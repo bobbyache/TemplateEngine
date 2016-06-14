@@ -5,6 +5,8 @@
 # My Settings
 Code/External/*.dll
 Design/*.~ml
+Code/Research/InitialAntlrWork/Generated/*.cs
+Code/Research/InitialAntlrWork/Generated/*.tokens
 # ==========================================================================================
 
 # User-specific files
