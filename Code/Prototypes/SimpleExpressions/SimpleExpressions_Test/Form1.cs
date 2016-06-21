@@ -24,11 +24,12 @@ namespace SimpleExpressions_Test
             DialogResult result = dialog.ShowDialog(this);
             if (result == System.Windows.Forms.DialogResult.OK)
             {
+                lblPath.Text = dialog.FileName;
                 Expressions expressions = new Expressions();
                 txtOutput.Text = expressions.GetTreeToString(dialog.FileName);
 
                 string calculatedOutput = expressions.ProcessVisitor(dialog.FileName);
-                MessageBox.Show(calculatedOutput);
+                MessageBox.Show(this, string.Format("The answers of the expressions:\n{0}", calculatedOutput), "Expression Evaluation Output");
             }
         }
     }

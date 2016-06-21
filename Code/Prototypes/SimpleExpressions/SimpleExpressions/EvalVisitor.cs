@@ -21,6 +21,14 @@ namespace SimpleExpressions
         // These assignments appear to be picked up before the "id" is visited later.
         // so use this to populate the symbol/id memory dictionary so that you can use
         // "VisitId" to return the values later. 
+
+        // It's important to realize that an assignment is not an expression, an assignment is
+        // made up of an identifier, an equal sign, and an expression. However, the Visitor pattern
+        // is used to probe down the sub-tree once an assignment is found, so that the expression can
+        // be calculated before being returned as a value and then the value is added to the memory
+        // dictionary.
+        //      ID '=' expr NEWLINE
+        // A full statement "stat", the results of the assignment added to the memory dictionary.
         public override int VisitAssign(LabeledExprParser.AssignContext context)
         {
             string id = context.ID().GetText();                     // id is left-hand side of '='.
@@ -32,6 +40,8 @@ namespace SimpleExpressions
 
         // Actually where the computation is processed for each expression on each line
         // and then passed to the output window.
+        // This label points to a full statement "stat", specifically an "expr NEWLINE" combination. Thus we
+        // capture the result of the expression out or add it to the list of completed calculations.
         public override int VisitPrintExpr(LabeledExprParser.PrintExprContext context)
         {
             int value = Visit(context.expr());                      // evaluate the expr child
@@ -80,7 +90,9 @@ namespace SimpleExpressions
             return left - right;                                    // must be subraction
         }
 
-        // parenthisis
+        // parenthisis - a sub-rule. In this case parenthesis always wraps an expression. So use the Visitor
+        // design pattern to walk down the sub-tree and evaluate the resulting expression before returning
+        // the solution value.
         public override int VisitParens(LabeledExprParser.ParensContext context)
         {
             return Visit(context.expr());                           // return child expression's value.
