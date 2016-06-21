@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{38D6ADF4-6E24-4140-BC80-F97707B807A5}</ProjectGuid>
+    <ProjectGuid>{0ACB8378-6AD8-4EC5-89EE-500B1E648661}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SimpleExpressions_Test</RootNamespace>
-    <AssemblyName>SimpleExpressions_Test</AssemblyName>
+    <RootNamespace>JavaInterfaceExtractor_Test</RootNamespace>
+    <AssemblyName>JavaInterfaceExtractor_Test</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -78,15 +78,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SimpleExpressions\SimpleExpressions.csproj">
-      <Project>{c8d8eec7-736e-46ce-bee6-6827ff393507}</Project>
-      <Name>SimpleExpressions</Name>
+    <ProjectReference Include="..\JavaInterfaceExtractor\JavaInterfaceExtractor.csproj">
+      <Project>{e27e0c97-1883-455a-8a31-065ecef955bd}</Project>
+      <Name>JavaInterfaceExtractor</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\InputFile.txt">
-      <Link>InputFile.txt</Link>
-    </Content>
+    <Content Include="JavaClass.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
