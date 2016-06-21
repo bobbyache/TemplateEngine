@@ -31,6 +31,16 @@ namespace JavaInterfaceExtractor
             this.interfaceBuilder = new StringBuilder();
         }
 
+        public override void EnterImportDeclaration(JavaParser.ImportDeclarationContext context)
+        {
+
+            System.Diagnostics.Debug.WriteLine("import " + context.qualifiedName().GetText() + ";");
+            interfaceBuilder.AppendLine("import " + context.qualifiedName().GetText() + ";");
+            string test = tokenStream.GetText(context); // simply prints out the text matched by the entire rule
+                                                        // which is the same as for what you did above... could
+                                                        // just as well just return this statement.
+        }
+
         public override void EnterClassDeclaration(JavaParser.ClassDeclarationContext context)
         {
             System.Diagnostics.Debug.WriteLine("interface I" + context.Identifier() + " {");
