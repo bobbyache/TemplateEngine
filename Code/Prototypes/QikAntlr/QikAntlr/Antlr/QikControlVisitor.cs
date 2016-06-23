@@ -49,6 +49,40 @@ namespace QikLanguageEngine.Antlr
             return base.VisitOptionBox(context);
         }
 
+        public override string VisitCheckBox(QikTemplateParser.CheckBoxContext context)
+        {
+            string controlId = context.ID().GetText();
+
+            string titleText = GetCheckBoxTitle(context);
+            string defaultId = GetCheckBoxDefaultText(context);
+
+            controlDictionary.Add(controlId, new QikTextBoxControl(controlId, defaultId));
+
+            return base.VisitCheckBox(context);
+        }
+
+        private string GetCheckBoxTitle(QikTemplateParser.CheckBoxContext context)
+        {
+            string titleText = null;
+            if (context.checkBoxArgs().titleArg() != null)
+            {
+                titleText = StripQuotes(context.checkBoxArgs().titleArg().STRING().GetText());
+            }
+            return titleText;
+        }
+
+        private string GetCheckBoxDefaultText(QikTemplateParser.CheckBoxContext context)
+        {
+            string defaultText = null;
+
+            if (context.checkBoxArgs().defaultArg() != null)
+            {
+                defaultText = StripQuotes(context.checkBoxArgs().defaultArg().STRING().GetText());
+            }
+
+            return defaultText;
+        }
+
         private string GetOptionBoxTitle(QikTemplateParser.OptionBoxContext context)
         {
             string titleText = null;

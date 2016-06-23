@@ -11,6 +11,7 @@ template
 ctrlDecl
     : optionBox
     | textBox
+    | checkBox
     ;
 
 optionBox
@@ -19,10 +20,18 @@ optionBox
 
 textBox
     : ID '=' 'text' '[' textBoxArgs ']' ';'
+    ; 
+
+checkBox
+    : ID '=' 'check' '[' checkBoxArgs ']' ';'
     ;
 
 exprDecl
     : ID '=' 'expression' '{' 'return' (expr|STRING) ';'  '}' ';'
+    ;
+
+checkBoxArgs
+    : titleArg  (',' defaultArg)?
     ;
 
 textBoxArgs

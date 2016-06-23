@@ -20,6 +20,8 @@ TextBox
 @procName = text[Title="Stored Proc Name", Default="sp_StoredProcName"] ;
 @procName2 = text[Title="Stored Proc Name"] ;
 
+@isDone = check[Title="Is Done", Default="true"] ;
+
 
 /* ************************************************************************************
 Expressions
