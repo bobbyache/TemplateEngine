@@ -1,0 +1,58 @@
+﻿
+
+/* ************************************************************************************
+Options ComboBox
+************************************************************************************ */
+
+@databaseOptions = options[Title="Database Options", Default=@MSDF_DM_2] {
+	@MSDF_DM_2 : option		[Value="MSDF_DM"] 			,
+	@MSDF_DF_3 : option		[Value="MSDF_DM"] 			;
+};
+
+@environmentOptions = options[Title="Database Options"] {
+	@MSDF_DM_2 : option		[Value="MSDF_DM"] 			,
+	@MSDF_DF_3 : option		[Value="MSDF_DM"] 			;
+};
+/* ************************************************************************************
+TextBox
+************************************************************************************ */
+
+@procName = text[Title="Stored Proc Name", Default="sp_StoredProcName"] ;
+@procName2 = text[Title="Stored Proc Name"] ;
+
+
+/* ************************************************************************************
+Expressions
+************************************************************************************ */
+
+@upperName = expression {
+	return lowerCase("Hello World");
+};
+/*
+@lowerName = expression {
+	return upperCase("Hello World");
+};
+
+@upperName2 = expression {
+	return lowerCase(@helloWorld);
+};
+
+@lowerName2 = expression {
+	return upperCase(removeSpaces(@helloWorld));
+};
+*/
+
+/*
+@exprVar = expression {
+	return upperCase(@helloWorld) + lowerCase(@helloWorld) + lowerCase(removeSpaces("yo bro"));
+};
+*/
+
+/*
+@exprVar = expression {
+	return "goodbye" + "hello" + upperCase("hello") + lowerCase(@lowerName);
+};
+*/
+
+
+
