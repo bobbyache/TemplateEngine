@@ -1,4 +1,5 @@
 ﻿using QikLanguageEngine;
+using QikLanguageEngine.QikControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,7 +27,7 @@ namespace QikLanguageEngine_Test
             {
                 lblPath.Text = dialog.FileName;
                 Qik engine = new Qik();
-                engine.GetControlsVisitor(dialog.FileName);
+                QikControl[] controls = engine.GetControls(dialog.FileName);
                 //txtOutput.Text = extractor.ExtractInterface(dialog.FileName);
             }
         }

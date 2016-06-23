@@ -14,7 +14,7 @@ namespace QikLanguageEngine
 {
     public class Qik
     {
-        public QikControl[] GetControlsVisitor(string filePath)
+        public QikControl[] GetControls(string filePath)
         {
             string input = File.ReadAllText(filePath);
 
@@ -28,9 +28,9 @@ namespace QikLanguageEngine
             QikControlVisitor controlVisitor = new QikControlVisitor();
             controlVisitor.Visit(tree);
 
-            var test = controlVisitor.ControlDictionary.Values;
+            QikControl[] controls = controlVisitor.ControlDictionary.Values.ToArray();
 
-            return new QikControl[0];
+            return controls;
         }
     }
 }
