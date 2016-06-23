@@ -86,7 +86,7 @@ namespace QikLanguageEngine.Antlr
 
             if (context.textBoxArgs().defaultArg() != null)
             {
-                StripQuotes(context.textBoxArgs().defaultArg().STRING().GetText());
+                defaultText = StripQuotes(context.textBoxArgs().defaultArg().STRING().GetText());
             }
 
             return defaultText;

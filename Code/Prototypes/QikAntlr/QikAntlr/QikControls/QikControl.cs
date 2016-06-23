@@ -8,12 +8,12 @@ namespace QikLanguageEngine.QikControls
 {
     public abstract class QikControl
     {
-        public string Symbol { get; private set; }
-        public string Value { get; set; }
+        public string ControlId { get; private set; }
+        public string Value { get; protected set; }
 
-        public QikControl(string symbol, string value)
+        public QikControl(string controlId, string value)
         {
-            this.Symbol = symbol;
+            this.ControlId = controlId;
             this.Value = value;
         }
     }

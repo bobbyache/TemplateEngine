@@ -8,10 +8,25 @@ namespace QikLanguageEngine.QikControls
 {
     public class QikOptionBoxControl : QikControl
     {
-        Dictionary<string, QikOptionBoxOption> optionsDictionary;
+        private Dictionary<string, QikOptionBoxOption> optionsDictionary = null;
 
-        public QikOptionBoxControl(string symbol, string value, Dictionary<string, QikOptionBoxOption> optionsDictionary)
-            : base(symbol, value)
+        public QikOptionBoxOption SelectedOption
+        {
+            get
+            {
+                if (optionsDictionary.ContainsKey(base.Value))
+                    return optionsDictionary[base.Value];
+                return null;
+            }
+        }
+
+        public QikOptionBoxOption[] Options
+        {
+            get { return optionsDictionary.Values.ToArray(); }
+        }
+
+        public QikOptionBoxControl(string controlId, string value, Dictionary<string, QikOptionBoxOption> optionsDictionary)
+            : base(controlId, value)
         {
             this.optionsDictionary = optionsDictionary;
         }
