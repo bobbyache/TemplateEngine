@@ -14,8 +14,8 @@ namespace QikLanguageEngine.QikControls
         {
             get
             {
-                if (base.Value != null && optionsDictionary.ContainsKey(base.Value))
-                    return optionsDictionary[base.Value];
+                if (base.DefaultValue != null && optionsDictionary.ContainsKey(base.DefaultValue))
+                    return optionsDictionary[base.DefaultValue];
                 return null;
             }
         }
@@ -56,6 +56,13 @@ namespace QikLanguageEngine.QikControls
                 this.optionsDictionary.Add(id, option);
             }
         }
+
+        //public void SetOptionByIndex(int index, string value)
+        //{
+        //    QikOptionBoxOption[] options = optionsDictionary.Values.ToArray();
+        //    if (options.Any(o => o.Index == index))
+        //         options.Where(o => o.Index == index).SingleOrDefault().Value
+        //}
 
         public string GetValueByIndex(int index)
         {

@@ -58,24 +58,17 @@ namespace QikLanguageEngine_Test
 
             Dyn.PropertyDescriptor propertyDescriptor = new Dyn.PropertyDescriptor(propertyGrid.SelectedObject.GetType(),
                                                         textBox.ControlId,
-                                                        typeof(string), textBox.Value,
+                                                        typeof(string), textBox.DefaultValue,
                                                         new Scm.BrowsableAttribute(true),
                                                         new Scm.DisplayNameAttribute(textBox.Title),
-                                                        new Scm.DescriptionAttribute("Insert Text")
+                                                        new Scm.DescriptionAttribute("Insert Text"),
+                                                        new Scm.DefaultValueAttribute(textBox.DefaultValue)
                                                         );
             propertyDescriptor.Attributes.Add(new Scm.CategoryAttribute("User Input"), true);
-
-            //propertyDescriptor.AddValueChanged(propertyGrid1.SelectedObject, new EventHandler(this.OnPropCChanged));
-            //propertyDescriptor.AddValueChanged(propertyGrid.SelectedObject, new PropertyChangedEventHandler(this, new InputPropertyEventArgs(textBox.ControlId)));
-
+            propertyDescriptor.Attributes.Add(new PropertyControlAttribute(ControlTypeEnum.TextBox), true);
             propertyDescriptor.AddValueChanged(propertyGrid.SelectedObject, new EventHandler(this.InputPropertyChanged));
-            
-            
-            typeDescriptor.GetProperties().Add(propertyDescriptor);
-        }
 
-        private void InputPropertyChanged (object sender, EventArgs e)
-        {
+            typeDescriptor.GetProperties().Add(propertyDescriptor);
         }
 
         private void CreateCheckBox(QikCheckBoxControl checkBox)
@@ -84,14 +77,16 @@ namespace QikLanguageEngine_Test
 
             Dyn.PropertyDescriptor propertyDescriptor = new Dyn.PropertyDescriptor(propertyGrid.SelectedObject.GetType(),
                                                         checkBox.ControlId,
-                                                        typeof(bool), bool.Parse(checkBox.Value),
+                                                        typeof(bool), bool.Parse(checkBox.DefaultValue),
                                                         new Scm.BrowsableAttribute(true),
                                                         new Scm.DisplayNameAttribute(checkBox.Title),
-                                                        new Scm.DescriptionAttribute("Select true/false.")
+                                                        new Scm.DescriptionAttribute("Select true/false."),
+                                                        new Scm.DefaultValueAttribute(bool.Parse(checkBox.DefaultValue))
                                                         );
             propertyDescriptor.Attributes.Add(new Scm.CategoryAttribute("User Input"), true);
+            propertyDescriptor.Attributes.Add(new PropertyControlAttribute(ControlTypeEnum.CheckBox), true);
 
-            //propertyDescriptor.AddValueChanged(propertyGrid1.SelectedObject, new EventHandler(this.OnPropCChanged));
+            propertyDescriptor.AddValueChanged(propertyGrid.SelectedObject, new EventHandler(this.InputPropertyChanged));
             typeDescriptor.GetProperties().Add(propertyDescriptor);
         }
 
@@ -103,18 +98,19 @@ namespace QikLanguageEngine_Test
                                                         typeof(int), optionBox.SelectedIndex,
                                                         new Scm.BrowsableAttribute(true),
                                                         new Scm.DisplayNameAttribute(optionBox.Title),
-                                                        new Scm.DescriptionAttribute("Select an option.")
+                                                        new Scm.DescriptionAttribute("Select an option."),
+                                                        new Scm.DefaultValueAttribute(optionBox.SelectedIndex)
                                                         );
             propertyDescriptor.Attributes.Add(new Scm.CategoryAttribute("User Input"), true);
+            propertyDescriptor.Attributes.Add(new PropertyControlAttribute(ControlTypeEnum.OptionBox), true);
 
             propertyDescriptor.Attributes.Add(new Scm.TypeConverterAttribute(typeof(Dyn.StandardValueConverter)), true);
             propertyDescriptor.Attributes.Add(new Scm.EditorAttribute(typeof(Dyn.StandardValueEditor), typeof(UITypeEditor)), true);
 
-
             BuildOptions(propertyDescriptor, optionBox.Options);
 
+            propertyDescriptor.AddValueChanged(propertyGrid.SelectedObject, new EventHandler(this.InputPropertyChanged));
             typeDescriptor.GetProperties().Add(propertyDescriptor);
-            
         }
 
         private void BuildOptions(Dyn.PropertyDescriptor pd, QikOptionBoxOption[] options)
@@ -126,6 +122,35 @@ namespace QikLanguageEngine_Test
                 Dyn.StandardValue sv = new Dyn.StandardValue(option.Index, option.Value);
                 sv.Description = "Description of " + sv.DisplayName + ".";
                 pd.StandardValues.Add(sv);
+            }
+        }
+
+        private void InputPropertyChanged(object sender, EventArgs e)
+        {
+            Dyn.TypeDescriptor typeDescriptor = Dyn.TypeDescriptor.GetTypeDescriptor(propertyGrid.SelectedObject);
+            PropertyDescriptorCollection propertyDescriptors = typeDescriptor.GetProperties();
+
+            foreach (Dyn.PropertyDescriptor propertyDescriptor in propertyDescriptors)
+            {
+                PropertyControlAttribute propertyControl = propertyDescriptor.Attributes[typeof(PropertyControlAttribute)] as PropertyControlAttribute;
+                if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.TextBox)
+                {
+                    string name = propertyDescriptor.Name;
+                    object value = propertyDescriptor.GetValue(sender);
+                    optionsDictionary[name].DefaultValue = value != null ? value.ToString() : null;
+                }
+                else if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.OptionBox)
+                {
+                    //string name = propertyDescriptor.Name;
+                    //string value = propertyDescriptor.GetValue(sender).ToString();
+                    //optionsDictionary[name].Value = value;
+                }
+                else if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.CheckBox)
+                {
+                    string name = propertyDescriptor.Name;
+                    string value = propertyDescriptor.GetValue(sender).ToString();
+                    optionsDictionary[name].DefaultValue = value;
+                }
             }
         }
     }

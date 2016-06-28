@@ -57,6 +57,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="PropertyControlAttribute.cs" />
     <Compile Include="UserInputProperties.cs" />
     <Compile Include="InputPropertiesForm.cs">
       <SubType>Form</SubType>

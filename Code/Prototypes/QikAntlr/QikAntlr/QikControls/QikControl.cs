@@ -10,12 +10,12 @@ namespace QikLanguageEngine.QikControls
     {
         public string ControlId { get; private set; }
         public string Title { get; protected set; }
-        public string Value { get; protected set; }
+        public string DefaultValue { get; set; }
 
-        public QikControl(string controlId, string value, string title)
+        public QikControl(string controlId, string defaultValue, string title)
         {
             this.ControlId = controlId;
-            this.Value = value;
+            this.DefaultValue = defaultValue;
             this.Title = title;
         }
     }
