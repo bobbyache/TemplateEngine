@@ -17,6 +17,7 @@ namespace QikLanguageEngine_Test
         public InputPropertiesForm()
         {
             InitializeComponent();
+            syntaxBox.Document.SyntaxFile = "qiktemplate.syn";
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)

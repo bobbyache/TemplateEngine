@@ -16,9 +16,13 @@ using System.Drawing.Design;
 
 namespace QikLanguageEngine_Test
 {
+    // http://www.codeproject.com/Articles/415070/Dynamic-Type-Description-Framework-for-PropertyGri
+
     public partial class InputPropertyGrid : UserControl
     {
         private Dictionary<string, QikControl> optionsDictionary = null;
+
+        private const string CATEGORY_USER_INPUT = "User Input";
 
         public InputPropertyGrid()
         {
@@ -64,7 +68,7 @@ namespace QikLanguageEngine_Test
                                                         new Scm.DescriptionAttribute("Insert Text"),
                                                         new Scm.DefaultValueAttribute(textBox.DefaultValue)
                                                         );
-            propertyDescriptor.Attributes.Add(new Scm.CategoryAttribute("User Input"), true);
+            propertyDescriptor.Attributes.Add(new Scm.CategoryAttribute(CATEGORY_USER_INPUT), true);
             propertyDescriptor.Attributes.Add(new PropertyControlAttribute(ControlTypeEnum.TextBox), true);
             propertyDescriptor.AddValueChanged(propertyGrid.SelectedObject, new EventHandler(this.InputPropertyChanged));
 
@@ -83,7 +87,7 @@ namespace QikLanguageEngine_Test
                                                         new Scm.DescriptionAttribute("Select true/false."),
                                                         new Scm.DefaultValueAttribute(bool.Parse(checkBox.DefaultValue))
                                                         );
-            propertyDescriptor.Attributes.Add(new Scm.CategoryAttribute("User Input"), true);
+            propertyDescriptor.Attributes.Add(new Scm.CategoryAttribute(CATEGORY_USER_INPUT), true);
             propertyDescriptor.Attributes.Add(new PropertyControlAttribute(ControlTypeEnum.CheckBox), true);
 
             propertyDescriptor.AddValueChanged(propertyGrid.SelectedObject, new EventHandler(this.InputPropertyChanged));
@@ -101,7 +105,7 @@ namespace QikLanguageEngine_Test
                                                         new Scm.DescriptionAttribute("Select an option."),
                                                         new Scm.DefaultValueAttribute(optionBox.SelectedIndex)
                                                         );
-            propertyDescriptor.Attributes.Add(new Scm.CategoryAttribute("User Input"), true);
+            propertyDescriptor.Attributes.Add(new Scm.CategoryAttribute(CATEGORY_USER_INPUT), true);
             propertyDescriptor.Attributes.Add(new PropertyControlAttribute(ControlTypeEnum.OptionBox), true);
 
             propertyDescriptor.Attributes.Add(new Scm.TypeConverterAttribute(typeof(Dyn.StandardValueConverter)), true);
