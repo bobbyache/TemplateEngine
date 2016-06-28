@@ -32,5 +32,22 @@ namespace QikLanguageEngine
 
             return controls;
         }
+
+        public QikControl[] GetUserInputControls(string inputData)
+        {
+            AntlrInputStream inputStream = new AntlrInputStream(inputData);
+            QikTemplateLexer lexer = new QikTemplateLexer(inputStream);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            QikTemplateParser parser = new QikTemplateParser(tokens);
+
+            IParseTree tree = parser.template();
+
+            QikControlVisitor controlVisitor = new QikControlVisitor();
+            controlVisitor.Visit(tree);
+
+            QikControl[] controls = controlVisitor.ControlDictionary.Values.ToArray();
+
+            return controls;
+        }
     }
 }

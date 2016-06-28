@@ -8,7 +8,7 @@ namespace QikLanguageEngine.QikControls
 {
     public class QikCheckBoxControl : QikControl
     {
-        public QikCheckBoxControl(string controlId, string value) : base(controlId, value)
+        public QikCheckBoxControl(string controlId, string value, string title) : base(controlId, value, title)
         {
 
         }

@@ -9,12 +9,14 @@ namespace QikLanguageEngine.QikControls
     public abstract class QikControl
     {
         public string ControlId { get; private set; }
+        public string Title { get; protected set; }
         public string Value { get; protected set; }
 
-        public QikControl(string controlId, string value)
+        public QikControl(string controlId, string value, string title)
         {
             this.ControlId = controlId;
             this.Value = value;
+            this.Title = title;
         }
     }
 }

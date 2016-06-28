@@ -8,7 +8,7 @@ namespace QikLanguageEngine.QikControls
 {
     public class QikTextBoxControl : QikControl
     {
-        public QikTextBoxControl(string symbol, string value) : base(symbol, value)
+        public QikTextBoxControl(string symbol, string value, string title) : base(symbol, value, title)
         {
 
         }

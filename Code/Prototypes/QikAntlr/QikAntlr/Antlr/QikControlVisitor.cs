@@ -23,28 +23,27 @@ namespace QikLanguageEngine.Antlr
             string titleText = GetTextBoxTitle(context);
             string defaultText = GetTextBoxDefaultText(context);
 
-            controlDictionary.Add(controlId, new QikTextBoxControl(controlId, defaultText));
+            controlDictionary.Add(controlId, new QikTextBoxControl(controlId, defaultText, titleText ));
 
             return base.VisitTextBox(context);
         }
 
         public override string VisitOptionBox(QikTemplateParser.OptionBoxContext context)
         {
-            Dictionary<string, QikOptionBoxOption> optionsDictionary = new Dictionary<string,QikOptionBoxOption>();
-
             string controlId = context.ID().GetText();
-
-            string titleText = GetOptionBoxTitle(context);
             string defaultId = GetOptionBoxDefaultId(context);
+            string titleText = GetOptionBoxTitle(context);
+
+            QikOptionBoxControl optionBox = new QikOptionBoxControl(controlId, defaultId, titleText);
 
             foreach (QikTemplateParser.SingleOptionContext optionContext in context.optionsBody().singleOption())
             {
                 string id = optionContext.ID().GetText();
                 string value = StripQuotes(optionContext.valueArg().STRING().GetText());
-                optionsDictionary.Add(id, new QikOptionBoxOption(id, value));
+                optionBox.AddOption(id, value);
             }
 
-            controlDictionary.Add(controlId, new QikOptionBoxControl(controlId, defaultId, optionsDictionary));
+            controlDictionary.Add(optionBox.ControlId, optionBox);
 
             return base.VisitOptionBox(context);
         }
@@ -56,7 +55,7 @@ namespace QikLanguageEngine.Antlr
             string titleText = GetCheckBoxTitle(context);
             string defaultId = GetCheckBoxDefaultText(context);
 
-            controlDictionary.Add(controlId, new QikTextBoxControl(controlId, defaultId));
+            controlDictionary.Add(controlId, new QikCheckBoxControl(controlId, defaultId, titleText));
 
             return base.VisitCheckBox(context);
         }
