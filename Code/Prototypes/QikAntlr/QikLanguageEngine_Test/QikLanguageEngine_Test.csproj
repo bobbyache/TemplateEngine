@@ -103,6 +103,7 @@
     </Compile>
     <None Include="qiktemplate.syn">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
