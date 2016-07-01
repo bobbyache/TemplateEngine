@@ -15,6 +15,7 @@ namespace CSVParsing.ANTLR.SymbolTables
         {
             //this.Scope = enclosingScope;
             this.enclosingScope = enclosingType;
+            this.enclosingScope.Define(this);
         }
 
         public List<Symbol> ScopedSymbols

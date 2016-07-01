@@ -10,7 +10,7 @@ namespace QikLanguageEngine.QikControls
     {
         public string ControlId { get; private set; }
         public string Title { get; protected set; }
-        public string DefaultValue { get; set; }
+        public string DefaultValue { get; protected set; }
 
         public QikControl(string controlId, string defaultValue, string title)
         {
@@ -18,5 +18,8 @@ namespace QikLanguageEngine.QikControls
             this.DefaultValue = defaultValue;
             this.Title = title;
         }
+
+        public abstract string GetCurrentValue();
+        public abstract void SetCurrentValue(string value);
     }
 }

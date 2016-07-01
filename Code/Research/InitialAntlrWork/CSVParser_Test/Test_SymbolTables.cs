@@ -122,9 +122,6 @@ namespace CSVParser_Test
             LocalScope localScopeA = new LocalScope(globalScope);
 
             MethodSymbol methodSymbol = new MethodSymbol("addOne", new BuiltInTypeSymbol("int"), localScopeA);
-            localScopeA.Define(methodSymbol);   // at the moment you have to do this because otherwise
-                                                // methodSymbol will not be defined on localScopeA and
-                                                // methodSymbol.Scope will be null otherwise.
 
             Symbol symbol = new Symbol("mySymbol", new BuiltInTypeSymbol("int"));
             methodSymbol.Define(symbol);

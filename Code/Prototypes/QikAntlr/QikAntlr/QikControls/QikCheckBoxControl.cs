@@ -8,9 +8,21 @@ namespace QikLanguageEngine.QikControls
 {
     public class QikCheckBoxControl : QikControl
     {
+        private string currentValue = null;
+
         public QikCheckBoxControl(string controlId, string value, string title) : base(controlId, value, title)
         {
+            this.currentValue = value;
+        }
 
+        public override void SetCurrentValue(string value)
+        {
+            this.currentValue = value;
+        }
+
+        public override string GetCurrentValue()
+        {
+            return this.currentValue;
         }
     }
 }

@@ -8,9 +8,21 @@ namespace QikLanguageEngine.QikControls
 {
     public class QikTextBoxControl : QikControl
     {
+        private string currentValue = null;
+
         public QikTextBoxControl(string symbol, string value, string title) : base(symbol, value, title)
         {
+            this.currentValue = value;
+        }
 
+        public override  void SetCurrentValue(string value)
+        {
+            this.currentValue = value;
+        }
+
+        public override string GetCurrentValue()
+        {
+            return this.currentValue;
         }
     }
 }

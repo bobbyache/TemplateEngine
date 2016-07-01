@@ -38,8 +38,8 @@ namespace QikLanguageEngine.Antlr
 
             foreach (QikTemplateParser.SingleOptionContext optionContext in context.optionsBody().singleOption())
             {
-                string id = optionContext.ID().GetText();
-                string value = StripQuotes(optionContext.valueArg().STRING().GetText());
+                string id = optionContext.CONST().GetText();
+                string value = StripQuotes(optionContext.titleArg().STRING().GetText());
                 optionBox.AddOption(id, value);
             }
 
@@ -108,7 +108,7 @@ namespace QikLanguageEngine.Antlr
 
             if (context.optionBoxArgs().defaultArg() != null)
             {
-                defaultId = context.optionBoxArgs().defaultArg().ID().GetText();
+                defaultId = context.optionBoxArgs().defaultArg().CONST().GetText();
             }
             return defaultId;
         }

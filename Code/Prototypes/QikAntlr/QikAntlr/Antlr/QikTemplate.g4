@@ -47,7 +47,7 @@ optionsBody
     ;
 
 singleOption
-    : ID ':' 'option' '[' valueArg ']'
+    : CONST ':' 'option' '[' titleArg ']'
     ;
 
 titleArg
@@ -55,7 +55,7 @@ titleArg
     ;
 
 defaultArg
-    : 'Default' '=' (STRING | ID)
+    : 'Default' '=' (STRING | CONST)
     ;
 
 valueArg
@@ -87,6 +87,9 @@ STRING
 	: '"' ('""'|~'"')* '"' 
 	;
 
+CONST
+    : LETTER (LETTER|DIGIT)*
+    ;
 
 ID  
     :   '@' LETTER (LETTER|DIGIT)*

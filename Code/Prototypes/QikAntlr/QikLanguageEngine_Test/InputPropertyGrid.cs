@@ -141,21 +141,40 @@ namespace QikLanguageEngine_Test
                 {
                     string name = propertyDescriptor.Name;
                     object value = propertyDescriptor.GetValue(sender);
-                    optionsDictionary[name].DefaultValue = value != null ? value.ToString() : null;
+
+                    QikTextBoxControl textBox = optionsDictionary[name] as QikTextBoxControl;
+                    textBox.SetCurrentValue(value != null ? value.ToString() : null);
                 }
                 else if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.OptionBox)
                 {
-                    //string name = propertyDescriptor.Name;
-                    //string value = propertyDescriptor.GetValue(sender).ToString();
-                    //optionsDictionary[name].Value = value;
+                    string name = propertyDescriptor.Name;
+                    object value = propertyDescriptor.GetValue(sender);
+
+                    QikOptionBoxControl optionBox = optionsDictionary[name] as QikOptionBoxControl;
+                    if (optionBox != null)
+                    {
+                        if (value != null)
+                            optionBox.SelectOption(int.Parse(value.ToString()));
+                        else
+                            optionBox.ClearSelection(false);
+                    }
                 }
                 else if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.CheckBox)
                 {
                     string name = propertyDescriptor.Name;
                     string value = propertyDescriptor.GetValue(sender).ToString();
-                    optionsDictionary[name].DefaultValue = value;
+
+                    QikCheckBoxControl checkBox = optionsDictionary[name] as QikCheckBoxControl;
+                    checkBox.SetCurrentValue(value);
                 }
             }
+
+            StringBuilder builder = new StringBuilder();
+            foreach (QikControl ctrl in optionsDictionary.Values)
+            {
+                builder.AppendLine(string.Format("{1}: ({0}) - {2}", ctrl.ControlId, ctrl.Title, ctrl.GetCurrentValue()));
+            }
+            MessageBox.Show(builder.ToString());
         }
     }
 }

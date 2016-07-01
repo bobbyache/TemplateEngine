@@ -4,15 +4,18 @@
 Options ComboBox
 ************************************************************************************ */
 
-@databaseOptions = options[Title="Database Options", Default=@MSDF_DM_2] {
-	@MSDF_DM_2 : option		[Value="MSDF_DM"] 			,
-	@MSDF_DF_3 : option		[Value="MSDF_DM"] 			;
+@databaseOptions = options[Title="Database Options", Default=@MSDF_DM] {
+	MSDF_DM : 		option		[Title="MSDF_DM"] ,
+	MSDF_ADMIN : 	option		[Title="MSDF_ADMIN"] ;
 };
 
 @environmentOptions = options[Title="Database Options"] {
-	@MSDF_DM_2 : option		[Value="MSDF_DM"] 			,
-	@MSDF_DF_3 : option		[Value="MSDF_DM"] 			;
+	MSDF_PROD : 	option		[Title="MSDF Production"],
+	MSDF_QA : 		option		[Title="MSDF Quality Assurance"],
+	MSDF_UAT : 		option		[Title="MSDF_User Acceptance Testing"],
+	MSDF_DEV : 		option		[Title="MSDF Development"] ;
 };
+
 /* ************************************************************************************
 TextBox
 ************************************************************************************ */
