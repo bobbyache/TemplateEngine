@@ -4,7 +4,7 @@
 Options ComboBox
 ************************************************************************************ */
 
-@databaseOptions = options[Title="Database Options", Default=@MSDF_DM] {
+@databaseOptions = options[Title="Database Options", Default=MSDF_DM] {
 	MSDF_DM : 		option		[Title="MSDF_DM"] ,
 	MSDF_ADMIN : 	option		[Title="MSDF_ADMIN"] ;
 };
