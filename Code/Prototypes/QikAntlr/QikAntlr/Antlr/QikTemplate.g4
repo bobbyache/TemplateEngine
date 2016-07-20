@@ -27,7 +27,23 @@ checkBox
     ;
 
 exprDecl
-    : ID '=' 'expression' '{' 'return' (expr|STRING) ';'  '}' ';'
+    : ID '=' 'expression' '{' 'return' (expr|STRING|ifStat) ';'  '}' ';'
+    ;
+
+ifStat
+    : ifLine (elseIfLine)* (elseLine)*
+    ;
+
+ifLine
+    : 'if' '(' ID '==' STRING ')' 'return' (expr|STRING) ','
+    ;
+
+elseIfLine
+    : 'elseif' '(' ID '==' STRING ')' 'return' (expr|STRING) ','
+    ;
+
+elseLine
+    : 'else' 'return' (expr|STRING)
     ;
 
 checkBoxArgs
