@@ -1,4 +1,26 @@
-﻿
+﻿/* ************************************************************************************
+Currently working Expressions:
+-------------------------------
+@goodbyeWorld = expression {
+	return "goodbye" + " " + upperCase("world");
+};
+
+@goodbyeCruelWorld = expression {
+	return "goodbye" + " " + upperCase("cruel") + " " + upperCase("world");
+};
+
+@testing = expression {
+	return upperCase("cruel");
+};
+
+To be Implemented
+-------------------------------
+@testing = expression {
+	return @Hello + @Goodbye;
+};
+************************************************************************************ */
+
+
 /* ************************************************************************************
 REMEMBER YOU STILL WANT TO ADD "CATEGORY" TO THIS SCRIPT LANGUAGE FOR YOUR CONTROLS
 AND ITEMS SO THEY CAN SHOW UP IN CATEGORIES IN THE PROPERTY GRID.

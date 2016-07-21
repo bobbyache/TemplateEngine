@@ -1,5 +1,6 @@
 ﻿using QikLanguageEngine;
 using QikLanguageEngine.QikControls;
+using QikLanguageEngine.QikExpressions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,15 +19,18 @@ namespace QikLanguageEngine_Test
         {
             InitializeComponent();
             syntaxBox.Document.SyntaxFile = "qiktemplate.syn";
+            // syntaxBox.Document.Text = "@exprVar = expression { return upperCase(\"yo bro\") + lowerCase(\"yo bro\") + removeSpaces(\"yo bro\"); };";
+            // syntaxBox.Document.Text = "@exprVar = expression { return upperCase(\"yo bro\"); };";
+            // syntaxBox.Document.Text = "@exprVar = expression { return upperCase(removeSpaces(lowerCase(\"yo bro\"))); };";
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             Qik engine = new Qik();
-            QikControl[] controls = engine.GetUserInputControls(syntaxBox.Document.Text);
+            QikControl[] controls = engine.GetControls(syntaxBox.Document.Text);
             inputPropertyGrid.Reset(controls);
 
-            engine.GetExpressions(syntaxBox.Document.Text);
+            QikExpression[] expressions = engine.GetExpressions(syntaxBox.Document.Text);
         }
     }
 }

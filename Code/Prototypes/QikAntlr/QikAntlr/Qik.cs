@@ -3,6 +3,7 @@ using Antlr4.Runtime.Tree;
 using QikAntlr.Antlr;
 using QikLanguageEngine.Antlr;
 using QikLanguageEngine.QikControls;
+using QikLanguageEngine.QikExpressions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,26 +15,26 @@ namespace QikLanguageEngine
 {
     public class Qik
     {
-        public QikControl[] GetControls(string filePath)
-        {
-            string input = File.ReadAllText(filePath);
+        //public QikControl[] GetControls(string filePath)
+        //{
+        //    string input = File.ReadAllText(filePath);
 
-            AntlrInputStream inputStream = new AntlrInputStream(input);
-            QikTemplateLexer lexer = new QikTemplateLexer(inputStream);
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
-            QikTemplateParser parser = new QikTemplateParser(tokens);
+        //    AntlrInputStream inputStream = new AntlrInputStream(input);
+        //    QikTemplateLexer lexer = new QikTemplateLexer(inputStream);
+        //    CommonTokenStream tokens = new CommonTokenStream(lexer);
+        //    QikTemplateParser parser = new QikTemplateParser(tokens);
 
-            IParseTree tree = parser.template();
+        //    IParseTree tree = parser.template();
 
-            QikControlVisitor controlVisitor = new QikControlVisitor();
-            controlVisitor.Visit(tree);
+        //    QikControlVisitor controlVisitor = new QikControlVisitor();
+        //    controlVisitor.Visit(tree);
 
-            QikControl[] controls = controlVisitor.ControlDictionary.Values.ToArray();
+        //    QikControl[] controls = controlVisitor.ControlDictionary.Values.ToArray();
 
-            return controls;
-        }
+        //    return controls;
+        //}
 
-        public QikControl[] GetUserInputControls(string inputData)
+        public QikControl[] GetControls(string inputData)
         {
             AntlrInputStream inputStream = new AntlrInputStream(inputData);
             QikTemplateLexer lexer = new QikTemplateLexer(inputStream);
@@ -50,7 +51,7 @@ namespace QikLanguageEngine
             return controls;
         }
 
-        public void GetExpressions(string inputData)
+        public QikExpression[] GetExpressions(string inputData)
         {
             AntlrInputStream inputStream = new AntlrInputStream(inputData);
             QikTemplateLexer lexer = new QikTemplateLexer(inputStream);
@@ -63,6 +64,8 @@ namespace QikLanguageEngine
             expressionVisitor.Visit(tree);
             QikControlVisitor controlVisitor = new QikControlVisitor();
             controlVisitor.Visit(tree);
+
+            return expressionVisitor.Expressions;
         }
     }
 }

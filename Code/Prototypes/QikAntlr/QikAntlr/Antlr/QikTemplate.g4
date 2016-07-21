@@ -54,7 +54,7 @@ singleOption
 Expression Declarations
 ----------------------------------------------------------------------- */ 
 exprDecl
-    : ID '=' 'expression' '{' 'return' (expr|STRING|ifStat) ';'  '}' ';'
+    : ID '=' 'expression' '{' 'return' (concatExpr|expr|ifStat) ';'  '}' ';'
     ;
 
 /* -----------------------------------------------------------------------
@@ -97,16 +97,19 @@ valueArg
 /* -----------------------------------------------------------------------
 Expressions and Functions
 ----------------------------------------------------------------------- */ 
+concatExpr
+    : expr ('+' expr)+
+    ;
+
 expr
-    : (func|STRING) ('+' (func|STRING))*
+    : func|STRING|ID
     ;
 
 func
-    : 'lowerCase' '(' (ID|STRING|func) ')'      #LowerCaseFunc
-    | 'upperCase' '(' (ID|STRING|func) ')'      #UpperCaseFunc
-    | 'removeSpaces' '(' (ID|STRING|func) ')'   #RemoveSpacesFunc
+    : 'lowerCase' '(' (ID|concatExpr|expr) ')'      #LowerCaseFunc
+    | 'upperCase' '(' (ID|concatExpr|expr) ')'      #UpperCaseFunc
+    | 'removeSpaces' '(' (ID|concatExpr|expr) ')'   #RemoveSpacesFunc
     ;
-
 
 /* ***********************************************************************
 Tokens and Fragments

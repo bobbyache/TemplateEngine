@@ -25,10 +25,10 @@ namespace QikLanguageEngine_Test
             DialogResult result = dialog.ShowDialog(this);
             if (result == System.Windows.Forms.DialogResult.OK)
             {
-                lblPath.Text = dialog.FileName;
-                Qik engine = new Qik();
-                QikControl[] controls = engine.GetControls(dialog.FileName);
-                engine.GetExpressions(dialog.FileName);
+                //lblPath.Text = dialog.FileName;
+                //Qik engine = new Qik();
+                //QikControl[] controls = engine.GetControls(dialog.FileName);
+                //engine.GetExpressions(dialog.FileName);
                 //txtOutput.Text = extractor.ExtractInterface(dialog.FileName);
             }
         }
