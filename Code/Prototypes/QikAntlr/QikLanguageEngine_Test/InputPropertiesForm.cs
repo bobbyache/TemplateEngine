@@ -25,6 +25,8 @@ namespace QikLanguageEngine_Test
             Qik engine = new Qik();
             QikControl[] controls = engine.GetUserInputControls(syntaxBox.Document.Text);
             inputPropertyGrid.Reset(controls);
+
+            engine.GetExpressions(syntaxBox.Document.Text);
         }
     }
 }

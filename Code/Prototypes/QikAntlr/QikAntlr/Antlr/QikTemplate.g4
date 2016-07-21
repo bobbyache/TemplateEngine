@@ -1,13 +1,17 @@
 grammar QikTemplate;
 
 /* ***********************************************************************
-Rules
+Complete Template
+    - Control Placeholders (user input)
+    - Derived Input (expression input derived from user input or system)
 *********************************************************************** */ 
 template		
-    //:	(ctrlDecl|exprDecl)+ 
     :	(ctrlDecl|exprDecl)+ 
     ;
-	
+
+/* -----------------------------------------------------------------------
+Control Declarations
+----------------------------------------------------------------------- */ 
 ctrlDecl
     : optionBox
     | textBox
@@ -24,26 +28,6 @@ textBox
 
 checkBox
     : ID '=' 'check' '[' checkBoxArgs ']' ';'
-    ;
-
-exprDecl
-    : ID '=' 'expression' '{' 'return' (expr|STRING|ifStat) ';'  '}' ';'
-    ;
-
-ifStat
-    : ifLine (elseIfLine)* (elseLine)*
-    ;
-
-ifLine
-    : 'if' '(' ID '==' STRING ')' 'return' (expr|STRING) ','
-    ;
-
-elseIfLine
-    : 'elseif' '(' ID '==' STRING ')' 'return' (expr|STRING) ','
-    ;
-
-elseLine
-    : 'else' 'return' (expr|STRING)
     ;
 
 checkBoxArgs
@@ -66,6 +50,38 @@ singleOption
     : CONST ':' 'option' '[' titleArg ']'
     ;
 
+/* -----------------------------------------------------------------------
+Expression Declarations
+----------------------------------------------------------------------- */ 
+exprDecl
+    : ID '=' 'expression' '{' 'return' (expr|STRING|ifStat) ';'  '}' ';'
+    ;
+
+/* -----------------------------------------------------------------------
+Decision (if) Statement
+----------------------------------------------------------------------- */ 
+ifStat
+    : ifLine (elseIfLine)* (elseLine)*
+    ;
+
+ifLine
+    : 'if' '(' ID '==' STRING ')' 'return' (expr) ','
+    ;
+
+elseIfLine
+    : 'elseif' '(' ID '==' STRING ')' 'return' (expr) ','
+    ;
+
+elseLine
+    : 'else' 'return' (expr)
+    ;
+
+
+
+
+/* -----------------------------------------------------------------------
+Control and Expression Arguments
+----------------------------------------------------------------------- */ 
 titleArg
     : 'Title' '=' STRING
     ;
@@ -78,27 +94,24 @@ valueArg
     : 'Value' '=' (STRING | ID)
     ;
 
+/* -----------------------------------------------------------------------
+Expressions and Functions
+----------------------------------------------------------------------- */ 
 expr
     : (func|STRING) ('+' (func|STRING))*
     ;
 
 func
-    : 'lowerCase' '(' (ID|STRING|func) ')'
-    | 'upperCase' '(' (ID|STRING|func) ')'
-    | 'removeSpaces' '(' (ID|STRING|func) ')'
+    : 'lowerCase' '(' (ID|STRING|func) ')'      #LowerCaseFunc
+    | 'upperCase' '(' (ID|STRING|func) ')'      #UpperCaseFunc
+    | 'removeSpaces' '(' (ID|STRING|func) ')'   #RemoveSpacesFunc
     ;
-
 
 
 /* ***********************************************************************
 Tokens and Fragments
 *********************************************************************** */ 
-/*
-CONTROLTYPE
-    : 'options'
-    | 'text'
-    ;
-*/
+
 STRING 
 	: '"' ('""'|~'"')* '"' 
 	;

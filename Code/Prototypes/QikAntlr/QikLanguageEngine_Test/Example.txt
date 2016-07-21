@@ -28,9 +28,6 @@ TextBox
 @procName = text[Title="Stored Proc Name", Default="sp_StoredProcName"] ;
 @procName2 = text[Title="Stored Proc Name"] ;
 
-/* ************************************************************************************
-CheckBox
-************************************************************************************ */
 @isDone = check[Title="Is Done", Default="true"] ;
 
 
@@ -42,26 +39,26 @@ Expressions
 
 @ifExpression = expression {
 	return
-		if 			(@option == "Earth") 	return "Planet",
+		if 		(@option == "Earth") 	return "Planet",
 		elseif 		(@option == "Africa") 	return "Continent",
 		elseif 		(@option == "Gauteng") 	return "Province",
-		else 								return "None"
+		else 					return "None"
 	;
 	
 };
 
 @ifExpression2 = expression {
 	return
-		if 		(@option == "Earth") 		return lowerCase("Planet"),
+		if 		(@option == "Earth") 	return lowerCase("Planet"),
 		elseif 		(@option == "Africa") 	return upperCase("Continent"),
-		elseif 		(@option == "Gauteng") 	return lowerCase("Province"),
-		else 								return "None"
+		elseif 		(@option == "Gauteng") 	return removeSpaces("Province"),
+		else 					return "None"
 	;
 	
 };
 
 
-/*
+
 @upperName = expression {
 	return lowerCase("Hello World");
 };
@@ -77,19 +74,19 @@ Expressions
 @lowerName2 = expression {
 	return upperCase(removeSpaces(@helloWorld));
 };
-*/
 
-/*
+
+
 @exprVar = expression {
 	return upperCase(@helloWorld) + lowerCase(@helloWorld) + lowerCase(removeSpaces("yo bro"));
 };
-*/
 
-/*
+
+
 @exprVar = expression {
 	return "goodbye" + "hello" + upperCase("hello") + lowerCase(@lowerName);
 };
-*/
+
 
 
 

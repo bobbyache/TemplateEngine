@@ -28,6 +28,7 @@ namespace QikLanguageEngine_Test
                 lblPath.Text = dialog.FileName;
                 Qik engine = new Qik();
                 QikControl[] controls = engine.GetControls(dialog.FileName);
+                engine.GetExpressions(dialog.FileName);
                 //txtOutput.Text = extractor.ExtractInterface(dialog.FileName);
             }
         }

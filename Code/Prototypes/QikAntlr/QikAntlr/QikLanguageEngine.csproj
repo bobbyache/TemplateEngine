@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Antlr\QikControlVisitor.cs" />
+    <Compile Include="Antlr\QikExpressionVisitor.cs" />
     <Compile Include="Antlr\QikTemplate.g4.lexer.cs">
       <DependentUpon>QikTemplate.g4</DependentUpon>
     </Compile>

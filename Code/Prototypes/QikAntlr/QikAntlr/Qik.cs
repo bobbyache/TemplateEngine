@@ -49,5 +49,20 @@ namespace QikLanguageEngine
 
             return controls;
         }
+
+        public void GetExpressions(string inputData)
+        {
+            AntlrInputStream inputStream = new AntlrInputStream(inputData);
+            QikTemplateLexer lexer = new QikTemplateLexer(inputStream);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            QikTemplateParser parser = new QikTemplateParser(tokens);
+
+            IParseTree tree = parser.template();
+
+            QikExpressionVisitor expressionVisitor = new QikExpressionVisitor();
+            expressionVisitor.Visit(tree);
+            QikControlVisitor controlVisitor = new QikControlVisitor();
+            controlVisitor.Visit(tree);
+        }
     }
 }
