@@ -8,12 +8,20 @@ namespace QikLanguageEngine.QikExpressions
 {
     public class QikUpperCaseFunction : QikFunction
     {
-        public QikUpperCaseFunction(string text) : base(text)
-        {
-        }
-
         public QikUpperCaseFunction(QikFunction func)
             : base(func)
+        {
+
+        }
+
+        public QikUpperCaseFunction(QikLiteralText literalText)
+            : base(literalText)
+        {
+
+        }
+
+        public QikUpperCaseFunction(QikVariable variable)
+            : base(variable)
         {
 
         }

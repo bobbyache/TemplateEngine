@@ -8,8 +8,22 @@ namespace QikLanguageEngine.QikExpressions
 {
     public class QikTextFunction : QikFunction
     {
-        public QikTextFunction(string text) : base(text)
+        public QikTextFunction(QikFunction func)
+            : base(func)
         {
+
+        }
+
+        public QikTextFunction(QikLiteralText literalText)
+            : base(literalText)
+        {
+
+        }
+
+        public QikTextFunction(QikVariable variable)
+            : base(variable)
+        {
+
         }
 
         public override string Execute()

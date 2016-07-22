@@ -8,12 +8,20 @@ namespace QikLanguageEngine.QikExpressions
 {
     public class QikRemoveSpacesFunction : QikFunction
     {
-        public QikRemoveSpacesFunction(string text) : base(text)
-        {
-        }
-
         public QikRemoveSpacesFunction(QikFunction func)
             : base(func)
+        {
+
+        }
+
+        public QikRemoveSpacesFunction(QikLiteralText literalText)
+            : base(literalText)
+        {
+
+        }
+
+        public QikRemoveSpacesFunction(QikVariable variable)
+            : base(variable)
         {
 
         }

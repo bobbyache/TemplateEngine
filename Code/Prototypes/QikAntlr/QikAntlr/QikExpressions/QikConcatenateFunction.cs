@@ -10,8 +10,9 @@ namespace QikLanguageEngine.QikExpressions
     {
         private List<QikFunction> functions = new List<QikFunction>();
 
-        public QikConcatenateFunction() : base("")
+        public QikConcatenateFunction()
         {
+            this.InputType = QikChildInputTypeEnum.Concatenation;
         }
 
         public override string Execute()

@@ -8,11 +8,20 @@ namespace QikLanguageEngine.QikExpressions
 {
     public class QikLowerCaseFunction : QikFunction
     {
-        public QikLowerCaseFunction(string text) : base(text)
+        public QikLowerCaseFunction(QikFunction func)
+            : base(func)
         {
+
         }
 
-        public QikLowerCaseFunction(QikFunction func) : base(func)
+        public QikLowerCaseFunction(QikLiteralText literalText)
+            : base(literalText)
+        {
+
+        }
+
+        public QikLowerCaseFunction(QikVariable variable)
+            : base(variable)
         {
 
         }

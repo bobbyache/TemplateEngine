@@ -1,114 +1,24 @@
 ﻿/* ************************************************************************************
-Currently working Expressions:
--------------------------------
-@goodbyeWorld = expression {
-	return "goodbye" + " " + upperCase("world");
-};
-
-@goodbyeCruelWorld = expression {
-	return "goodbye" + " " + upperCase("cruel") + " " + upperCase("world");
-};
-
-@testing = expression {
-	return upperCase("cruel");
-};
-
-To be Implemented
--------------------------------
-@testing = expression {
-	return @Hello + @Goodbye;
-};
-************************************************************************************ */
-
-
-/* ************************************************************************************
-REMEMBER YOU STILL WANT TO ADD "CATEGORY" TO THIS SCRIPT LANGUAGE FOR YOUR CONTROLS
-AND ITEMS SO THEY CAN SHOW UP IN CATEGORIES IN THE PROPERTY GRID.
-************************************************************************************ */
-
-/* ************************************************************************************
-Options ComboBox
-************************************************************************************ */
-
-@databaseOptions = options[Title="Database Options", Default=MSDF_DM] {
-	MSDF_DM : 		option		[Title="MSDF_DM"] ,
-	MSDF_ADMIN : 	option		[Title="MSDF_ADMIN"] ;
-};
-
-@environmentOptions = options[Title="Database Options"] {
-	MSDF_PROD : 	option		[Title="MSDF Production"],
-	MSDF_QA : 		option		[Title="MSDF Quality Assurance"],
-	MSDF_UAT : 		option		[Title="MSDF_User Acceptance Testing"],
-	MSDF_DEV : 		option		[Title="MSDF Development"] ;
-};
-
-
-/* ************************************************************************************
 TextBox
 ************************************************************************************ */
 
 @procName = text[Title="Stored Proc Name", Default="sp_StoredProcName"] ;
-@procName2 = text[Title="Stored Proc Name"] ;
-
-@isDone = check[Title="Is Done", Default="true"] ;
-
-
+@authorName = text[Title="Author Name", Default="Robert Blake"] ;
+@someText = text[Title="Some Text", Default="Some Text"] ;
+@otherText = text[Title="Other Text", Default="Other Text"] ;
 
 /* ************************************************************************************
 Expressions
 ************************************************************************************ */
 
-
-@ifExpression = expression {
-	return
-		if 		(@option == "Earth") 	return "Planet",
-		elseif 		(@option == "Africa") 	return "Continent",
-		elseif 		(@option == "Gauteng") 	return "Province",
-		else 					return "None"
-	;
-	
+@upperProcName = expression {
+	return upperCase(@procName);
 };
 
-@ifExpression2 = expression {
-	return
-		if 		(@option == "Earth") 	return lowerCase("Planet"),
-		elseif 		(@option == "Africa") 	return upperCase("Continent"),
-		elseif 		(@option == "Gauteng") 	return removeSpaces("Province"),
-		else 					return "None"
-	;
-	
+@lowerProcName = expression {
+	return lowerCase(@procName);
 };
 
-
-
-@upperName = expression {
-	return lowerCase("Hello World");
+@noSpacesUpperAuthorConcat = expression {
+	return upperCase(removeSpaces(@authorName)) + " 123";
 };
-
-@lowerName = expression {
-	return upperCase("Hello World");
-};
-
-@upperName2 = expression {
-	return lowerCase(@helloWorld);
-};
-
-@lowerName2 = expression {
-	return upperCase(removeSpaces(@helloWorld));
-};
-
-
-
-@exprVar = expression {
-	return upperCase(@helloWorld) + lowerCase(@helloWorld) + lowerCase(removeSpaces("yo bro"));
-};
-
-
-
-@exprVar = expression {
-	return "goodbye" + "hello" + upperCase("hello") + lowerCase(@lowerName);
-};
-
-
-
-

@@ -4,6 +4,7 @@ using QikAntlr.Antlr;
 using QikLanguageEngine.Antlr;
 using QikLanguageEngine.QikControls;
 using QikLanguageEngine.QikExpressions;
+using QikLanguageEngine.QikScoping;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,7 +35,32 @@ namespace QikLanguageEngine
         //    return controls;
         //}
 
-        public QikControl[] GetControls(string inputData)
+        public QikControl[] Controls { get; private set; }
+        public QikExpression[] Expressions { get; private set; }
+
+        public void ExecuteScript(string inputData)
+        {
+            ScopeTable.Clear();
+
+            ScopeTable.Add("@goodbye", "GOODBYE OLD BOY, WELL DONE!");
+
+            QikControl[] controls = GetControls(inputData);
+            foreach (QikControl control in controls)
+            {
+                if (control.DefaultValue != null)
+                    ScopeTable.Add(control.ControlId, control.DefaultValue);
+                else
+                    ScopeTable.Add(control.ControlId);
+            }
+            this.Controls = controls;
+
+            QikExpression[] expressions = GetExpressions(inputData);
+            foreach (QikExpression expression in expressions)
+                ScopeTable.Add(expression.Symbol);
+            this.Expressions = expressions;
+        }
+
+        private QikControl[] GetControls(string inputData)
         {
             AntlrInputStream inputStream = new AntlrInputStream(inputData);
             QikTemplateLexer lexer = new QikTemplateLexer(inputStream);
@@ -51,7 +77,7 @@ namespace QikLanguageEngine
             return controls;
         }
 
-        public QikExpression[] GetExpressions(string inputData)
+        private QikExpression[] GetExpressions(string inputData)
         {
             AntlrInputStream inputStream = new AntlrInputStream(inputData);
             QikTemplateLexer lexer = new QikTemplateLexer(inputStream);

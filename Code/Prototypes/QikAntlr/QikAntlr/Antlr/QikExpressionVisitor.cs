@@ -28,13 +28,12 @@ namespace QikLanguageEngine.Antlr
 
                 QikFunction result = null;
                 if (expr.STRING() != null)
-                    result = new QikTextFunction(expr.STRING().GetText());
+                    result = new QikTextFunction(new QikLiteralText(expr.STRING().GetText()));
                 else if (expr.ID() != null)
-                    // ****************************************************************************************
-                    // ID/Symbol still needs to be handled !!!!!!!!!!
-                    // @testing = expression { return @Hello + @Goodbye; };
-                    // ****************************************************************************************
-                    return null;
+                {
+                    result = new QikTextFunction(new QikVariable(expr.ID().GetText()));
+                    return result;
+                }
                 else
                     result = Visit(expr);
 
@@ -59,13 +58,12 @@ namespace QikLanguageEngine.Antlr
                 QikFunction result = null;
 
                 if (expr.STRING() != null)
-                    result = new QikLowerCaseFunction(expr.STRING().GetText());
+                    result = new QikLowerCaseFunction(new QikLiteralText(expr.STRING().GetText()));
                 else if (expr.ID() != null)
-                    // ****************************************************************************************
-                    // ID/Symbol still needs to be handled !!!!!!!!!!
-                    // @testing = expression { return @Hello + @Goodbye; };
-                    // ****************************************************************************************
-                    return null;
+                {
+                    result = new QikLowerCaseFunction(new QikVariable(expr.ID().GetText()));
+                    return result;
+                }
                 else
                     result = new QikLowerCaseFunction(Visit(expr));
 
@@ -73,11 +71,8 @@ namespace QikLanguageEngine.Antlr
             }
             else if (context.ID() != null)
             {
-                // ****************************************************************************************
-                // ID/Symbol still needs to be handled !!!!!!!!!!
-                // @testing = expression { return @Hello + @Goodbye; };
-                // ****************************************************************************************
-                return null;
+                QikFunction result = new QikTextFunction(new QikVariable(context.ID().ToString()));
+                return result;
             }
 
             return null;
@@ -97,13 +92,13 @@ namespace QikLanguageEngine.Antlr
                 QikFunction result = null;
 
                 if (expr.STRING() != null)
-                    result = new QikUpperCaseFunction(expr.STRING().GetText());
+                    result = new QikUpperCaseFunction(new QikLiteralText(expr.STRING().GetText()));
+
                 else if (expr.ID() != null)
-                    // ****************************************************************************************
-                    // ID/Symbol still needs to be handled !!!!!!!!!!
-                    // @testing = expression { return @Hello + @Goodbye; };
-                    // ****************************************************************************************
-                    return null;
+                {
+                    result = new QikUpperCaseFunction(new QikVariable(expr.ID().GetText()));
+                    return result;
+                }
                 else
                     result = new QikUpperCaseFunction(Visit(expr));
 
@@ -111,11 +106,8 @@ namespace QikLanguageEngine.Antlr
             }
             else if (context.ID() != null)
             {
-                // ****************************************************************************************
-                // ID/Symbol still needs to be handled !!!!!!!!!!
-                // @testing = expression { return @Hello + @Goodbye; };
-                // ****************************************************************************************
-                return null;
+                QikFunction result = new QikUpperCaseFunction(new QikVariable(context.ID().ToString()));
+                return result;
             }
 
             return null;
@@ -135,13 +127,13 @@ namespace QikLanguageEngine.Antlr
                 QikFunction result = null;
 
                 if (expr.STRING() != null)
-                    result = new QikRemoveSpacesFunction(expr.STRING().GetText());
+                    result = new QikRemoveSpacesFunction(new QikLiteralText(expr.STRING().GetText()));
+
                 else if (expr.ID() != null)
-                    // ****************************************************************************************
-                    // ID/Symbol still needs to be handled !!!!!!!!!!
-                    // @testing = expression { return @Hello + @Goodbye; };
-                    // ****************************************************************************************
-                    return null;
+                {
+                    result = new QikRemoveSpacesFunction(new QikVariable(expr.ID().GetText()));
+                    return result;
+                }
                 else
                     result = new QikRemoveSpacesFunction(Visit(expr));
 
@@ -149,11 +141,8 @@ namespace QikLanguageEngine.Antlr
             }
             else if (context.ID() != null)
             {
-                // ****************************************************************************************
-                // ID/Symbol still needs to be handled !!!!!!!!!!
-                // @testing = expression { return @Hello + @Goodbye; };
-                // ****************************************************************************************
-                return null;
+                QikFunction result = new QikRemoveSpacesFunction(new QikVariable(context.ID().ToString()));
+                return result;
             }
 
             return null;
@@ -169,13 +158,12 @@ namespace QikLanguageEngine.Antlr
                 QikFunction result = null;
 
                 if (concatExpr.STRING() != null)
-                    result = new QikTextFunction(concatExpr.STRING().GetText());
+                    result = new QikTextFunction(new QikLiteralText(concatExpr.STRING().GetText()));
+
                 else if (concatExpr.ID() != null)
-                    // ****************************************************************************************
-                    // ID/Symbol still needs to be handled !!!!!!!!!!
-                    // @testing = expression { return @Hello + @Goodbye; };
-                    // ****************************************************************************************
-                    return null;
+                {
+                    result = new QikTextFunction(new QikVariable(concatExpr.ID().GetText()));
+                }
                 else
                     result = Visit(concatExpr);
 

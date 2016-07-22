@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QikLanguageEngine.QikScoping;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,42 +7,67 @@ using System.Threading.Tasks;
 
 namespace QikLanguageEngine.QikExpressions
 {
+    public enum QikChildInputTypeEnum
+    {
+        Concatenation,
+        LiteralText,
+        Variable,
+        Function
+    }
+
     public abstract class QikFunction
     {
-        protected string text;
-        protected QikFunction childFunction;
+        protected QikFunction childFunction = null;
+        protected QikLiteralText literalText = null;
+        protected QikVariable variable = null;
 
-        public QikFunction(string text)
+        public QikChildInputTypeEnum InputType { get; protected set; }
+
+        //public QikFunction(string literalText)
+        //{
+        //    QikLiteralText literal = new QikLiteralText(literalText);
+        //    this.literalText = literal;
+        //    this.InputType = QikChildInputTypeEnum.LiteralText;
+        //}
+
+        public QikFunction()
         {
-            this.text = StripOuterQuotes(text);
-            this.childFunction = null;
+        }
+
+        public QikFunction(QikLiteralText literalText)
+        {
+            this.literalText = literalText;
+            this.InputType = QikChildInputTypeEnum.LiteralText;
         }
 
         public QikFunction(QikFunction childFunction)
         {
-            this.text = null;
             this.childFunction = childFunction;
+            this.InputType = QikChildInputTypeEnum.Function;
         }
 
-        //public abstract string Execute();
+        public QikFunction(QikVariable variable)
+        {
+            this.variable = variable;
+            this.InputType = QikChildInputTypeEnum.Variable;
+        }
 
         public virtual string Execute()
         {
-            if (this.childFunction == null)
+            switch (this.InputType)
             {
-                return this.text;
+                case QikChildInputTypeEnum.LiteralText:
+                    return this.literalText.LiteralText;
+                    
+                case QikChildInputTypeEnum.Variable:
+                    return ScopeTable.FindValue(this.variable.Symbol);
+                    
+                case QikChildInputTypeEnum.Function:
+                    return this.childFunction.Execute();
+                    
+                default:
+                    return this.literalText.LiteralText;
             }
-            else
-            {
-                return childFunction.Execute();
-            }
-        }
-
-        private string StripOuterQuotes(string text)
-        {
-            if (text.Length != 0)
-                return text.Substring(1, text.Length - 2);
-            return text;
         }
     }
 }
