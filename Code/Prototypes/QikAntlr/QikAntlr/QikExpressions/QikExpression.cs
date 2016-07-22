@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QikLanguageEngine.QikScoping;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,17 +11,22 @@ namespace QikLanguageEngine.QikExpressions
     {
         private QikFunction func = null;
         public string Symbol { get; private set; }
+        public string Title { get; private set; }
 
 
-        public QikExpression(string symbol, QikFunction func)
+        public QikExpression(string symbol, string title, QikFunction func)
         {
             this.Symbol = symbol;
             this.func = func;
+            this.Title = title;
+            ScopeTable.UpdateSymbol(symbol);
         }
 
         public string Execute()
         {
-            return this.func.Execute();
+            string newValue = this.func.Execute();
+            ScopeTable.UpdateSymbol(this.Symbol, newValue);
+            return newValue;
         }
     }
 }

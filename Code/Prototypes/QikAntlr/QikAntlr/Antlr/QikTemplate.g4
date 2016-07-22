@@ -52,9 +52,11 @@ singleOption
 
 /* -----------------------------------------------------------------------
 Expression Declarations
+
+ID '=' 'options' '[' optionBoxArgs ']' optionsBody ';'
 ----------------------------------------------------------------------- */ 
 exprDecl
-    : ID '=' 'expression' '{' 'return' (concatExpr|expr|ifStat) ';'  '}' ';'
+    : ID '=' 'expression' '[' titleArg ']' '{' 'return' (concatExpr|expr|ifStat) ';'  '}' ';'
     ;
 
 /* -----------------------------------------------------------------------

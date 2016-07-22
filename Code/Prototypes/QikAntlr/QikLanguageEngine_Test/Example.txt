@@ -11,14 +11,15 @@ TextBox
 Expressions
 ************************************************************************************ */
 
-@upperProcName = expression {
+@upperProcName = expression [Title="Upper Case Proc Name"] {
 	return upperCase(@procName);
 };
 
-@lowerProcName = expression {
+@lowerProcName = expression [Title="Lower Case Proc Name"] {
 	return lowerCase(@procName);
 };
 
-@noSpacesUpperAuthorConcat = expression {
+@noSpacesUpperAuthorConcat = expression [Title="Upper Case Author and 123"] {
 	return upperCase(removeSpaces(@authorName)) + " 123";
 };
+

@@ -38,26 +38,22 @@ namespace QikLanguageEngine
         public QikControl[] Controls { get; private set; }
         public QikExpression[] Expressions { get; private set; }
 
+        public string[] Symbols
+        {
+            get { return ScopeTable.Symbols; }
+        }
+
+        public string FindSymbolValue(string symbol)
+        {
+            return ScopeTable.FindValue(symbol);
+        }
+
         public void ExecuteScript(string inputData)
         {
             ScopeTable.Clear();
 
-            ScopeTable.Add("@goodbye", "GOODBYE OLD BOY, WELL DONE!");
-
-            QikControl[] controls = GetControls(inputData);
-            foreach (QikControl control in controls)
-            {
-                if (control.DefaultValue != null)
-                    ScopeTable.Add(control.ControlId, control.DefaultValue);
-                else
-                    ScopeTable.Add(control.ControlId);
-            }
-            this.Controls = controls;
-
-            QikExpression[] expressions = GetExpressions(inputData);
-            foreach (QikExpression expression in expressions)
-                ScopeTable.Add(expression.Symbol);
-            this.Expressions = expressions;
+            this.Controls = GetControls(inputData);
+            this.Expressions = GetExpressions(inputData);
         }
 
         private QikControl[] GetControls(string inputData)

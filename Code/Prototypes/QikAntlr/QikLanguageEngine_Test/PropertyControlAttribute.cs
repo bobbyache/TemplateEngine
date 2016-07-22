@@ -10,7 +10,8 @@ namespace QikLanguageEngine_Test
     {
         TextBox,
         CheckBox,
-        OptionBox
+        OptionBox,
+        ExpressionBox
     }
 
     public class PropertyControlAttribute : Attribute

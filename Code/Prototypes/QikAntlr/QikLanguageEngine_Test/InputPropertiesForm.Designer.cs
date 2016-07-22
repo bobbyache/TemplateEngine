@@ -36,6 +36,7 @@
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.syntaxBox = new Alsing.Windows.Forms.SyntaxBoxControl();
             this.inputPropertyGrid = new QikLanguageEngine_Test.InputPropertyGrid();
+            this.btnDisplaySymbolTable = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -54,7 +55,8 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnRefresh});
+            this.btnRefresh,
+            this.btnDisplaySymbolTable});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1008, 25);
@@ -125,6 +127,15 @@
             this.inputPropertyGrid.Size = new System.Drawing.Size(301, 534);
             this.inputPropertyGrid.TabIndex = 0;
             // 
+            // btnDisplaySymbolTable
+            // 
+            this.btnDisplaySymbolTable.Image = ((System.Drawing.Image)(resources.GetObject("btnDisplaySymbolTable.Image")));
+            this.btnDisplaySymbolTable.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDisplaySymbolTable.Name = "btnDisplaySymbolTable";
+            this.btnDisplaySymbolTable.Size = new System.Drawing.Size(140, 22);
+            this.btnDisplaySymbolTable.Text = "Display Symbol Table";
+            this.btnDisplaySymbolTable.Click += new System.EventHandler(this.btnDisplaySymbolTable_Click);
+            // 
             // InputPropertiesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -153,5 +164,6 @@
         private Alsing.Windows.Forms.SyntaxBoxControl syntaxBox;
         private System.Windows.Forms.ToolStripButton btnRefresh;
         private InputPropertyGrid inputPropertyGrid;
+        private System.Windows.Forms.ToolStripButton btnDisplaySymbolTable;
     }
 }

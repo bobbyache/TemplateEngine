@@ -17,6 +17,7 @@ namespace QikLanguageEngine.QikControls
 
         public override  void SetCurrentValue(string value)
         {
+            base.SetCurrentValue(value);
             this.currentValue = value;
         }
 

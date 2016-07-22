@@ -16,10 +16,13 @@ namespace QikLanguageEngine.Antlr
 
         public override QikFunction VisitExprDecl(QikTemplateParser.ExprDeclContext context)
         {
+            string id = context.ID().GetText();
+            string title = GetExpressionTitle(context);
+
             if (context.concatExpr() != null)
             {
                 QikConcatenateFunction concatenateFunc = GetConcatenateFunction(context.concatExpr());
-                QikExpression expression = new QikExpression(context.ID().GetText(), concatenateFunc);
+                QikExpression expression = new QikExpression(id, title, concatenateFunc);
                 expressions.Add(expression);
             }
             else if (context.expr() != null)
@@ -37,7 +40,7 @@ namespace QikLanguageEngine.Antlr
                 else
                     result = Visit(expr);
 
-                QikExpression expression = new QikExpression(context.ID().GetText(), result);
+                QikExpression expression = new QikExpression(context.ID().GetText(), title, result);
                 expressions.Add(expression);
             }
 
@@ -171,6 +174,21 @@ namespace QikLanguageEngine.Antlr
             }
 
             return concatenateFunc;
+        }
+
+        private string GetExpressionTitle(QikTemplateParser.ExprDeclContext context)
+        {
+            string titleText = null;
+            if (context.titleArg() != null)
+            {
+                titleText = StripQuotes(context.titleArg().STRING().GetText());
+            }
+            return titleText;
+        }
+
+        private string StripQuotes(string text)
+        {
+            return text.Replace("\"", "");
         }
     }
 }

@@ -16,6 +16,8 @@ namespace QikLanguageEngine_Test
 {
     public partial class InputPropertiesForm : Form
     {
+        private Qik engine = new Qik();
+
         public InputPropertiesForm()
         {
             InitializeComponent();
@@ -25,13 +27,24 @@ namespace QikLanguageEngine_Test
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            Qik engine = new Qik();
             engine.ExecuteScript(syntaxBox.Document.Text);
 
             QikControl[] controls = engine.Controls;
             QikExpression[] expressions = engine.Expressions;
 
-            inputPropertyGrid.Reset(engine.Controls);
+            inputPropertyGrid.Reset(engine.Controls, engine.Expressions);
+        }
+
+        private void btnDisplaySymbolTable_Click(object sender, EventArgs e)
+        {
+            StringBuilder builder = new StringBuilder();
+
+            foreach (string symbol in engine.Symbols)
+            {
+                builder.AppendLine(string.Format("{0} = \"{1}\"", symbol, engine.FindSymbolValue(symbol)));
+            }
+
+            MessageBox.Show(builder.ToString());
         }
     }
 }

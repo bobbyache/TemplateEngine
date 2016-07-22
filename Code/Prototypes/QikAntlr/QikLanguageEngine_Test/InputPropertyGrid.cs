@@ -13,6 +13,7 @@ using DynamicTypeDescriptor;
 using Dyn = DynamicTypeDescriptor;
 using Scm = System.ComponentModel;
 using System.Drawing.Design;
+using QikLanguageEngine.QikExpressions;
 
 namespace QikLanguageEngine_Test
 {
@@ -21,17 +22,20 @@ namespace QikLanguageEngine_Test
     public partial class InputPropertyGrid : UserControl
     {
         private Dictionary<string, QikControl> optionsDictionary = null;
+        private Dictionary<string, QikExpression> expressionDictionary = null;
 
-        private const string CATEGORY_USER_INPUT = "User Input";
+        private const string CATEGORY_USER_INPUT = "1. User Input";
+        private const string CATEGORY_EXPRESSION = "2. Expressions";
 
         public InputPropertyGrid()
         {
             InitializeComponent();
         }
 
-        public void Reset(QikControl[] controlList)
+        public void Reset(QikControl[] controlList, QikExpression[] expressionList)
         {
             optionsDictionary = new Dictionary<string, QikControl>();
+            expressionDictionary = new Dictionary<string, QikExpression>();
 
             UserInputProperties properties = new UserInputProperties();
             Dyn.TypeDescriptor.IntallTypeDescriptor(properties);
@@ -53,6 +57,14 @@ namespace QikLanguageEngine_Test
                 }
                 optionsDictionary.Add(ctrl.ControlId, ctrl);
             }
+
+
+            foreach (QikExpression expression in expressionList)
+            {
+                CreateExpression(expression);
+                expressionDictionary.Add(expression.Symbol, expression);
+            }
+
             propertyGrid.Refresh();
         }
 
@@ -117,6 +129,31 @@ namespace QikLanguageEngine_Test
             typeDescriptor.GetProperties().Add(propertyDescriptor);
         }
 
+        public void CreateExpression(QikExpression expression)
+        {
+            Dyn.TypeDescriptor typeDescriptor = Dyn.TypeDescriptor.GetTypeDescriptor(propertyGrid.SelectedObject);
+
+            Dyn.PropertyDescriptor propertyDescriptor = new Dyn.PropertyDescriptor(propertyGrid.SelectedObject.GetType(),
+                                                        expression.Symbol,
+                                                        typeof(string), expression.Execute(),
+                                                        //typeof(string), null,
+                                                        new Scm.BrowsableAttribute(true),
+                                                        new Scm.DisplayNameAttribute(expression.Title),
+                                                        new Scm.DescriptionAttribute("Insert Text"),
+                                                        new Scm.DefaultValueAttribute(null),
+                                                        new Scm.ReadOnlyAttribute(true)
+                                                        );
+            propertyDescriptor.Attributes.Add(new Scm.CategoryAttribute(CATEGORY_EXPRESSION), true);
+            propertyDescriptor.Attributes.Add(new PropertyControlAttribute(ControlTypeEnum.ExpressionBox), true);
+            
+            // If you don't want to raise  an "InputPropertyChanged" event for this property, then don't add a delegate.
+            // Also, you'll be able to know exactly what property changed by having different handlers for different property
+            // descriptors... good thing to know for the future !!!
+            //propertyDescriptor.AddValueChanged(propertyGrid.SelectedObject, new EventHandler(this.InputPropertyChanged));
+
+            typeDescriptor.GetProperties().Add(propertyDescriptor);
+        }
+
         private void BuildOptions(Dyn.PropertyDescriptor pd, QikOptionBoxOption[] options)
         {
             pd.StandardValues.Clear();
@@ -131,6 +168,7 @@ namespace QikLanguageEngine_Test
 
         private void InputPropertyChanged(object sender, EventArgs e)
         {
+            UserInputProperties userInputProperties = sender as UserInputProperties;
             Dyn.TypeDescriptor typeDescriptor = Dyn.TypeDescriptor.GetTypeDescriptor(propertyGrid.SelectedObject);
             PropertyDescriptorCollection propertyDescriptors = typeDescriptor.GetProperties();
 
@@ -140,7 +178,7 @@ namespace QikLanguageEngine_Test
                 if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.TextBox)
                 {
                     string name = propertyDescriptor.Name;
-                    object value = propertyDescriptor.GetValue(sender);
+                    object value = propertyDescriptor.GetValue(userInputProperties);
 
                     QikTextBoxControl textBox = optionsDictionary[name] as QikTextBoxControl;
                     textBox.SetCurrentValue(value != null ? value.ToString() : null);
@@ -148,7 +186,7 @@ namespace QikLanguageEngine_Test
                 else if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.OptionBox)
                 {
                     string name = propertyDescriptor.Name;
-                    object value = propertyDescriptor.GetValue(sender);
+                    object value = propertyDescriptor.GetValue(userInputProperties);
 
                     QikOptionBoxControl optionBox = optionsDictionary[name] as QikOptionBoxControl;
                     if (optionBox != null)
@@ -162,19 +200,35 @@ namespace QikLanguageEngine_Test
                 else if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.CheckBox)
                 {
                     string name = propertyDescriptor.Name;
-                    string value = propertyDescriptor.GetValue(sender).ToString();
+                    string value = propertyDescriptor.GetValue(userInputProperties).ToString();
 
                     QikCheckBoxControl checkBox = optionsDictionary[name] as QikCheckBoxControl;
                     checkBox.SetCurrentValue(value);
                 }
             }
 
-            StringBuilder builder = new StringBuilder();
-            foreach (QikControl ctrl in optionsDictionary.Values)
+            CalculateExpressions(userInputProperties);
+            propertyGrid.Refresh();
+        }
+
+        private void CalculateExpressions(UserInputProperties userInputProperties)
+        {
+            Dyn.TypeDescriptor typeDescriptor = Dyn.TypeDescriptor.GetTypeDescriptor(propertyGrid.SelectedObject);
+            PropertyDescriptorCollection propertyDescriptors = typeDescriptor.GetProperties();
+
+            foreach (Dyn.PropertyDescriptor propertyDescriptor in propertyDescriptors)
             {
-                builder.AppendLine(string.Format("{1}: ({0}) - {2}", ctrl.ControlId, ctrl.Title, ctrl.GetCurrentValue()));
+                PropertyControlAttribute propertyControl = propertyDescriptor.Attributes[typeof(PropertyControlAttribute)] as PropertyControlAttribute;
+                if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.ExpressionBox)
+                {
+                    string name = propertyDescriptor.Name;
+                    string value = propertyDescriptor.GetValue(userInputProperties).ToString();
+
+                    QikExpression expression = expressionDictionary[name] as QikExpression;
+                    string newValue = expression.Execute();
+                    propertyDescriptor.SetValue(userInputProperties, newValue);
+                }
             }
-            MessageBox.Show(builder.ToString());
         }
     }
 }

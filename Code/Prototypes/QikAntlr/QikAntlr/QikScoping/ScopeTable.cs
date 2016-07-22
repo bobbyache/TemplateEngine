@@ -10,12 +10,24 @@ namespace QikLanguageEngine.QikScoping
     {
         private static Dictionary<string, string> table = new Dictionary<string, string>();
 
-        public static void Add(string symbol, string value = null)
+        public static string[] Symbols
         {
-            table.Add(symbol, value);
+            get { return table.Keys.ToArray(); }
         }
 
-        public static void Clear()
+        internal static void UpdateSymbol(string symbol, string value = null)
+        {
+            if (table.ContainsKey(symbol))
+            {
+                table[symbol] = value;
+            }
+            else
+            {
+                table.Add(symbol, value);
+            }
+        }
+
+        internal static void Clear()
         {
             table.Clear();
         }
