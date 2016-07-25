@@ -25,6 +25,16 @@ namespace QikLanguageEngine.Antlr
                 QikExpression expression = new QikExpression(id, title, concatenateFunc);
                 expressions.Add(expression);
             }
+            else if (context.optExpr() != null)
+            {
+                var expr = context.optExpr();
+                QikFunction ifFunc = VisitOptExpr(context.optExpr());
+
+                QikExpression expression = new QikExpression(id, title, ifFunc);
+                expressions.Add(expression);
+                //expressions.Add(ifFunc);
+                //return ifFunc;
+            }
             else if (context.expr() != null)
             {
                 var expr = context.expr();
@@ -45,6 +55,44 @@ namespace QikLanguageEngine.Antlr
             }
 
             return null;
+        }
+
+        public override QikFunction VisitOptExpr(QikTemplateParser.OptExprContext context)
+        {
+            string id = context.ID().GetText();
+            QikIfFunction ifFunc = new QikIfFunction(id);
+            
+            foreach (var ifOptContext in context.ifOptExpr())
+            {
+                QikFunction result = null;
+                string text = ifOptContext.STRING().GetText();
+
+                if (ifOptContext.concatExpr() != null)
+                {
+                    QikConcatenateFunction concatenateFunc = GetConcatenateFunction(ifOptContext.concatExpr());
+                    ifFunc.AddFunction(text, concatenateFunc);
+                }
+                else if (ifOptContext.expr() != null)
+                {
+                    var expr = ifOptContext.expr();
+                    if (expr.STRING() != null)
+                    {
+                        result = new QikTextFunction(new QikLiteralText(expr.STRING().GetText()));
+                        ifFunc.AddFunction(text, result);
+                    }
+                    else if (expr.ID() != null)
+                    {
+                        result = new QikTextFunction(new QikVariable(expr.ID().GetText()));
+                        return result;
+                    }
+                    else
+                        ifFunc.AddFunction(text, Visit(expr));
+                }
+            }
+
+            //ifFunc.Execute();
+
+            return ifFunc;
         }
 
         public override QikFunction VisitLowerCaseFunc(QikTemplateParser.LowerCaseFuncContext context)

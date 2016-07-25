@@ -43,11 +43,13 @@ optionBoxArgs
     ;
 
 optionsBody
-    : '{' (singleOption ',')* (singleOption ';') '}'
+    : '{' (singleOption ',')* (singleOption) '}'
     ;
 
 singleOption
-    : CONST ':' 'option' '[' titleArg ']'
+    //: CONST ':' 'option' '[' titleArg ']'
+    //: 'option' CONST '[' titleArg ']'
+    : 'option' STRING '[' titleArg ']'
     ;
 
 /* -----------------------------------------------------------------------
@@ -56,20 +58,23 @@ Expression Declarations
 ID '=' 'options' '[' optionBoxArgs ']' optionsBody ';'
 ----------------------------------------------------------------------- */ 
 exprDecl
-    : ID '=' 'expression' '[' titleArg ']' '{' 'return' (concatExpr|expr|ifStat) ';'  '}' ';'
+    : ID '=' 'expression' '[' titleArg ']' '{' 'return' (concatExpr|expr|optExpr) ';'  '}' ';'
     ;
 
 /* -----------------------------------------------------------------------
 Decision (if) Statement
 ----------------------------------------------------------------------- */ 
-ifStat
-    : ifLine (elseIfLine)* (elseLine)*
+optExpr
+    //: ifLine (elseIfLine)* (elseLine)*
+    : 'with' 'options' ID '{' (ifOptExpr ',')* ifOptExpr '}'
+     // : 'with' 'options' ID '{'  '}'
     ;
 
-ifLine
-    : 'if' '(' ID '==' STRING ')' 'return' (expr) ','
+ifOptExpr
+    //: 'if' '(' ID '==' STRING ')' 'return' (expr) ','
+    : 'if' '(' STRING ')' 'return' (concatExpr|expr)
     ;
-
+/*
 elseIfLine
     : 'elseif' '(' ID '==' STRING ')' 'return' (expr) ','
     ;
@@ -77,7 +82,7 @@ elseIfLine
 elseLine
     : 'else' 'return' (expr)
     ;
-
+*/
 
 
 
@@ -89,7 +94,7 @@ titleArg
     ;
 
 defaultArg
-    : 'Default' '=' (STRING | CONST)
+    : 'Default' '=' STRING
     ;
 
 valueArg
@@ -120,6 +125,10 @@ Tokens and Fragments
 STRING 
 	: '"' ('""'|~'"')* '"' 
 	;
+
+STRINGCONST
+    : '"' CONST '"'
+    ;
 
 CONST
     : LETTER (LETTER|DIGIT)*

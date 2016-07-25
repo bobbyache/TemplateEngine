@@ -129,7 +129,7 @@ namespace QikLanguageEngine_Test
             typeDescriptor.GetProperties().Add(propertyDescriptor);
         }
 
-        public void CreateExpression(QikExpression expression)
+        private void CreateExpression(QikExpression expression)
         {
             Dyn.TypeDescriptor typeDescriptor = Dyn.TypeDescriptor.GetTypeDescriptor(propertyGrid.SelectedObject);
 
@@ -222,11 +222,12 @@ namespace QikLanguageEngine_Test
                 if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.ExpressionBox)
                 {
                     string name = propertyDescriptor.Name;
-                    string value = propertyDescriptor.GetValue(userInputProperties).ToString();
+                    //string value = propertyDescriptor.GetValue(userInputProperties).ToString();
 
                     QikExpression expression = expressionDictionary[name] as QikExpression;
                     string newValue = expression.Execute();
-                    propertyDescriptor.SetValue(userInputProperties, newValue);
+                    //propertyDescriptor.SetValue(userInputProperties, newValue);
+                    propertyDescriptor.SetValue(userInputProperties, newValue == null ? string.Empty : newValue);
                 }
             }
         }

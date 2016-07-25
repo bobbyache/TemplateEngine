@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QikLanguageEngine.QikScoping;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -85,6 +86,8 @@ namespace QikLanguageEngine.QikControls
             QikOptionBoxOption[] options = optionsDictionary.Values.ToArray();
             if (options.Any(o => o.Index == index))
             {
+                string value = options.Where(o => o.Index == index).SingleOrDefault().Symbol;
+                base.SetCurrentValue(value);
                 this.selectedOption = options.Where(o => o.Index == index).SingleOrDefault();
             }
         }
@@ -94,6 +97,8 @@ namespace QikLanguageEngine.QikControls
             QikOptionBoxOption[] options = optionsDictionary.Values.ToArray();
             if (options.Any(o => o.Symbol == symbol))
             {
+                string value = options.Where(o => o.Symbol == symbol).SingleOrDefault().Symbol;
+                base.SetCurrentValue(value);
                 this.selectedOption = options.Where(o => o.Symbol == symbol).SingleOrDefault();
             }
         }
@@ -106,6 +111,13 @@ namespace QikLanguageEngine.QikControls
 
             return null;
         }
+
+        //private string StripOuterQuotes(string text)
+        //{
+        //    if (text.Length != 0)
+        //        return text.Substring(1, text.Length - 2);
+        //    return text;
+        //}
 
         //public string GetValueByIndex(int index)
         //{

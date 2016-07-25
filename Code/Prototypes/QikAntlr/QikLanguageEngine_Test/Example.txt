@@ -1,4 +1,5 @@
-﻿/* ************************************************************************************
+﻿
+/* ************************************************************************************
 TextBox
 ************************************************************************************ */
 
@@ -7,9 +8,37 @@ TextBox
 @someText = text[Title="Some Text", Default="Some Text"] ;
 @otherText = text[Title="Other Text", Default="Other Text"] ;
 
+@reportParameterId = text [Title="Report Parameter Id"];
+@parameterOrder = text [Title="Parameter Order"];
+@reportRole = text [Title="Report Role"];
+
+@reportType = options [Title="Report Type"] {
+	option "SYSTEM" [Title="System"],
+	option "NONSYSTEM" [Title="Non-System"]
+};
+
+@renderType = options [Title="Output File Type"] {
+	option "EXCEL" [Title="Excel Spreadsheet"],
+	option "PDF" [Title="PDF Document"]
+};
+
+@saveReport = options [Title="Save Report"] {
+	option "YES" [Title="Yes"],
+	option "NO" [Title="No"]
+};
+
+@menuGroup = options [Title="Menu Group/Report Group"] {
+	option "ENTITY" [Title="Entity"],
+	option "CURINSIGHT" [Title="Curriculum Insights"],
+	option "SYSTEM" [Title="System"],
+	option "TRAINING" [Title="Training"],
+	option "TERM2DATE" [Title="Term to Date"]
+};
+
 /* ************************************************************************************
 Expressions
 ************************************************************************************ */
+
 
 @upperProcName = expression [Title="Upper Case Proc Name"] {
 	return upperCase(@procName);
@@ -23,3 +52,35 @@ Expressions
 	return upperCase(removeSpaces(@authorName)) + " 123";
 };
 
+
+
+@databaseOptions = options[Title="Database Options", Default="MSDF_DM"] {
+	option "MSDF_DM" 	[Title="MSDF_DM"] ,
+	option "MSDF_ADMIN"	[Title="MSDF_ADMIN"]
+};
+
+
+@useDatabase = expression [Title="Database Use Statement"] {
+	return with options @databaseOptions {
+		if 		("MSDF_DM") 	return lowerCase("USE MSDF_DM") + upperCase("USE MSDF_DM"),
+		if 		("MSDF_ADMIN") 	return lowerCase("USE MSDF_ADMIN") + upperCase("USE MSDF_ADMIN")
+	};
+};
+
+
+@expr_RenderType = expression [Title="Report Render Type"] {
+	return with options @renderType {
+		if 		("EXCEL") 	return "EXCELOPENXML",
+		if 		("PDF") 	return "PDF"
+	};
+};
+
+@expr_MenuGroup = expression [Title="Menu Group"] {
+	return with options @menuGroup {
+		if 		("ENTITY") 	return "1",
+		if 		("CURINSIGHT") 	return "2",
+		if 		("SYSTEM") 	return "3",
+		if 		("TRAINING") 	return "4",
+		if 		("TERM2DATE") 	return "5"
+	};
+};

@@ -63,6 +63,7 @@
     <Compile Include="QikExpressions\QikConcatenateFunction.cs" />
     <Compile Include="QikExpressions\QikExpression.cs" />
     <Compile Include="QikExpressions\QikFunction.cs" />
+    <Compile Include="QikExpressions\QikIfFunction.cs" />
     <Compile Include="QikExpressions\QikLiteralText.cs" />
     <Compile Include="QikExpressions\QikLowerCaseFunction.cs" />
     <Compile Include="QikExpressions\QikRemoveSpacesFunction.cs" />

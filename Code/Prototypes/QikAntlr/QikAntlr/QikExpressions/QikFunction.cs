@@ -12,7 +12,8 @@ namespace QikLanguageEngine.QikExpressions
         Concatenation,
         LiteralText,
         Variable,
-        Function
+        Function,
+        IfStatement
     }
 
     public abstract class QikFunction
