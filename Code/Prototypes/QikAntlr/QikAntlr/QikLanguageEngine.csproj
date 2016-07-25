@@ -60,6 +60,7 @@
     <Compile Include="QikControls\QikOptionBoxControl.cs" />
     <Compile Include="QikControls\QikOptionBoxOption.cs" />
     <Compile Include="QikControls\QikTextBoxControl.cs" />
+    <Compile Include="QikExpressions\QikCamelCaseFunction.cs" />
     <Compile Include="QikExpressions\QikConcatenateFunction.cs" />
     <Compile Include="QikExpressions\QikExpression.cs" />
     <Compile Include="QikExpressions\QikFunction.cs" />

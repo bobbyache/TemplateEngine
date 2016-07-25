@@ -95,6 +95,40 @@ namespace QikLanguageEngine.Antlr
             return ifFunc;
         }
 
+        public override QikFunction VisitCamelCaseFunc(QikTemplateParser.CamelCaseFuncContext context)
+        {
+            if (context.concatExpr() != null)
+            {
+                QikConcatenateFunction concatenateFunc = GetConcatenateFunction(context.concatExpr());
+                return concatenateFunc;
+            }
+            else if (context.expr() != null)
+            {
+                var expr = context.expr();
+
+                QikFunction result = null;
+
+                if (expr.STRING() != null)
+                    result = new QikCamelCaseFunction(new QikLiteralText(expr.STRING().GetText()));
+                else if (expr.ID() != null)
+                {
+                    result = new QikCamelCaseFunction(new QikVariable(expr.ID().GetText()));
+                    return result;
+                }
+                else
+                    result = new QikCamelCaseFunction(Visit(expr));
+
+                return result;
+            }
+            else if (context.ID() != null)
+            {
+                QikFunction result = new QikCamelCaseFunction(new QikVariable(context.ID().ToString()));
+                return result;
+            }
+
+            return null;
+        }
+
         public override QikFunction VisitLowerCaseFunc(QikTemplateParser.LowerCaseFuncContext context)
         {
             if (context.concatExpr() != null)

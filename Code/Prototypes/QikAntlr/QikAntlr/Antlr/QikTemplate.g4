@@ -116,6 +116,7 @@ func
     : 'lowerCase' '(' (ID|concatExpr|expr) ')'      #LowerCaseFunc
     | 'upperCase' '(' (ID|concatExpr|expr) ')'      #UpperCaseFunc
     | 'removeSpaces' '(' (ID|concatExpr|expr) ')'   #RemoveSpacesFunc
+    | 'camelCase' '(' (ID|concatExpr|expr) ')'      #CamelCaseFunc
     ;
 
 /* ***********************************************************************

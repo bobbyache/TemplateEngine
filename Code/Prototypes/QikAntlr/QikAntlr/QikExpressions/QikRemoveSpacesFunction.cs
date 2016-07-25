@@ -29,7 +29,11 @@ namespace QikLanguageEngine.QikExpressions
         public override string Execute()
         {
             string txt = base.Execute();
-            return txt.Replace(" ", "");
+            if (txt != null && txt.Length >= 1)
+            {
+                return txt.Replace(" ", "");
+            }
+            return txt;
         }
     }
 }

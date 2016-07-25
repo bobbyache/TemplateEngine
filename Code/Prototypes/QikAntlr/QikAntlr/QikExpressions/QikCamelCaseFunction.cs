@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace QikLanguageEngine.QikExpressions
 {
-    public class QikLowerCaseFunction : QikFunction
+    public class QikCamelCaseFunction : QikFunction
     {
-        public QikLowerCaseFunction(QikFunction func)
+        public QikCamelCaseFunction(QikFunction func)
             : base(func)
         {
 
         }
 
-        public QikLowerCaseFunction(QikLiteralText literalText)
+        public QikCamelCaseFunction(QikLiteralText literalText)
             : base(literalText)
         {
 
         }
 
-        public QikLowerCaseFunction(QikVariable variable)
+        public QikCamelCaseFunction(QikVariable variable)
             : base(variable)
         {
 
@@ -29,9 +29,12 @@ namespace QikLanguageEngine.QikExpressions
         public override string Execute()
         {
             string txt = base.Execute();
+
             if (txt != null && txt.Length >= 1)
             {
-                return txt.ToLower();
+                string firstChar = txt.Substring(0, 1);
+                string theRest = txt.Substring(1, txt.Length - 1);
+                return firstChar.ToLower() + theRest;
             }
             return txt;
         }
