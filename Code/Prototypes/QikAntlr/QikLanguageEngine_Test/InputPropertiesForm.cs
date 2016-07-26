@@ -1,4 +1,5 @@
-﻿using QikLanguageEngine;
+﻿using Alsing.SourceCode;
+using QikLanguageEngine;
 using QikLanguageEngine.QikControls;
 using QikLanguageEngine.QikExpressions;
 using System;
@@ -35,6 +36,7 @@ namespace QikLanguageEngine_Test
         private void inputPropertyGrid_InputChanged(object sender, EventArgs e)
         {
             UpdateOutputDocument();
+            UpdateAutoList();
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -47,6 +49,7 @@ namespace QikLanguageEngine_Test
             inputPropertyGrid.Reset(engine.Controls, engine.Expressions);
 
             UpdateOutputDocument();
+            UpdateAutoList();
         }
 
         private void btnDisplaySymbolTable_Click(object sender, EventArgs e)
@@ -67,6 +70,7 @@ namespace QikLanguageEngine_Test
             if (e.TabPage.Name == "tabOutput")
             {
                 UpdateOutputDocument();
+                UpdateAutoList();
             }
         }
 
@@ -80,6 +84,29 @@ namespace QikLanguageEngine_Test
             }
 
             outputSyntaxBox.Document.Text = input;
+        }
+
+        private void UpdateAutoList()
+        {
+            blueprintSyntaxBox.AutoListClear();
+
+            foreach (string placeholder in engine.Placeholders)
+            {
+                string title = engine.FindTitle(placeholder);
+                blueprintSyntaxBox.AutoListAdd(string.Format("{0} ({1})", title, placeholder), placeholder, 0);
+            }
+        }
+
+        private void blueprintSyntaxBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!this.blueprintSyntaxBox.ReadOnly)
+            {
+                if (e.KeyData == (Keys.Shift | Keys.F8) || e.KeyData == Keys.F8)
+                {
+                    this.blueprintSyntaxBox.AutoListPosition = new TextPoint(blueprintSyntaxBox.Caret.Position.X, blueprintSyntaxBox.Caret.Position.Y);
+                    this.blueprintSyntaxBox.AutoListVisible = true;
+                }
+            }
         }
     }
 }

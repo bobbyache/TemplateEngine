@@ -58,6 +58,11 @@ namespace QikLanguageEngine
             return ScopeTable.FindPlaceholder(placeholder);
         }
 
+        public string FindTitle(string placeholder)
+        {
+            return ScopeTable.FindTitle(placeholder);
+        }
+
         public void ExecuteScript(string inputData)
         {
             ScopeTable.Clear();

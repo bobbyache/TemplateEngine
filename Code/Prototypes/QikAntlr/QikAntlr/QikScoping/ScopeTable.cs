@@ -46,5 +46,10 @@ namespace QikLanguageEngine.QikScoping
         {
             return table.Where(r => r.Value.Placeholder == placeholder).SingleOrDefault().Value.Value;
         }
+
+        public static string FindTitle(string placeholder)
+        {
+            return table.Where(r => r.Value.Placeholder == placeholder).SingleOrDefault().Value.Title;
+        }
     }
 }

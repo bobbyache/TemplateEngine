@@ -39,12 +39,12 @@
             this.outputSyntaxDocument = new Alsing.SourceCode.SyntaxDocument(this.components);
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControlFile = new System.Windows.Forms.TabControl();
+            this.tabScript = new System.Windows.Forms.TabPage();
+            this.syntaxBox = new Alsing.Windows.Forms.SyntaxBoxControl();
             this.tabBlueprint = new System.Windows.Forms.TabPage();
             this.blueprintSyntaxBox = new Alsing.Windows.Forms.SyntaxBoxControl();
             this.tabOutput = new System.Windows.Forms.TabPage();
             this.outputSyntaxBox = new Alsing.Windows.Forms.SyntaxBoxControl();
-            this.tabScript = new System.Windows.Forms.TabPage();
-            this.syntaxBox = new Alsing.Windows.Forms.SyntaxBoxControl();
             this.inputPropertyGrid = new QikLanguageEngine_Test.InputPropertyGrid();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -52,9 +52,9 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tabControlFile.SuspendLayout();
+            this.tabScript.SuspendLayout();
             this.tabBlueprint.SuspendLayout();
             this.tabOutput.SuspendLayout();
-            this.tabScript.SuspendLayout();
             this.SuspendLayout();
             // 
             // syntaxDocument
@@ -148,6 +148,46 @@
             this.tabControlFile.TabIndex = 3;
             this.tabControlFile.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlFile_Selected);
             // 
+            // tabScript
+            // 
+            this.tabScript.Controls.Add(this.syntaxBox);
+            this.tabScript.Location = new System.Drawing.Point(4, 22);
+            this.tabScript.Name = "tabScript";
+            this.tabScript.Size = new System.Drawing.Size(578, 508);
+            this.tabScript.TabIndex = 2;
+            this.tabScript.Text = "Script";
+            this.tabScript.UseVisualStyleBackColor = true;
+            // 
+            // syntaxBox
+            // 
+            this.syntaxBox.ActiveView = Alsing.Windows.Forms.ActiveView.BottomRight;
+            this.syntaxBox.AutoListPosition = null;
+            this.syntaxBox.AutoListSelectedText = "a123";
+            this.syntaxBox.AutoListVisible = false;
+            this.syntaxBox.BackColor = System.Drawing.Color.White;
+            this.syntaxBox.BorderStyle = Alsing.Windows.Forms.BorderStyle.None;
+            this.syntaxBox.CopyAsRTF = false;
+            this.syntaxBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.syntaxBox.Document = this.syntaxDocument;
+            this.syntaxBox.FontName = "Courier new";
+            this.syntaxBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.syntaxBox.InfoTipCount = 1;
+            this.syntaxBox.InfoTipPosition = null;
+            this.syntaxBox.InfoTipSelectedIndex = 1;
+            this.syntaxBox.InfoTipVisible = false;
+            this.syntaxBox.Location = new System.Drawing.Point(0, 0);
+            this.syntaxBox.LockCursorUpdate = false;
+            this.syntaxBox.Name = "syntaxBox";
+            this.syntaxBox.ShowScopeIndicator = false;
+            this.syntaxBox.Size = new System.Drawing.Size(578, 508);
+            this.syntaxBox.SmoothScroll = false;
+            this.syntaxBox.SplitviewH = -4;
+            this.syntaxBox.SplitviewV = -4;
+            this.syntaxBox.TabGuideColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(233)))), ((int)(((byte)(233)))));
+            this.syntaxBox.TabIndex = 3;
+            this.syntaxBox.Text = "syntaxBoxControl1";
+            this.syntaxBox.WhitespaceColor = System.Drawing.SystemColors.ControlDark;
+            // 
             // tabBlueprint
             // 
             this.tabBlueprint.Controls.Add(this.blueprintSyntaxBox);
@@ -188,6 +228,7 @@
             this.blueprintSyntaxBox.TabIndex = 0;
             this.blueprintSyntaxBox.Text = "syntaxBoxControl1";
             this.blueprintSyntaxBox.WhitespaceColor = System.Drawing.SystemColors.ControlDark;
+            this.blueprintSyntaxBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.blueprintSyntaxBox_KeyDown);
             // 
             // tabOutput
             // 
@@ -230,46 +271,6 @@
             this.outputSyntaxBox.Text = "syntaxBoxControl2";
             this.outputSyntaxBox.WhitespaceColor = System.Drawing.SystemColors.ControlDark;
             // 
-            // tabScript
-            // 
-            this.tabScript.Controls.Add(this.syntaxBox);
-            this.tabScript.Location = new System.Drawing.Point(4, 22);
-            this.tabScript.Name = "tabScript";
-            this.tabScript.Size = new System.Drawing.Size(578, 508);
-            this.tabScript.TabIndex = 2;
-            this.tabScript.Text = "Script";
-            this.tabScript.UseVisualStyleBackColor = true;
-            // 
-            // syntaxBox
-            // 
-            this.syntaxBox.ActiveView = Alsing.Windows.Forms.ActiveView.BottomRight;
-            this.syntaxBox.AutoListPosition = null;
-            this.syntaxBox.AutoListSelectedText = "a123";
-            this.syntaxBox.AutoListVisible = false;
-            this.syntaxBox.BackColor = System.Drawing.Color.White;
-            this.syntaxBox.BorderStyle = Alsing.Windows.Forms.BorderStyle.None;
-            this.syntaxBox.CopyAsRTF = false;
-            this.syntaxBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.syntaxBox.Document = this.syntaxDocument;
-            this.syntaxBox.FontName = "Courier new";
-            this.syntaxBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.syntaxBox.InfoTipCount = 1;
-            this.syntaxBox.InfoTipPosition = null;
-            this.syntaxBox.InfoTipSelectedIndex = 1;
-            this.syntaxBox.InfoTipVisible = false;
-            this.syntaxBox.Location = new System.Drawing.Point(0, 0);
-            this.syntaxBox.LockCursorUpdate = false;
-            this.syntaxBox.Name = "syntaxBox";
-            this.syntaxBox.ShowScopeIndicator = false;
-            this.syntaxBox.Size = new System.Drawing.Size(578, 508);
-            this.syntaxBox.SmoothScroll = false;
-            this.syntaxBox.SplitviewH = -4;
-            this.syntaxBox.SplitviewV = -4;
-            this.syntaxBox.TabGuideColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(233)))), ((int)(((byte)(233)))));
-            this.syntaxBox.TabIndex = 3;
-            this.syntaxBox.Text = "syntaxBoxControl1";
-            this.syntaxBox.WhitespaceColor = System.Drawing.SystemColors.ControlDark;
-            // 
             // inputPropertyGrid
             // 
             this.inputPropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -294,9 +295,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.tabControlFile.ResumeLayout(false);
+            this.tabScript.ResumeLayout(false);
             this.tabBlueprint.ResumeLayout(false);
             this.tabOutput.ResumeLayout(false);
-            this.tabScript.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
