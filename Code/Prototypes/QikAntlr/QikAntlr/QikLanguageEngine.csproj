@@ -71,6 +71,7 @@
     <Compile Include="QikExpressions\QikTextFunction.cs" />
     <Compile Include="QikExpressions\QikUpperCaseFunction.cs" />
     <Compile Include="QikExpressions\QikVariable.cs" />
+    <Compile Include="QikScoping\ScopeItem.cs" />
     <Compile Include="QikScoping\ScopeTable.cs" />
   </ItemGroup>
   <ItemGroup>

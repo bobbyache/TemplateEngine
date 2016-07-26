@@ -19,13 +19,13 @@ namespace QikLanguageEngine.QikExpressions
             this.Symbol = symbol;
             this.func = func;
             this.Title = title;
-            ScopeTable.UpdateSymbol(symbol);
+            ScopeTable.UpdateSymbol(title, symbol);
         }
 
         public string Execute()
         {
             string newValue = this.func.Execute();
-            ScopeTable.UpdateSymbol(this.Symbol, newValue);
+            ScopeTable.UpdateSymbol(this.Title, this.Symbol, newValue);
             return newValue;
         }
     }

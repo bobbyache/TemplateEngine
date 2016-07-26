@@ -21,7 +21,7 @@ namespace QikLanguageEngine.QikControls
             if (DefaultValue != null)
                 ScopeTable.UpdateSymbol(ControlId, DefaultValue);
             else
-                ScopeTable.UpdateSymbol(ControlId);
+                ScopeTable.UpdateSymbol(title, ControlId);
         }
 
         public abstract string GetCurrentValue();
@@ -29,7 +29,7 @@ namespace QikLanguageEngine.QikControls
 
         public virtual void SetCurrentValue(string value)
         {
-            ScopeTable.UpdateSymbol(this.ControlId, value);
+            ScopeTable.UpdateSymbol(this.Title, this.ControlId, value);
         }
 
         private string StripOuterQuotes(string text)

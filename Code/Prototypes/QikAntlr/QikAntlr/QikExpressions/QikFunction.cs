@@ -61,7 +61,7 @@ namespace QikLanguageEngine.QikExpressions
                     return this.literalText.LiteralText;
                     
                 case QikChildInputTypeEnum.Variable:
-                    return ScopeTable.FindValue(this.variable.Symbol);
+                    return ScopeTable.FindSymbol(this.variable.Symbol);
                     
                 case QikChildInputTypeEnum.Function:
                     return this.childFunction.Execute();

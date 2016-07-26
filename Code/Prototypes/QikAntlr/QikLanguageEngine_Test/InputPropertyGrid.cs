@@ -21,6 +21,8 @@ namespace QikLanguageEngine_Test
 
     public partial class InputPropertyGrid : UserControl
     {
+        public event EventHandler InputChanged;
+
         private Dictionary<string, QikControl> optionsDictionary = null;
         private Dictionary<string, QikExpression> expressionDictionary = null;
 
@@ -230,6 +232,13 @@ namespace QikLanguageEngine_Test
                     propertyDescriptor.SetValue(userInputProperties, newValue == null ? string.Empty : newValue);
                 }
             }
+        }
+
+        private void propertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            //System.Diagnostics.Debug.WriteLine(e.ChangedItem.Label);
+            if (InputChanged != null)
+                InputChanged(this, new EventArgs());
         }
     }
 }

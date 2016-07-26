@@ -22,7 +22,7 @@ namespace QikLanguageEngine.QikExpressions
 
         public override string Execute()
         {
-            string curOption = ScopeTable.FindValue(this.symbol);
+            string curOption = ScopeTable.FindSymbol(this.symbol);
             if (curOption != null && functions.ContainsKey(curOption))
             {
                 QikFunction func = functions[curOption];

@@ -8,22 +8,27 @@ namespace QikLanguageEngine.QikScoping
 {
     internal class ScopeTable
     {
-        private static Dictionary<string, string> table = new Dictionary<string, string>();
+        private static Dictionary<string, ScopeItem> table = new Dictionary<string, ScopeItem>();
 
         public static string[] Symbols
         {
             get { return table.Keys.ToArray(); }
         }
 
-        internal static void UpdateSymbol(string symbol, string value = null)
+        public static string[] Placeholders
+        {
+            get { return table.Values.Select(r => r.Placeholder).ToArray(); }
+        }
+
+        internal static void UpdateSymbol(string title, string symbol, string value = null)
         {
             if (table.ContainsKey(symbol))
             {
-                table[symbol] = value;
+                table[symbol].Value = value;
             }
             else
             {
-                table.Add(symbol, value);
+                table.Add(symbol, new ScopeItem(title, symbol, value));
             }
         }
 
@@ -32,9 +37,14 @@ namespace QikLanguageEngine.QikScoping
             table.Clear();
         }
 
-        public static string FindValue(string symbol)
+        public static string FindSymbol(string symbol)
         {
-            return table[symbol];
+            return table[symbol].Value;
+        }
+
+        public static string FindPlaceholder(string placeholder)
+        {
+            return table.Where(r => r.Value.Placeholder == placeholder).SingleOrDefault().Value.Value;
         }
     }
 }

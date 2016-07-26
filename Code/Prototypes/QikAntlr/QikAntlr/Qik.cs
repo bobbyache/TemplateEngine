@@ -43,9 +43,19 @@ namespace QikLanguageEngine
             get { return ScopeTable.Symbols; }
         }
 
+        public string[] Placeholders
+        {
+            get { return ScopeTable.Placeholders; }
+        }
+
         public string FindSymbolValue(string symbol)
         {
-            return ScopeTable.FindValue(symbol);
+            return ScopeTable.FindSymbol(symbol);
+        }
+
+        public string FindOutput(string placeholder)
+        {
+            return ScopeTable.FindPlaceholder(placeholder);
         }
 
         public void ExecuteScript(string inputData)
