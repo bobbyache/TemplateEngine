@@ -38,8 +38,8 @@ namespace QikLanguageEngine.Antlr
 
             foreach (QikTemplateParser.SingleOptionContext optionContext in context.optionsBody().singleOption())
             {
-                string id = StripQuotes(optionContext.STRING().GetText());
-                string value = StripQuotes(optionContext.titleArg().STRING().GetText());
+                string id = QikCommon.StripOuterQuotes(optionContext.STRING().GetText());
+                string value = QikCommon.StripOuterQuotes(optionContext.titleArg().STRING().GetText());
                 optionBox.AddOption(id, value);
             }
 
@@ -65,7 +65,7 @@ namespace QikLanguageEngine.Antlr
             string titleText = null;
             if (context.checkBoxArgs().titleArg() != null)
             {
-                titleText = StripQuotes(context.checkBoxArgs().titleArg().STRING().GetText());
+                titleText = QikCommon.StripOuterQuotes(context.checkBoxArgs().titleArg().STRING().GetText());
             }
             return titleText;
         }
@@ -76,7 +76,7 @@ namespace QikLanguageEngine.Antlr
 
             if (context.checkBoxArgs().defaultArg() != null)
             {
-                defaultText = StripQuotes(context.checkBoxArgs().defaultArg().STRING().GetText());
+                defaultText = QikCommon.StripOuterQuotes(context.checkBoxArgs().defaultArg().STRING().GetText());
             }
 
             return defaultText;
@@ -87,7 +87,7 @@ namespace QikLanguageEngine.Antlr
             string titleText = null;
             if (context.optionBoxArgs().titleArg() != null)
             {
-                titleText = StripQuotes(context.optionBoxArgs().titleArg().STRING().GetText());
+                titleText = QikCommon.StripOuterQuotes(context.optionBoxArgs().titleArg().STRING().GetText());
             }
             return titleText;
         }
@@ -97,7 +97,7 @@ namespace QikLanguageEngine.Antlr
             string titleText = null;
             if (context.textBoxArgs().titleArg() != null)
             {
-                titleText = StripQuotes(context.textBoxArgs().titleArg().STRING().GetText());
+                titleText = QikCommon.StripOuterQuotes(context.textBoxArgs().titleArg().STRING().GetText());
             }
             return titleText;
         }
@@ -119,15 +119,10 @@ namespace QikLanguageEngine.Antlr
 
             if (context.textBoxArgs().defaultArg() != null)
             {
-                defaultText = StripQuotes(context.textBoxArgs().defaultArg().STRING().GetText());
+                defaultText = QikCommon.StripOuterQuotes(context.textBoxArgs().defaultArg().STRING().GetText());
             }
 
             return defaultText;
-        }
-
-        private string StripQuotes(string text)
-        {
-            return text.Replace("\"", "");
         }
     }
 }

@@ -55,6 +55,7 @@
     </Compile>
     <Compile Include="Qik.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QikCommon.cs" />
     <Compile Include="QikControls\QikCheckBoxControl.cs" />
     <Compile Include="QikControls\QikControl.cs" />
     <Compile Include="QikControls\QikOptionBoxControl.cs" />

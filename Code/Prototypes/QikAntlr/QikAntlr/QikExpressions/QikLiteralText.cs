@@ -12,14 +12,7 @@ namespace QikLanguageEngine.QikExpressions
 
         public QikLiteralText(string literalText)
         {
-            this.LiteralText = StripOuterQuotes(literalText);
-        }
-
-        private string StripOuterQuotes(string text)
-        {
-            if (text.Length != 0)
-                return text.Substring(1, text.Length - 2);
-            return text;
+            this.LiteralText = QikCommon.StripOuterQuotes(literalText);
         }
     }
 }

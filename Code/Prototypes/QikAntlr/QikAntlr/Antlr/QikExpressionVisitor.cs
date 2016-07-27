@@ -263,14 +263,9 @@ namespace QikLanguageEngine.Antlr
             string titleText = null;
             if (context.titleArg() != null)
             {
-                titleText = StripQuotes(context.titleArg().STRING().GetText());
+                titleText = QikCommon.StripOuterQuotes(context.titleArg().STRING().GetText());
             }
             return titleText;
-        }
-
-        private string StripQuotes(string text)
-        {
-            return text.Replace("\"", "");
         }
     }
 }

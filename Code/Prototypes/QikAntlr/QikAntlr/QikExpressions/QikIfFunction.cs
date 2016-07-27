@@ -35,14 +35,7 @@ namespace QikLanguageEngine.QikExpressions
 
         public void AddFunction(string text, QikFunction func)
         {
-            functions.Add(StripOuterQuotes(text), func);
-        }
-
-        private string StripOuterQuotes(string text)
-        {
-            if (text.Length != 0)
-                return text.Substring(1, text.Length - 2);
-            return text;
+            functions.Add(QikCommon.StripOuterQuotes(text), func);
         }
     }
 }

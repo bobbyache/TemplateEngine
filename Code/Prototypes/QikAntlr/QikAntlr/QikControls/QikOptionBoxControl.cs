@@ -111,33 +111,5 @@ namespace QikLanguageEngine.QikControls
 
             return null;
         }
-
-        //private string StripOuterQuotes(string text)
-        //{
-        //    if (text.Length != 0)
-        //        return text.Substring(1, text.Length - 2);
-        //    return text;
-        //}
-
-        //public string GetValueByIndex(int index)
-        //{
-        //    QikOptionBoxOption[] options = optionsDictionary.Values.ToArray();
-        //    if (options.Any(o => o.Index == index))
-        //        return options.Where(o => o.Index == index).SingleOrDefault().Value;
-
-        //    return null;
-        //}
-
-        //public string GetValue(string symbol)
-        //{
-        //    if (optionsDictionary.ContainsKey(symbol))
-        //        return optionsDictionary[symbol].Value;
-        //    return null;
-        //}
-
-        //public int GetIndexBySymbol(string symbol)
-        //{
-        //    return optionsDictionary[symbol].Index;
-        //}
     }
 }
