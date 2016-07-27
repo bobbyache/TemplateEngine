@@ -63,6 +63,7 @@
     <Compile Include="QikControls\QikTextBoxControl.cs" />
     <Compile Include="QikExpressions\QikCamelCaseFunction.cs" />
     <Compile Include="QikExpressions\QikConcatenateFunction.cs" />
+    <Compile Include="QikExpressions\QikCurrentDateFunction.cs" />
     <Compile Include="QikExpressions\QikExpression.cs" />
     <Compile Include="QikExpressions\QikFunction.cs" />
     <Compile Include="QikExpressions\QikIfFunction.cs" />

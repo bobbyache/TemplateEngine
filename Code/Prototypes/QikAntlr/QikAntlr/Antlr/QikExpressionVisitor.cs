@@ -90,8 +90,6 @@ namespace QikLanguageEngine.Antlr
                 }
             }
 
-            //ifFunc.Execute();
-
             return ifFunc;
         }
 
@@ -129,6 +127,40 @@ namespace QikLanguageEngine.Antlr
             return null;
         }
 
+        public override QikFunction VisitCurrentDateFunc(QikTemplateParser.CurrentDateFuncContext context)
+        {
+            if (context.concatExpr() != null)
+            {
+                QikConcatenateFunction concatenateFunc = GetConcatenateFunction(context.concatExpr());
+                return concatenateFunc;
+            }
+            else if (context.expr() != null)
+            {
+                var expr = context.expr();
+
+                QikFunction result = null;
+
+                if (expr.STRING() != null)
+                    result = new QikCurrentDateFunction(new QikLiteralText(expr.STRING().GetText()));
+                else if (expr.ID() != null)
+                {
+                    result = new QikCurrentDateFunction(new QikVariable(expr.ID().GetText()));
+                    return result;
+                }
+                else
+                    result = new QikCurrentDateFunction(Visit(expr));
+
+                return result;
+            }
+            else if (context.ID() != null)
+            {
+                QikFunction result = new QikCurrentDateFunction(new QikVariable(context.ID().ToString()));
+                return result;
+            }
+
+            return null;
+        }
+
         public override QikFunction VisitLowerCaseFunc(QikTemplateParser.LowerCaseFuncContext context)
         {
             if (context.concatExpr() != null)
@@ -156,7 +188,7 @@ namespace QikLanguageEngine.Antlr
             }
             else if (context.ID() != null)
             {
-                QikFunction result = new QikTextFunction(new QikVariable(context.ID().ToString()));
+                QikFunction result = new QikLowerCaseFunction(new QikVariable(context.ID().ToString()));
                 return result;
             }
 

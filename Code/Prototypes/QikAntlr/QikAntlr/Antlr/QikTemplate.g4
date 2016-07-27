@@ -117,6 +117,7 @@ func
     | 'upperCase' '(' (ID|concatExpr|expr) ')'      #UpperCaseFunc
     | 'removeSpaces' '(' (ID|concatExpr|expr) ')'   #RemoveSpacesFunc
     | 'camelCase' '(' (ID|concatExpr|expr) ')'      #CamelCaseFunc
+    | 'currentDate' '(' (ID|concatExpr|expr) ')'      #CurrentDateFunc
     ;
 
 /* ***********************************************************************
