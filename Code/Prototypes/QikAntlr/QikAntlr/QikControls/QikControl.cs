@@ -19,9 +19,9 @@ namespace QikLanguageEngine.QikControls
             this.DefaultValue = QikCommon.StripOuterQuotes(defaultValue);
             this.Title = title;
             if (DefaultValue != null)
-                ScopeTable.UpdateSymbol(ControlId, DefaultValue);
+                ScopeTable.UpdateSymbol(Title, ControlId, DefaultValue);
             else
-                ScopeTable.UpdateSymbol(title, ControlId);
+                ScopeTable.UpdateSymbol(Title, ControlId);
         }
 
         public abstract string GetCurrentValue();

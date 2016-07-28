@@ -49,10 +49,10 @@ namespace QikLanguageEngine_Test
                 {
                     CreateOptionsBox(ctrl as QikOptionBoxControl);   
                 }
-                else if (ctrl is QikCheckBoxControl)
-                {
-                    CreateCheckBox(ctrl as QikCheckBoxControl);
-                }
+                //else if (ctrl is QikCheckBoxControl)
+                //{
+                //    CreateCheckBox(ctrl as QikCheckBoxControl);
+                //}
                 else if (ctrl is QikTextBoxControl)
                 {
                     CreateTextBox(ctrl as QikTextBoxControl);
@@ -89,24 +89,24 @@ namespace QikLanguageEngine_Test
             typeDescriptor.GetProperties().Add(propertyDescriptor);
         }
 
-        private void CreateCheckBox(QikCheckBoxControl checkBox)
-        {
-            Dyn.TypeDescriptor typeDescriptor = Dyn.TypeDescriptor.GetTypeDescriptor(propertyGrid.SelectedObject);
+        //private void CreateCheckBox(QikCheckBoxControl checkBox)
+        //{
+        //    Dyn.TypeDescriptor typeDescriptor = Dyn.TypeDescriptor.GetTypeDescriptor(propertyGrid.SelectedObject);
 
-            Dyn.PropertyDescriptor propertyDescriptor = new Dyn.PropertyDescriptor(propertyGrid.SelectedObject.GetType(),
-                                                        checkBox.ControlId,
-                                                        typeof(bool), bool.Parse(checkBox.DefaultValue),
-                                                        new Scm.BrowsableAttribute(true),
-                                                        new Scm.DisplayNameAttribute(checkBox.Title),
-                                                        new Scm.DescriptionAttribute("Select true/false."),
-                                                        new Scm.DefaultValueAttribute(bool.Parse(checkBox.DefaultValue))
-                                                        );
-            propertyDescriptor.Attributes.Add(new Scm.CategoryAttribute(CATEGORY_USER_INPUT), true);
-            propertyDescriptor.Attributes.Add(new PropertyControlAttribute(ControlTypeEnum.CheckBox), true);
+        //    Dyn.PropertyDescriptor propertyDescriptor = new Dyn.PropertyDescriptor(propertyGrid.SelectedObject.GetType(),
+        //                                                checkBox.ControlId,
+        //                                                typeof(bool), bool.Parse(checkBox.DefaultValue),
+        //                                                new Scm.BrowsableAttribute(true),
+        //                                                new Scm.DisplayNameAttribute(checkBox.Title),
+        //                                                new Scm.DescriptionAttribute("Select true/false."),
+        //                                                new Scm.DefaultValueAttribute(bool.Parse(checkBox.DefaultValue))
+        //                                                );
+        //    propertyDescriptor.Attributes.Add(new Scm.CategoryAttribute(CATEGORY_USER_INPUT), true);
+        //    propertyDescriptor.Attributes.Add(new PropertyControlAttribute(ControlTypeEnum.CheckBox), true);
 
-            propertyDescriptor.AddValueChanged(propertyGrid.SelectedObject, new EventHandler(this.InputPropertyChanged));
-            typeDescriptor.GetProperties().Add(propertyDescriptor);
-        }
+        //    propertyDescriptor.AddValueChanged(propertyGrid.SelectedObject, new EventHandler(this.InputPropertyChanged));
+        //    typeDescriptor.GetProperties().Add(propertyDescriptor);
+        //}
 
         private void CreateOptionsBox(QikOptionBoxControl optionBox)
         {
@@ -141,7 +141,7 @@ namespace QikLanguageEngine_Test
                                                         //typeof(string), null,
                                                         new Scm.BrowsableAttribute(true),
                                                         new Scm.DisplayNameAttribute(expression.Title),
-                                                        new Scm.DescriptionAttribute("Insert Text"),
+                                                        new Scm.DescriptionAttribute("Derived expression."),
                                                         new Scm.DefaultValueAttribute(null),
                                                         new Scm.ReadOnlyAttribute(true)
                                                         );
@@ -199,14 +199,14 @@ namespace QikLanguageEngine_Test
                             optionBox.ClearSelection(false);
                     }
                 }
-                else if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.CheckBox)
-                {
-                    string name = propertyDescriptor.Name;
-                    string value = propertyDescriptor.GetValue(userInputProperties).ToString();
+                //else if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.CheckBox)
+                //{
+                //    string name = propertyDescriptor.Name;
+                //    string value = propertyDescriptor.GetValue(userInputProperties).ToString();
 
-                    QikCheckBoxControl checkBox = optionsDictionary[name] as QikCheckBoxControl;
-                    checkBox.SetCurrentValue(value);
-                }
+                //    QikCheckBoxControl checkBox = optionsDictionary[name] as QikCheckBoxControl;
+                //    checkBox.SetCurrentValue(value);
+                //}
             }
 
             CalculateExpressions(userInputProperties);

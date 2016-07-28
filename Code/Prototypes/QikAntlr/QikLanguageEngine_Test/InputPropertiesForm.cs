@@ -31,6 +31,23 @@ namespace QikLanguageEngine_Test
             outputSyntaxBox.Document.SyntaxFile = "qikblueprint.syn";
 
             inputPropertyGrid.InputChanged += inputPropertyGrid_InputChanged;
+
+
+            AddTemplateTab();
+
+            ExecuteScript();
+            //tabControlFile.TabPages.RemoveByKey("templateTabPage"); // the key can be the template file name !!!
+        }
+
+        private void AddTemplateTab()
+        {
+            TabPage tabPage = new TabPage("My New Tab Page");
+            tabPage.Name = "templateTabPage";
+            TemplateControl templateCtrl = new TemplateControl();
+            tabPage.Controls.Add(templateCtrl);
+
+            templateCtrl.Dock = DockStyle.Fill;
+            tabControlFile.TabPages.Add(tabPage);
         }
 
         private void inputPropertyGrid_InputChanged(object sender, EventArgs e)
@@ -40,6 +57,19 @@ namespace QikLanguageEngine_Test
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            engine.ExecuteScript(syntaxBox.Document.Text);
+
+            QikControl[] controls = engine.Controls;
+            QikExpression[] expressions = engine.Expressions;
+
+            inputPropertyGrid.Reset(engine.Controls, engine.Expressions);
+
+            UpdateOutputDocument();
+            UpdateAutoList();
+        }
+
+        private void ExecuteScript()
         {
             engine.ExecuteScript(syntaxBox.Document.Text);
 

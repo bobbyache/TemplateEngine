@@ -9,7 +9,7 @@ namespace QikLanguageEngine_Test
     public enum ControlTypeEnum
     {
         TextBox,
-        CheckBox,
+        //CheckBox,
         OptionBox,
         ExpressionBox
     }

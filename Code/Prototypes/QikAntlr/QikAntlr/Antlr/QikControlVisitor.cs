@@ -48,39 +48,39 @@ namespace QikLanguageEngine.Antlr
             return base.VisitOptionBox(context);
         }
 
-        public override string VisitCheckBox(QikTemplateParser.CheckBoxContext context)
-        {
-            string controlId = context.ID().GetText();
+        //public override string VisitCheckBox(QikTemplateParser.CheckBoxContext context)
+        //{
+        //    string controlId = context.ID().GetText();
 
-            string titleText = GetCheckBoxTitle(context);
-            string defaultId = GetCheckBoxDefaultText(context);
+        //    string titleText = GetCheckBoxTitle(context);
+        //    string defaultId = GetCheckBoxDefaultText(context);
 
-            controlDictionary.Add(controlId, new QikCheckBoxControl(controlId, defaultId, titleText));
+        //    controlDictionary.Add(controlId, new QikCheckBoxControl(controlId, defaultId, titleText));
 
-            return base.VisitCheckBox(context);
-        }
+        //    return base.VisitCheckBox(context);
+        //}
 
-        private string GetCheckBoxTitle(QikTemplateParser.CheckBoxContext context)
-        {
-            string titleText = null;
-            if (context.checkBoxArgs().titleArg() != null)
-            {
-                titleText = QikCommon.StripOuterQuotes(context.checkBoxArgs().titleArg().STRING().GetText());
-            }
-            return titleText;
-        }
+        //private string GetCheckBoxTitle(QikTemplateParser.CheckBoxContext context)
+        //{
+        //    string titleText = null;
+        //    if (context.checkBoxArgs().titleArg() != null)
+        //    {
+        //        titleText = QikCommon.StripOuterQuotes(context.checkBoxArgs().titleArg().STRING().GetText());
+        //    }
+        //    return titleText;
+        //}
 
-        private string GetCheckBoxDefaultText(QikTemplateParser.CheckBoxContext context)
-        {
-            string defaultText = null;
+        //private string GetCheckBoxDefaultText(QikTemplateParser.CheckBoxContext context)
+        //{
+        //    string defaultText = null;
 
-            if (context.checkBoxArgs().defaultArg() != null)
-            {
-                defaultText = QikCommon.StripOuterQuotes(context.checkBoxArgs().defaultArg().STRING().GetText());
-            }
+        //    if (context.checkBoxArgs().defaultArg() != null)
+        //    {
+        //        defaultText = QikCommon.StripOuterQuotes(context.checkBoxArgs().defaultArg().STRING().GetText());
+        //    }
 
-            return defaultText;
-        }
+        //    return defaultText;
+        //}
 
         private string GetOptionBoxTitle(QikTemplateParser.OptionBoxContext context)
         {

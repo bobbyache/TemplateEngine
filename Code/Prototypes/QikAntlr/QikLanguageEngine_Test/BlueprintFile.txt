@@ -9,8 +9,8 @@ Generated:
 
 /* ===================================================================================================
 	Name:				@{procName}
-	CreatedBy:         	Rob Blake
-	EmployeeNumber:    	0505c
+	CreatedBy:         	@{authorName}
+	EmployeeNumber:    	@{authorCode}
 	CreateDate:        	@{date}
 	IncidentNumber:    
 	Division:           ALL

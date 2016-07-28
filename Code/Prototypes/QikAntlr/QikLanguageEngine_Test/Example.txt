@@ -1,12 +1,26 @@
-﻿
+﻿/* ************************************************************************************
+DEFAULTS NOT WORKING SEE CONTEXT !!!!!!!!!!!!!!!
+************************************************************************************ */
+
 /* ************************************************************************************
 TextBox
 ************************************************************************************ */
-@date = text [Title="Date"];
+@authorName = expression [Title="Author Name"] {
+	return "Rob Blake";
+};
+
+@authorCode = expression [Title="Author Code"] {
+	return "0505c";
+};
+
+@date = expression [Title="Date"] {
+	return currentDate("dd/MM/yyyy");
+};
+
 @desc = text [Title="Description"];
 @name = text [Title="Procedure Title"];
 
-@database = options [Title="Database"] {
+@database = options [Title="Database", Default="MSDF_DM"] {
 	option "MSDF_DM" [Title="MSDF_DM"],
 	option "MSDF_ADMIN" [Title="MSDF_ADMIN"],
 	option "MSDF_DW" [Title="MSDF_DW"],
@@ -14,9 +28,9 @@ TextBox
 	option "MSDF_VALISTRACTOR" [Title="MSDF_VALISTRACTOR"]
 };
 
-@context = options [Title="Context"] {
+@context = options [Title="Context", Default="FE"] {
 	option "FE" [Title="Front End"],
-	option "BE" [Title="Back End"],
+	option "BE" [Title="Back End"]
 };
 
 @procName = expression [Title="Procedure Name"] {

@@ -15,7 +15,7 @@ Control Declarations
 ctrlDecl
     : optionBox
     | textBox
-    | checkBox
+    //| checkBox
     ;
 
 optionBox
@@ -26,13 +26,13 @@ textBox
     : ID '=' 'text' '[' textBoxArgs ']' ';'
     ; 
 
-checkBox
-    : ID '=' 'check' '[' checkBoxArgs ']' ';'
-    ;
+//checkBox
+//    : ID '=' 'check' '[' checkBoxArgs ']' ';'
+//    ;
 
-checkBoxArgs
-    : titleArg  (',' defaultArg)?
-    ;
+//checkBoxArgs
+//    : titleArg  (',' defaultArg)?
+//    ;
 
 textBoxArgs
     : titleArg  (',' defaultArg)?
