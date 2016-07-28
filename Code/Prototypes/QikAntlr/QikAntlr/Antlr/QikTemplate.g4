@@ -19,7 +19,7 @@ ctrlDecl
     ;
 
 optionBox
-    : ID '=' 'options' '[' optionBoxArgs ']' optionsBody ';'
+    : ID '=' 'options' '[' optionBoxArgs ']' '{' optionsBody '}' ';'
     ;
 
 textBox
@@ -43,7 +43,7 @@ optionBoxArgs
     ;
 
 optionsBody
-    : '{' (singleOption ',')* (singleOption) '}'
+    : 'return' (singleOption ',')* (singleOption) ';'
     ;
 
 singleOption
@@ -66,7 +66,8 @@ Decision (if) Statement
 ----------------------------------------------------------------------- */ 
 optExpr
     //: ifLine (elseIfLine)* (elseLine)*
-    : 'with' 'options' ID '{' (ifOptExpr ',')* ifOptExpr '}'
+    : 'with' 'options' ID (ifOptExpr ',')* ifOptExpr
+    //: 'with' 'options' ID (ifOptExpr ',')* ifOptExpr
      // : 'with' 'options' ID '{'  '}'
     ;
 
