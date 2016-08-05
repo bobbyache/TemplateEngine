@@ -57,7 +57,7 @@ namespace QikLanguageEngine_Test
                 {
                     CreateTextBox(ctrl as QikTextBoxControl);
                 }
-                optionsDictionary.Add(ctrl.ControlId, ctrl);
+                optionsDictionary.Add(ctrl.Symbol, ctrl);
             }
 
 
@@ -75,7 +75,7 @@ namespace QikLanguageEngine_Test
             Dyn.TypeDescriptor typeDescriptor = Dyn.TypeDescriptor.GetTypeDescriptor(propertyGrid.SelectedObject);
 
             Dyn.PropertyDescriptor propertyDescriptor = new Dyn.PropertyDescriptor(propertyGrid.SelectedObject.GetType(),
-                                                        textBox.ControlId,
+                                                        textBox.Symbol,
                                                         typeof(string), textBox.DefaultValue,
                                                         new Scm.BrowsableAttribute(true),
                                                         new Scm.DisplayNameAttribute(textBox.Title),
@@ -112,7 +112,7 @@ namespace QikLanguageEngine_Test
         {
             Dyn.TypeDescriptor typeDescriptor = Dyn.TypeDescriptor.GetTypeDescriptor(propertyGrid.SelectedObject);
             Dyn.PropertyDescriptor propertyDescriptor = new Dyn.PropertyDescriptor(propertyGrid.SelectedObject.GetType(),
-                                                        optionBox.ControlId,
+                                                        optionBox.Symbol,
                                                         typeof(int), optionBox.SelectedIndex,
                                                         new Scm.BrowsableAttribute(true),
                                                         new Scm.DisplayNameAttribute(optionBox.Title),

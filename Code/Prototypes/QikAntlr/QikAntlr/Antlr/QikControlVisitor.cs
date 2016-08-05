@@ -43,7 +43,7 @@ namespace QikLanguageEngine.Antlr
                 optionBox.AddOption(id, value);
             }
 
-            controlDictionary.Add(optionBox.ControlId, optionBox);
+            controlDictionary.Add(optionBox.Symbol, optionBox);
 
             return base.VisitOptionBox(context);
         }
