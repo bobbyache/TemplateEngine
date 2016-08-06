@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QikLanguageEngine.QikScoping;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,8 @@ namespace QikLanguageEngine.QikControls
     {
         private string currentValue = null;
 
-        public QikTextBoxControl(string symbol, string value, string title) : base(symbol, value, title)
+        internal QikTextBoxControl(ScopeTable scopeTable, string symbol, string value, string title)
+            : base(scopeTable, symbol, value, title)
         {
             this.currentValue = value;
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QikLanguageEngine.QikScoping;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,20 +9,20 @@ namespace QikLanguageEngine.QikExpressions
 {
     public class QikRemoveSpacesFunction : QikFunction
     {
-        public QikRemoveSpacesFunction(QikFunction func)
-            : base(func)
+        internal QikRemoveSpacesFunction(ScopeTable scopeTable, QikFunction func)
+            : base(scopeTable, func)
         {
 
         }
 
-        public QikRemoveSpacesFunction(QikLiteralText literalText)
-            : base(literalText)
+        internal QikRemoveSpacesFunction(ScopeTable scopeTable, QikLiteralText literalText)
+            : base(scopeTable, literalText)
         {
 
         }
 
-        public QikRemoveSpacesFunction(QikVariable variable)
-            : base(variable)
+        internal QikRemoveSpacesFunction(ScopeTable scopeTable, QikVariable variable)
+            : base(scopeTable, variable)
         {
 
         }

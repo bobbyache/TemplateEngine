@@ -38,34 +38,36 @@ namespace QikLanguageEngine
         public QikControl[] Controls { get; private set; }
         public QikExpression[] Expressions { get; private set; }
 
+        private ScopeTable scopeTable = new ScopeTable();
+
         public string[] Symbols
         {
-            get { return ScopeTable.Symbols; }
+            get { return scopeTable.Symbols; }
         }
 
         public string[] Placeholders
         {
-            get { return ScopeTable.Placeholders; }
+            get { return scopeTable.Placeholders; }
         }
 
         public string FindSymbolValue(string symbol)
         {
-            return ScopeTable.FindSymbol(symbol);
+            return scopeTable.FindSymbol(symbol);
         }
 
         public string FindOutput(string placeholder)
         {
-            return ScopeTable.FindPlaceholder(placeholder);
+            return scopeTable.FindPlaceholder(placeholder);
         }
 
         public string FindTitle(string placeholder)
         {
-            return ScopeTable.FindTitle(placeholder);
+            return scopeTable.FindTitle(placeholder);
         }
 
         public void ExecuteScript(string inputData)
         {
-            ScopeTable.Clear();
+            scopeTable.Clear();
 
             this.Controls = GetControls(inputData);
             this.Expressions = GetExpressions(inputData);
@@ -80,7 +82,7 @@ namespace QikLanguageEngine
 
             IParseTree tree = parser.template();
 
-            QikControlVisitor controlVisitor = new QikControlVisitor();
+            QikControlVisitor controlVisitor = new QikControlVisitor(this.scopeTable);
             controlVisitor.Visit(tree);
 
             QikControl[] controls = controlVisitor.ControlDictionary.Values.ToArray();
@@ -97,10 +99,10 @@ namespace QikLanguageEngine
 
             IParseTree tree = parser.template();
 
-            QikExpressionVisitor expressionVisitor = new QikExpressionVisitor();
+            QikExpressionVisitor expressionVisitor = new QikExpressionVisitor(this.scopeTable);
             expressionVisitor.Visit(tree);
-            QikControlVisitor controlVisitor = new QikControlVisitor();
-            controlVisitor.Visit(tree);
+            //QikControlVisitor controlVisitor = new QikControlVisitor();
+            //controlVisitor.Visit(tree);
 
             return expressionVisitor.Expressions;
         }

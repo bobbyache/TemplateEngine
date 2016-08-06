@@ -36,8 +36,8 @@ namespace QikLanguageEngine.QikControls
             get { return optionsDictionary.Values.ToArray(); }
         }
 
-        public QikOptionBoxControl(string controlId, string defaultValue, string title)
-            : base(controlId, defaultValue, title)
+        internal QikOptionBoxControl(ScopeTable scopeTable, string controlId, string defaultValue, string title)
+            : base(scopeTable, controlId, defaultValue, title)
         {
         }
 

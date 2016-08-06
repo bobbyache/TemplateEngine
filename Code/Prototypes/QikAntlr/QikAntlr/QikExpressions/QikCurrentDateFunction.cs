@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QikLanguageEngine.QikScoping;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,20 +9,20 @@ namespace QikLanguageEngine.QikExpressions
 {
     public class QikCurrentDateFunction : QikFunction
     {
-        public QikCurrentDateFunction(QikFunction func)
-            : base(func)
+        internal QikCurrentDateFunction(ScopeTable scopeTable, QikFunction func)
+            : base(scopeTable, func)
         {
 
         }
 
-        public QikCurrentDateFunction(QikLiteralText literalText)
-            : base(literalText)
+        internal QikCurrentDateFunction(ScopeTable scopeTable, QikLiteralText literalText)
+            : base(scopeTable, literalText)
         {
 
         }
 
-        public QikCurrentDateFunction(QikVariable variable)
-            : base(variable)
+        internal QikCurrentDateFunction(ScopeTable scopeTable, QikVariable variable)
+            : base(scopeTable, variable)
         {
 
         }

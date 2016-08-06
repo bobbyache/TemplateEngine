@@ -22,6 +22,8 @@ namespace QikLanguageEngine.QikExpressions
         protected QikLiteralText literalText = null;
         protected QikVariable variable = null;
 
+        private ScopeTable scopeTable;
+
         public QikChildInputTypeEnum InputType { get; protected set; }
 
         //public QikFunction(string literalText)
@@ -31,26 +33,30 @@ namespace QikLanguageEngine.QikExpressions
         //    this.InputType = QikChildInputTypeEnum.LiteralText;
         //}
 
-        public QikFunction()
+        internal QikFunction(ScopeTable scopeTable)
         {
+            this.scopeTable = scopeTable;
         }
 
-        public QikFunction(QikLiteralText literalText)
+        internal QikFunction(ScopeTable scopeTable, QikLiteralText literalText)
         {
             this.literalText = literalText;
             this.InputType = QikChildInputTypeEnum.LiteralText;
+            this.scopeTable = scopeTable;
         }
 
-        public QikFunction(QikFunction childFunction)
+        internal QikFunction(ScopeTable scopeTable, QikFunction childFunction)
         {
             this.childFunction = childFunction;
             this.InputType = QikChildInputTypeEnum.Function;
+            this.scopeTable = scopeTable;
         }
 
-        public QikFunction(QikVariable variable)
+        internal QikFunction(ScopeTable scopeTable, QikVariable variable)
         {
             this.variable = variable;
             this.InputType = QikChildInputTypeEnum.Variable;
+            this.scopeTable = scopeTable;
         }
 
         public virtual string Execute()
@@ -61,7 +67,7 @@ namespace QikLanguageEngine.QikExpressions
                     return this.literalText.LiteralText;
                     
                 case QikChildInputTypeEnum.Variable:
-                    return ScopeTable.FindSymbol(this.variable.Symbol);
+                    return scopeTable.FindSymbol(this.variable.Symbol);
                     
                 case QikChildInputTypeEnum.Function:
                     return this.childFunction.Execute();

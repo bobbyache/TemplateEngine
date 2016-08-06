@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QikLanguageEngine.QikScoping;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,12 @@ namespace QikLanguageEngine.QikExpressions
     {
         private List<QikFunction> functions = new List<QikFunction>();
 
-        public QikConcatenateFunction()
+        private ScopeTable scopeTable;
+
+        internal QikConcatenateFunction(ScopeTable scopeTable) : base(scopeTable)
         {
             this.InputType = QikChildInputTypeEnum.Concatenation;
+            this.scopeTable = scopeTable;
         }
 
         public override string Execute()

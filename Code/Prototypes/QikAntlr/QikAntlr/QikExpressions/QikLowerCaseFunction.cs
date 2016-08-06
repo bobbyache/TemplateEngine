@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QikLanguageEngine.QikScoping;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,20 +9,20 @@ namespace QikLanguageEngine.QikExpressions
 {
     public class QikLowerCaseFunction : QikFunction
     {
-        public QikLowerCaseFunction(QikFunction func)
-            : base(func)
+        internal QikLowerCaseFunction(ScopeTable scopeTable, QikFunction func)
+            : base(scopeTable, func)
         {
 
         }
 
-        public QikLowerCaseFunction(QikLiteralText literalText)
-            : base(literalText)
+        internal QikLowerCaseFunction(ScopeTable scopeTable, QikLiteralText literalText)
+            : base(scopeTable, literalText)
         {
 
         }
 
-        public QikLowerCaseFunction(QikVariable variable)
-            : base(variable)
+        internal QikLowerCaseFunction(ScopeTable scopeTable, QikVariable variable)
+            : base(scopeTable, variable)
         {
 
         }

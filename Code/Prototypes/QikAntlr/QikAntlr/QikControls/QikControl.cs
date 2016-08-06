@@ -13,15 +13,19 @@ namespace QikLanguageEngine.QikControls
         public string Title { get; protected set; }
         public string DefaultValue { get; protected set; }
 
-        public QikControl(string symbol, string defaultValue, string title)
+        private ScopeTable scopeTable;
+
+        internal QikControl(ScopeTable scopeTable, string symbol, string defaultValue, string title)
         {
             this.Symbol = symbol;
             this.DefaultValue = QikCommon.StripOuterQuotes(defaultValue);
             this.Title = title;
+            this.scopeTable = scopeTable;
+
             if (DefaultValue != null)
-                ScopeTable.UpdateSymbol(Title, Symbol, DefaultValue);
+                scopeTable.UpdateSymbol(Title, Symbol, DefaultValue);
             else
-                ScopeTable.UpdateSymbol(Title, Symbol);
+                scopeTable.UpdateSymbol(Title, Symbol);
         }
 
         public abstract string GetCurrentValue();
@@ -29,7 +33,7 @@ namespace QikLanguageEngine.QikControls
 
         public virtual void SetCurrentValue(string value)
         {
-            ScopeTable.UpdateSymbol(this.Title, this.Symbol, value);
+            scopeTable.UpdateSymbol(this.Title, this.Symbol, value);
         }
     }
 }

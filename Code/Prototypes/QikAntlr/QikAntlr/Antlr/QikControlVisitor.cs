@@ -1,5 +1,6 @@
 ﻿using QikAntlr.Antlr;
 using QikLanguageEngine.QikControls;
+using QikLanguageEngine.QikScoping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,12 @@ namespace QikLanguageEngine.Antlr
 {
     public class QikControlVisitor : QikTemplateBaseVisitor<string>
     {
+        private ScopeTable scopeTable;
+
+        internal QikControlVisitor(ScopeTable scopeTable)
+        {
+            this.scopeTable = scopeTable;
+        }
         private Dictionary<string, QikControl> controlDictionary = new Dictionary<string, QikControl>();
         public Dictionary<string, QikControl> ControlDictionary
         {
@@ -23,7 +30,7 @@ namespace QikLanguageEngine.Antlr
             string titleText = GetTextBoxTitle(context);
             string defaultText = GetTextBoxDefaultText(context);
 
-            controlDictionary.Add(controlId, new QikTextBoxControl(controlId, defaultText, titleText ));
+            controlDictionary.Add(controlId, new QikTextBoxControl(this.scopeTable, controlId, defaultText, titleText));
 
             return base.VisitTextBox(context);
         }
@@ -34,7 +41,7 @@ namespace QikLanguageEngine.Antlr
             string defaultId = GetOptionBoxDefaultId(context);
             string titleText = GetOptionBoxTitle(context);
 
-            QikOptionBoxControl optionBox = new QikOptionBoxControl(controlId, defaultId, titleText);
+            QikOptionBoxControl optionBox = new QikOptionBoxControl(this.scopeTable, controlId, defaultId, titleText);
 
             foreach (QikTemplateParser.SingleOptionContext optionContext in context.optionsBody().singleOption())
             {

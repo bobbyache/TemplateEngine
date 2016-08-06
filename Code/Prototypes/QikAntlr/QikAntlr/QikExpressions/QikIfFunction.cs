@@ -13,16 +13,18 @@ namespace QikLanguageEngine.QikExpressions
         private List<string> options = new List<string>();
 
         private string symbol = null;
+        private ScopeTable scopeTable;
 
-        public QikIfFunction(string symbol)
+        internal QikIfFunction(ScopeTable scopeTable, string symbol) : base (scopeTable)
         {
             this.symbol = symbol;
             this.InputType = QikChildInputTypeEnum.IfStatement;
+            this.scopeTable = scopeTable;
         }
 
         public override string Execute()
         {
-            string curOption = ScopeTable.FindSymbol(this.symbol);
+            string curOption = scopeTable.FindSymbol(this.symbol);
             if (curOption != null && functions.ContainsKey(curOption))
             {
                 QikFunction func = functions[curOption];

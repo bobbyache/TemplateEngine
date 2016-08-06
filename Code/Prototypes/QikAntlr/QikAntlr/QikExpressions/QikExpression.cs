@@ -12,20 +12,21 @@ namespace QikLanguageEngine.QikExpressions
         private QikFunction func = null;
         public string Symbol { get; private set; }
         public string Title { get; private set; }
+        private ScopeTable scopeTable;
 
-
-        public QikExpression(string symbol, string title, QikFunction func)
+        internal QikExpression(ScopeTable scopeTable, string symbol, string title, QikFunction func)
         {
             this.Symbol = symbol;
             this.func = func;
             this.Title = title;
-            ScopeTable.UpdateSymbol(title, symbol);
+            this.scopeTable = scopeTable;
+            this.scopeTable.UpdateSymbol(title, symbol);
         }
 
         public string Execute()
         {
             string newValue = this.func.Execute();
-            ScopeTable.UpdateSymbol(this.Title, this.Symbol, newValue);
+            scopeTable.UpdateSymbol(this.Title, this.Symbol, newValue);
             return newValue;
         }
     }
