@@ -46,17 +46,17 @@ namespace QikLanguageEngine_Test
 
             foreach (IQikControl ctrl in controlList)
             {
-                if (ctrl is QikOptionBoxControl)
+                if (ctrl is IQikOptionBoxControl)
                 {
-                    CreateOptionsBox(ctrl as QikOptionBoxControl);   
+                    CreateOptionsBox(ctrl as IQikOptionBoxControl);   
                 }
                 //else if (ctrl is QikCheckBoxControl)
                 //{
                 //    CreateCheckBox(ctrl as QikCheckBoxControl);
                 //}
-                else if (ctrl is QikTextBoxControl)
+                else if (ctrl is IQikTextBoxControl)
                 {
-                    CreateTextBox(ctrl as QikTextBoxControl);
+                    CreateTextBox(ctrl as IQikTextBoxControl);
                 }
                 optionsDictionary.Add(ctrl.Symbol, ctrl);
             }
@@ -71,7 +71,7 @@ namespace QikLanguageEngine_Test
             propertyGrid.Refresh();
         }
 
-        private void CreateTextBox(QikTextBoxControl textBox)
+        private void CreateTextBox(IQikTextBoxControl textBox)
         {
             Dyn.TypeDescriptor typeDescriptor = Dyn.TypeDescriptor.GetTypeDescriptor(propertyGrid.SelectedObject);
 
@@ -109,7 +109,7 @@ namespace QikLanguageEngine_Test
         //    typeDescriptor.GetProperties().Add(propertyDescriptor);
         //}
 
-        private void CreateOptionsBox(QikOptionBoxControl optionBox)
+        private void CreateOptionsBox(IQikOptionBoxControl optionBox)
         {
             Dyn.TypeDescriptor typeDescriptor = Dyn.TypeDescriptor.GetTypeDescriptor(propertyGrid.SelectedObject);
             Dyn.PropertyDescriptor propertyDescriptor = new Dyn.PropertyDescriptor(propertyGrid.SelectedObject.GetType(),
@@ -157,11 +157,11 @@ namespace QikLanguageEngine_Test
             typeDescriptor.GetProperties().Add(propertyDescriptor);
         }
 
-        private void BuildOptions(Dyn.PropertyDescriptor pd, QikOptionBoxOption[] options)
+        private void BuildOptions(Dyn.PropertyDescriptor pd, IQikOptionBoxOption[] options)
         {
             pd.StandardValues.Clear();
 
-            foreach (QikOptionBoxOption option in options)
+            foreach (IQikOptionBoxOption option in options)
             {
                 Dyn.StandardValue sv = new Dyn.StandardValue(option.Index, option.Value);
                 sv.Description = "Description of " + sv.DisplayName + ".";
@@ -183,7 +183,7 @@ namespace QikLanguageEngine_Test
                     string name = propertyDescriptor.Name;
                     object value = propertyDescriptor.GetValue(userInputProperties);
 
-                    QikTextBoxControl textBox = optionsDictionary[name] as QikTextBoxControl;
+                    IQikTextBoxControl textBox = optionsDictionary[name] as IQikTextBoxControl;
                     textBox.SetCurrentValue(value != null ? value.ToString() : null);
                 }
                 else if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.OptionBox)
@@ -191,7 +191,7 @@ namespace QikLanguageEngine_Test
                     string name = propertyDescriptor.Name;
                     object value = propertyDescriptor.GetValue(userInputProperties);
 
-                    QikOptionBoxControl optionBox = optionsDictionary[name] as QikOptionBoxControl;
+                    IQikOptionBoxControl optionBox = optionsDictionary[name] as IQikOptionBoxControl;
                     if (optionBox != null)
                     {
                         if (value != null)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CygSoft.Qik.LanguageEngine.QikControls
 {
-    public class QikOptionBoxOption
+    public class QikOptionBoxOption : IQikOptionBoxOption
     {
         public string Symbol { get; private set; }
         public string Value { get; set; }

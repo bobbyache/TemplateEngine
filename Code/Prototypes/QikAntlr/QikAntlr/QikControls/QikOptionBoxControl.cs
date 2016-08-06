@@ -1,4 +1,5 @@
-﻿using CygSoft.Qik.LanguageEngine.QikScoping;
+﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
+using CygSoft.Qik.LanguageEngine.QikScoping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CygSoft.Qik.LanguageEngine.QikControls
 {
-    public class QikOptionBoxControl : QikControl
+    public class QikOptionBoxControl : QikControl, IQikOptionBoxControl
     {
         private QikOptionBoxOption selectedOption = null;
         private Dictionary<string, QikOptionBoxOption> optionsDictionary = new Dictionary<string,QikOptionBoxOption>();
@@ -31,7 +32,7 @@ namespace CygSoft.Qik.LanguageEngine.QikControls
             }
         }
 
-        public QikOptionBoxOption[] Options
+        public IQikOptionBoxOption[] Options
         {
             get { return optionsDictionary.Values.ToArray(); }
         }

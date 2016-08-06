@@ -42,6 +42,9 @@
   <ItemGroup>
     <Compile Include="IQikControl.cs" />
     <Compile Include="IQikExpression.cs" />
+    <Compile Include="IQikOptionBoxControl.cs" />
+    <Compile Include="IQikOptionBoxOption.cs" />
+    <Compile Include="IQikTextBoxControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

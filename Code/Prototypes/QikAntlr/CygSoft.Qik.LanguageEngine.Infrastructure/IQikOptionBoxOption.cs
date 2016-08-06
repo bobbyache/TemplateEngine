@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CygSoft.Qik.LanguageEngine.Infrastructure
 {
-    public interface IQikControl
+    public interface IQikOptionBoxOption
     {
+        int Index { get; }
         string Symbol { get; }
-        string Title { get; }
-        string DefaultValue { get; }
+        string Value { get; set; }
     }
 }

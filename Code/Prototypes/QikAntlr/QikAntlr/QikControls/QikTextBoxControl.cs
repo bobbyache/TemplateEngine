@@ -1,4 +1,5 @@
-﻿using CygSoft.Qik.LanguageEngine.QikScoping;
+﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
+using CygSoft.Qik.LanguageEngine.QikScoping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CygSoft.Qik.LanguageEngine.QikControls
 {
-    public class QikTextBoxControl : QikControl
+    public class QikTextBoxControl : QikControl, IQikTextBoxControl
     {
         private string currentValue = null;
 

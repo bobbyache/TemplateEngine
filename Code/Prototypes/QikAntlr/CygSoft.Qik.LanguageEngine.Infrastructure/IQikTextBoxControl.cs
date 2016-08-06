@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace CygSoft.Qik.LanguageEngine.Infrastructure
 {
-    public interface IQikControl
+    public interface IQikTextBoxControl : IQikControl
     {
-        string Symbol { get; }
-        string Title { get; }
-        string DefaultValue { get; }
+        string GetCurrentValue();
+        void SetCurrentValue(string value);
     }
 }
