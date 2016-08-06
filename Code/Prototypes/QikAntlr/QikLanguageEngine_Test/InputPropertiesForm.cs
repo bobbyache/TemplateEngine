@@ -61,7 +61,7 @@ namespace QikLanguageEngine_Test
         {
             engine.ExecuteScript(syntaxBox.Document.Text);
 
-            QikControl[] controls = engine.Controls;
+            IQikControl[] controls = engine.Controls;
             IQikExpression[] expressions = engine.Expressions;
 
             inputPropertyGrid.Reset(engine.Controls, engine.Expressions);
@@ -74,7 +74,7 @@ namespace QikLanguageEngine_Test
         {
             engine.ExecuteScript(syntaxBox.Document.Text);
 
-            QikControl[] controls = engine.Controls;
+            IQikControl[] controls = engine.Controls;
             IQikExpression[] expressions = engine.Expressions;
 
             inputPropertyGrid.Reset(engine.Controls, engine.Expressions);

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CygSoft.Qik.LanguageEngine.Infrastructure;
 
 namespace CygSoft.Qik.LanguageEngine.Antlr
 {
@@ -17,8 +18,8 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
         {
             this.scopeTable = scopeTable;
         }
-        private Dictionary<string, QikControl> controlDictionary = new Dictionary<string, QikControl>();
-        public Dictionary<string, QikControl> ControlDictionary
+        private Dictionary<string, IQikControl> controlDictionary = new Dictionary<string, IQikControl>();
+        public Dictionary<string, IQikControl> ControlDictionary
         {
             get { return this.controlDictionary; }
         }

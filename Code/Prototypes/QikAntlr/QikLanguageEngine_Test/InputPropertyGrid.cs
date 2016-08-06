@@ -24,7 +24,7 @@ namespace QikLanguageEngine_Test
     {
         public event EventHandler InputChanged;
 
-        private Dictionary<string, QikControl> optionsDictionary = null;
+        private Dictionary<string, IQikControl> optionsDictionary = null;
         private Dictionary<string, IQikExpression> expressionDictionary = null;
 
         private const string CATEGORY_USER_INPUT = "1. User Input";
@@ -35,16 +35,16 @@ namespace QikLanguageEngine_Test
             InitializeComponent();
         }
 
-        public void Reset(QikControl[] controlList, IQikExpression[] expressionList)
+        public void Reset(IQikControl[] controlList, IQikExpression[] expressionList)
         {
-            optionsDictionary = new Dictionary<string, QikControl>();
+            optionsDictionary = new Dictionary<string, IQikControl>();
             expressionDictionary = new Dictionary<string, IQikExpression>();
 
             UserInputProperties properties = new UserInputProperties();
             Dyn.TypeDescriptor.IntallTypeDescriptor(properties);
             propertyGrid.SelectedObject = properties;
 
-            foreach (QikControl ctrl in controlList)
+            foreach (IQikControl ctrl in controlList)
             {
                 if (ctrl is QikOptionBoxControl)
                 {

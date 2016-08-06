@@ -36,7 +36,7 @@ namespace CygSoft.Qik.LanguageEngine
         //    return controls;
         //}
 
-        public QikControl[] Controls { get; private set; }
+        public IQikControl[] Controls { get; private set; }
         public IQikExpression[] Expressions { get; private set; }
 
         private ScopeTable scopeTable = new ScopeTable();
@@ -74,7 +74,7 @@ namespace CygSoft.Qik.LanguageEngine
             this.Expressions = GetExpressions(inputData);
         }
 
-        private QikControl[] GetControls(string inputData)
+        private IQikControl[] GetControls(string inputData)
         {
             AntlrInputStream inputStream = new AntlrInputStream(inputData);
             QikTemplateLexer lexer = new QikTemplateLexer(inputStream);
@@ -86,7 +86,7 @@ namespace CygSoft.Qik.LanguageEngine
             QikControlVisitor controlVisitor = new QikControlVisitor(this.scopeTable);
             controlVisitor.Visit(tree);
 
-            QikControl[] controls = controlVisitor.ControlDictionary.Values.ToArray();
+            IQikControl[] controls = controlVisitor.ControlDictionary.Values.ToArray();
 
             return controls;
         }
