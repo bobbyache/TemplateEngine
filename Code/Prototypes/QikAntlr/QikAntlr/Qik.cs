@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CygSoft.Qik.LanguageEngine.Infrastructure;
 
 namespace CygSoft.Qik.LanguageEngine
 {
@@ -36,7 +37,7 @@ namespace CygSoft.Qik.LanguageEngine
         //}
 
         public QikControl[] Controls { get; private set; }
-        public QikExpression[] Expressions { get; private set; }
+        public IQikExpression[] Expressions { get; private set; }
 
         private ScopeTable scopeTable = new ScopeTable();
 
@@ -90,7 +91,7 @@ namespace CygSoft.Qik.LanguageEngine
             return controls;
         }
 
-        private QikExpression[] GetExpressions(string inputData)
+        private IQikExpression[] GetExpressions(string inputData)
         {
             AntlrInputStream inputStream = new AntlrInputStream(inputData);
             QikTemplateLexer lexer = new QikTemplateLexer(inputStream);

@@ -1,5 +1,6 @@
 ﻿using Alsing.SourceCode;
 using CygSoft.Qik.LanguageEngine;
+using CygSoft.Qik.LanguageEngine.Infrastructure;
 using CygSoft.Qik.LanguageEngine.QikControls;
 using CygSoft.Qik.LanguageEngine.QikExpressions;
 using System;
@@ -61,7 +62,7 @@ namespace QikLanguageEngine_Test
             engine.ExecuteScript(syntaxBox.Document.Text);
 
             QikControl[] controls = engine.Controls;
-            QikExpression[] expressions = engine.Expressions;
+            IQikExpression[] expressions = engine.Expressions;
 
             inputPropertyGrid.Reset(engine.Controls, engine.Expressions);
 
@@ -74,7 +75,7 @@ namespace QikLanguageEngine_Test
             engine.ExecuteScript(syntaxBox.Document.Text);
 
             QikControl[] controls = engine.Controls;
-            QikExpression[] expressions = engine.Expressions;
+            IQikExpression[] expressions = engine.Expressions;
 
             inputPropertyGrid.Reset(engine.Controls, engine.Expressions);
 

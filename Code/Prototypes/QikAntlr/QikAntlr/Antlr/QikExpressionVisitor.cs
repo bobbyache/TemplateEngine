@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CygSoft.Qik.LanguageEngine.Infrastructure;
 
 namespace CygSoft.Qik.LanguageEngine.Antlr
 {
@@ -20,7 +21,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
             this.scopeTable = scopeTable;
         }
 
-        public QikExpression[] Expressions { get { return this.expressions.ToArray(); } }
+        public IQikExpression[] Expressions { get { return this.expressions.ToArray(); } }
 
         public override QikFunction VisitExprDecl(QikTemplateParser.ExprDeclContext context)
         {

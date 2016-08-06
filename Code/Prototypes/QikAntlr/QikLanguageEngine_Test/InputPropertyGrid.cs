@@ -14,6 +14,7 @@ using Dyn = DynamicTypeDescriptor;
 using Scm = System.ComponentModel;
 using System.Drawing.Design;
 using CygSoft.Qik.LanguageEngine.QikExpressions;
+using CygSoft.Qik.LanguageEngine.Infrastructure;
 
 namespace QikLanguageEngine_Test
 {
@@ -24,7 +25,7 @@ namespace QikLanguageEngine_Test
         public event EventHandler InputChanged;
 
         private Dictionary<string, QikControl> optionsDictionary = null;
-        private Dictionary<string, QikExpression> expressionDictionary = null;
+        private Dictionary<string, IQikExpression> expressionDictionary = null;
 
         private const string CATEGORY_USER_INPUT = "1. User Input";
         private const string CATEGORY_EXPRESSION = "2. Expressions";
@@ -34,10 +35,10 @@ namespace QikLanguageEngine_Test
             InitializeComponent();
         }
 
-        public void Reset(QikControl[] controlList, QikExpression[] expressionList)
+        public void Reset(QikControl[] controlList, IQikExpression[] expressionList)
         {
             optionsDictionary = new Dictionary<string, QikControl>();
-            expressionDictionary = new Dictionary<string, QikExpression>();
+            expressionDictionary = new Dictionary<string, IQikExpression>();
 
             UserInputProperties properties = new UserInputProperties();
             Dyn.TypeDescriptor.IntallTypeDescriptor(properties);
@@ -61,7 +62,7 @@ namespace QikLanguageEngine_Test
             }
 
 
-            foreach (QikExpression expression in expressionList)
+            foreach (IQikExpression expression in expressionList)
             {
                 CreateExpression(expression);
                 expressionDictionary.Add(expression.Symbol, expression);
@@ -131,7 +132,7 @@ namespace QikLanguageEngine_Test
             typeDescriptor.GetProperties().Add(propertyDescriptor);
         }
 
-        private void CreateExpression(QikExpression expression)
+        private void CreateExpression(IQikExpression expression)
         {
             Dyn.TypeDescriptor typeDescriptor = Dyn.TypeDescriptor.GetTypeDescriptor(propertyGrid.SelectedObject);
 
@@ -226,7 +227,7 @@ namespace QikLanguageEngine_Test
                     string name = propertyDescriptor.Name;
                     //string value = propertyDescriptor.GetValue(userInputProperties).ToString();
 
-                    QikExpression expression = expressionDictionary[name] as QikExpression;
+                    IQikExpression expression = expressionDictionary[name] as IQikExpression;
                     string newValue = expression.Execute();
                     //propertyDescriptor.SetValue(userInputProperties, newValue);
                     propertyDescriptor.SetValue(userInputProperties, newValue == null ? string.Empty : newValue);

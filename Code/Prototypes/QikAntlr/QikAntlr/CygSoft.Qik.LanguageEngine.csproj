@@ -83,7 +83,12 @@
     </Antlr4>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CygSoft.Qik.LanguageEngine.Infrastructure\CygSoft.Qik.LanguageEngine.Infrastructure.csproj">
+      <Project>{4614a954-2183-4b9f-be3e-6b541694aa00}</Project>
+      <Name>CygSoft.Qik.LanguageEngine.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
