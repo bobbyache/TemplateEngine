@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QikLanguageEngine.QikScoping
+namespace CygSoft.Qik.LanguageEngine.QikScoping
 {
     public class ScopeItem
     {

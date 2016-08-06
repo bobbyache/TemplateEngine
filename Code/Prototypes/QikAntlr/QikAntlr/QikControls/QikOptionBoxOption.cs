@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QikLanguageEngine.QikControls
+namespace CygSoft.Qik.LanguageEngine.QikControls
 {
     public class QikOptionBoxOption
     {

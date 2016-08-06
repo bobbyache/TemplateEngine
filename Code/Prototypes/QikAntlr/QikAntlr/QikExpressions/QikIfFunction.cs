@@ -1,11 +1,11 @@
-﻿using QikLanguageEngine.QikScoping;
+﻿using CygSoft.Qik.LanguageEngine.QikScoping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QikLanguageEngine.QikExpressions
+namespace CygSoft.Qik.LanguageEngine.QikExpressions
 {
     public class QikIfFunction : QikFunction
     {

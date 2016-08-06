@@ -1,10 +1,10 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using QikAntlr.Antlr;
-using QikLanguageEngine.Antlr;
-using QikLanguageEngine.QikControls;
-using QikLanguageEngine.QikExpressions;
-using QikLanguageEngine.QikScoping;
+using CygSoft.Qik.LanguageEngine.Antlr;
+using CygSoft.Qik.LanguageEngine.QikControls;
+using CygSoft.Qik.LanguageEngine.QikExpressions;
+using CygSoft.Qik.LanguageEngine.QikScoping;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QikLanguageEngine
+namespace CygSoft.Qik.LanguageEngine
 {
     public class Qik
     {

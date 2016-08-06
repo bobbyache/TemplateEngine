@@ -1,7 +1,7 @@
 ﻿using Alsing.SourceCode;
-using QikLanguageEngine;
-using QikLanguageEngine.QikControls;
-using QikLanguageEngine.QikExpressions;
+using CygSoft.Qik.LanguageEngine;
+using CygSoft.Qik.LanguageEngine.QikControls;
+using CygSoft.Qik.LanguageEngine.QikExpressions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

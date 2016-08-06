@@ -113,9 +113,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\QikAntlr\QikLanguageEngine.csproj">
+    <ProjectReference Include="..\QikAntlr\CygSoft.Qik.LanguageEngine.csproj">
       <Project>{7d927a0f-d7ad-4b6b-a5b0-7021089589ff}</Project>
-      <Name>QikLanguageEngine</Name>
+      <Name>CygSoft.Qik.LanguageEngine</Name>
     </ProjectReference>
     <ProjectReference Include="..\QikFileManager\QikFileManager.csproj">
       <Project>{e9e3430b-8047-4f8f-8186-1714676aafd0}</Project>

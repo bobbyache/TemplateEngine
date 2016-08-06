@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QikLanguageEngine", "QikAntlr\QikLanguageEngine.csproj", "{7D927A0F-D7AD-4B6B-A5B0-7021089589FF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CygSoft.Qik.LanguageEngine", "QikAntlr\CygSoft.Qik.LanguageEngine.csproj", "{7D927A0F-D7AD-4B6B-A5B0-7021089589FF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QikLanguageEngine_Test", "QikLanguageEngine_Test\QikLanguageEngine_Test.csproj", "{86A9F2C4-B07C-4045-AA88-80AAEDD5C5AC}"
 EndProject

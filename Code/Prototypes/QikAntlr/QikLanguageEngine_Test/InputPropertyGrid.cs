@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using QikLanguageEngine.QikControls;
+using CygSoft.Qik.LanguageEngine.QikControls;
 using DynamicTypeDescriptor;
 
 using Dyn = DynamicTypeDescriptor;
 using Scm = System.ComponentModel;
 using System.Drawing.Design;
-using QikLanguageEngine.QikExpressions;
+using CygSoft.Qik.LanguageEngine.QikExpressions;
 
 namespace QikLanguageEngine_Test
 {

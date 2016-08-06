@@ -1,13 +1,13 @@
 ﻿using QikAntlr.Antlr;
-using QikLanguageEngine.QikExpressions;
-using QikLanguageEngine.QikScoping;
+using CygSoft.Qik.LanguageEngine.QikExpressions;
+using CygSoft.Qik.LanguageEngine.QikScoping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QikLanguageEngine.Antlr
+namespace CygSoft.Qik.LanguageEngine.Antlr
 {
     public class QikExpressionVisitor : QikTemplateBaseVisitor<QikFunction>
     {
