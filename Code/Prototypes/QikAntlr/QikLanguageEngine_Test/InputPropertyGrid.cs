@@ -24,28 +24,30 @@ namespace QikLanguageEngine_Test
     {
         public event EventHandler InputChanged;
 
-        private Dictionary<string, IQikControl> optionsDictionary = null;
+        //private Dictionary<string, IQikControl> optionsDictionary = null;
         private Dictionary<string, IQikExpression> expressionDictionary = null;
 
         private const string CATEGORY_USER_INPUT = "1. User Input";
         private const string CATEGORY_EXPRESSION = "2. Expressions";
+
+        private IQikCompiler compiler;
 
         public InputPropertyGrid()
         {
             InitializeComponent();
         }
 
-        //public void Reset(IQikControl[] controlList, IQikExpression[] expressionList)
-        public void Reset(IQikCompiler qik)
+        public void Reset(IQikCompiler qikCompiler)
         {
-            optionsDictionary = new Dictionary<string, IQikControl>();
+            this.compiler = qikCompiler;
+            //optionsDictionary = new Dictionary<string, IQikControl>();
             expressionDictionary = new Dictionary<string, IQikExpression>();
 
             UserInputProperties properties = new UserInputProperties();
             Dyn.TypeDescriptor.IntallTypeDescriptor(properties);
             propertyGrid.SelectedObject = properties;
 
-            foreach (IQikControl ctrl in qik.Controls)
+            foreach (IQikControl ctrl in qikCompiler.Controls)
             {
                 if (ctrl is IQikOptionBoxControl)
                 {
@@ -59,11 +61,11 @@ namespace QikLanguageEngine_Test
                 {
                     CreateTextBox(ctrl as IQikTextBoxControl);
                 }
-                optionsDictionary.Add(ctrl.Symbol, ctrl);
+                //optionsDictionary.Add(ctrl.Symbol, ctrl);
             }
 
 
-            foreach (IQikExpression expression in qik.Expressions)
+            foreach (IQikExpression expression in qikCompiler.Expressions)
             {
                 CreateExpression(expression);
                 expressionDictionary.Add(expression.Symbol, expression);
@@ -181,34 +183,13 @@ namespace QikLanguageEngine_Test
                 PropertyControlAttribute propertyControl = propertyDescriptor.Attributes[typeof(PropertyControlAttribute)] as PropertyControlAttribute;
                 if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.TextBox)
                 {
-                    string name = propertyDescriptor.Name;
-                    object value = propertyDescriptor.GetValue(userInputProperties);
-
-                    IQikTextBoxControl textBox = optionsDictionary[name] as IQikTextBoxControl;
-                    textBox.SetCurrentValue(value != null ? value.ToString() : null);
+                    string value = propertyDescriptor.GetValue(userInputProperties) != null ? propertyDescriptor.GetValue(userInputProperties).ToString() : null;
+                    compiler.UpdateControl(propertyDescriptor.Name, value);
                 }
                 else if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.OptionBox)
                 {
-                    string name = propertyDescriptor.Name;
-                    object value = propertyDescriptor.GetValue(userInputProperties);
-
-                    IQikOptionBoxControl optionBox = optionsDictionary[name] as IQikOptionBoxControl;
-                    if (optionBox != null)
-                    {
-                        if (value != null)
-                            optionBox.SelectOption(int.Parse(value.ToString()));
-                        else
-                            optionBox.ClearSelection(false);
-                    }
+                    compiler.UpdateControl(propertyDescriptor.Name, propertyDescriptor.GetValue(userInputProperties).ToString());
                 }
-                //else if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.CheckBox)
-                //{
-                //    string name = propertyDescriptor.Name;
-                //    string value = propertyDescriptor.GetValue(userInputProperties).ToString();
-
-                //    QikCheckBoxControl checkBox = optionsDictionary[name] as QikCheckBoxControl;
-                //    checkBox.SetCurrentValue(value);
-                //}
             }
 
             CalculateExpressions(userInputProperties);

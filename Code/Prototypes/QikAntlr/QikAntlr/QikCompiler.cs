@@ -55,6 +55,34 @@ namespace CygSoft.Qik.LanguageEngine
             this.Expressions = GetExpressions(inputData);
         }
 
+        public void UpdateControl(string symbol, string value)
+        {
+            IQikControl control = this.Controls.Where(c => c.Symbol == symbol).SingleOrDefault();
+            if (control != null)
+            {
+                if (control is IQikTextBoxControl)
+                {
+                    IQikTextBoxControl textBoxControl = control as IQikTextBoxControl;
+                    textBoxControl.SetCurrentValue(value);
+                }
+                else if (control is IQikOptionBoxControl)
+                {
+                    if (control is IQikOptionBoxControl)
+                    {
+                        IQikOptionBoxControl optionBoxControl = control as IQikOptionBoxControl;
+                        if (value != null)
+                        {
+                            optionBoxControl.SelectOption(int.Parse(value));
+                        }
+                        else
+                        {
+                            optionBoxControl.ClearSelection(false);
+                        }
+                    }
+                }
+            }
+        }
+
         private IQikControl[] GetControls(string inputData)
         {
             AntlrInputStream inputStream = new AntlrInputStream(inputData);

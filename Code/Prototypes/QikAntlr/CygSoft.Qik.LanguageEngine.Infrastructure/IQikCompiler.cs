@@ -8,13 +8,17 @@ namespace CygSoft.Qik.LanguageEngine.Infrastructure
 {
     public interface IQikCompiler
     {
-        CygSoft.Qik.LanguageEngine.Infrastructure.IQikControl[] Controls { get; }
+        IQikExpression[] Expressions { get; }
+        IQikControl[] Controls { get; }
+
         void ExecuteScript(string inputData);
-        CygSoft.Qik.LanguageEngine.Infrastructure.IQikExpression[] Expressions { get; }
+        
         string FindOutput(string placeholder);
         string FindSymbolValue(string symbol);
         string FindTitle(string placeholder);
         string[] Placeholders { get; }
         string[] Symbols { get; }
+
+        void UpdateControl(string symbol, string value);
     }
 }
