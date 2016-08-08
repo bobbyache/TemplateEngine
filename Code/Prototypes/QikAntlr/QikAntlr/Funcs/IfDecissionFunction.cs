@@ -1,33 +1,34 @@
-﻿using CygSoft.Qik.LanguageEngine.QikScoping;
+﻿using CygSoft.Qik.LanguageEngine.Scope;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CygSoft.Qik.LanguageEngine.QikExpressions
+namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    public class QikIfFunction : QikFunction
+    internal class IfDecissionFunction : BaseFunction
     {
-        private Dictionary<string, QikFunction> functions = new Dictionary<string, QikFunction>();
+        private Dictionary<string, BaseFunction> functions = new Dictionary<string, BaseFunction>();
         private List<string> options = new List<string>();
 
         private string symbol = null;
-        private ScopeTable scopeTable;
+        private GlobalTable scopeTable;
 
-        internal QikIfFunction(ScopeTable scopeTable, string symbol) : base (scopeTable)
+        internal IfDecissionFunction(GlobalTable scopeTable, string symbol)
+            : base(scopeTable)
         {
             this.symbol = symbol;
-            this.InputType = QikChildInputTypeEnum.IfStatement;
+            this.InputType = ChildInputTypeEnum.IfStatement;
             this.scopeTable = scopeTable;
         }
 
         public override string Execute()
         {
-            string curOption = scopeTable.FindSymbol(this.symbol);
+            string curOption = scopeTable.GetValueOfSymbol(this.symbol);
             if (curOption != null && functions.ContainsKey(curOption))
             {
-                QikFunction func = functions[curOption];
+                BaseFunction func = functions[curOption];
                 string result = func.Execute();
 
                 return result;
@@ -35,7 +36,7 @@ namespace CygSoft.Qik.LanguageEngine.QikExpressions
             return null;
         }
 
-        public void AddFunction(string text, QikFunction func)
+        public void AddFunction(string text, BaseFunction func)
         {
             functions.Add(QikCommon.StripOuterQuotes(text), func);
         }

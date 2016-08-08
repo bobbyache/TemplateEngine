@@ -1,27 +1,27 @@
-﻿using CygSoft.Qik.LanguageEngine.QikScoping;
+﻿using CygSoft.Qik.LanguageEngine.Scope;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CygSoft.Qik.LanguageEngine.QikExpressions
+namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    public class QikCurrentDateFunction : QikFunction
+    internal class CurrentDateFunction : BaseFunction
     {
-        internal QikCurrentDateFunction(ScopeTable scopeTable, QikFunction func)
+        internal CurrentDateFunction(GlobalTable scopeTable, BaseFunction func)
             : base(scopeTable, func)
         {
 
         }
 
-        internal QikCurrentDateFunction(ScopeTable scopeTable, QikLiteralText literalText)
+        internal CurrentDateFunction(GlobalTable scopeTable, LiteralText literalText)
             : base(scopeTable, literalText)
         {
 
         }
 
-        internal QikCurrentDateFunction(ScopeTable scopeTable, QikVariable variable)
+        internal CurrentDateFunction(GlobalTable scopeTable, Variable variable)
             : base(scopeTable, variable)
         {
 

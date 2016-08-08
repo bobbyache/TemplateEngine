@@ -1,27 +1,28 @@
-﻿using CygSoft.Qik.LanguageEngine.QikScoping;
+﻿using CygSoft.Qik.LanguageEngine.Scope;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CygSoft.Qik.LanguageEngine.QikExpressions
+namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    public class QikCamelCaseFunction : QikFunction
+    internal class CamelCaseFunction : BaseFunction
     {
-        internal QikCamelCaseFunction(ScopeTable scopeTable, QikFunction func)
+        internal CamelCaseFunction(GlobalTable scopeTable, 
+            BaseFunction func)
             : base(scopeTable, func)
         {
 
         }
 
-        internal QikCamelCaseFunction(ScopeTable scopeTable, QikLiteralText literalText)
+        internal CamelCaseFunction(GlobalTable scopeTable, LiteralText literalText)
             : base(scopeTable, literalText)
         {
 
         }
 
-        internal QikCamelCaseFunction(ScopeTable scopeTable, QikVariable variable)
+        internal CamelCaseFunction(GlobalTable scopeTable, Variable variable)
             : base(scopeTable, variable)
         {
 

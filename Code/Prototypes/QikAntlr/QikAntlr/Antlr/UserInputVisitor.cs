@@ -1,27 +1,21 @@
-﻿using QikAntlr.Antlr;
-using CygSoft.Qik.LanguageEngine.QikControls;
-using CygSoft.Qik.LanguageEngine.QikScoping;
+﻿using CygSoft.Qik.LanguageEngine.Scope;
+using CygSoft.Qik.LanguageEngine.Symbols;
+using QikAntlr.Antlr;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CygSoft.Qik.LanguageEngine.Infrastructure;
 
 namespace CygSoft.Qik.LanguageEngine.Antlr
 {
-    public class QikControlVisitor : QikTemplateBaseVisitor<string>
+    internal class UserInputVisitor : QikTemplateBaseVisitor<string>
     {
-        private ScopeTable scopeTable;
+        private GlobalTable scopeTable;
 
-        internal QikControlVisitor(ScopeTable scopeTable)
+        internal UserInputVisitor(GlobalTable scopeTable)
         {
             this.scopeTable = scopeTable;
-        }
-        private Dictionary<string, IQikControl> controlDictionary = new Dictionary<string, IQikControl>();
-        public Dictionary<string, IQikControl> ControlDictionary
-        {
-            get { return this.controlDictionary; }
         }
 
         public override string VisitTextBox(QikTemplateParser.TextBoxContext context)
@@ -31,7 +25,8 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
             string titleText = GetTextBoxTitle(context);
             string defaultText = GetTextBoxDefaultText(context);
 
-            controlDictionary.Add(controlId, new QikTextBoxControl(this.scopeTable, controlId, defaultText, titleText));
+            TextInputSymbol textInputSymbol = new TextInputSymbol(controlId, titleText, defaultText);
+            scopeTable.AddSymbol(textInputSymbol);
 
             return base.VisitTextBox(context);
         }
@@ -42,53 +37,18 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
             string defaultId = GetOptionBoxDefaultId(context);
             string titleText = GetOptionBoxTitle(context);
 
-            QikOptionBoxControl optionBox = new QikOptionBoxControl(this.scopeTable, controlId, defaultId, titleText);
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol(controlId, titleText, defaultId);
 
             foreach (QikTemplateParser.SingleOptionContext optionContext in context.optionsBody().singleOption())
             {
-                string id = QikCommon.StripOuterQuotes(optionContext.STRING().GetText());
-                string value = QikCommon.StripOuterQuotes(optionContext.titleArg().STRING().GetText());
-                optionBox.AddOption(id, value);
+                optionInputSymbol.AddOption(QikCommon.StripOuterQuotes(optionContext.STRING().GetText()), 
+                    QikCommon.StripOuterQuotes(optionContext.titleArg().STRING().GetText()));
             }
 
-            controlDictionary.Add(optionBox.Symbol, optionBox);
-
+            scopeTable.AddSymbol(optionInputSymbol);
             return base.VisitOptionBox(context);
         }
 
-        //public override string VisitCheckBox(QikTemplateParser.CheckBoxContext context)
-        //{
-        //    string controlId = context.ID().GetText();
-
-        //    string titleText = GetCheckBoxTitle(context);
-        //    string defaultId = GetCheckBoxDefaultText(context);
-
-        //    controlDictionary.Add(controlId, new QikCheckBoxControl(controlId, defaultId, titleText));
-
-        //    return base.VisitCheckBox(context);
-        //}
-
-        //private string GetCheckBoxTitle(QikTemplateParser.CheckBoxContext context)
-        //{
-        //    string titleText = null;
-        //    if (context.checkBoxArgs().titleArg() != null)
-        //    {
-        //        titleText = QikCommon.StripOuterQuotes(context.checkBoxArgs().titleArg().STRING().GetText());
-        //    }
-        //    return titleText;
-        //}
-
-        //private string GetCheckBoxDefaultText(QikTemplateParser.CheckBoxContext context)
-        //{
-        //    string defaultText = null;
-
-        //    if (context.checkBoxArgs().defaultArg() != null)
-        //    {
-        //        defaultText = QikCommon.StripOuterQuotes(context.checkBoxArgs().defaultArg().STRING().GetText());
-        //    }
-
-        //    return defaultText;
-        //}
 
         private string GetOptionBoxTitle(QikTemplateParser.OptionBoxContext context)
         {

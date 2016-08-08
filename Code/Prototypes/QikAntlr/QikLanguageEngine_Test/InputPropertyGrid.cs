@@ -7,14 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CygSoft.Qik.LanguageEngine.QikControls;
 using DynamicTypeDescriptor;
 
 using Dyn = DynamicTypeDescriptor;
 using Scm = System.ComponentModel;
 using System.Drawing.Design;
-using CygSoft.Qik.LanguageEngine.QikExpressions;
 using CygSoft.Qik.LanguageEngine.Infrastructure;
+using CygSoft.Qik.LanguageEngine;
 
 namespace QikLanguageEngine_Test
 {
@@ -27,35 +26,30 @@ namespace QikLanguageEngine_Test
         private const string CATEGORY_USER_INPUT = "1. User Input";
         private const string CATEGORY_EXPRESSION = "2. Expressions";
 
-        private IQikCompiler compiler;
+        private Compiler scriptCompiler;
 
         public InputPropertyGrid()
         {
             InitializeComponent();
         }
 
-        public void Reset(IQikCompiler qikCompiler)
+        public void Reset(Compiler compiler)
         {
-            this.compiler = qikCompiler;
+            this.scriptCompiler = compiler;
 
             UserInputProperties properties = new UserInputProperties();
             Dyn.TypeDescriptor.IntallTypeDescriptor(properties);
             propertyGrid.SelectedObject = properties;
 
-            foreach (IQikControl ctrl in qikCompiler.Controls)
+            foreach (IInputField field in compiler.InputFields)
             {
-                if (ctrl is IQikOptionBoxControl)
-                {
-                    CreateOptionsBox(ctrl as IQikOptionBoxControl);   
-                }
-                else if (ctrl is IQikTextBoxControl)
-                {
-                    CreateTextBox(ctrl as IQikTextBoxControl);
-                }
+                if (field is ITextField)
+                    CreateTextBox(field as ITextField);
+                else if (field is IOptionsField)
+                    CreateOptionsBox(field as IOptionsField);
             }
 
-
-            foreach (IQikExpression expression in qikCompiler.Expressions)
+            foreach (IExpression expression in compiler.Expressions)
             {
                 CreateExpression(expression);
             }
@@ -63,7 +57,7 @@ namespace QikLanguageEngine_Test
             propertyGrid.Refresh();
         }
 
-        private void CreateTextBox(IQikTextBoxControl textBox)
+        private void CreateTextBox(ITextField textBox)
         {
             Dyn.TypeDescriptor typeDescriptor = Dyn.TypeDescriptor.GetTypeDescriptor(propertyGrid.SelectedObject);
 
@@ -82,7 +76,7 @@ namespace QikLanguageEngine_Test
             typeDescriptor.GetProperties().Add(propertyDescriptor);
         }
 
-        private void CreateOptionsBox(IQikOptionBoxControl optionBox)
+        private void CreateOptionsBox(IOptionsField optionBox)
         {
             Dyn.TypeDescriptor typeDescriptor = Dyn.TypeDescriptor.GetTypeDescriptor(propertyGrid.SelectedObject);
             Dyn.PropertyDescriptor propertyDescriptor = new Dyn.PropertyDescriptor(propertyGrid.SelectedObject.GetType(),
@@ -105,13 +99,13 @@ namespace QikLanguageEngine_Test
             typeDescriptor.GetProperties().Add(propertyDescriptor);
         }
 
-        private void CreateExpression(IQikExpression expression)
+        private void CreateExpression(IExpression expression)
         {
             Dyn.TypeDescriptor typeDescriptor = Dyn.TypeDescriptor.GetTypeDescriptor(propertyGrid.SelectedObject);
 
             Dyn.PropertyDescriptor propertyDescriptor = new Dyn.PropertyDescriptor(propertyGrid.SelectedObject.GetType(),
                                                         expression.Symbol,
-                                                        typeof(string), expression.Execute(),
+                                                        typeof(string), expression.Value,
                                                         //typeof(string), null,
                                                         new Scm.BrowsableAttribute(true),
                                                         new Scm.DisplayNameAttribute(expression.Title),
@@ -130,11 +124,11 @@ namespace QikLanguageEngine_Test
             typeDescriptor.GetProperties().Add(propertyDescriptor);
         }
 
-        private void BuildOptions(Dyn.PropertyDescriptor pd, IQikOptionBoxOption[] options)
+        private void BuildOptions(Dyn.PropertyDescriptor pd, IOption[] options)
         {
             pd.StandardValues.Clear();
 
-            foreach (IQikOptionBoxOption option in options)
+            foreach (IOption option in options)
             {
                 Dyn.StandardValue sv = new Dyn.StandardValue(option.Index, option.Value);
                 sv.Description = "Description of " + sv.DisplayName + ".";
@@ -154,11 +148,11 @@ namespace QikLanguageEngine_Test
                 if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.TextBox)
                 {
                     string value = propertyDescriptor.GetValue(userInputProperties) != null ? propertyDescriptor.GetValue(userInputProperties).ToString() : null;
-                    compiler.UpdateControl(propertyDescriptor.Name, value);
+                    scriptCompiler.Input(propertyDescriptor.Name, value);
                 }
                 else if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.OptionBox)
                 {
-                    compiler.UpdateControl(propertyDescriptor.Name, propertyDescriptor.GetValue(userInputProperties).ToString());
+                    scriptCompiler.Input(propertyDescriptor.Name, propertyDescriptor.GetValue(userInputProperties).ToString());
                 }
             }
 
@@ -176,7 +170,7 @@ namespace QikLanguageEngine_Test
                 PropertyControlAttribute propertyControl = propertyDescriptor.Attributes[typeof(PropertyControlAttribute)] as PropertyControlAttribute;
                 if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.ExpressionBox)
                 {
-                    string newValue = compiler.ResolveExpression(propertyDescriptor.Name);
+                    string newValue = scriptCompiler.GetValueOfSymbol(propertyDescriptor.Name);
                     propertyDescriptor.SetValue(userInputProperties, newValue == null ? string.Empty : newValue);
                 }
             }

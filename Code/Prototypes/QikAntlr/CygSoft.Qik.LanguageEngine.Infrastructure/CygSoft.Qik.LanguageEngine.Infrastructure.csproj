@@ -40,12 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IExpression.cs" />
+    <Compile Include="IInputField.cs" />
+    <Compile Include="IOption.cs" />
+    <Compile Include="IOptionsField.cs" />
     <Compile Include="IQikCompiler.cs" />
     <Compile Include="IQikControl.cs" />
     <Compile Include="IQikExpression.cs" />
     <Compile Include="IQikOptionBoxControl.cs" />
     <Compile Include="IQikOptionBoxOption.cs" />
     <Compile Include="IQikTextBoxControl.cs" />
+    <Compile Include="ITextField.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

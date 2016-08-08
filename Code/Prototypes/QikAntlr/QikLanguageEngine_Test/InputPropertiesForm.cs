@@ -1,8 +1,6 @@
 ﻿using Alsing.SourceCode;
 using CygSoft.Qik.LanguageEngine;
 using CygSoft.Qik.LanguageEngine.Infrastructure;
-using CygSoft.Qik.LanguageEngine.QikControls;
-using CygSoft.Qik.LanguageEngine.QikExpressions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,7 +16,7 @@ namespace QikLanguageEngine_Test
 {
     public partial class InputPropertiesForm : Form
     {
-        private QikCompiler engine = new QikCompiler();
+        private Compiler compiler = new Compiler();
 
         public InputPropertiesForm()
         {
@@ -59,12 +57,9 @@ namespace QikLanguageEngine_Test
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            engine.ExecuteScript(syntaxBox.Document.Text);
+            compiler.Execute(syntaxBox.Document.Text);
 
-            IQikControl[] controls = engine.Controls;
-            IQikExpression[] expressions = engine.Expressions;
-
-            inputPropertyGrid.Reset(engine);
+            inputPropertyGrid.Reset(compiler);
 
             UpdateOutputDocument();
             UpdateAutoList();
@@ -72,12 +67,10 @@ namespace QikLanguageEngine_Test
 
         private void ExecuteScript()
         {
-            engine.ExecuteScript(syntaxBox.Document.Text);
+            compiler = new Compiler();
+            compiler.Execute(syntaxBox.Document.Text);
 
-            IQikControl[] controls = engine.Controls;
-            IQikExpression[] expressions = engine.Expressions;
-
-            inputPropertyGrid.Reset(engine);
+            inputPropertyGrid.Reset(compiler);
 
             UpdateOutputDocument();
             UpdateAutoList();
@@ -87,9 +80,9 @@ namespace QikLanguageEngine_Test
         {
             StringBuilder builder = new StringBuilder();
 
-            foreach (string symbol in engine.Symbols)
+            foreach (string symbol in compiler.Symbols)
             {
-                builder.AppendLine(string.Format("{0} = \"{1}\"", symbol, engine.FindSymbolValue(symbol)));
+                builder.AppendLine(string.Format("{0} = \"{1}\"", symbol, compiler.GetValueOfSymbol(symbol)));
             }
 
             MessageBox.Show(builder.ToString());
@@ -108,9 +101,9 @@ namespace QikLanguageEngine_Test
         private void UpdateOutputDocument()
         {
             string input = blueprintSyntaxBox.Document.Text;
-            foreach (string placeholder in engine.Placeholders)
+            foreach (string placeholder in compiler.Placeholders)
             {
-                string output = engine.FindOutput(placeholder);
+                string output = compiler.GetValueOfPlaceholder(placeholder);
                 input = input.Replace(placeholder, output);
             }
 
@@ -121,9 +114,9 @@ namespace QikLanguageEngine_Test
         {
             blueprintSyntaxBox.AutoListClear();
 
-            foreach (string placeholder in engine.Placeholders)
+            foreach (string placeholder in compiler.Placeholders)
             {
-                string title = engine.FindTitle(placeholder);
+                string title = compiler.GetTitleOfPlaceholder(placeholder);
                 blueprintSyntaxBox.AutoListAdd(string.Format("{0} ({1})", title, placeholder), placeholder, 0);
             }
         }

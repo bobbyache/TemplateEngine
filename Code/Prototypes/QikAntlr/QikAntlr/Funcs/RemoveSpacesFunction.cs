@@ -1,27 +1,27 @@
-﻿using CygSoft.Qik.LanguageEngine.QikScoping;
+﻿using CygSoft.Qik.LanguageEngine.Scope;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CygSoft.Qik.LanguageEngine.QikExpressions
+namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    public class QikRemoveSpacesFunction : QikFunction
+    internal class RemoveSpacesFunction : BaseFunction
     {
-        internal QikRemoveSpacesFunction(ScopeTable scopeTable, QikFunction func)
+        internal RemoveSpacesFunction(GlobalTable scopeTable, BaseFunction func)
             : base(scopeTable, func)
         {
 
         }
 
-        internal QikRemoveSpacesFunction(ScopeTable scopeTable, QikLiteralText literalText)
+        internal RemoveSpacesFunction(GlobalTable scopeTable, LiteralText literalText)
             : base(scopeTable, literalText)
         {
 
         }
 
-        internal QikRemoveSpacesFunction(ScopeTable scopeTable, QikVariable variable)
+        internal RemoveSpacesFunction(GlobalTable scopeTable, Variable variable)
             : base(scopeTable, variable)
         {
 

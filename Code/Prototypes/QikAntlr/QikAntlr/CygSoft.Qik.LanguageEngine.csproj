@@ -45,36 +45,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Antlr\QikControlVisitor.cs" />
-    <Compile Include="Antlr\QikExpressionVisitor.cs" />
+    <Compile Include="Antlr\ExpressionVisitor.cs" />
     <Compile Include="Antlr\QikTemplate.g4.lexer.cs">
       <DependentUpon>QikTemplate.g4</DependentUpon>
     </Compile>
     <Compile Include="Antlr\QikTemplate.g4.parser.cs">
       <DependentUpon>QikTemplate.g4</DependentUpon>
     </Compile>
-    <Compile Include="QikCompiler.cs" />
+    <Compile Include="Antlr\UserInputVisitor.cs" />
+    <Compile Include="Compiler.cs" />
+    <Compile Include="Funcs\BaseFunction.cs" />
+    <Compile Include="Funcs\CamelCaseFunction.cs" />
+    <Compile Include="Funcs\ConcatenateFunction.cs" />
+    <Compile Include="Funcs\CurrentDateFunction.cs" />
+    <Compile Include="Funcs\IfDecissionFunction.cs" />
+    <Compile Include="Funcs\LiteralText.cs" />
+    <Compile Include="Funcs\LowerCaseFunction.cs" />
+    <Compile Include="Funcs\RemoveSpacesFunction.cs" />
+    <Compile Include="Funcs\TextFunction.cs" />
+    <Compile Include="Funcs\UpperCaseFunction.cs" />
+    <Compile Include="Funcs\Variable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QikCommon.cs" />
-    <Compile Include="QikControls\QikCheckBoxControl.cs" />
-    <Compile Include="QikControls\QikControl.cs" />
-    <Compile Include="QikControls\QikOptionBoxControl.cs" />
-    <Compile Include="QikControls\QikOptionBoxOption.cs" />
-    <Compile Include="QikControls\QikTextBoxControl.cs" />
-    <Compile Include="QikExpressions\QikCamelCaseFunction.cs" />
-    <Compile Include="QikExpressions\QikConcatenateFunction.cs" />
-    <Compile Include="QikExpressions\QikCurrentDateFunction.cs" />
-    <Compile Include="QikExpressions\QikExpression.cs" />
-    <Compile Include="QikExpressions\QikFunction.cs" />
-    <Compile Include="QikExpressions\QikIfFunction.cs" />
-    <Compile Include="QikExpressions\QikLiteralText.cs" />
-    <Compile Include="QikExpressions\QikLowerCaseFunction.cs" />
-    <Compile Include="QikExpressions\QikRemoveSpacesFunction.cs" />
-    <Compile Include="QikExpressions\QikTextFunction.cs" />
-    <Compile Include="QikExpressions\QikUpperCaseFunction.cs" />
-    <Compile Include="QikExpressions\QikVariable.cs" />
-    <Compile Include="QikScoping\ScopeItem.cs" />
-    <Compile Include="QikScoping\ScopeTable.cs" />
+    <Compile Include="Scope\GlobalTable.cs" />
+    <Compile Include="Symbols\BaseSymbol.cs" />
+    <Compile Include="Symbols\ExpressionSymbol.cs" />
+    <Compile Include="Symbols\OptionInputSymbol.cs" />
+    <Compile Include="Symbols\TextInputSymbol.cs" />
+    <Compile Include="Symbols\InputSymbol.cs" />
   </ItemGroup>
   <ItemGroup>
     <Antlr4 Include="Antlr\QikTemplate.g4">
@@ -89,6 +87,7 @@
       <Name>CygSoft.Qik.LanguageEngine.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -1,30 +1,27 @@
-﻿using CygSoft.Qik.LanguageEngine.QikScoping;
+﻿using CygSoft.Qik.LanguageEngine.Scope;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CygSoft.Qik.LanguageEngine.QikExpressions
+namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    public class QikTextFunction : QikFunction
+    internal class TextFunction : BaseFunction
     {
-        internal QikTextFunction(ScopeTable scopeTable, QikFunction func)
+        internal TextFunction(GlobalTable scopeTable, BaseFunction func)
             : base(scopeTable, func)
         {
-
         }
 
-        internal QikTextFunction(ScopeTable scopeTable, QikLiteralText literalText)
+        internal TextFunction(GlobalTable scopeTable, LiteralText literalText)
             : base(scopeTable, literalText)
         {
-
         }
 
-        internal QikTextFunction(ScopeTable scopeTable, QikVariable variable)
+        internal TextFunction(GlobalTable scopeTable, Variable variable)
             : base(scopeTable, variable)
         {
-
         }
 
         public override string Execute()

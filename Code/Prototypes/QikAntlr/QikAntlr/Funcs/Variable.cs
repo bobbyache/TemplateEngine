@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CygSoft.Qik.LanguageEngine.QikExpressions
+namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    public class QikVariable
+    internal class Variable
     {
         public string Symbol { get; private set; }
 
-        public QikVariable(string symbol)
+        public Variable(string symbol)
         {
             this.Symbol = symbol;
         }

@@ -1,27 +1,27 @@
-﻿using CygSoft.Qik.LanguageEngine.QikScoping;
+﻿using CygSoft.Qik.LanguageEngine.Scope;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CygSoft.Qik.LanguageEngine.QikExpressions
+namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    public class QikUpperCaseFunction : QikFunction
+    internal class LowerCaseFunction : BaseFunction
     {
-        internal QikUpperCaseFunction(ScopeTable scopeTable, QikFunction func)
+        internal LowerCaseFunction(GlobalTable scopeTable, BaseFunction func)
             : base(scopeTable, func)
         {
 
         }
 
-        internal QikUpperCaseFunction(ScopeTable scopeTable, QikLiteralText literalText)
+        internal LowerCaseFunction(GlobalTable scopeTable, LiteralText literalText)
             : base(scopeTable, literalText)
         {
 
         }
 
-        internal QikUpperCaseFunction(ScopeTable scopeTable, QikVariable variable)
+        internal LowerCaseFunction(GlobalTable scopeTable, Variable variable)
             : base(scopeTable, variable)
         {
 
@@ -32,7 +32,7 @@ namespace CygSoft.Qik.LanguageEngine.QikExpressions
             string txt = base.Execute();
             if (txt != null && txt.Length >= 1)
             {
-                return txt.ToUpper();
+                return txt.ToLower();
             }
             return txt;
         }
