@@ -12,12 +12,24 @@ namespace CygSoft.Qik.LanguageEngine.QikScoping
 
         public string[] Symbols
         {
-            get { return table.Keys.ToArray(); }
+            get 
+            {
+                if (table.Keys.Select(r => r).Any())
+                    return table.Keys.Select(r => r).ToArray();
+                else
+                    return new string[0];
+            }
         }
 
         public string[] Placeholders
         {
-            get { return table.Values.Select(r => r.Placeholder).ToArray(); }
+            get 
+            {
+                if (table.Values.Select(r => r.Placeholder).Any())
+                    return table.Values.Select(r => r.Placeholder).ToArray();
+                else
+                    return new string[0];
+            }
         }
 
         internal void UpdateSymbol(string title, string symbol, string value = null)
