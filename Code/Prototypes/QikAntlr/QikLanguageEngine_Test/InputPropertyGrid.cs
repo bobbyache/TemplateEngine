@@ -24,9 +24,6 @@ namespace QikLanguageEngine_Test
     {
         public event EventHandler InputChanged;
 
-        //private Dictionary<string, IQikControl> optionsDictionary = null;
-        private Dictionary<string, IQikExpression> expressionDictionary = null;
-
         private const string CATEGORY_USER_INPUT = "1. User Input";
         private const string CATEGORY_EXPRESSION = "2. Expressions";
 
@@ -40,8 +37,6 @@ namespace QikLanguageEngine_Test
         public void Reset(IQikCompiler qikCompiler)
         {
             this.compiler = qikCompiler;
-            //optionsDictionary = new Dictionary<string, IQikControl>();
-            expressionDictionary = new Dictionary<string, IQikExpression>();
 
             UserInputProperties properties = new UserInputProperties();
             Dyn.TypeDescriptor.IntallTypeDescriptor(properties);
@@ -53,22 +48,16 @@ namespace QikLanguageEngine_Test
                 {
                     CreateOptionsBox(ctrl as IQikOptionBoxControl);   
                 }
-                //else if (ctrl is QikCheckBoxControl)
-                //{
-                //    CreateCheckBox(ctrl as QikCheckBoxControl);
-                //}
                 else if (ctrl is IQikTextBoxControl)
                 {
                     CreateTextBox(ctrl as IQikTextBoxControl);
                 }
-                //optionsDictionary.Add(ctrl.Symbol, ctrl);
             }
 
 
             foreach (IQikExpression expression in qikCompiler.Expressions)
             {
                 CreateExpression(expression);
-                expressionDictionary.Add(expression.Symbol, expression);
             }
 
             propertyGrid.Refresh();
@@ -92,25 +81,6 @@ namespace QikLanguageEngine_Test
 
             typeDescriptor.GetProperties().Add(propertyDescriptor);
         }
-
-        //private void CreateCheckBox(QikCheckBoxControl checkBox)
-        //{
-        //    Dyn.TypeDescriptor typeDescriptor = Dyn.TypeDescriptor.GetTypeDescriptor(propertyGrid.SelectedObject);
-
-        //    Dyn.PropertyDescriptor propertyDescriptor = new Dyn.PropertyDescriptor(propertyGrid.SelectedObject.GetType(),
-        //                                                checkBox.ControlId,
-        //                                                typeof(bool), bool.Parse(checkBox.DefaultValue),
-        //                                                new Scm.BrowsableAttribute(true),
-        //                                                new Scm.DisplayNameAttribute(checkBox.Title),
-        //                                                new Scm.DescriptionAttribute("Select true/false."),
-        //                                                new Scm.DefaultValueAttribute(bool.Parse(checkBox.DefaultValue))
-        //                                                );
-        //    propertyDescriptor.Attributes.Add(new Scm.CategoryAttribute(CATEGORY_USER_INPUT), true);
-        //    propertyDescriptor.Attributes.Add(new PropertyControlAttribute(ControlTypeEnum.CheckBox), true);
-
-        //    propertyDescriptor.AddValueChanged(propertyGrid.SelectedObject, new EventHandler(this.InputPropertyChanged));
-        //    typeDescriptor.GetProperties().Add(propertyDescriptor);
-        //}
 
         private void CreateOptionsBox(IQikOptionBoxControl optionBox)
         {
@@ -206,12 +176,7 @@ namespace QikLanguageEngine_Test
                 PropertyControlAttribute propertyControl = propertyDescriptor.Attributes[typeof(PropertyControlAttribute)] as PropertyControlAttribute;
                 if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.ExpressionBox)
                 {
-                    string name = propertyDescriptor.Name;
-                    //string value = propertyDescriptor.GetValue(userInputProperties).ToString();
-
-                    IQikExpression expression = expressionDictionary[name] as IQikExpression;
-                    string newValue = expression.Execute();
-                    //propertyDescriptor.SetValue(userInputProperties, newValue);
+                    string newValue = compiler.ResolveExpression(propertyDescriptor.Name);
                     propertyDescriptor.SetValue(userInputProperties, newValue == null ? string.Empty : newValue);
                 }
             }

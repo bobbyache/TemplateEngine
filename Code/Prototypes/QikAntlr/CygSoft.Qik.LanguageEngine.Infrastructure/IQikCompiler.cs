@@ -20,5 +20,7 @@ namespace CygSoft.Qik.LanguageEngine.Infrastructure
         string[] Symbols { get; }
 
         void UpdateControl(string symbol, string value);
+        //void CalculateExpressions();
+        string ResolveExpression(string symbol);
     }
 }

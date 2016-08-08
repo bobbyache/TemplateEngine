@@ -83,6 +83,20 @@ namespace CygSoft.Qik.LanguageEngine
             }
         }
 
+        //public void CalculateExpressions()
+        //{
+        //    foreach (IQikExpression expression in this.Expressions)
+        //    {
+        //        expression.Execute();
+        //    }
+        //}
+
+        public string ResolveExpression(string symbol)
+        {
+            IQikExpression expression = this.Expressions.Where(e => e.Symbol == symbol).SingleOrDefault();
+            return expression.Execute();
+        }
+
         private IQikControl[] GetControls(string inputData)
         {
             AntlrInputStream inputStream = new AntlrInputStream(inputData);
