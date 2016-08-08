@@ -18,7 +18,7 @@ namespace QikLanguageEngine_Test
 {
     public partial class InputPropertiesForm : Form
     {
-        private Qik engine = new Qik();
+        private QikCompiler engine = new QikCompiler();
 
         public InputPropertiesForm()
         {
@@ -64,7 +64,7 @@ namespace QikLanguageEngine_Test
             IQikControl[] controls = engine.Controls;
             IQikExpression[] expressions = engine.Expressions;
 
-            inputPropertyGrid.Reset(engine.Controls, engine.Expressions);
+            inputPropertyGrid.Reset(engine);
 
             UpdateOutputDocument();
             UpdateAutoList();
@@ -77,7 +77,7 @@ namespace QikLanguageEngine_Test
             IQikControl[] controls = engine.Controls;
             IQikExpression[] expressions = engine.Expressions;
 
-            inputPropertyGrid.Reset(engine.Controls, engine.Expressions);
+            inputPropertyGrid.Reset(engine);
 
             UpdateOutputDocument();
             UpdateAutoList();

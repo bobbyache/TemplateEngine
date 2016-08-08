@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IQikCompiler.cs" />
     <Compile Include="IQikControl.cs" />
     <Compile Include="IQikExpression.cs" />
     <Compile Include="IQikOptionBoxControl.cs" />

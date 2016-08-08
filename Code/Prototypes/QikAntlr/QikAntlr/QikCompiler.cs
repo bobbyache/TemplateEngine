@@ -15,27 +15,8 @@ using CygSoft.Qik.LanguageEngine.Infrastructure;
 
 namespace CygSoft.Qik.LanguageEngine
 {
-    public class Qik
+    public class QikCompiler : IQikCompiler
     {
-        //public QikControl[] GetControls(string filePath)
-        //{
-        //    string input = File.ReadAllText(filePath);
-
-        //    AntlrInputStream inputStream = new AntlrInputStream(input);
-        //    QikTemplateLexer lexer = new QikTemplateLexer(inputStream);
-        //    CommonTokenStream tokens = new CommonTokenStream(lexer);
-        //    QikTemplateParser parser = new QikTemplateParser(tokens);
-
-        //    IParseTree tree = parser.template();
-
-        //    QikControlVisitor controlVisitor = new QikControlVisitor();
-        //    controlVisitor.Visit(tree);
-
-        //    QikControl[] controls = controlVisitor.ControlDictionary.Values.ToArray();
-
-        //    return controls;
-        //}
-
         public IQikControl[] Controls { get; private set; }
         public IQikExpression[] Expressions { get; private set; }
 

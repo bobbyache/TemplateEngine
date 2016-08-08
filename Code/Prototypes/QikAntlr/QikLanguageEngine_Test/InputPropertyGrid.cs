@@ -35,7 +35,8 @@ namespace QikLanguageEngine_Test
             InitializeComponent();
         }
 
-        public void Reset(IQikControl[] controlList, IQikExpression[] expressionList)
+        //public void Reset(IQikControl[] controlList, IQikExpression[] expressionList)
+        public void Reset(IQikCompiler qik)
         {
             optionsDictionary = new Dictionary<string, IQikControl>();
             expressionDictionary = new Dictionary<string, IQikExpression>();
@@ -44,7 +45,7 @@ namespace QikLanguageEngine_Test
             Dyn.TypeDescriptor.IntallTypeDescriptor(properties);
             propertyGrid.SelectedObject = properties;
 
-            foreach (IQikControl ctrl in controlList)
+            foreach (IQikControl ctrl in qik.Controls)
             {
                 if (ctrl is IQikOptionBoxControl)
                 {
@@ -62,7 +63,7 @@ namespace QikLanguageEngine_Test
             }
 
 
-            foreach (IQikExpression expression in expressionList)
+            foreach (IQikExpression expression in qik.Expressions)
             {
                 CreateExpression(expression);
                 expressionDictionary.Add(expression.Symbol, expression);
@@ -237,7 +238,6 @@ namespace QikLanguageEngine_Test
 
         private void propertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            //System.Diagnostics.Debug.WriteLine(e.ChangedItem.Label);
             if (InputChanged != null)
                 InputChanged(this, new EventArgs());
         }
