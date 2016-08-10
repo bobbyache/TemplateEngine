@@ -14,8 +14,8 @@ namespace CygSoft.Qik.LanguageEngine.Tests
         public void Create_OptionInputSymbol_WithoutDefault()
         {
             OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", null);
-            optionInputSymbol.AddOption("MSDF_DM", "Data Mart");
-            optionInputSymbol.AddOption("MSDF_VALISTRACTOR", "Valistractor");
+            optionInputSymbol.AddOption("ADVWORKS", "Adventure Works Database");
+            optionInputSymbol.AddOption("PUBBOOKS", "Published Books Database");
 
             IOptionsField optionsField = optionInputSymbol;
 
@@ -37,25 +37,25 @@ namespace CygSoft.Qik.LanguageEngine.Tests
         [TestMethod]
         public void Create_OptionInputSymbol_WithDefault()
         {
-            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "MSDF_DM");
-            optionInputSymbol.AddOption("MSDF_DM", "Data Mart");
-            optionInputSymbol.AddOption("MSDF_VALISTRACTOR", "Valistractor");
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "ADVWORKS");
+            optionInputSymbol.AddOption("ADVWORKS", "Adventure Works Database");
+            optionInputSymbol.AddOption("PUBBOOKS", "Published Books Database");
 
             IOptionsField optionsField = optionInputSymbol;
 
-            Assert.AreEqual("MSDF_DM", optionInputSymbol.DefaultValue);
-            Assert.AreEqual("MSDF_DM", optionInputSymbol.Value);
+            Assert.AreEqual("ADVWORKS", optionInputSymbol.DefaultValue);
+            Assert.AreEqual("ADVWORKS", optionInputSymbol.Value);
 
-            Assert.AreEqual("MSDF_DM", optionsField.DefaultValue);
-            Assert.AreEqual("MSDF_DM", optionsField.Value);
+            Assert.AreEqual("ADVWORKS", optionsField.DefaultValue);
+            Assert.AreEqual("ADVWORKS", optionsField.Value);
         }
 
         [TestMethod]
         public void Create_OptionInputSymbol_MakeSelections()
         {
-            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "MSDF_DM");
-            optionInputSymbol.AddOption("MSDF_DM", "Data Mart");
-            optionInputSymbol.AddOption("MSDF_VALISTRACTOR", "Valistractor");
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "ADVWORKS");
+            optionInputSymbol.AddOption("ADVWORKS", "Adventure Works Database");
+            optionInputSymbol.AddOption("PUBBOOKS", "Published Books Database");
 
             optionInputSymbol.SelectOption("0");
             string indexOption_at_0 = optionInputSymbol.Value;
@@ -66,25 +66,25 @@ namespace CygSoft.Qik.LanguageEngine.Tests
             optionInputSymbol.SelectOption(0);
             string indexOption_index_at_0 = optionInputSymbol.Value;
 
-            optionInputSymbol.SelectOption("MSDF_DM");
+            optionInputSymbol.SelectOption("ADVWORKS");
             string valueOption_at_0 = optionInputSymbol.Value;
 
-            optionInputSymbol.SelectOption("MSDF_VALISTRACTOR");
+            optionInputSymbol.SelectOption("PUBBOOKS");
             string valueOption_at_1 = optionInputSymbol.Value;
 
-            Assert.AreEqual("MSDF_DM", indexOption_at_0);
-            Assert.AreEqual("MSDF_VALISTRACTOR", indexOption_at_1);
-            Assert.AreEqual("MSDF_DM", valueOption_at_0);
-            Assert.AreEqual("MSDF_VALISTRACTOR", valueOption_at_1);
-            Assert.AreEqual("MSDF_DM", indexOption_index_at_0);
+            Assert.AreEqual("ADVWORKS", indexOption_at_0);
+            Assert.AreEqual("PUBBOOKS", indexOption_at_1);
+            Assert.AreEqual("ADVWORKS", valueOption_at_0);
+            Assert.AreEqual("PUBBOOKS", valueOption_at_1);
+            Assert.AreEqual("ADVWORKS", indexOption_index_at_0);
         }
 
         [TestMethod]
         public void Create_OptionInputSymbolInterface_MakeSelections()
         {
-            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "MSDF_DM");
-            optionInputSymbol.AddOption("MSDF_DM", "Data Mart");
-            optionInputSymbol.AddOption("MSDF_VALISTRACTOR", "Valistractor");
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "ADVWORKS");
+            optionInputSymbol.AddOption("ADVWORKS", "Adventure Works Database");
+            optionInputSymbol.AddOption("PUBBOOKS", "Published Books Database");
 
             IOptionsField optionsField = optionInputSymbol;
 
@@ -97,67 +97,67 @@ namespace CygSoft.Qik.LanguageEngine.Tests
             optionsField.SelectOption(0);
             string indexOption_index_at_0 = optionsField.Value;
 
-            optionsField.SelectOption("MSDF_DM");
+            optionsField.SelectOption("ADVWORKS");
             string valueOption_at_0 = optionsField.Value;
 
-            optionsField.SelectOption("MSDF_VALISTRACTOR");
+            optionsField.SelectOption("PUBBOOKS");
             string valueOption_at_1 = optionsField.Value;
 
-            Assert.AreEqual("MSDF_DM", indexOption_at_0);
-            Assert.AreEqual("MSDF_VALISTRACTOR", indexOption_at_1);
-            Assert.AreEqual("MSDF_DM", valueOption_at_0);
-            Assert.AreEqual("MSDF_VALISTRACTOR", valueOption_at_1);
-            Assert.AreEqual("MSDF_DM", indexOption_index_at_0);
+            Assert.AreEqual("ADVWORKS", indexOption_at_0);
+            Assert.AreEqual("PUBBOOKS", indexOption_at_1);
+            Assert.AreEqual("ADVWORKS", valueOption_at_0);
+            Assert.AreEqual("PUBBOOKS", valueOption_at_1);
+            Assert.AreEqual("ADVWORKS", indexOption_index_at_0);
         }
 
         [TestMethod]
         public void Create_OptionInputSymbol_GetOptionTitles()
         {
-            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "MSDF_DM");
-            optionInputSymbol.AddOption("MSDF_DM", "Data Mart");
-            optionInputSymbol.AddOption("MSDF_VALISTRACTOR", "Valistractor");
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "ADVWORKS");
+            optionInputSymbol.AddOption("ADVWORKS", "Adventure Works Database");
+            optionInputSymbol.AddOption("PUBBOOKS", "Published Books Database");
 
             string indexOption_at_0 = optionInputSymbol.OptionTitle("0");
             string indexOption_at_1 = optionInputSymbol.OptionTitle("1");
-            string valueOption_at_0 = optionInputSymbol.OptionTitle("MSDF_DM");
-            string valueOption_at_1 = optionInputSymbol.OptionTitle("MSDF_VALISTRACTOR");
+            string valueOption_at_0 = optionInputSymbol.OptionTitle("ADVWORKS");
+            string valueOption_at_1 = optionInputSymbol.OptionTitle("PUBBOOKS");
 
             string optionIndex_at_0 = optionInputSymbol.OptionTitle(0);
             string optionIndex_at_1 = optionInputSymbol.OptionTitle(1);
 
-            Assert.AreEqual("Data Mart", indexOption_at_0);
-            Assert.AreEqual("Valistractor", indexOption_at_1);
-            Assert.AreEqual("Data Mart", valueOption_at_0);
-            Assert.AreEqual("Valistractor", valueOption_at_1);
+            Assert.AreEqual("Adventure Works Database", indexOption_at_0);
+            Assert.AreEqual("Published Books Database", indexOption_at_1);
+            Assert.AreEqual("Adventure Works Database", valueOption_at_0);
+            Assert.AreEqual("Published Books Database", valueOption_at_1);
 
-            Assert.AreEqual("Data Mart", optionIndex_at_0);
-            Assert.AreEqual("Valistractor", optionIndex_at_1);
+            Assert.AreEqual("Adventure Works Database", optionIndex_at_0);
+            Assert.AreEqual("Published Books Database", optionIndex_at_1);
         }
 
         [TestMethod]
         public void Create_OptionInputSymbolInterface_GetOptionTitles()
         {
-            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "MSDF_DM");
-            optionInputSymbol.AddOption("MSDF_DM", "Data Mart");
-            optionInputSymbol.AddOption("MSDF_VALISTRACTOR", "Valistractor");
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "ADVWORKS");
+            optionInputSymbol.AddOption("ADVWORKS", "Adventure Works Database");
+            optionInputSymbol.AddOption("PUBBOOKS", "Published Books Database");
 
             IOptionsField optionsField = optionInputSymbol;
 
             string indexOption_at_0 = optionsField.OptionTitle("0");
             string indexOption_at_1 = optionsField.OptionTitle("1");
-            string valueOption_at_0 = optionsField.OptionTitle("MSDF_DM");
-            string valueOption_at_1 = optionsField.OptionTitle("MSDF_VALISTRACTOR");
+            string valueOption_at_0 = optionsField.OptionTitle("ADVWORKS");
+            string valueOption_at_1 = optionsField.OptionTitle("PUBBOOKS");
 
             string optionIndex_at_0 = optionsField.OptionTitle(0);
             string optionIndex_at_1 = optionsField.OptionTitle(1);
 
-            Assert.AreEqual("Data Mart", indexOption_at_0);
-            Assert.AreEqual("Valistractor", indexOption_at_1);
-            Assert.AreEqual("Data Mart", valueOption_at_0);
-            Assert.AreEqual("Valistractor", valueOption_at_1);
+            Assert.AreEqual("Adventure Works Database", indexOption_at_0);
+            Assert.AreEqual("Published Books Database", indexOption_at_1);
+            Assert.AreEqual("Adventure Works Database", valueOption_at_0);
+            Assert.AreEqual("Published Books Database", valueOption_at_1);
 
-            Assert.AreEqual("Data Mart", optionIndex_at_0);
-            Assert.AreEqual("Valistractor", optionIndex_at_1);
+            Assert.AreEqual("Adventure Works Database", optionIndex_at_0);
+            Assert.AreEqual("Published Books Database", optionIndex_at_1);
         }
 
         [TestMethod]
@@ -332,26 +332,26 @@ namespace CygSoft.Qik.LanguageEngine.Tests
         {
             GlobalTable globalTable = new GlobalTable();
 
-            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "MSDF_DM");
-            optionInputSymbol.AddOption("MSDF_DM", "Data Mart");
-            optionInputSymbol.AddOption("MSDF_VALISTRACTOR", "Valistractor");
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "ADVWORKS");
+            optionInputSymbol.AddOption("ADVWORKS", "Adventure Works Database");
+            optionInputSymbol.AddOption("PUBBOOKS", "Published Books Database");
 
             IfDecissionFunction decissionFunc = new IfDecissionFunction(globalTable, "@databaseOptions");
-            decissionFunc.AddFunction("MSDF_DM", new TextFunction(globalTable, new LiteralText("You chose DM")));
-            decissionFunc.AddFunction("MSDF_VALISTRACTOR", new TextFunction(globalTable, new LiteralText("You chose Valistractor")));
+            decissionFunc.AddFunction("ADVWORKS", new TextFunction(globalTable, new LiteralText("You chose DM")));
+            decissionFunc.AddFunction("PUBBOOKS", new TextFunction(globalTable, new LiteralText("You chose Published Books Database")));
 
             ExpressionSymbol expressionSymbol = new ExpressionSymbol("@selectedDatabase", "Selected Database", decissionFunc);
 
             globalTable.AddSymbol(optionInputSymbol);
             globalTable.AddSymbol(expressionSymbol);
 
-            Assert.AreEqual("MSDF_DM", globalTable.GetValueOfSymbol("@databaseOptions"));
+            Assert.AreEqual("ADVWORKS", globalTable.GetValueOfSymbol("@databaseOptions"));
             Assert.AreEqual("You chose DM", globalTable.GetValueOfSymbol("@selectedDatabase"));
 
             globalTable.Input("@databaseOptions", "1");
 
-            Assert.AreEqual("MSDF_VALISTRACTOR", globalTable.GetValueOfSymbol("@databaseOptions"));
-            Assert.AreEqual("You chose Valistractor", globalTable.GetValueOfSymbol("@selectedDatabase"));
+            Assert.AreEqual("PUBBOOKS", globalTable.GetValueOfSymbol("@databaseOptions"));
+            Assert.AreEqual("You chose Published Books Database", globalTable.GetValueOfSymbol("@selectedDatabase"));
         }
     }
 }
