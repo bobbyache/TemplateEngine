@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CygSoft.Qik.LanguageEngine.Symbols;
 using CygSoft.Qik.LanguageEngine.Funcs;
 using CygSoft.Qik.LanguageEngine.Scope;
+using CygSoft.Qik.LanguageEngine.Infrastructure;
 
 namespace CygSoft.Qik.LanguageEngine.Tests
 {
@@ -16,12 +17,21 @@ namespace CygSoft.Qik.LanguageEngine.Tests
             optionInputSymbol.AddOption("MSDF_DM", "Data Mart");
             optionInputSymbol.AddOption("MSDF_VALISTRACTOR", "Valistractor");
 
+            IOptionsField optionsField = optionInputSymbol;
+
             Assert.AreEqual("@databaseOptions", optionInputSymbol.Symbol);
             Assert.AreEqual("@{databaseOptions}", optionInputSymbol.Placeholder);
             Assert.AreEqual("Database Options", optionInputSymbol.Title);
 
             Assert.AreEqual(null, optionInputSymbol.DefaultValue);
             Assert.AreEqual(null, optionInputSymbol.Value);
+
+            Assert.AreEqual("@databaseOptions", optionsField.Symbol);
+            Assert.AreEqual("@{databaseOptions}", optionsField.Placeholder);
+            Assert.AreEqual("Database Options", optionsField.Title);
+
+            Assert.AreEqual(null, optionsField.DefaultValue);
+            Assert.AreEqual(null, optionsField.Value);
         }
 
         [TestMethod]
@@ -31,8 +41,13 @@ namespace CygSoft.Qik.LanguageEngine.Tests
             optionInputSymbol.AddOption("MSDF_DM", "Data Mart");
             optionInputSymbol.AddOption("MSDF_VALISTRACTOR", "Valistractor");
 
+            IOptionsField optionsField = optionInputSymbol;
+
             Assert.AreEqual("MSDF_DM", optionInputSymbol.DefaultValue);
             Assert.AreEqual("MSDF_DM", optionInputSymbol.Value);
+
+            Assert.AreEqual("MSDF_DM", optionsField.DefaultValue);
+            Assert.AreEqual("MSDF_DM", optionsField.Value);
         }
 
         [TestMethod]

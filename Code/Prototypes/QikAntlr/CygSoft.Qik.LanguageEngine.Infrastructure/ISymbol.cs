@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace CygSoft.Qik.LanguageEngine.Infrastructure
 {
-    public interface IOptionsField : IInputField
+    public interface ISymbol
     {
-        int? SelectedIndex { get; }
-        IOption[] Options { get; }
-        string OptionTitle(string option);
+        string Symbol { get; }
+        string Title { get; }
+        string Value { get; }
+        string Placeholder { get; }
     }
 }

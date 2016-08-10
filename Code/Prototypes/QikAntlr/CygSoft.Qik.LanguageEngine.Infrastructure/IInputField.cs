@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace CygSoft.Qik.LanguageEngine.Infrastructure
 {
-    public interface IInputField
+    public interface IInputField : ISymbol
     {
-        string Symbol { get; }
-        string Title { get; }
         string DefaultValue { get; }
     }
 }

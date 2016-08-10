@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace CygSoft.Qik.LanguageEngine.Infrastructure
 {
-    public interface IExpression
+    public interface IExpression : ISymbol
     {
-        string Symbol { get; }
-        string Title { get; }
-        string Value { get; }
+
     }
 }
