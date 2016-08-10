@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ICompiler.cs" />
     <Compile Include="IExpression.cs" />
     <Compile Include="IInputField.cs" />
     <Compile Include="IOption.cs" />

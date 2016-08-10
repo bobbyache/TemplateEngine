@@ -12,8 +12,14 @@ using System.Threading.Tasks;
 
 namespace CygSoft.Qik.LanguageEngine
 {
-    public class Compiler
+    public class Compiler : ICompiler
     {
+        public event EventHandler BeforeCompile;
+        public event EventHandler AfterCompile;
+
+        public event EventHandler BeforeInput;
+        public event EventHandler AfterInput;
+
         private GlobalTable scopeTable = new GlobalTable();
 
         public string[] Symbols
@@ -44,17 +50,29 @@ namespace CygSoft.Qik.LanguageEngine
         public IInputField[] InputFields { get { return scopeTable.InputFields; } }
         public IExpression[] Expressions { get { return scopeTable.Expressions; } }
 
-        public void Execute(string scriptText)
+        public void Compile(string scriptText)
         {
+            if (BeforeCompile != null)
+                BeforeCompile(this, new EventArgs());
+
             scopeTable.Clear();
 
             GetControls(scriptText);
             GetExpressions(scriptText);
+
+            if (AfterCompile != null)
+                AfterCompile(this, new EventArgs());
         }
 
         public void Input(string symbol, string value)
         {
+            if (BeforeInput != null)
+                BeforeInput(this, new EventArgs());
+
             scopeTable.Input(symbol, value);
+
+            if (AfterInput != null)
+                AfterInput(this, new EventArgs());
         }
 
         private void GetControls(string scriptText)

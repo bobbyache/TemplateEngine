@@ -21,38 +21,26 @@ namespace QikLanguageEngine_Test
 
     public partial class InputPropertyGrid : UserControl
     {
+        // important: required to add dynamic properties to...
+        private class UserInputProperties { }
+
         public event EventHandler InputChanged;
 
         private const string CATEGORY_USER_INPUT = "1. User Input";
         private const string CATEGORY_EXPRESSION = "2. Expressions";
 
-        private Compiler scriptCompiler;
+        private ICompiler compiler;
+        private UserInputProperties properties;
 
         public InputPropertyGrid()
         {
             InitializeComponent();
         }
 
-        public void Reset(Compiler compiler)
+        public void Reset(ICompiler compiler)
         {
-            this.scriptCompiler = compiler;
-
-            UserInputProperties properties = new UserInputProperties();
-            Dyn.TypeDescriptor.IntallTypeDescriptor(properties);
-            propertyGrid.SelectedObject = properties;
-
-            foreach (IInputField field in compiler.InputFields)
-            {
-                if (field is ITextField)
-                    CreateTextBox(field as ITextField);
-                else if (field is IOptionsField)
-                    CreateOptionsBox(field as IOptionsField);
-            }
-
-            foreach (IExpression expression in compiler.Expressions)
-            {
-                CreateExpression(expression);
-            }
+            InitializeCompiler(compiler);
+            CreateControls();
 
             propertyGrid.Refresh();
         }
@@ -71,7 +59,7 @@ namespace QikLanguageEngine_Test
                                                         );
             propertyDescriptor.Attributes.Add(new Scm.CategoryAttribute(CATEGORY_USER_INPUT), true);
             propertyDescriptor.Attributes.Add(new PropertyControlAttribute(ControlTypeEnum.TextBox), true);
-            propertyDescriptor.AddValueChanged(propertyGrid.SelectedObject, new EventHandler(this.InputPropertyChanged));
+            //propertyDescriptor.AddValueChanged(propertyGrid.SelectedObject, new EventHandler(this.InputPropertyChanged));
 
             typeDescriptor.GetProperties().Add(propertyDescriptor);
         }
@@ -95,7 +83,7 @@ namespace QikLanguageEngine_Test
 
             BuildOptions(propertyDescriptor, optionBox.Options);
 
-            propertyDescriptor.AddValueChanged(propertyGrid.SelectedObject, new EventHandler(this.InputPropertyChanged));
+            //propertyDescriptor.AddValueChanged(propertyGrid.SelectedObject, new EventHandler(this.InputPropertyChanged));
             typeDescriptor.GetProperties().Add(propertyDescriptor);
         }
 
@@ -136,31 +124,69 @@ namespace QikLanguageEngine_Test
             }
         }
 
-        private void InputPropertyChanged(object sender, EventArgs e)
+        private void InitializeCompiler(ICompiler compiler)
         {
-            UserInputProperties userInputProperties = sender as UserInputProperties;
+            if (this.compiler != null)
+            {
+                //this.compiler.BeforeCompile -= compiler_BeforeCompile;
+                //this.compiler.AfterCompile -= compiler_AfterCompile;
+                //this.compiler.BeforeInput -= compiler_BeforeInput;
+                this.compiler.AfterInput -= compiler_AfterInput;
+            }
+
+            this.compiler = compiler;
+            //this.compiler.BeforeCompile += compiler_BeforeCompile;
+            //this.compiler.AfterCompile += compiler_AfterCompile;
+            //this.compiler.BeforeInput += compiler_BeforeInput;
+            this.compiler.AfterInput += compiler_AfterInput;
+        }
+
+        private void CreateControls()
+        {
+            properties = new UserInputProperties();
+            Dyn.TypeDescriptor.IntallTypeDescriptor(properties);
+            propertyGrid.SelectedObject = properties;
+
+            foreach (IInputField field in compiler.InputFields)
+            {
+                if (field is ITextField)
+                    CreateTextBox(field as ITextField);
+                else if (field is IOptionsField)
+                    CreateOptionsBox(field as IOptionsField);
+            }
+
+            foreach (IExpression expression in compiler.Expressions)
+            {
+                CreateExpression(expression);
+            }
+        }
+
+        private void propertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            GridItem gridItem = e.ChangedItem;
+            string itemSymbol = gridItem.PropertyDescriptor.Name;
+
             Dyn.TypeDescriptor typeDescriptor = Dyn.TypeDescriptor.GetTypeDescriptor(propertyGrid.SelectedObject);
             PropertyDescriptorCollection propertyDescriptors = typeDescriptor.GetProperties();
 
-            foreach (Dyn.PropertyDescriptor propertyDescriptor in propertyDescriptors)
+            Dyn.PropertyDescriptor propertyDescriptor = propertyDescriptors[itemSymbol] as Dyn.PropertyDescriptor;
+            PropertyControlAttribute propertyControl = propertyDescriptor.Attributes[typeof(PropertyControlAttribute)] as PropertyControlAttribute;
+
+            if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.TextBox)
             {
-                PropertyControlAttribute propertyControl = propertyDescriptor.Attributes[typeof(PropertyControlAttribute)] as PropertyControlAttribute;
-                if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.TextBox)
-                {
-                    string value = propertyDescriptor.GetValue(userInputProperties) != null ? propertyDescriptor.GetValue(userInputProperties).ToString() : null;
-                    scriptCompiler.Input(propertyDescriptor.Name, value);
-                }
-                else if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.OptionBox)
-                {
-                    scriptCompiler.Input(propertyDescriptor.Name, propertyDescriptor.GetValue(userInputProperties).ToString());
-                }
+                string value = propertyDescriptor.GetValue(this.properties) != null ? propertyDescriptor.GetValue(this.properties).ToString() : null;
+                compiler.Input(propertyDescriptor.Name, value);
+            }
+            else if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.OptionBox)
+            {
+                compiler.Input(propertyDescriptor.Name, propertyDescriptor.GetValue(this.properties).ToString());
             }
 
-            CalculateExpressions(userInputProperties);
-            propertyGrid.Refresh();
+            if (InputChanged != null)
+                InputChanged(this, new EventArgs());
         }
 
-        private void CalculateExpressions(UserInputProperties userInputProperties)
+        private void compiler_AfterInput(object sender, EventArgs e)
         {
             Dyn.TypeDescriptor typeDescriptor = Dyn.TypeDescriptor.GetTypeDescriptor(propertyGrid.SelectedObject);
             PropertyDescriptorCollection propertyDescriptors = typeDescriptor.GetProperties();
@@ -170,16 +196,28 @@ namespace QikLanguageEngine_Test
                 PropertyControlAttribute propertyControl = propertyDescriptor.Attributes[typeof(PropertyControlAttribute)] as PropertyControlAttribute;
                 if (propertyControl != null && propertyControl.ControlType == ControlTypeEnum.ExpressionBox)
                 {
-                    string newValue = scriptCompiler.GetValueOfSymbol(propertyDescriptor.Name);
-                    propertyDescriptor.SetValue(userInputProperties, newValue == null ? string.Empty : newValue);
+                    string newValue = compiler.GetValueOfSymbol(propertyDescriptor.Name);
+                    propertyDescriptor.SetValue(properties, newValue == null ? string.Empty : newValue);
                 }
             }
+
+            propertyGrid.Refresh();
         }
 
-        private void propertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
-        {
-            if (InputChanged != null)
-                InputChanged(this, new EventArgs());
-        }
+        //private void compiler_BeforeInput(object sender, EventArgs e)
+        //{
+        //    //throw new NotImplementedException();
+        //}
+
+        //private void compiler_AfterCompile(object sender, EventArgs e)
+        //{
+        //    //throw new NotImplementedException();
+        //}
+
+        //private void compiler_BeforeCompile(object sender, EventArgs e)
+        //{
+        //    //throw new NotImplementedException();
+        //}
+
     }
 }

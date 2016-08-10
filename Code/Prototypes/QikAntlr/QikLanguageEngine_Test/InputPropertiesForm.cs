@@ -16,7 +16,7 @@ namespace QikLanguageEngine_Test
 {
     public partial class InputPropertiesForm : Form
     {
-        private Compiler compiler = new Compiler();
+        private ICompiler compiler = new Compiler();
 
         public InputPropertiesForm()
         {
@@ -57,7 +57,7 @@ namespace QikLanguageEngine_Test
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            compiler.Execute(syntaxBox.Document.Text);
+            compiler.Compile(syntaxBox.Document.Text);
 
             inputPropertyGrid.Reset(compiler);
 
@@ -68,7 +68,7 @@ namespace QikLanguageEngine_Test
         private void ExecuteScript()
         {
             compiler = new Compiler();
-            compiler.Execute(syntaxBox.Document.Text);
+            compiler.Compile(syntaxBox.Document.Text);
 
             inputPropertyGrid.Reset(compiler);
 

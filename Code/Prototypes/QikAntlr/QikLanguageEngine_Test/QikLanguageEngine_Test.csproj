@@ -58,7 +58,6 @@
     <Compile Include="TemplateControl.Designer.cs">
       <DependentUpon>TemplateControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserInputProperties.cs" />
     <Compile Include="InputPropertiesForm.cs">
       <SubType>Form</SubType>
     </Compile>
