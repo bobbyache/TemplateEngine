@@ -5,6 +5,13 @@ DEFAULTS NOT WORKING SEE CONTEXT !!!!!!!!!!!!!!!
 /* ************************************************************************************
 TextBox
 ************************************************************************************ */
+
+@reportType = options[Title="Report Type", Default="False"] {
+	return
+		option "1" [Title="System"],
+		option "0" [Title="Non-System"];
+};
+
 @testFunc = text [Title="Test Func", Default="Test"];
 
 @authorName = expression [Title="Author Name"] {
