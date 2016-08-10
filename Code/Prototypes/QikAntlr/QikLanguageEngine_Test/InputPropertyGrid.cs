@@ -24,8 +24,6 @@ namespace QikLanguageEngine_Test
         // important: required to add dynamic properties to...
         private class UserInputProperties { }
 
-        public event EventHandler InputChanged;
-
         private const string CATEGORY_USER_INPUT = "1. User Input";
         private const string CATEGORY_EXPRESSION = "2. Expressions";
 
@@ -40,9 +38,6 @@ namespace QikLanguageEngine_Test
         public void Reset(ICompiler compiler)
         {
             InitializeCompiler(compiler);
-            CreateControls();
-
-            propertyGrid.Refresh();
         }
 
         private void CreateTextBox(ITextField textBox)
@@ -59,7 +54,6 @@ namespace QikLanguageEngine_Test
                                                         );
             propertyDescriptor.Attributes.Add(new Scm.CategoryAttribute(CATEGORY_USER_INPUT), true);
             propertyDescriptor.Attributes.Add(new PropertyControlAttribute(ControlTypeEnum.TextBox), true);
-            //propertyDescriptor.AddValueChanged(propertyGrid.SelectedObject, new EventHandler(this.InputPropertyChanged));
 
             typeDescriptor.GetProperties().Add(propertyDescriptor);
         }
@@ -83,7 +77,6 @@ namespace QikLanguageEngine_Test
 
             BuildOptions(propertyDescriptor, optionBox.Options);
 
-            //propertyDescriptor.AddValueChanged(propertyGrid.SelectedObject, new EventHandler(this.InputPropertyChanged));
             typeDescriptor.GetProperties().Add(propertyDescriptor);
         }
 
@@ -129,14 +122,14 @@ namespace QikLanguageEngine_Test
             if (this.compiler != null)
             {
                 //this.compiler.BeforeCompile -= compiler_BeforeCompile;
-                //this.compiler.AfterCompile -= compiler_AfterCompile;
+                this.compiler.AfterCompile -= compiler_AfterCompile;
                 //this.compiler.BeforeInput -= compiler_BeforeInput;
                 this.compiler.AfterInput -= compiler_AfterInput;
             }
 
             this.compiler = compiler;
             //this.compiler.BeforeCompile += compiler_BeforeCompile;
-            //this.compiler.AfterCompile += compiler_AfterCompile;
+            this.compiler.AfterCompile += compiler_AfterCompile;
             //this.compiler.BeforeInput += compiler_BeforeInput;
             this.compiler.AfterInput += compiler_AfterInput;
         }
@@ -159,6 +152,8 @@ namespace QikLanguageEngine_Test
             {
                 CreateExpression(expression);
             }
+
+            propertyGrid.Refresh();
         }
 
         private void propertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
@@ -181,9 +176,6 @@ namespace QikLanguageEngine_Test
             {
                 compiler.Input(propertyDescriptor.Name, propertyDescriptor.GetValue(this.properties).ToString());
             }
-
-            if (InputChanged != null)
-                InputChanged(this, new EventArgs());
         }
 
         private void compiler_AfterInput(object sender, EventArgs e)
@@ -209,10 +201,10 @@ namespace QikLanguageEngine_Test
         //    //throw new NotImplementedException();
         //}
 
-        //private void compiler_AfterCompile(object sender, EventArgs e)
-        //{
-        //    //throw new NotImplementedException();
-        //}
+        private void compiler_AfterCompile(object sender, EventArgs e)
+        {
+            CreateControls();
+        }
 
         //private void compiler_BeforeCompile(object sender, EventArgs e)
         //{

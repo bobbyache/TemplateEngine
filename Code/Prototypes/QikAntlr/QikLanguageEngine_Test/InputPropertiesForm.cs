@@ -21,19 +21,21 @@ namespace QikLanguageEngine_Test
         public InputPropertiesForm()
         {
             InitializeComponent();
+
+            compiler = new Compiler();
+            compiler.AfterCompile += compiler_AfterCompile;
+            compiler.AfterInput += compiler_AfterInput;
+
             syntaxBox.Document.SyntaxFile = "qiktemplate.syn";
             syntaxBox.Document.Text = File.ReadAllText("Example.txt");
 
             blueprintSyntaxBox.Document.SyntaxFile = "qikblueprint.syn";
             blueprintSyntaxBox.Document.Text = File.ReadAllText("BlueprintFile.txt");
-
             outputSyntaxBox.Document.SyntaxFile = "qikblueprint.syn";
 
-            inputPropertyGrid.InputChanged += inputPropertyGrid_InputChanged;
-
+            inputPropertyGrid.Reset(compiler);
 
             AddTemplateTab();
-
             ExecuteScript();
             //tabControlFile.TabPages.RemoveByKey("templateTabPage"); // the key can be the template file name !!!
         }
@@ -49,7 +51,13 @@ namespace QikLanguageEngine_Test
             tabControlFile.TabPages.Add(tabPage);
         }
 
-        private void inputPropertyGrid_InputChanged(object sender, EventArgs e)
+        private void compiler_AfterInput(object sender, EventArgs e)
+        {
+            UpdateOutputDocument();
+            UpdateAutoList();
+        }
+
+        private void compiler_AfterCompile(object sender, EventArgs e)
         {
             UpdateOutputDocument();
             UpdateAutoList();
@@ -57,23 +65,13 @@ namespace QikLanguageEngine_Test
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            compiler.Compile(syntaxBox.Document.Text);
-
-            inputPropertyGrid.Reset(compiler);
-
-            UpdateOutputDocument();
-            UpdateAutoList();
+            ExecuteScript();
         }
 
         private void ExecuteScript()
         {
-            compiler = new Compiler();
+            
             compiler.Compile(syntaxBox.Document.Text);
-
-            inputPropertyGrid.Reset(compiler);
-
-            UpdateOutputDocument();
-            UpdateAutoList();
         }
 
         private void btnDisplaySymbolTable_Click(object sender, EventArgs e)
