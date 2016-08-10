@@ -41,8 +41,8 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
 
             foreach (QikTemplateParser.SingleOptionContext optionContext in context.optionsBody().singleOption())
             {
-                optionInputSymbol.AddOption(QikCommon.StripOuterQuotes(optionContext.STRING().GetText()), 
-                    QikCommon.StripOuterQuotes(optionContext.titleArg().STRING().GetText()));
+                optionInputSymbol.AddOption(Common.StripOuterQuotes(optionContext.STRING().GetText()), 
+                    Common.StripOuterQuotes(optionContext.titleArg().STRING().GetText()));
             }
 
             scopeTable.AddSymbol(optionInputSymbol);
@@ -55,7 +55,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
             string titleText = null;
             if (context.optionBoxArgs().titleArg() != null)
             {
-                titleText = QikCommon.StripOuterQuotes(context.optionBoxArgs().titleArg().STRING().GetText());
+                titleText = Common.StripOuterQuotes(context.optionBoxArgs().titleArg().STRING().GetText());
             }
             return titleText;
         }
@@ -65,7 +65,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
             string titleText = null;
             if (context.textBoxArgs().titleArg() != null)
             {
-                titleText = QikCommon.StripOuterQuotes(context.textBoxArgs().titleArg().STRING().GetText());
+                titleText = Common.StripOuterQuotes(context.textBoxArgs().titleArg().STRING().GetText());
             }
             return titleText;
         }
@@ -87,7 +87,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
 
             if (context.textBoxArgs().defaultArg() != null)
             {
-                defaultText = QikCommon.StripOuterQuotes(context.textBoxArgs().defaultArg().STRING().GetText());
+                defaultText = Common.StripOuterQuotes(context.textBoxArgs().defaultArg().STRING().GetText());
             }
 
             return defaultText;

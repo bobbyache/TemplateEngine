@@ -298,7 +298,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
             string titleText = null;
             if (context.titleArg() != null)
             {
-                titleText = QikCommon.StripOuterQuotes(context.titleArg().STRING().GetText());
+                titleText = Common.StripOuterQuotes(context.titleArg().STRING().GetText());
             }
             return titleText;
         }

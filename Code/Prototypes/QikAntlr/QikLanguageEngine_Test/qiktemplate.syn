@@ -15,6 +15,7 @@
 
     <Keywords>
       <PatternGroup Name="Variables" Style="Variable">
+        <!--<Pattern Text="(@{[a-zA-Z]+[a-zA-Z0-9_]*})" IsComplex="true" />-->
         <Pattern Text="(@[a-zA-Z]+[a-zA-Z0-9_]*)" IsComplex="true" />
       </PatternGroup>
     </Keywords>
@@ -44,6 +45,7 @@
   <Style Name="Qik Comment" ForeColor="Green" BackColor="" Bold="false" Italic="false" Underline="false" />
   <Style Name="Text" ForeColor="" BackColor="" Bold="false" Italic="false" Underline="false" />
   <Style Name="Variable" ForeColor="Magenta" BackColor="" Bold="true" Italic="false" Underline="false" />
+  <!--<Style Name="Variable" ForeColor="Black" BackColor="Yellow" Bold="true" Italic="false" Underline="false" />-->
   <Style Name="Qik String" ForeColor="Teal" BackColor="" Bold="true" Italic="false" Underline="false" />
   
 </Language>

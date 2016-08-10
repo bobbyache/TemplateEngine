@@ -38,7 +38,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 
         public void AddFunction(string text, BaseFunction func)
         {
-            functions.Add(QikCommon.StripOuterQuotes(text), func);
+            functions.Add(Common.StripOuterQuotes(text), func);
         }
     }
 }

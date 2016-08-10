@@ -12,7 +12,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 
         public LiteralText(string value)
         {
-            this.Value = QikCommon.StripOuterQuotes(value);
+            this.Value = Common.StripOuterQuotes(value);
         }
     }
 }

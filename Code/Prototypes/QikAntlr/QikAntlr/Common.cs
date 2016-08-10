@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CygSoft.Qik.LanguageEngine
 {
-    internal class QikCommon
+    internal class Common
     {
         public static string StripOuterQuotes(string text)
         {

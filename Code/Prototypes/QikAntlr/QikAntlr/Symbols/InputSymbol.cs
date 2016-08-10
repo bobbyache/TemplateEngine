@@ -12,7 +12,7 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
 
         public InputSymbol(string symbol, string title, string defaultValue) : base(symbol, title)
         {
-            this.DefaultValue = QikCommon.StripOuterQuotes(defaultValue);
+            this.DefaultValue = Common.StripOuterQuotes(defaultValue);
         }
 
         public InputSymbol(string symbol, string title, string defaultValue, string prefix, string postfix)
