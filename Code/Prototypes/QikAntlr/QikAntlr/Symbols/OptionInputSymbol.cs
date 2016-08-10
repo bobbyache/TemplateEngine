@@ -141,5 +141,19 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
 
             return title;
         }
+
+        public string OptionTitle(int optionIndex)
+        {
+            SymbolOption[] options = optionsDictionary.Values.ToArray();
+            int index = optionIndex;
+            string title = null;
+
+            if (options.Any(o => o.Index == index))
+            {
+                title = options.Where(o => o.Index == index).SingleOrDefault().Title;
+            }
+
+            return title;
+        }
     }
 }

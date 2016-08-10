@@ -122,10 +122,42 @@ namespace CygSoft.Qik.LanguageEngine.Tests
             string valueOption_at_0 = optionInputSymbol.OptionTitle("MSDF_DM");
             string valueOption_at_1 = optionInputSymbol.OptionTitle("MSDF_VALISTRACTOR");
 
+            string optionIndex_at_0 = optionInputSymbol.OptionTitle(0);
+            string optionIndex_at_1 = optionInputSymbol.OptionTitle(1);
+
             Assert.AreEqual("Data Mart", indexOption_at_0);
             Assert.AreEqual("Valistractor", indexOption_at_1);
             Assert.AreEqual("Data Mart", valueOption_at_0);
             Assert.AreEqual("Valistractor", valueOption_at_1);
+
+            Assert.AreEqual("Data Mart", optionIndex_at_0);
+            Assert.AreEqual("Valistractor", optionIndex_at_1);
+        }
+
+        [TestMethod]
+        public void Create_OptionInputSymbolInterface_GetOptionTitles()
+        {
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "MSDF_DM");
+            optionInputSymbol.AddOption("MSDF_DM", "Data Mart");
+            optionInputSymbol.AddOption("MSDF_VALISTRACTOR", "Valistractor");
+
+            IOptionsField optionsField = optionInputSymbol;
+
+            string indexOption_at_0 = optionsField.OptionTitle("0");
+            string indexOption_at_1 = optionsField.OptionTitle("1");
+            string valueOption_at_0 = optionsField.OptionTitle("MSDF_DM");
+            string valueOption_at_1 = optionsField.OptionTitle("MSDF_VALISTRACTOR");
+
+            string optionIndex_at_0 = optionsField.OptionTitle(0);
+            string optionIndex_at_1 = optionsField.OptionTitle(1);
+
+            Assert.AreEqual("Data Mart", indexOption_at_0);
+            Assert.AreEqual("Valistractor", indexOption_at_1);
+            Assert.AreEqual("Data Mart", valueOption_at_0);
+            Assert.AreEqual("Valistractor", valueOption_at_1);
+
+            Assert.AreEqual("Data Mart", optionIndex_at_0);
+            Assert.AreEqual("Valistractor", optionIndex_at_1);
         }
 
         [TestMethod]
