@@ -103,6 +103,20 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
                 this.currentOption = null;
         }
 
+        public void SelectOption(int optionIndex)
+        {
+            // will always look at the index.
+            SymbolOption[] options = optionsDictionary.Values.ToArray();
+
+            int index = optionIndex;
+
+            if (options.Any(o => o.Index == index))
+            {
+                string value = options.Where(o => o.Index == index).SingleOrDefault().Value;
+                this.currentOption = options.Where(o => o.Index == index).SingleOrDefault();
+            }
+        }
+
         public string OptionTitle(string option)
         {
             SymbolOption[] options = optionsDictionary.Values.ToArray();

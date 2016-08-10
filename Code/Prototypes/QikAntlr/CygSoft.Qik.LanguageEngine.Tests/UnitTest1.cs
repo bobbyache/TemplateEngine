@@ -63,6 +63,9 @@ namespace CygSoft.Qik.LanguageEngine.Tests
             optionInputSymbol.SelectOption("1");
             string indexOption_at_1 = optionInputSymbol.Value;
 
+            optionInputSymbol.SelectOption(0);
+            string indexOption_index_at_0 = optionInputSymbol.Value;
+
             optionInputSymbol.SelectOption("MSDF_DM");
             string valueOption_at_0 = optionInputSymbol.Value;
 
@@ -73,6 +76,38 @@ namespace CygSoft.Qik.LanguageEngine.Tests
             Assert.AreEqual("MSDF_VALISTRACTOR", indexOption_at_1);
             Assert.AreEqual("MSDF_DM", valueOption_at_0);
             Assert.AreEqual("MSDF_VALISTRACTOR", valueOption_at_1);
+            Assert.AreEqual("MSDF_DM", indexOption_index_at_0);
+        }
+
+        [TestMethod]
+        public void Create_OptionInputSymbolInterface_MakeSelections()
+        {
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "MSDF_DM");
+            optionInputSymbol.AddOption("MSDF_DM", "Data Mart");
+            optionInputSymbol.AddOption("MSDF_VALISTRACTOR", "Valistractor");
+
+            IOptionsField optionsField = optionInputSymbol;
+
+            optionsField.SelectOption("0");
+            string indexOption_at_0 = optionsField.Value;
+
+            optionsField.SelectOption("1");
+            string indexOption_at_1 = optionsField.Value;
+
+            optionsField.SelectOption(0);
+            string indexOption_index_at_0 = optionsField.Value;
+
+            optionsField.SelectOption("MSDF_DM");
+            string valueOption_at_0 = optionsField.Value;
+
+            optionsField.SelectOption("MSDF_VALISTRACTOR");
+            string valueOption_at_1 = optionsField.Value;
+
+            Assert.AreEqual("MSDF_DM", indexOption_at_0);
+            Assert.AreEqual("MSDF_VALISTRACTOR", indexOption_at_1);
+            Assert.AreEqual("MSDF_DM", valueOption_at_0);
+            Assert.AreEqual("MSDF_VALISTRACTOR", valueOption_at_1);
+            Assert.AreEqual("MSDF_DM", indexOption_index_at_0);
         }
 
         [TestMethod]
