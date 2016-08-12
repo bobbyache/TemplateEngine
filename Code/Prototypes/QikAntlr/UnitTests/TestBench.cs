@@ -214,7 +214,7 @@ namespace UnitTests
             GlobalTable globalTable = new GlobalTable();
 
             string literalText = "Literal Text";
-            ExpressionSymbol expressionSymbol = new ExpressionSymbol("@authorName", "Author Name", new TextFunction(globalTable, new LiteralText(literalText)));
+            ExpressionSymbol expressionSymbol = new ExpressionSymbol("@authorName", "Author Name", new TextFunction(globalTable, new LiteralText(literalText)), "False");
             Assert.AreEqual("@authorName", expressionSymbol.Symbol);
             Assert.AreEqual("@{authorName}", expressionSymbol.Placeholder);
             Assert.AreEqual("Author Name", expressionSymbol.Title);
@@ -228,7 +228,7 @@ namespace UnitTests
             GlobalTable globalTable = new GlobalTable();
 
             string literalText = "LiteralText";
-            ExpressionSymbol expressionSymbol = new ExpressionSymbol("@classInstance", "Class Instance", new CamelCaseFunction(globalTable, new LiteralText(literalText)));
+            ExpressionSymbol expressionSymbol = new ExpressionSymbol("@classInstance", "Class Instance", new CamelCaseFunction(globalTable, new LiteralText(literalText)), "False");
             Assert.AreEqual("@classInstance", expressionSymbol.Symbol);
             Assert.AreEqual("@{classInstance}", expressionSymbol.Placeholder);
             Assert.AreEqual("Class Instance", expressionSymbol.Title);
@@ -242,7 +242,7 @@ namespace UnitTests
             GlobalTable globalTable = new GlobalTable();
 
             string literalText = "LITERALTEXT";
-            ExpressionSymbol expressionSymbol = new ExpressionSymbol("@classInstance", "Class Instance", new LowerCaseFunction(globalTable, new LiteralText(literalText)));
+            ExpressionSymbol expressionSymbol = new ExpressionSymbol("@classInstance", "Class Instance", new LowerCaseFunction(globalTable, new LiteralText(literalText)), "False");
             Assert.AreEqual("@classInstance", expressionSymbol.Symbol);
             Assert.AreEqual("@{classInstance}", expressionSymbol.Placeholder);
             Assert.AreEqual("Class Instance", expressionSymbol.Title);
@@ -256,7 +256,7 @@ namespace UnitTests
             GlobalTable globalTable = new GlobalTable();
 
             string literalText = "literaltext";
-            ExpressionSymbol expressionSymbol = new ExpressionSymbol("@classInstance", "Class Instance", new UpperCaseFunction(globalTable, new LiteralText(literalText)));
+            ExpressionSymbol expressionSymbol = new ExpressionSymbol("@classInstance", "Class Instance", new UpperCaseFunction(globalTable, new LiteralText(literalText)), "False");
             Assert.AreEqual("@classInstance", expressionSymbol.Symbol);
             Assert.AreEqual("@{classInstance}", expressionSymbol.Placeholder);
             Assert.AreEqual("Class Instance", expressionSymbol.Title);
@@ -271,7 +271,7 @@ namespace UnitTests
             GlobalTable globalTable = new GlobalTable();
 
             string literalText = "literal text";
-            ExpressionSymbol expressionSymbol = new ExpressionSymbol("@classInstance", "Class Instance", new RemoveSpacesFunction(globalTable, new LiteralText(literalText)));
+            ExpressionSymbol expressionSymbol = new ExpressionSymbol("@classInstance", "Class Instance", new RemoveSpacesFunction(globalTable, new LiteralText(literalText)), "False");
             Assert.AreEqual("@classInstance", expressionSymbol.Symbol);
             Assert.AreEqual("@{classInstance}", expressionSymbol.Placeholder);
             Assert.AreEqual("Class Instance", expressionSymbol.Title);
@@ -284,7 +284,7 @@ namespace UnitTests
         {
             GlobalTable globalTable = new GlobalTable();
 
-            ExpressionSymbol expressionSymbol = new ExpressionSymbol("@currentDate", "Current Date", new CurrentDateFunction(globalTable, new LiteralText("dd/MM/yyyy")));
+            ExpressionSymbol expressionSymbol = new ExpressionSymbol("@currentDate", "Current Date", new CurrentDateFunction(globalTable, new LiteralText("dd/MM/yyyy")), "False");
             Assert.AreEqual("@currentDate", expressionSymbol.Symbol);
             Assert.AreEqual("@{currentDate}", expressionSymbol.Placeholder);
             Assert.AreEqual("Current Date", expressionSymbol.Title);
@@ -304,7 +304,7 @@ namespace UnitTests
             concatFunc.AddFunction(new TextFunction(globalTable, new TextFunction(globalTable, new LiteralText(" "))));
             concatFunc.AddFunction(new TextFunction(globalTable, new TextFunction(globalTable, new LiteralText("world"))));
 
-            ExpressionSymbol expressionSymbol = new ExpressionSymbol("@concat", "Concatenated String", concatFunc);
+            ExpressionSymbol expressionSymbol = new ExpressionSymbol("@concat", "Concatenated String", concatFunc, "False");
             Assert.AreEqual("@concat", expressionSymbol.Symbol);
             Assert.AreEqual("@{concat}", expressionSymbol.Placeholder);
             Assert.AreEqual("Concatenated String", expressionSymbol.Title);
@@ -320,7 +320,7 @@ namespace UnitTests
             GlobalTable globalTable = new GlobalTable();
 
             TextInputSymbol textInputSymbol = new TextInputSymbol("@authorName", "Author Name", "Rob Blake");
-            ExpressionSymbol expressionSymbol = new ExpressionSymbol("@upperAuthorName", "Upper Author Name", new UpperCaseFunction(globalTable, new Variable("@authorName")));
+            ExpressionSymbol expressionSymbol = new ExpressionSymbol("@upperAuthorName", "Upper Author Name", new UpperCaseFunction(globalTable, new Variable("@authorName")), "False");
             
             globalTable.AddSymbol(textInputSymbol);
             globalTable.AddSymbol(expressionSymbol);
@@ -353,7 +353,7 @@ namespace UnitTests
             decissionFunc.AddFunction("ADVWORKS", new TextFunction(globalTable, new LiteralText("You chose DM")));
             decissionFunc.AddFunction("PUBBOOKS", new TextFunction(globalTable, new LiteralText("You chose Published Books Database")));
 
-            ExpressionSymbol expressionSymbol = new ExpressionSymbol("@selectedDatabase", "Selected Database", decissionFunc);
+            ExpressionSymbol expressionSymbol = new ExpressionSymbol("@selectedDatabase", "Selected Database", decissionFunc, "False");
 
             globalTable.AddSymbol(optionInputSymbol);
             globalTable.AddSymbol(expressionSymbol);

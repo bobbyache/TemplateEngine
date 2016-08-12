@@ -23,11 +23,12 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
         {
             string id = context.ID().GetText();
             string title = GetExpressionTitle(context);
+            string hidden = GetExpressionHidden(context);
 
             if (context.concatExpr() != null)
             {
                 ConcatenateFunction concatenateFunc = GetConcatenateFunction(context.concatExpr());
-                ExpressionSymbol expression = new ExpressionSymbol(id, title, concatenateFunc);
+                ExpressionSymbol expression = new ExpressionSymbol(id, title, concatenateFunc, hidden);
                 scopeTable.AddSymbol(expression);
             }
             else if (context.optExpr() != null)
@@ -35,7 +36,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                 var expr = context.optExpr();
                 BaseFunction ifFunc = VisitOptExpr(context.optExpr());
 
-                ExpressionSymbol expression = new ExpressionSymbol(id, title, ifFunc);
+                ExpressionSymbol expression = new ExpressionSymbol(id, title, ifFunc, hidden);
                 scopeTable.AddSymbol(expression);
             }
             else if (context.expr() != null)
@@ -57,7 +58,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                 else
                     result = Visit(expr);
 
-                ExpressionSymbol expression = new ExpressionSymbol(context.ID().GetText(), title, result);
+                ExpressionSymbol expression = new ExpressionSymbol(context.ID().GetText(), title, result, hidden);
                 scopeTable.AddSymbol(expression);
             }
 
@@ -369,11 +370,19 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
         private string GetExpressionTitle(QikTemplateParser.ExprDeclContext context)
         {
             string titleText = null;
-            if (context.titleArg() != null)
-            {
-                titleText = Common.StripOuterQuotes(context.titleArg().STRING().GetText());
-            }
+            if (context.exprArgs().titleArg() != null)
+                return Common.StripOuterQuotes(context.exprArgs().titleArg().GetText());
+
             return titleText;
+        }
+
+        private string GetExpressionHidden(QikTemplateParser.ExprDeclContext context)
+        {
+            string hiddenText = null;
+            if (context.exprArgs().hiddenArg() != null)
+                return Common.StripOuterQuotes(context.exprArgs().hiddenArg().GetText());
+
+            return hiddenText;
         }
     }
 }

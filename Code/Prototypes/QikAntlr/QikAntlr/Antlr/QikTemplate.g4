@@ -58,7 +58,11 @@ Expression Declarations
 ID '=' 'options' '[' optionBoxArgs ']' optionsBody ';'
 ----------------------------------------------------------------------- */ 
 exprDecl
-    : ID '=' 'expression' '[' titleArg ']' '{' 'return' (concatExpr|expr|optExpr) ';'  '}' ';'
+    : ID '=' 'expression' '[' exprArgs ']' '{' 'return' (concatExpr|expr|optExpr) ';'  '}' ';'
+    ;
+
+exprArgs
+    : titleArg  (',' hiddenArg)?
     ;
 
 /* -----------------------------------------------------------------------
@@ -100,6 +104,10 @@ defaultArg
 
 valueArg
     : 'Value' '=' (STRING | ID)
+    ;
+
+hiddenArg
+    : 'Hidden' '=' STRING
     ;
 
 /* -----------------------------------------------------------------------
