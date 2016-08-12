@@ -9,7 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QikFileManager", "QikFileMa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CygSoft.Qik.LanguageEngine.Infrastructure", "CygSoft.Qik.LanguageEngine.Infrastructure\CygSoft.Qik.LanguageEngine.Infrastructure.csproj", "{4614A954-2183-4B9F-BE3E-6B541694AA00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CygSoft.Qik.LanguageEngine.Tests", "CygSoft.Qik.LanguageEngine.Tests\CygSoft.Qik.LanguageEngine.Tests.csproj", "{7453AD48-D9AF-4047-9C92-67FBCE60854F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{568DA9C8-00DF-44E8-BDFF-CC9E0ECD2ECB}"
+	ProjectSection(SolutionItems) = preProject
+		default.runsettings = default.runsettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{41D8C320-6C3C-4A1E-9A43-4A9EC8DE7577}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +38,10 @@ Global
 		{4614A954-2183-4B9F-BE3E-6B541694AA00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4614A954-2183-4B9F-BE3E-6B541694AA00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4614A954-2183-4B9F-BE3E-6B541694AA00}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7453AD48-D9AF-4047-9C92-67FBCE60854F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7453AD48-D9AF-4047-9C92-67FBCE60854F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7453AD48-D9AF-4047-9C92-67FBCE60854F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7453AD48-D9AF-4047-9C92-67FBCE60854F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41D8C320-6C3C-4A1E-9A43-4A9EC8DE7577}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41D8C320-6C3C-4A1E-9A43-4A9EC8DE7577}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41D8C320-6C3C-4A1E-9A43-4A9EC8DE7577}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41D8C320-6C3C-4A1E-9A43-4A9EC8DE7577}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
