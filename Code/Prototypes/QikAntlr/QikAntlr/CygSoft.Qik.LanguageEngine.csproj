@@ -59,8 +59,10 @@
     <Compile Include="Funcs\ConcatenateFunction.cs" />
     <Compile Include="Funcs\CurrentDateFunction.cs" />
     <Compile Include="Funcs\IfDecissionFunction.cs" />
+    <Compile Include="Funcs\IndentFunction.cs" />
     <Compile Include="Funcs\LiteralText.cs" />
     <Compile Include="Funcs\LowerCaseFunction.cs" />
+    <Compile Include="Funcs\NewlineFunction.cs" />
     <Compile Include="Funcs\RemoveSpacesFunction.cs" />
     <Compile Include="Funcs\TextFunction.cs" />
     <Compile Include="Funcs\UpperCaseFunction.cs" />

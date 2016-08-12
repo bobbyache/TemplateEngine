@@ -50,6 +50,10 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                     result = new TextFunction(this.scopeTable, new Variable(expr.ID().GetText()));
                     return result;
                 }
+                else if (expr.NEWLINE() != null)
+                {
+                    result = new NewlineFunction();
+                }
                 else
                     result = Visit(expr);
 
@@ -88,6 +92,10 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                         result = new TextFunction(this.scopeTable, new Variable(expr.ID().GetText()));
                         return result;
                     }
+                    else if (expr.NEWLINE() != null)
+                    {
+                        result = new NewlineFunction();
+                    }
                     else
                         ifFunc.AddFunction(text, Visit(expr));
                 }
@@ -115,6 +123,10 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                 {
                     result = new CamelCaseFunction(this.scopeTable, new Variable(expr.ID().GetText()));
                     return result;
+                }
+                else if (expr.NEWLINE() != null)
+                {
+                    result = new NewlineFunction();
                 }
                 else
                     result = new CamelCaseFunction(this.scopeTable, Visit(expr));
@@ -150,6 +162,10 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                     result = new CurrentDateFunction(this.scopeTable, new Variable(expr.ID().GetText()));
                     return result;
                 }
+                else if (expr.NEWLINE() != null)
+                {
+                    result = new NewlineFunction();
+                }
                 else
                     result = new CurrentDateFunction(this.scopeTable, Visit(expr));
 
@@ -183,6 +199,10 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                 {
                     result = new LowerCaseFunction(this.scopeTable, new Variable(expr.ID().GetText()));
                     return result;
+                }
+                else if (expr.NEWLINE() != null)
+                {
+                    result = new NewlineFunction();
                 }
                 else
                     result = new LowerCaseFunction(this.scopeTable, Visit(expr));
@@ -219,6 +239,10 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                     result = new UpperCaseFunction(this.scopeTable, new Variable(expr.ID().GetText()));
                     return result;
                 }
+                else if (expr.NEWLINE() != null)
+                {
+                    result = new NewlineFunction();
+                }
                 else
                     result = new UpperCaseFunction(this.scopeTable, Visit(expr));
 
@@ -254,6 +278,10 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                     result = new RemoveSpacesFunction(this.scopeTable, new Variable(expr.ID().GetText()));
                     return result;
                 }
+                else if (expr.NEWLINE() != null)
+                {
+                    result = new NewlineFunction();
+                }
                 else
                     result = new RemoveSpacesFunction(this.scopeTable, Visit(expr));
 
@@ -262,6 +290,46 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
             else if (context.ID() != null)
             {
                 BaseFunction result = new RemoveSpacesFunction(this.scopeTable, new Variable(context.ID().ToString()));
+                return result;
+            }
+
+            return null;
+        }
+
+
+        public override BaseFunction VisitIndentFunc(QikTemplateParser.IndentFuncContext context)
+        {
+            if (context.concatExpr() != null)
+            {
+                ConcatenateFunction concatenateFunc = GetConcatenateFunction(context.concatExpr());
+                return concatenateFunc;
+            }
+            else if (context.expr() != null)
+            {
+                var expr = context.expr();
+
+                BaseFunction result = null;
+
+                if (expr.STRING() != null)
+                    result = new IndentFunction(this.scopeTable, new LiteralText(expr.STRING().GetText()), context.INDENT().GetText());
+
+                else if (expr.ID() != null)
+                {
+                    result = new IndentFunction(this.scopeTable, new Variable(expr.ID().GetText()), context.INDENT().GetText());
+                    return result;
+                }
+                else if (expr.NEWLINE() != null)
+                {
+                    result = new NewlineFunction();
+                }
+                else
+                    result = new IndentFunction(this.scopeTable, Visit(expr), context.INDENT().GetText());
+
+                return result;
+            }
+            else if (context.ID() != null)
+            {
+                BaseFunction result = new IndentFunction(this.scopeTable, new Variable(context.ID().ToString()), context.INDENT().GetText());
                 return result;
             }
 
@@ -283,6 +351,10 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                 else if (concatExpr.ID() != null)
                 {
                     result = new TextFunction(this.scopeTable, new Variable(concatExpr.ID().GetText()));
+                }
+                else if (concatExpr.NEWLINE() != null)
+                {
+                    result = new NewlineFunction();
                 }
                 else
                     result = Visit(concatExpr);

@@ -110,7 +110,7 @@ concatExpr
     ;
 
 expr
-    : func|STRING|ID
+    : func|STRING|ID|NEWLINE
     ;
 
 func
@@ -118,12 +118,23 @@ func
     | 'upperCase' '(' (ID|concatExpr|expr) ')'      #UpperCaseFunc
     | 'removeSpaces' '(' (ID|concatExpr|expr) ')'   #RemoveSpacesFunc
     | 'camelCase' '(' (ID|concatExpr|expr) ')'      #CamelCaseFunc
-    | 'currentDate' '(' (ID|concatExpr|expr) ')'      #CurrentDateFunc
+    | 'currentDate' '(' (ID|concatExpr|expr) ')'    #CurrentDateFunc
+    //| 'indentLine' '(' (ID|concatExpr|expr) ',' INDENT ',' DIGIT ')'    #IndentFunc
+    | 'indentLine' '(' (ID|concatExpr|expr) ',' INDENT ')'    #IndentFunc
     ;
 
 /* ***********************************************************************
 Tokens and Fragments
 *********************************************************************** */ 
+
+INDENT
+    : 'TAB' '[' DIGIT ']'
+    | 'SPACE' '[' DIGIT ']'
+    ;
+
+NEWLINE
+    : 'NEWLINE'
+    ;
 
 STRING 
 	: '"' ('""'|~'"')* '"' 
