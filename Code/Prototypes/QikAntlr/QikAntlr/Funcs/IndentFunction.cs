@@ -9,24 +9,28 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class IndentFunction : BaseFunction
     {
-        private string indentFragment;
+        private string indentType;
+        private int noOfTimes;
 
-        internal IndentFunction(GlobalTable scopeTable, BaseFunction func, string indentFragment)
+        internal IndentFunction(GlobalTable scopeTable, BaseFunction func, string indentType, string noOfTimes)
             : base(scopeTable, func)
         {
-            this.indentFragment = indentFragment;
+            this.indentType = indentType;
+            this.noOfTimes = int.Parse(noOfTimes);
         }
 
-        internal IndentFunction(GlobalTable scopeTable, LiteralText literalText, string indentFragment)
+        internal IndentFunction(GlobalTable scopeTable, LiteralText literalText, string indentType, string noOfTimes)
             : base(scopeTable, literalText)
         {
-            this.indentFragment = indentFragment;
+            this.indentType = indentType;
+            this.noOfTimes = int.Parse(noOfTimes);
         }
 
-        internal IndentFunction(GlobalTable scopeTable, Variable variable, string indentFragment)
+        internal IndentFunction(GlobalTable scopeTable, Variable variable, string indentType, string noOfTimes)
             : base(scopeTable, variable)
         {
-            this.indentFragment = indentFragment;
+            this.indentType = indentType;
+            this.noOfTimes = int.Parse(noOfTimes);
         }
 
         public override string Execute()
@@ -36,17 +40,21 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 
             if (txt != null && txt.Length >= 1)
             {
-                //return txt.ToLower();
-                if (indentFragment.StartsWith("T"))
-                {
-                    int numberTimes = int.Parse(indentFragment.Replace("TAB[", "").Replace("]", ""));
-                    indentedText = txt.PadLeft(txt.Length + numberTimes, '\t');
-                }
-                else
-                {
-                    int numberTimes = int.Parse(indentFragment.Replace("SPACE[", "").Replace("]", ""));
-                    indentedText = txt.PadLeft(txt.Length + numberTimes, ' ');
-                }
+                if (indentType == "TAB")
+                    indentedText = txt.PadLeft(txt.Length + noOfTimes, '\t');
+                else // SPACE
+                    indentedText = txt.PadLeft(txt.Length + noOfTimes, ' ');
+
+                //if (indentFragment.StartsWith("T"))
+                //{
+                //    int numberTimes = int.Parse(indentFragment.Replace("TAB[", "").Replace("]", ""));
+                //    indentedText = txt.PadLeft(txt.Length + numberTimes, '\t');
+                //}
+                //else
+                //{
+                //    int numberTimes = int.Parse(indentFragment.Replace("SPACE[", "").Replace("]", ""));
+                //    indentedText = txt.PadLeft(txt.Length + numberTimes, ' ');
+                //}
                 return indentedText;
             }
             return txt;

@@ -110,7 +110,10 @@ concatExpr
     ;
 
 expr
-    : func|STRING|ID|NEWLINE
+    : func
+    |STRING
+    |ID
+    |NEWLINE
     ;
 
 func
@@ -119,18 +122,21 @@ func
     | 'removeSpaces' '(' (ID|concatExpr|expr) ')'   #RemoveSpacesFunc
     | 'camelCase' '(' (ID|concatExpr|expr) ')'      #CamelCaseFunc
     | 'currentDate' '(' (ID|concatExpr|expr) ')'    #CurrentDateFunc
-    //| 'indentLine' '(' (ID|concatExpr|expr) ',' INDENT ',' DIGIT ')'    #IndentFunc
-    | 'indentLine' '(' (ID|concatExpr|expr) ',' INDENT ')'    #IndentFunc
+    | 'indentLine' '(' (ID|concatExpr|expr) ',' INDENT ',' INT ')'    #IndentFunc
+    //| 'indentLine' '(' (ID|concatExpr|expr) ',' 'SPACE' ',' INT ')'       #IndentFunc
     ;
+
 
 /* ***********************************************************************
 Tokens and Fragments
 *********************************************************************** */ 
 
+
 INDENT
-    : 'TAB' '[' DIGIT ']'
-    | 'SPACE' '[' DIGIT ']'
+    : 'TAB'
+    | 'SPACE'
     ;
+
 
 NEWLINE
     : 'NEWLINE'
@@ -140,10 +146,6 @@ STRING
 	: '"' ('""'|~'"')* '"' 
 	;
 
-STRINGCONST
-    : '"' CONST '"'
-    ;
-
 CONST
     : LETTER (LETTER|DIGIT)*
     ;
@@ -151,16 +153,21 @@ CONST
 ID  
     :   '@' LETTER (LETTER|DIGIT)*
     ;
+
+FLOAT 
+    : INT '.' DIGIT*
+    | '.' INT
+    ;
+
+INT 
+    : DIGIT+
+    ;
+
 fragment
 LETTER
     : [a-zA-Z\u00FF_]
     ;
 
-fragment
-NUMBER
-    : '-'? ('.' DIGIT+ | DIGIT+ ('.' DIGIT*)? )
-    ;
-    
 fragment
 DIGIT
     : [0-9]

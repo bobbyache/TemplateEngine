@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="ICompiler.cs" />
     <Compile Include="IExpression.cs" />
+    <Compile Include="IGenerator.cs" />
     <Compile Include="IInputField.cs" />
     <Compile Include="IOption.cs" />
     <Compile Include="IOptionsField.cs" />

@@ -67,6 +67,7 @@
     <Compile Include="Funcs\TextFunction.cs" />
     <Compile Include="Funcs\UpperCaseFunction.cs" />
     <Compile Include="Funcs\Variable.cs" />
+    <Compile Include="Generator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="Scope\GlobalTable.cs" />

@@ -311,11 +311,12 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                 BaseFunction result = null;
 
                 if (expr.STRING() != null)
-                    result = new IndentFunction(this.scopeTable, new LiteralText(expr.STRING().GetText()), context.INDENT().GetText());
+                    result = new IndentFunction(this.scopeTable, new LiteralText(expr.STRING().GetText()), context.INDENT().GetText(), context.INT().GetText());
 
                 else if (expr.ID() != null)
                 {
-                    result = new IndentFunction(this.scopeTable, new Variable(expr.ID().GetText()), context.INDENT().GetText());
+                    context.INT();
+                    result = new IndentFunction(this.scopeTable, new Variable(expr.ID().GetText()), context.INDENT().GetText(), context.INT().GetText());
                     return result;
                 }
                 else if (expr.NEWLINE() != null)
@@ -323,13 +324,13 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                     result = new NewlineFunction();
                 }
                 else
-                    result = new IndentFunction(this.scopeTable, Visit(expr), context.INDENT().GetText());
+                    result = new IndentFunction(this.scopeTable, Visit(expr), context.INDENT().GetText(), context.INT().GetText());
 
                 return result;
             }
             else if (context.ID() != null)
             {
-                BaseFunction result = new IndentFunction(this.scopeTable, new Variable(context.ID().ToString()), context.INDENT().GetText());
+                BaseFunction result = new IndentFunction(this.scopeTable, new Variable(context.ID().ToString()), context.INDENT().GetText(), context.INT().GetText());
                 return result;
             }
 

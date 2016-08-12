@@ -52,7 +52,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\ScriptTests.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Files\Scripts\MultiLine.out">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\Scripts\MultiLine.tpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CygSoft.Qik.LanguageEngine.Infrastructure\CygSoft.Qik.LanguageEngine.Infrastructure.csproj">
       <Project>{4614a954-2183-4b9f-be3e-6b541694aa00}</Project>
@@ -64,6 +71,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Files\Scripts\MultiLine.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\Scripts\StoredProc.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

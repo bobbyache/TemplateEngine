@@ -7,11 +7,30 @@ using CygSoft.Qik.LanguageEngine.Infrastructure;
 namespace UnitTests.Tests
 {
     [TestClass]
+    [DeploymentItem(@"Files\Scripts\StoredProc.txt")]
+    [DeploymentItem(@"Files\Scripts\StoredProc.tpl")]
+    [DeploymentItem(@"Files\Scripts\MultiLine.txt")]
+    [DeploymentItem(@"Files\Scripts\MultiLine.tpl")]
+    [DeploymentItem(@"Files\Scripts\MultiLine.out")]
     public class ScriptTests
     {
         [TestMethod]
-        [DeploymentItem(@"Files\Scripts\StoredProc.txt")]
-        [DeploymentItem(@"Files\Scripts\StoredProc.tpl")]
+        public void MultiLine_Script()
+        {
+            string scriptText = File.ReadAllText("MultiLine.txt");
+            string templateText = File.ReadAllText("MultiLine.tpl");
+            string outputText = File.ReadAllText("MultiLine.out");
+
+            ICompiler compiler = new Compiler();
+            compiler.Compile(scriptText);
+
+            IGenerator generator = new Generator();
+            string output = generator.Generate(compiler, templateText);
+
+            Assert.AreEqual(outputText, output);
+        }
+
+        [TestMethod]
         public void StoredProc_Script ()
         {
             string scriptText = File.ReadAllText("StoredProc.txt");
@@ -22,6 +41,9 @@ namespace UnitTests.Tests
 
             IExpression[] expressions = compiler.Expressions;
             IInputField[] inputFields = compiler.InputFields;
+
+            Assert.IsTrue(expressions.Length > 0);
+            Assert.IsTrue(inputFields.Length > 0);
 
             string authorName = compiler.GetValueOfSymbol("@authorName");
             string database = compiler.GetValueOfSymbol("@database");
