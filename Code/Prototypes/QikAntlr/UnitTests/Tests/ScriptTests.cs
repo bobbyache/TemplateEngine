@@ -12,8 +12,49 @@ namespace UnitTests.Tests
     [DeploymentItem(@"Files\Scripts\MultiLine.txt")]
     [DeploymentItem(@"Files\Scripts\MultiLine.tpl")]
     [DeploymentItem(@"Files\Scripts\MultiLine.out")]
+    [DeploymentItem(@"Files\Scripts\InferPK.txt")]
     public class ScriptTests
     {
+        [TestMethod]
+        public void InferPK_Script()
+        {
+            string scriptText = File.ReadAllText("InferPK.txt");
+            ICompiler compiler = new Compiler();
+            compiler.Compile(scriptText);
+
+            compiler.Input("@table", "MyTable");
+            compiler.Input("@userPrimaryKey", "CustomMyTableId");
+
+            string table = compiler.GetValueOfSymbol("@table");
+            string userPrimaryKey = compiler.GetValueOfSymbol("@userPrimaryKey");
+
+            // there is no default, so primaryKeyOption1 = null, inferredKeyOption1 should be null?
+            string primaryKeyOption1 = compiler.GetValueOfSymbol("@primaryKeyOption");
+            string inferredKeyOption1 = compiler.GetValueOfSymbol("@inferredPrimaryKey");
+
+            // made a selection: inferredKeyOption2 expected to be @userPrimaryKey.
+            compiler.Input("@primaryKeyOption", "CUSTOM");
+            string primaryKeyOption2 = compiler.GetValueOfSymbol("@primaryKeyOption");
+            string inferredKeyOption2 = compiler.GetValueOfSymbol("@inferredPrimaryKey");
+
+            // made a selection: inferredKeyOption2 expected to be @table + "Id".
+            compiler.Input("@primaryKeyOption", "INFERRED");
+            string primaryKeyOption3 = compiler.GetValueOfSymbol("@primaryKeyOption");
+            string inferredKeyOption3 = compiler.GetValueOfSymbol("@inferredPrimaryKey");
+
+            // ensure both are null
+            Assert.AreEqual(null, primaryKeyOption1);
+            Assert.AreEqual(null, inferredKeyOption1);
+
+            // ensure the custom primary key is used.
+            Assert.AreEqual("CUSTOM", primaryKeyOption2);
+            Assert.AreEqual("CustomMyTableId", inferredKeyOption2);
+
+            // ensure the inferred primary key is used.
+            Assert.AreEqual("INFERRED", primaryKeyOption3);
+            Assert.AreEqual("MyTableId", inferredKeyOption3);
+        }
+
         [TestMethod]
         public void MultiLine_Script()
         {

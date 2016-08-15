@@ -69,7 +69,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
         {
             string id = context.ID().GetText();
             IfDecissionFunction ifFunc = new IfDecissionFunction(this.scopeTable, id);
-            
+
             foreach (var ifOptContext in context.ifOptExpr())
             {
                 BaseFunction result = null;
@@ -91,11 +91,12 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                     else if (expr.ID() != null)
                     {
                         result = new TextFunction(this.scopeTable, new Variable(expr.ID().GetText()));
-                        return result;
+                        ifFunc.AddFunction(text, result);
                     }
                     else if (expr.NEWLINE() != null)
                     {
                         result = new NewlineFunction();
+                        ifFunc.AddFunction(text, result);
                     }
                     else
                         ifFunc.AddFunction(text, Visit(expr));

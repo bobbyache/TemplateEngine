@@ -53,6 +53,9 @@
     <Compile Include="Tests\ScriptTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Files\Scripts\InferPK.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\Scripts\MultiLine.out">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

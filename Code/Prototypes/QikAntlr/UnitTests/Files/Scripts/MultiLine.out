@@ -1,2 +1,7 @@
-﻿  hello world
-		hello world
+﻿{
+	int x = y;
+	if (x == 2)
+		return y;
+	else
+		return x;
+}
