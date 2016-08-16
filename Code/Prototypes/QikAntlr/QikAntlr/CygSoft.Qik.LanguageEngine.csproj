@@ -60,6 +60,7 @@
     <Compile Include="Funcs\ConcatenateFunction.cs" />
     <Compile Include="Funcs\ConstantFunction.cs" />
     <Compile Include="Funcs\CurrentDateFunction.cs" />
+    <Compile Include="Funcs\DoubleQuoteFunction.cs" />
     <Compile Include="Funcs\FloatFunction.cs" />
     <Compile Include="Funcs\IfDecissionFunction.cs" />
     <Compile Include="Funcs\IndentFunction.cs" />

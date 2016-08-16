@@ -51,6 +51,8 @@
     <Compile Include="TestBench.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\ScriptTests.cs" />
+    <Compile Include="Tests\FunctionTests.cs" />
+    <Compile Include="Tests\InputControlTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Files\Scripts\InferPK.txt">

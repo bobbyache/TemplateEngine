@@ -18,10 +18,15 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 
         public override string Execute()
         {
-            string result = this.text.Replace(@"\n", Environment.NewLine);
-            //result = result.Replace("\\\"", "\""); // doesn't work at the moment...
-            result = result.Replace(@"\t", "\t");
-            return result;
+            // NB !!! You don't ever want to do this, rather create a "doubleQuote" func or something
+            // you might want literal text as replacement into code!
+
+            //string result = this.text.Replace(@"\n", Environment.NewLine);
+            ////result = result.Replace("\\\"", "\""); // doesn't work at the moment...
+            //result = result.Replace(@"\t", "\t");
+            //return result;
+
+            return this.text;
         }
     }
 }

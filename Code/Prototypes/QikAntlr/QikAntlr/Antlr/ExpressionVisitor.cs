@@ -113,6 +113,10 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                         IndentFunction indentFunc = new IndentFunction(scopeTable, functionArguments);
                         func = indentFunc;
                         break;
+                    case "doubleQuotes":
+                        DoubleQuoteFunction doubleQuoteFunction = new DoubleQuoteFunction(scopeTable, functionArguments);
+                        func = doubleQuoteFunction;
+                        break;
                     default:
                         throw new NotSupportedException(string.Format("Function \"{0}\" is not supported in this context.", funcIdentifier));
                 }

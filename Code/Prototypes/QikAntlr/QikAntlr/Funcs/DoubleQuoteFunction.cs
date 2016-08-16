@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal class UpperCaseFunction : BaseFunction
+    internal class DoubleQuoteFunction : BaseFunction
     {
-        public UpperCaseFunction(GlobalTable scopeTable, List<BaseFunction> functionArguments)
+        public DoubleQuoteFunction(GlobalTable scopeTable, List<BaseFunction> functionArguments)
             : base(scopeTable, functionArguments)
         {
 
@@ -24,7 +24,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 
             if (txt != null && txt.Length >= 1)
             {
-                return txt.ToUpper();
+                return "\"" + txt + "\"";
             }
             return txt;
         }

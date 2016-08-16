@@ -16,7 +16,7 @@ namespace UnitTests.Tests
     public class ScriptTests
     {
         [TestMethod]
-        public void InferPK_Script()
+        public void Script_InferPK()
         {
             string scriptText = File.ReadAllText("InferPK.txt");
             ICompiler compiler = new Compiler();
@@ -56,7 +56,7 @@ namespace UnitTests.Tests
         }
 
         [TestMethod]
-        public void MultiLine_Script()
+        public void Script_MultiLine()
         {
             string scriptText = File.ReadAllText("MultiLine.txt");
             string templateText = File.ReadAllText("MultiLine.tpl");
@@ -72,7 +72,7 @@ namespace UnitTests.Tests
         }
 
         [TestMethod]
-        public void StoredProc_Script ()
+        public void Script_StoredProc()
         {
             string scriptText = File.ReadAllText("StoredProc.txt");
             string templateText = File.ReadAllText("StoredProc.tpl");

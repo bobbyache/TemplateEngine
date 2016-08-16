@@ -49,7 +49,7 @@ namespace QikLanguageEngine_Test
                                                         typeof(string), textBox.DefaultValue,
                                                         new Scm.BrowsableAttribute(true),
                                                         new Scm.DisplayNameAttribute(textBox.Title),
-                                                        new Scm.DescriptionAttribute(textBox.Description),
+                                                        new Scm.DescriptionAttribute(CreatePropertyDescription(textBox)),
                                                         new Scm.DefaultValueAttribute(textBox.DefaultValue)
                                                         );
             propertyDescriptor.Attributes.Add(new Scm.CategoryAttribute(CATEGORY_USER_INPUT), true);
@@ -66,7 +66,7 @@ namespace QikLanguageEngine_Test
                                                         typeof(int), optionBox.SelectedIndex,
                                                         new Scm.BrowsableAttribute(true),
                                                         new Scm.DisplayNameAttribute(optionBox.Title),
-                                                        new Scm.DescriptionAttribute(optionBox.Description),
+                                                        new Scm.DescriptionAttribute(CreatePropertyDescription(optionBox)),
                                                         new Scm.DefaultValueAttribute(optionBox.SelectedIndex)
                                                         );
             propertyDescriptor.Attributes.Add(new Scm.CategoryAttribute(CATEGORY_USER_INPUT), true);
@@ -90,7 +90,7 @@ namespace QikLanguageEngine_Test
                                                         //typeof(string), null,
                                                         new Scm.BrowsableAttribute(true),
                                                         new Scm.DisplayNameAttribute(expression.Title),
-                                                        new Scm.DescriptionAttribute(expression.Description),
+                                                        new Scm.DescriptionAttribute(CreatePropertyDescription(expression)),
                                                         new Scm.DefaultValueAttribute(null),
                                                         new Scm.ReadOnlyAttribute(true)
                                                         );
@@ -103,6 +103,14 @@ namespace QikLanguageEngine_Test
             //propertyDescriptor.AddValueChanged(propertyGrid.SelectedObject, new EventHandler(this.InputPropertyChanged));
 
             typeDescriptor.GetProperties().Add(propertyDescriptor);
+        }
+
+        private string CreatePropertyDescription(ISymbol expression)
+        {
+            if (string.IsNullOrEmpty(expression.Description))
+                return string.Format("PLACEHOLDER: {0}\nSYMBOL: {1}", expression.Placeholder, expression.Symbol);
+            else
+                return string.Format("{0}\n\nPLACEHOLDER: {1}\nSYMBOL: {2}", expression.Description, expression.Placeholder, expression.Symbol);
         }
 
         private void BuildOptions(Dyn.PropertyDescriptor pd, IOption[] options)
