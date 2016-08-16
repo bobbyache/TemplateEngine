@@ -18,7 +18,10 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 
         public override string Execute()
         {
-            return text;
+            string result = this.text.Replace(@"\n", Environment.NewLine);
+            //result = result.Replace("\\\"", "\""); // doesn't work at the moment...
+            result = result.Replace(@"\t", "\t");
+            return result;
         }
     }
 }

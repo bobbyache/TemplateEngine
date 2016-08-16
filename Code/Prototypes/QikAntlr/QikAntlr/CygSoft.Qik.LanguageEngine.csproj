@@ -64,7 +64,6 @@
     <Compile Include="Funcs\IfDecissionFunction.cs" />
     <Compile Include="Funcs\IndentFunction.cs" />
     <Compile Include="Funcs\IntegerFunction.cs" />
-    <Compile Include="Funcs\LiteralTextFunction.cs" />
     <Compile Include="Funcs\LowerCaseFunction.cs" />
     <Compile Include="Funcs\NewlineFunction.cs" />
     <Compile Include="Funcs\RemoveSpacesFunction.cs" />

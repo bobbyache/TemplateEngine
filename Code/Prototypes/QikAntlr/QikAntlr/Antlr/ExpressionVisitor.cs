@@ -123,7 +123,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
         public override BaseFunction VisitExpr(QikTemplateParser.ExprContext context)
         {
             if (context.STRING() != null)
-                return new LiteralTextFunction(scopeTable, Common.StripOuterQuotes(context.STRING().GetText()));
+                return new TextFunction(scopeTable, Common.StripOuterQuotes(context.STRING().GetText()));
 
             else if (context.VARIABLE() != null)
                 return new VariableFunction(scopeTable, context.VARIABLE().GetText());
