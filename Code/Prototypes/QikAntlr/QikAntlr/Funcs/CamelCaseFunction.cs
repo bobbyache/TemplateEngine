@@ -9,28 +9,17 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class CamelCaseFunction : BaseFunction
     {
-        internal CamelCaseFunction(GlobalTable scopeTable, 
-            BaseFunction func)
-            : base(scopeTable, func)
-        {
-
-        }
-
-        internal CamelCaseFunction(GlobalTable scopeTable, LiteralText literalText)
-            : base(scopeTable, literalText)
-        {
-
-        }
-
-        internal CamelCaseFunction(GlobalTable scopeTable, Variable variable)
-            : base(scopeTable, variable)
+        public CamelCaseFunction(GlobalTable scopeTable, List<BaseFunction> functionArguments) : base(scopeTable, functionArguments)
         {
 
         }
 
         public override string Execute()
         {
-            string txt = base.Execute();
+            if (functionArguments.Count() != 1)
+                throw new ApplicationException("Too many arguments.");
+
+            string txt = functionArguments[0].Execute();
 
             if (txt != null && txt.Length >= 1)
             {

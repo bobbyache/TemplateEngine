@@ -9,27 +9,20 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class LowerCaseFunction : BaseFunction
     {
-        internal LowerCaseFunction(GlobalTable scopeTable, BaseFunction func)
-            : base(scopeTable, func)
-        {
 
-        }
-
-        internal LowerCaseFunction(GlobalTable scopeTable, LiteralText literalText)
-            : base(scopeTable, literalText)
-        {
-
-        }
-
-        internal LowerCaseFunction(GlobalTable scopeTable, Variable variable)
-            : base(scopeTable, variable)
+        public LowerCaseFunction(GlobalTable scopeTable, List<BaseFunction> functionArguments)
+            : base(scopeTable, functionArguments)
         {
 
         }
 
         public override string Execute()
         {
-            string txt = base.Execute();
+            if (functionArguments.Count() != 1)
+                throw new ApplicationException("Too many arguments.");
+
+            string txt = functionArguments[0].Execute();
+
             if (txt != null && txt.Length >= 1)
             {
                 return txt.ToLower();

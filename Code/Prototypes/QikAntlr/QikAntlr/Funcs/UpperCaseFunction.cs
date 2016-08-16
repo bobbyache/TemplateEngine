@@ -9,27 +9,18 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class UpperCaseFunction : BaseFunction
     {
-        internal UpperCaseFunction(GlobalTable scopeTable, BaseFunction func)
-            : base(scopeTable, func)
+        public UpperCaseFunction(GlobalTable scopeTable, List<BaseFunction> functionArguments)
+            : base(scopeTable, functionArguments)
         {
 
         }
-
-        internal UpperCaseFunction(GlobalTable scopeTable, LiteralText literalText)
-            : base(scopeTable, literalText)
-        {
-
-        }
-
-        internal UpperCaseFunction(GlobalTable scopeTable, Variable variable)
-            : base(scopeTable, variable)
-        {
-
-        }
-
         public override string Execute()
         {
-            string txt = base.Execute();
+            if (functionArguments.Count() != 1)
+                throw new ApplicationException("Too many arguments.");
+
+            string txt = functionArguments[0].Execute();
+
             if (txt != null && txt.Length >= 1)
             {
                 return txt.ToUpper();

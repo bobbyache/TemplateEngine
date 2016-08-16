@@ -9,27 +9,18 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class CurrentDateFunction : BaseFunction
     {
-        internal CurrentDateFunction(GlobalTable scopeTable, BaseFunction func)
-            : base(scopeTable, func)
-        {
-
-        }
-
-        internal CurrentDateFunction(GlobalTable scopeTable, LiteralText literalText)
-            : base(scopeTable, literalText)
-        {
-
-        }
-
-        internal CurrentDateFunction(GlobalTable scopeTable, Variable variable)
-            : base(scopeTable, variable)
+        internal CurrentDateFunction(GlobalTable scopeTable, List<BaseFunction> functionArguments)
+            : base(scopeTable, functionArguments)
         {
 
         }
 
         public override string Execute()
         {
-            string dateFormatText = base.Execute();
+            if (functionArguments.Count() != 1)
+                throw new ApplicationException("Too many arguments.");
+
+            string dateFormatText = functionArguments[0].Execute();
 
             if (dateFormatText != null && dateFormatText.Length >= 1)
             {

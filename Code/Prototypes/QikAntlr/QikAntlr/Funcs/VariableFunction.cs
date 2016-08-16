@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal class TextFunction : BaseFunction
+    internal class VariableFunction : BaseFunction
     {
-        private string text;
+        private string symbol;
 
-        internal TextFunction(GlobalTable scopeTable, string text) : base(scopeTable)
+        public VariableFunction(GlobalTable scopeTable, string symbol) : base(scopeTable)
         {
-            this.text = text;
+            this.symbol = symbol;
         }
 
         public override string Execute()
         {
-            return text;
+            return base.scopeTable.GetValueOfSymbol(this.symbol);
         }
     }
 }

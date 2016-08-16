@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal class TextFunction : BaseFunction
+    internal class FloatFunction : BaseFunction
     {
         private string text;
 
-        internal TextFunction(GlobalTable scopeTable, string text) : base(scopeTable)
+        public FloatFunction(GlobalTable scopeTable, string text)
+            : base(scopeTable)
         {
             this.text = text;
         }

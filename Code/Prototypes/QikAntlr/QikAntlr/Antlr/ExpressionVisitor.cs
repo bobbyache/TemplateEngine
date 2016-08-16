@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CygSoft.Qik.LanguageEngine.Antlr
 {
-    internal class ExpressionVisitor :  QikTemplateBaseVisitor<BaseFunction>
+    internal class ExpressionVisitor : QikTemplateBaseVisitor<BaseFunction>
     {
         private GlobalTable scopeTable;
 
@@ -21,14 +21,15 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
 
         public override BaseFunction VisitExprDecl(QikTemplateParser.ExprDeclContext context)
         {
-            string id = context.ID().GetText();
-            string title = GetExpressionTitle(context);
-            string hidden = GetExpressionHidden(context);
+            string id = context.VARIABLE().GetText();
+
+            SymbolArguments symbolArguments = new SymbolArguments();
+            symbolArguments.Process(context.declArgs());
 
             if (context.concatExpr() != null)
             {
                 ConcatenateFunction concatenateFunc = GetConcatenateFunction(context.concatExpr());
-                ExpressionSymbol expression = new ExpressionSymbol(id, title, concatenateFunc, hidden);
+                ExpressionSymbol expression = new ExpressionSymbol(id, symbolArguments.Title, concatenateFunc, symbolArguments.Hidden);
                 scopeTable.AddSymbol(expression);
             }
             else if (context.optExpr() != null)
@@ -36,29 +37,13 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                 var expr = context.optExpr();
                 BaseFunction ifFunc = VisitOptExpr(context.optExpr());
 
-                ExpressionSymbol expression = new ExpressionSymbol(id, title, ifFunc, hidden);
+                ExpressionSymbol expression = new ExpressionSymbol(id, symbolArguments.Title, ifFunc, symbolArguments.Hidden);
                 scopeTable.AddSymbol(expression);
             }
             else if (context.expr() != null)
             {
-                var expr = context.expr();
-
-                BaseFunction result = null;
-                if (expr.STRING() != null)
-                    result = new TextFunction(this.scopeTable, new LiteralText(expr.STRING().GetText()));
-                else if (expr.ID() != null)
-                {
-                    result = new TextFunction(this.scopeTable, new Variable(expr.ID().GetText()));
-                    return result;
-                }
-                else if (expr.NEWLINE() != null)
-                {
-                    result = new NewlineFunction();
-                }
-                else
-                    result = Visit(expr);
-
-                ExpressionSymbol expression = new ExpressionSymbol(context.ID().GetText(), title, result, hidden);
+                BaseFunction function = VisitExpr(context.expr());
+                ExpressionSymbol expression = new ExpressionSymbol(id, symbolArguments.Title, function, symbolArguments.Hidden);
                 scopeTable.AddSymbol(expression);
             }
 
@@ -67,12 +52,11 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
 
         public override BaseFunction VisitOptExpr(QikTemplateParser.OptExprContext context)
         {
-            string id = context.ID().GetText();
+            string id = context.VARIABLE().GetText();
             IfDecissionFunction ifFunc = new IfDecissionFunction(this.scopeTable, id);
 
             foreach (var ifOptContext in context.ifOptExpr())
             {
-                BaseFunction result = null;
                 string text = ifOptContext.STRING().GetText();
 
                 if (ifOptContext.concatExpr() != null)
@@ -82,308 +66,123 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                 }
                 else if (ifOptContext.expr() != null)
                 {
-                    var expr = ifOptContext.expr();
-                    if (expr.STRING() != null)
-                    {
-                        result = new TextFunction(this.scopeTable, new LiteralText(expr.STRING().GetText()));
-                        ifFunc.AddFunction(text, result);
-                    }
-                    else if (expr.ID() != null)
-                    {
-                        result = new TextFunction(this.scopeTable, new Variable(expr.ID().GetText()));
-                        ifFunc.AddFunction(text, result);
-                    }
-                    else if (expr.NEWLINE() != null)
-                    {
-                        result = new NewlineFunction();
-                        ifFunc.AddFunction(text, result);
-                    }
-                    else
-                        ifFunc.AddFunction(text, Visit(expr));
+                    BaseFunction function = VisitExpr(ifOptContext.expr());
+                    ifFunc.AddFunction(text, function);
                 }
             }
 
             return ifFunc;
         }
 
-        public override BaseFunction VisitCamelCaseFunc(QikTemplateParser.CamelCaseFuncContext context)
+        public override BaseFunction VisitFunc(QikTemplateParser.FuncContext context)
         {
-            if (context.concatExpr() != null)
-            {
-                ConcatenateFunction concatenateFunc = GetConcatenateFunction(context.concatExpr());
-                return concatenateFunc;
-            }
-            else if (context.expr() != null)
-            {
-                var expr = context.expr();
+            BaseFunction func = null;
 
-                BaseFunction result = null;
+            if (context.IDENTIFIER() != null)
+            {
+                string funcIdentifier = context.IDENTIFIER().GetText();
+                List<BaseFunction> functionArguments = CreateArguments(context.funcArg());
 
-                if (expr.STRING() != null)
-                    result = new CamelCaseFunction(this.scopeTable, new LiteralText(expr.STRING().GetText()));
-                else if (expr.ID() != null)
+                switch (funcIdentifier)
                 {
-                    result = new CamelCaseFunction(this.scopeTable, new Variable(expr.ID().GetText()));
-                    return result;
+                    case "camelCase":
+                        CamelCaseFunction camelCaseFunc = new CamelCaseFunction(scopeTable, functionArguments);
+                        func = camelCaseFunc;
+                        break;
+                    case "currentDate":
+                        CurrentDateFunction currentDateFunc = new CurrentDateFunction(scopeTable, functionArguments);
+                        func = currentDateFunc;
+                        break;
+                    case "lowerCase":
+                        LowerCaseFunction lowerCaseFunc = new LowerCaseFunction(scopeTable, functionArguments);
+                        func = lowerCaseFunc;
+                        break;
+                    case "upperCase":
+                        UpperCaseFunction upperCaseFunc = new UpperCaseFunction(scopeTable, functionArguments);
+                        func = upperCaseFunc;
+                        break;
+                    case "removeSpaces":
+                        RemoveSpacesFunction removeSpacesFunc = new RemoveSpacesFunction(scopeTable, functionArguments);
+                        func = removeSpacesFunc;
+                        break;
+                    case "indentLine":
+                        IndentFunction indentFunc = new IndentFunction(scopeTable, functionArguments);
+                        func = indentFunc;
+                        break;
+                    default:
+                        throw new NotSupportedException(string.Format("Function \"{0}\" is not supported in this context.", funcIdentifier));
                 }
-                else if (expr.NEWLINE() != null)
-                {
-                    result = new NewlineFunction();
-                }
-                else
-                    result = new CamelCaseFunction(this.scopeTable, Visit(expr));
-
-                return result;
             }
-            else if (context.ID() != null)
-            {
-                BaseFunction result = new CamelCaseFunction(this.scopeTable, new Variable(context.ID().ToString()));
-                return result;
-            }
-
-            return null;
+            return func;
         }
 
-        public override BaseFunction VisitCurrentDateFunc(QikTemplateParser.CurrentDateFuncContext context)
+        public override BaseFunction VisitExpr(QikTemplateParser.ExprContext context)
         {
-            if (context.concatExpr() != null)
-            {
-                ConcatenateFunction concatenateFunc = GetConcatenateFunction(context.concatExpr());
-                return concatenateFunc;
-            }
-            else if (context.expr() != null)
-            {
-                var expr = context.expr();
+            if (context.STRING() != null)
+                return new LiteralTextFunction(scopeTable, Common.StripOuterQuotes(context.STRING().GetText()));
 
-                BaseFunction result = null;
+            else if (context.VARIABLE() != null)
+                return new VariableFunction(scopeTable, context.VARIABLE().GetText());
 
-                if (expr.STRING() != null)
-                    result = new CurrentDateFunction(this.scopeTable, new LiteralText(expr.STRING().GetText()));
-                else if (expr.ID() != null)
-                {
-                    result = new CurrentDateFunction(this.scopeTable, new Variable(expr.ID().GetText()));
-                    return result;
-                }
-                else if (expr.NEWLINE() != null)
-                {
-                    result = new NewlineFunction();
-                }
+            else if (context.CONST() != null)
+            {
+                string constantText = context.CONST().GetText();
+                if (constantText == "NEWLINE")
+                    return new NewlineFunction();
                 else
-                    result = new CurrentDateFunction(this.scopeTable, Visit(expr));
-
-                return result;
-            }
-            else if (context.ID() != null)
-            {
-                BaseFunction result = new CurrentDateFunction(this.scopeTable, new Variable(context.ID().ToString()));
-                return result;
+                    return new ConstantFunction(scopeTable, context.CONST().GetText());
             }
 
-            return null;
+            else if (context.INT() != null)
+                return new IntegerFunction(scopeTable, context.INT().GetText());
+
+            else if (context.FLOAT() != null)
+                return new FloatFunction(scopeTable, context.FLOAT().GetText());
+
+            // recurse...
+            else if (context.func() != null)
+                return VisitFunc(context.func());
+
+            else
+                return null;
         }
 
-        public override BaseFunction VisitLowerCaseFunc(QikTemplateParser.LowerCaseFuncContext context)
+        private List<BaseFunction> CreateArguments(IReadOnlyList<QikTemplateParser.FuncArgContext> funcArgs)
         {
-            if (context.concatExpr() != null)
-            {
-                ConcatenateFunction concatenateFunc = GetConcatenateFunction(context.concatExpr());
-                return concatenateFunc;
-            }
-            else if (context.expr() != null)
-            {
-                var expr = context.expr();
+            List<BaseFunction> functionArguments = new List<BaseFunction>();
 
-                BaseFunction result = null;
+            foreach (QikTemplateParser.FuncArgContext funcArg in funcArgs)
+            {
+                QikTemplateParser.ConcatExprContext concatExpr = funcArg.concatExpr();
+                QikTemplateParser.ExprContext expr = funcArg.expr();
 
-                if (expr.STRING() != null)
-                    result = new LowerCaseFunction(this.scopeTable, new LiteralText(expr.STRING().GetText()));
-                else if (expr.ID() != null)
+                if (concatExpr != null)
                 {
-                    result = new LowerCaseFunction(this.scopeTable, new Variable(expr.ID().GetText()));
-                    return result;
+                    ConcatenateFunction concatenateFunc = GetConcatenateFunction(concatExpr);
+                    functionArguments.Add(concatenateFunc);
                 }
-                else if (expr.NEWLINE() != null)
+                else if (expr != null)
                 {
-                    result = new NewlineFunction();
+                    BaseFunction function = VisitExpr(expr);
+                    functionArguments.Add(function);
                 }
-                else
-                    result = new LowerCaseFunction(this.scopeTable, Visit(expr));
-
-                return result;
             }
-            else if (context.ID() != null)
-            {
-                BaseFunction result = new LowerCaseFunction(this.scopeTable, new Variable(context.ID().ToString()));
-                return result;
-            }
-
-            return null;
-        }
-
-        public override BaseFunction VisitUpperCaseFunc(QikTemplateParser.UpperCaseFuncContext context)
-        {
-            if (context.concatExpr() != null)
-            {
-                ConcatenateFunction concatenateFunc = GetConcatenateFunction(context.concatExpr());
-                return concatenateFunc;
-            }
-            else if (context.expr() != null)
-            {
-                var expr = context.expr();
-
-                BaseFunction result = null;
-
-                if (expr.STRING() != null)
-                    result = new UpperCaseFunction(this.scopeTable, new LiteralText(expr.STRING().GetText()));
-
-                else if (expr.ID() != null)
-                {
-                    result = new UpperCaseFunction(this.scopeTable, new Variable(expr.ID().GetText()));
-                    return result;
-                }
-                else if (expr.NEWLINE() != null)
-                {
-                    result = new NewlineFunction();
-                }
-                else
-                    result = new UpperCaseFunction(this.scopeTable, Visit(expr));
-
-                return result;
-            }
-            else if (context.ID() != null)
-            {
-                BaseFunction result = new UpperCaseFunction(this.scopeTable, new Variable(context.ID().ToString()));
-                return result;
-            }
-
-            return null;
-        }
-
-        public override BaseFunction VisitRemoveSpacesFunc(QikTemplateParser.RemoveSpacesFuncContext context)
-        {
-            if (context.concatExpr() != null)
-            {
-                ConcatenateFunction concatenateFunc = GetConcatenateFunction(context.concatExpr());
-                return concatenateFunc;
-            }
-            else if (context.expr() != null)
-            {
-                var expr = context.expr();
-
-                BaseFunction result = null;
-
-                if (expr.STRING() != null)
-                    result = new RemoveSpacesFunction(this.scopeTable, new LiteralText(expr.STRING().GetText()));
-
-                else if (expr.ID() != null)
-                {
-                    result = new RemoveSpacesFunction(this.scopeTable, new Variable(expr.ID().GetText()));
-                    return result;
-                }
-                else if (expr.NEWLINE() != null)
-                {
-                    result = new NewlineFunction();
-                }
-                else
-                    result = new RemoveSpacesFunction(this.scopeTable, Visit(expr));
-
-                return result;
-            }
-            else if (context.ID() != null)
-            {
-                BaseFunction result = new RemoveSpacesFunction(this.scopeTable, new Variable(context.ID().ToString()));
-                return result;
-            }
-
-            return null;
-        }
-
-
-        public override BaseFunction VisitIndentFunc(QikTemplateParser.IndentFuncContext context)
-        {
-            if (context.concatExpr() != null)
-            {
-                ConcatenateFunction concatenateFunc = GetConcatenateFunction(context.concatExpr());
-                return concatenateFunc;
-            }
-            else if (context.expr() != null)
-            {
-                var expr = context.expr();
-
-                BaseFunction result = null;
-
-                if (expr.STRING() != null)
-                    result = new IndentFunction(this.scopeTable, new LiteralText(expr.STRING().GetText()), context.INDENT().GetText(), context.INT().GetText());
-
-                else if (expr.ID() != null)
-                {
-                    context.INT();
-                    result = new IndentFunction(this.scopeTable, new Variable(expr.ID().GetText()), context.INDENT().GetText(), context.INT().GetText());
-                    return result;
-                }
-                else if (expr.NEWLINE() != null)
-                {
-                    result = new NewlineFunction();
-                }
-                else
-                    result = new IndentFunction(this.scopeTable, Visit(expr), context.INDENT().GetText(), context.INT().GetText());
-
-                return result;
-            }
-            else if (context.ID() != null)
-            {
-                BaseFunction result = new IndentFunction(this.scopeTable, new Variable(context.ID().ToString()), context.INDENT().GetText(), context.INT().GetText());
-                return result;
-            }
-
-            return null;
+            return functionArguments;
         }
 
         private ConcatenateFunction GetConcatenateFunction(QikTemplateParser.ConcatExprContext context)
         {
             ConcatenateFunction concatenateFunc = new ConcatenateFunction(this.scopeTable);
 
-            var concatExprs = context.expr();
-            foreach (var concatExpr in concatExprs)
+            IReadOnlyList<QikTemplateParser.ExprContext> expressions = context.expr();
+
+            foreach (QikTemplateParser.ExprContext expr in expressions)
             {
-                BaseFunction result = null;
-
-                if (concatExpr.STRING() != null)
-                    result = new TextFunction(this.scopeTable, new LiteralText(concatExpr.STRING().GetText()));
-
-                else if (concatExpr.ID() != null)
-                {
-                    result = new TextFunction(this.scopeTable, new Variable(concatExpr.ID().GetText()));
-                }
-                else if (concatExpr.NEWLINE() != null)
-                {
-                    result = new NewlineFunction();
-                }
-                else
-                    result = Visit(concatExpr);
-
+                BaseFunction result = VisitExpr(expr);
                 concatenateFunc.AddFunction(result);
             }
 
             return concatenateFunc;
-        }
-
-        private string GetExpressionTitle(QikTemplateParser.ExprDeclContext context)
-        {
-            string titleText = null;
-            if (context.exprArgs().titleArg() != null)
-                return Common.StripOuterQuotes(context.exprArgs().titleArg().GetText());
-
-            return titleText;
-        }
-
-        private string GetExpressionHidden(QikTemplateParser.ExprDeclContext context)
-        {
-            string hiddenText = null;
-            if (context.exprArgs().hiddenArg() != null)
-                return Common.StripOuterQuotes(context.exprArgs().hiddenArg().GetText());
-
-            return hiddenText;
         }
     }
 }

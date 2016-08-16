@@ -15,150 +15,98 @@ Control Declarations
 ctrlDecl
     : optionBox
     | textBox
-    //| checkBox
     ;
 
 optionBox
-    : ID '=' 'options' '[' optionBoxArgs ']' '{' optionsBody '}' ';'
+    : VARIABLE '=' 'options' '[' declArgs ']' '{' optionsBody '}' ';'
     ;
 
 textBox
-    : ID '=' 'text' '[' textBoxArgs ']' ';'
+    : VARIABLE '=' 'text' '[' declArgs ']' ';'
     ; 
-
-//checkBox
-//    : ID '=' 'check' '[' checkBoxArgs ']' ';'
-//    ;
-
-//checkBoxArgs
-//    : titleArg  (',' defaultArg)?
-//    ;
-
-textBoxArgs
-    : titleArg  (',' defaultArg)?
-    ;
-
-optionBoxArgs
-    : titleArg  (',' defaultArg)?
-    ;
 
 optionsBody
     : 'return' (singleOption ',')* (singleOption) ';'
     ;
 
 singleOption
-    //: CONST ':' 'option' '[' titleArg ']'
-    //: 'option' CONST '[' titleArg ']'
-    : 'option' STRING '[' titleArg ']'
+    : 'option' STRING '[' declArgs ']'
     ;
 
 /* -----------------------------------------------------------------------
 Expression Declarations
-
-ID '=' 'options' '[' optionBoxArgs ']' optionsBody ';'
 ----------------------------------------------------------------------- */ 
 exprDecl
-    : ID '=' 'expression' '[' exprArgs ']' '{' 'return' (concatExpr|expr|optExpr) ';'  '}' ';'
-    ;
-
-exprArgs
-    : titleArg  (',' hiddenArg)?
+    : VARIABLE '=' 'expression' '[' declArgs ']' '{' 'return' (concatExpr|expr|optExpr) ';'  '}' ';'
     ;
 
 /* -----------------------------------------------------------------------
 Decision (if) Statement
 ----------------------------------------------------------------------- */ 
 optExpr
-    //: ifLine (elseIfLine)* (elseLine)*
-    : 'with' 'options' ID (ifOptExpr ',')* ifOptExpr
-    //: 'with' 'options' ID (ifOptExpr ',')* ifOptExpr
-     // : 'with' 'options' ID '{'  '}'
+    : 'with' 'options' VARIABLE (ifOptExpr ',')* ifOptExpr
     ;
 
 ifOptExpr
-    //: 'if' '(' ID '==' STRING ')' 'return' (expr) ','
     : 'if' '(' STRING ')' 'return' (concatExpr|expr)
     ;
-/*
-elseIfLine
-    : 'elseif' '(' ID '==' STRING ')' 'return' (expr) ','
-    ;
-
-elseLine
-    : 'else' 'return' (expr)
-    ;
-*/
-
-
 
 /* -----------------------------------------------------------------------
 Control and Expression Arguments
 ----------------------------------------------------------------------- */ 
-titleArg
-    : 'Title' '=' STRING
+
+declArgs
+    : declArg (',' declArg)*
     ;
 
-defaultArg
-    : 'Default' '=' STRING
-    ;
-
-valueArg
-    : 'Value' '=' (STRING | ID)
-    ;
-
-hiddenArg
-    : 'Hidden' '=' STRING
+declArg
+    : IDENTIFIER '=' STRING
     ;
 
 /* -----------------------------------------------------------------------
 Expressions and Functions
 ----------------------------------------------------------------------- */ 
+expr
+    : func
+    |STRING
+    |VARIABLE
+    |INT
+    |FLOAT
+    |CONST
+    ;
+
 concatExpr
     : expr ('+' expr)+
     ;
 
-expr
-    : func
-    |STRING
-    |ID
-    |NEWLINE
-    ;
-
 func
-    : 'lowerCase' '(' (ID|concatExpr|expr) ')'      #LowerCaseFunc
-    | 'upperCase' '(' (ID|concatExpr|expr) ')'      #UpperCaseFunc
-    | 'removeSpaces' '(' (ID|concatExpr|expr) ')'   #RemoveSpacesFunc
-    | 'camelCase' '(' (ID|concatExpr|expr) ')'      #CamelCaseFunc
-    | 'currentDate' '(' (ID|concatExpr|expr) ')'    #CurrentDateFunc
-    | 'indentLine' '(' (ID|concatExpr|expr) ',' INDENT ',' INT ')'    #IndentFunc
-    //| 'indentLine' '(' (ID|concatExpr|expr) ',' 'SPACE' ',' INT ')'       #IndentFunc
+    : IDENTIFIER '(' funcArg (',' funcArg)* ')'
     ;
 
+funcArg
+    : expr | concatExpr
+    ;
 
 /* ***********************************************************************
 Tokens and Fragments
 *********************************************************************** */ 
 
 
-INDENT
+CONST
     : 'TAB'
     | 'SPACE'
-    ;
-
-
-NEWLINE
-    : 'NEWLINE'
+    | 'NEWLINE'
     ;
 
 STRING 
 	: '"' ('""'|~'"')* '"' 
 	;
 
-CONST
+IDENTIFIER
     : LETTER (LETTER|DIGIT)*
     ;
 
-ID  
+VARIABLE  
     :   '@' LETTER (LETTER|DIGIT)*
     ;
 

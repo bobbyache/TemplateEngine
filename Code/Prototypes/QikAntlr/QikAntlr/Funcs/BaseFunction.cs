@@ -7,67 +7,42 @@ using System.Threading.Tasks;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    public enum ChildInputTypeEnum
+    internal abstract class BaseFunction
     {
-        Concatenation,
-        LiteralText,
-        Variable,
-        Function,
-        IfStatement
-    }
+        protected GlobalTable scopeTable = null;
+        protected List<BaseFunction> functionArguments;
 
-    internal class BaseFunction
-    {
-        protected BaseFunction childFunction = null;
-        protected LiteralText literalText = null;
-        protected Variable variable = null;
-        private GlobalTable scopeTable = null;
-
-        public ChildInputTypeEnum InputType { get; protected set; }
+        internal BaseFunction(GlobalTable scopeTable, List<BaseFunction> functionArguments)
+        {
+            this.scopeTable = scopeTable;
+            this.functionArguments = functionArguments;
+        }
 
         internal BaseFunction(GlobalTable scopeTable)
         {
             this.scopeTable = scopeTable;
+            this.functionArguments = new List<BaseFunction>();
         }
 
-        internal BaseFunction(GlobalTable scopeTable, LiteralText literalText)
-        {
-            this.literalText = literalText;
-            this.InputType = ChildInputTypeEnum.LiteralText;
-            this.scopeTable = scopeTable;
-        }
+        public abstract string Execute();
 
-        internal BaseFunction(GlobalTable scopeTable, BaseFunction childFunction)
-        {
-            this.childFunction = childFunction;
-            this.InputType = ChildInputTypeEnum.Function;
-            this.scopeTable = scopeTable;
-        }
-
-        internal BaseFunction(GlobalTable scopeTable, Variable variable)
-        {
-            this.variable = variable;
-            this.InputType = ChildInputTypeEnum.Variable;
-            this.scopeTable = scopeTable;
-        }
-
-        public virtual string Execute()
-        {
-            switch (this.InputType)
-            {
-                case ChildInputTypeEnum.LiteralText:
-                    return this.literalText.Value;
+        //public virtual string Execute()
+        //{
+        //    switch (this.InputType)
+        //    {
+        //        case ChildInputTypeEnum.LiteralText:
+        //            return this.literalText.Value;
                     
-                case ChildInputTypeEnum.Variable:
-                    return scopeTable.GetValueOfSymbol(this.variable.Symbol);
+        //        case ChildInputTypeEnum.Variable:
+        //            return scopeTable.GetValueOfSymbol(this.variable.Symbol);
                     
-                case ChildInputTypeEnum.Function:
-                    return this.childFunction.Execute();
+        //        case ChildInputTypeEnum.Function:
+        //            return this.childFunction.Execute();
                     
-                default:
-                    return this.literalText.Value;
-            }
-        }
+        //        default:
+        //            return this.literalText.Value;
+        //    }
+        //}
 
     }
 }

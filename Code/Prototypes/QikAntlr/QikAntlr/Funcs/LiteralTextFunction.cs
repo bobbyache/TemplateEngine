@@ -7,18 +7,19 @@ using System.Threading.Tasks;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal class TextFunction : BaseFunction
+    internal class LiteralTextFunction : BaseFunction
     {
         private string text;
 
-        internal TextFunction(GlobalTable scopeTable, string text) : base(scopeTable)
+        public LiteralTextFunction(GlobalTable scopeTable, string text) : base(scopeTable)
         {
             this.text = text;
         }
 
         public override string Execute()
         {
-            return text;
+            return this.text;
         }
+
     }
 }

@@ -10,12 +10,10 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
     internal class ConcatenateFunction : BaseFunction
     {
         private List<BaseFunction> functions = new List<BaseFunction>();
-
         private GlobalTable scopeTable;
 
         internal ConcatenateFunction(GlobalTable scopeTable) : base(scopeTable)
         {
-            this.InputType = ChildInputTypeEnum.Concatenation;
             this.scopeTable = scopeTable;
         }
 

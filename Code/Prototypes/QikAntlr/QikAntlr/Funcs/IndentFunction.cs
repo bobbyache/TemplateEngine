@@ -9,34 +9,21 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class IndentFunction : BaseFunction
     {
-        private string indentType;
-        private int noOfTimes;
-
-        internal IndentFunction(GlobalTable scopeTable, BaseFunction func, string indentType, string noOfTimes)
-            : base(scopeTable, func)
+        public IndentFunction(GlobalTable scopeTable, List<BaseFunction> functionArguments)
+            : base(scopeTable, functionArguments)
         {
-            this.indentType = indentType;
-            this.noOfTimes = int.Parse(noOfTimes);
-        }
-
-        internal IndentFunction(GlobalTable scopeTable, LiteralText literalText, string indentType, string noOfTimes)
-            : base(scopeTable, literalText)
-        {
-            this.indentType = indentType;
-            this.noOfTimes = int.Parse(noOfTimes);
-        }
-
-        internal IndentFunction(GlobalTable scopeTable, Variable variable, string indentType, string noOfTimes)
-            : base(scopeTable, variable)
-        {
-            this.indentType = indentType;
-            this.noOfTimes = int.Parse(noOfTimes);
         }
 
         public override string Execute()
         {
+            if (functionArguments.Count() != 3)
+                throw new ApplicationException("Too many arguments.");
+
+            string txt = functionArguments[0].Execute();
+            string indentType = functionArguments[1].Execute();
+            int noOfTimes = int.Parse(functionArguments[2].Execute());
+
             string indentedText = "";
-            string txt = base.Execute();
 
             if (txt != null && txt.Length >= 1)
             {
@@ -45,16 +32,6 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
                 else // SPACE
                     indentedText = txt.PadLeft(txt.Length + noOfTimes, ' ');
 
-                //if (indentFragment.StartsWith("T"))
-                //{
-                //    int numberTimes = int.Parse(indentFragment.Replace("TAB[", "").Replace("]", ""));
-                //    indentedText = txt.PadLeft(txt.Length + numberTimes, '\t');
-                //}
-                //else
-                //{
-                //    int numberTimes = int.Parse(indentFragment.Replace("SPACE[", "").Replace("]", ""));
-                //    indentedText = txt.PadLeft(txt.Length + numberTimes, ' ');
-                //}
                 return indentedText;
             }
             return txt;

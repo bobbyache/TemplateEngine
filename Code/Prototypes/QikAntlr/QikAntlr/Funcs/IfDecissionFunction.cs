@@ -19,7 +19,6 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
             : base(scopeTable)
         {
             this.symbol = symbol;
-            this.InputType = ChildInputTypeEnum.IfStatement;
             this.scopeTable = scopeTable;
         }
 

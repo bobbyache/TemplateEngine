@@ -20,12 +20,12 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
 
         public override string VisitTextBox(QikTemplateParser.TextBoxContext context)
         {
-            string controlId = context.ID().GetText();
+            string controlId = context.VARIABLE().GetText();
 
-            string titleText = GetTextBoxTitle(context);
-            string defaultText = GetTextBoxDefaultText(context);
+            SymbolArguments symbolArguments = new SymbolArguments();
+            symbolArguments.Process(context.declArgs());
 
-            TextInputSymbol textInputSymbol = new TextInputSymbol(controlId, titleText, defaultText);
+            TextInputSymbol textInputSymbol = new TextInputSymbol(controlId, symbolArguments.Title, symbolArguments.Default);
             scopeTable.AddSymbol(textInputSymbol);
 
             return base.VisitTextBox(context);
@@ -33,64 +33,24 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
 
         public override string VisitOptionBox(QikTemplateParser.OptionBoxContext context)
         {
-            string controlId = context.ID().GetText();
-            string defaultId = GetOptionBoxDefaultId(context);
-            string titleText = GetOptionBoxTitle(context);
+            string symbol = context.VARIABLE().GetText();
 
-            OptionInputSymbol optionInputSymbol = new OptionInputSymbol(controlId, titleText, defaultId);
+            SymbolArguments symbolArguments = new SymbolArguments();
+            symbolArguments.Process(context.declArgs());
+
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol(symbol, symbolArguments.Title, symbolArguments.Default);
 
             foreach (QikTemplateParser.SingleOptionContext optionContext in context.optionsBody().singleOption())
             {
-                optionInputSymbol.AddOption(Common.StripOuterQuotes(optionContext.STRING().GetText()), 
-                    Common.StripOuterQuotes(optionContext.titleArg().STRING().GetText()));
+                SymbolArguments optionArgs = new SymbolArguments();
+                optionArgs.Process(optionContext.declArgs());
+
+                optionInputSymbol.AddOption(Common.StripOuterQuotes(optionContext.STRING().GetText()),
+                    optionArgs.Title);
             }
 
             scopeTable.AddSymbol(optionInputSymbol);
             return base.VisitOptionBox(context);
-        }
-
-
-        private string GetOptionBoxTitle(QikTemplateParser.OptionBoxContext context)
-        {
-            string titleText = null;
-            if (context.optionBoxArgs().titleArg() != null)
-            {
-                titleText = Common.StripOuterQuotes(context.optionBoxArgs().titleArg().STRING().GetText());
-            }
-            return titleText;
-        }
-
-        private string GetTextBoxTitle(QikTemplateParser.TextBoxContext context)
-        {
-            string titleText = null;
-            if (context.textBoxArgs().titleArg() != null)
-            {
-                titleText = Common.StripOuterQuotes(context.textBoxArgs().titleArg().STRING().GetText());
-            }
-            return titleText;
-        }
-
-        private string GetOptionBoxDefaultId(QikTemplateParser.OptionBoxContext context)
-        {
-            string defaultId = null;
-
-            if (context.optionBoxArgs().defaultArg() != null)
-            {
-                defaultId = context.optionBoxArgs().defaultArg().STRING().GetText();
-            }
-            return defaultId;
-        }
-
-        private string GetTextBoxDefaultText(QikTemplateParser.TextBoxContext context)
-        {
-            string defaultText = null;
-
-            if (context.textBoxArgs().defaultArg() != null)
-            {
-                defaultText = Common.StripOuterQuotes(context.textBoxArgs().defaultArg().STRING().GetText());
-            }
-
-            return defaultText;
         }
     }
 }

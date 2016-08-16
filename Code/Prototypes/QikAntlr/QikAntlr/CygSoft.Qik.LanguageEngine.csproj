@@ -52,21 +52,25 @@
     <Compile Include="Antlr\QikTemplate.g4.parser.cs">
       <DependentUpon>QikTemplate.g4</DependentUpon>
     </Compile>
+    <Compile Include="Antlr\SymbolArguments.cs" />
     <Compile Include="Antlr\UserInputVisitor.cs" />
     <Compile Include="Compiler.cs" />
     <Compile Include="Funcs\BaseFunction.cs" />
     <Compile Include="Funcs\CamelCaseFunction.cs" />
     <Compile Include="Funcs\ConcatenateFunction.cs" />
+    <Compile Include="Funcs\ConstantFunction.cs" />
     <Compile Include="Funcs\CurrentDateFunction.cs" />
+    <Compile Include="Funcs\FloatFunction.cs" />
     <Compile Include="Funcs\IfDecissionFunction.cs" />
     <Compile Include="Funcs\IndentFunction.cs" />
-    <Compile Include="Funcs\LiteralText.cs" />
+    <Compile Include="Funcs\IntegerFunction.cs" />
+    <Compile Include="Funcs\LiteralTextFunction.cs" />
     <Compile Include="Funcs\LowerCaseFunction.cs" />
     <Compile Include="Funcs\NewlineFunction.cs" />
     <Compile Include="Funcs\RemoveSpacesFunction.cs" />
     <Compile Include="Funcs\TextFunction.cs" />
     <Compile Include="Funcs\UpperCaseFunction.cs" />
-    <Compile Include="Funcs\Variable.cs" />
+    <Compile Include="Funcs\VariableFunction.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common.cs" />
