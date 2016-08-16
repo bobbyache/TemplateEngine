@@ -11,13 +11,16 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
     {
         private string value = null;
 
-        public TextInputSymbol(string symbol, string title, string defaultValue) : base(symbol, title, defaultValue)
+        public TextInputSymbol(string symbol, string title, string description, string defaultValue, 
+            bool isPlaceholder)
+            : base(symbol, title, description, defaultValue, isPlaceholder)
         {
             this.value = defaultValue;
         }
 
-        public TextInputSymbol(string symbol, string title, string defaultValue, string prefix, string postfix)
-            : base(symbol, title, defaultValue, prefix, postfix)
+        public TextInputSymbol(string symbol, string title, string description, string defaultValue, bool isPlaceholder,
+            string prefix, string postfix)
+            : base(symbol, title, description, defaultValue, isPlaceholder, prefix, postfix)
         {
             this.value = defaultValue;
         }

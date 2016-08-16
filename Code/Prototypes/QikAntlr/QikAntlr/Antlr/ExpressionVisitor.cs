@@ -29,7 +29,9 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
             if (context.concatExpr() != null)
             {
                 ConcatenateFunction concatenateFunc = GetConcatenateFunction(context.concatExpr());
-                ExpressionSymbol expression = new ExpressionSymbol(id, symbolArguments.Title, concatenateFunc, symbolArguments.Hidden);
+                ExpressionSymbol expression = 
+                    new ExpressionSymbol(id, symbolArguments.Title, symbolArguments.Description, 
+                        symbolArguments.IsPlaceholder, symbolArguments.IsVisibleToEditor, concatenateFunc, symbolArguments.Hidden);
                 scopeTable.AddSymbol(expression);
             }
             else if (context.optExpr() != null)
@@ -37,13 +39,15 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                 var expr = context.optExpr();
                 BaseFunction ifFunc = VisitOptExpr(context.optExpr());
 
-                ExpressionSymbol expression = new ExpressionSymbol(id, symbolArguments.Title, ifFunc, symbolArguments.Hidden);
+                ExpressionSymbol expression = new ExpressionSymbol(id, symbolArguments.Title, symbolArguments.Description, 
+                    symbolArguments.IsPlaceholder, symbolArguments.IsVisibleToEditor, ifFunc, symbolArguments.Hidden);
                 scopeTable.AddSymbol(expression);
             }
             else if (context.expr() != null)
             {
                 BaseFunction function = VisitExpr(context.expr());
-                ExpressionSymbol expression = new ExpressionSymbol(id, symbolArguments.Title, function, symbolArguments.Hidden);
+                ExpressionSymbol expression = new ExpressionSymbol(id, symbolArguments.Title, symbolArguments.Description,
+                    symbolArguments.IsPlaceholder, symbolArguments.IsVisibleToEditor, function, symbolArguments.Hidden);
                 scopeTable.AddSymbol(expression);
             }
 

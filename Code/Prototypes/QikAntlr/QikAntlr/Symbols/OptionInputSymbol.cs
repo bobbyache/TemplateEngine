@@ -14,25 +14,28 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
             public string Value { get; set; }
             public int Index { get; private set; }
             public string Title { get; private set; }
+            public string Description { get; private set; }
 
-            internal SymbolOption(string value, int index, string title)
+            internal SymbolOption(string value, int index, string title, string description)
             {
                 this.Value = value;
                 this.Index = index;
                 this.Title = title;
+                this.Description = description;
             }
         }
 
         private SymbolOption currentOption = null;
         private Dictionary<string, SymbolOption> optionsDictionary = new Dictionary<string, SymbolOption>();
 
-        public OptionInputSymbol(string symbol, string title, string defaultValue = null) : base(symbol, title, defaultValue)
+        public OptionInputSymbol(string symbol, string title, string description, string defaultValue = null, bool isPlaceholder = true)
+            : base(symbol, title, description, defaultValue, isPlaceholder)
         {
 
         }
 
-        public OptionInputSymbol(string symbol, string title, string defaultValue, string prefix, string postfix)
-            : base(symbol, title, defaultValue, prefix, postfix)
+        public OptionInputSymbol(string symbol, string title, string description, string defaultValue, bool isPlaceholder, string prefix, string postfix)
+            : base(symbol, title, description, defaultValue, isPlaceholder, prefix, postfix)
         {
 
         }
@@ -59,7 +62,7 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
             } 
         }
 
-        public void AddOption(string value, string title)
+        public void AddOption(string value, string title, string description = null)
         {
 
             if (this.optionsDictionary.ContainsKey(value))
@@ -69,7 +72,7 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
             }
             else
             {
-                SymbolOption option = new SymbolOption(value, this.optionsDictionary.Count(), title);
+                SymbolOption option = new SymbolOption(value, this.optionsDictionary.Count(), title, description);
                 this.optionsDictionary.Add(value, option);
             }
 

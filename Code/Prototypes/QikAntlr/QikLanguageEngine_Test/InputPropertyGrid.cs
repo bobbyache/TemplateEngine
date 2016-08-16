@@ -49,7 +49,7 @@ namespace QikLanguageEngine_Test
                                                         typeof(string), textBox.DefaultValue,
                                                         new Scm.BrowsableAttribute(true),
                                                         new Scm.DisplayNameAttribute(textBox.Title),
-                                                        new Scm.DescriptionAttribute("Insert Text"),
+                                                        new Scm.DescriptionAttribute(textBox.Description),
                                                         new Scm.DefaultValueAttribute(textBox.DefaultValue)
                                                         );
             propertyDescriptor.Attributes.Add(new Scm.CategoryAttribute(CATEGORY_USER_INPUT), true);
@@ -66,7 +66,7 @@ namespace QikLanguageEngine_Test
                                                         typeof(int), optionBox.SelectedIndex,
                                                         new Scm.BrowsableAttribute(true),
                                                         new Scm.DisplayNameAttribute(optionBox.Title),
-                                                        new Scm.DescriptionAttribute("Select an option."),
+                                                        new Scm.DescriptionAttribute(optionBox.Description),
                                                         new Scm.DefaultValueAttribute(optionBox.SelectedIndex)
                                                         );
             propertyDescriptor.Attributes.Add(new Scm.CategoryAttribute(CATEGORY_USER_INPUT), true);
@@ -90,7 +90,7 @@ namespace QikLanguageEngine_Test
                                                         //typeof(string), null,
                                                         new Scm.BrowsableAttribute(true),
                                                         new Scm.DisplayNameAttribute(expression.Title),
-                                                        new Scm.DescriptionAttribute("Derived expression."),
+                                                        new Scm.DescriptionAttribute(expression.Description),
                                                         new Scm.DefaultValueAttribute(null),
                                                         new Scm.ReadOnlyAttribute(true)
                                                         );
@@ -112,7 +112,7 @@ namespace QikLanguageEngine_Test
             foreach (IOption option in options)
             {
                 Dyn.StandardValue sv = new Dyn.StandardValue(option.Index, option.Title);
-                sv.Description = "Description of " + sv.DisplayName + ".";
+                sv.Description = option.Description;
                 pd.StandardValues.Add(sv);
             }
         }
@@ -150,7 +150,8 @@ namespace QikLanguageEngine_Test
 
             foreach (IExpression expression in compiler.Expressions)
             {
-                CreateExpression(expression);
+                if (expression.IsVisibleToEditor)
+                    CreateExpression(expression);
             }
 
             propertyGrid.Refresh();

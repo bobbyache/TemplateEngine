@@ -25,7 +25,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
             SymbolArguments symbolArguments = new SymbolArguments();
             symbolArguments.Process(context.declArgs());
 
-            TextInputSymbol textInputSymbol = new TextInputSymbol(controlId, symbolArguments.Title, symbolArguments.Default);
+            TextInputSymbol textInputSymbol = new TextInputSymbol(controlId, symbolArguments.Title, symbolArguments.Description, symbolArguments.Default, symbolArguments.IsPlaceholder);
             scopeTable.AddSymbol(textInputSymbol);
 
             return base.VisitTextBox(context);
@@ -38,7 +38,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
             SymbolArguments symbolArguments = new SymbolArguments();
             symbolArguments.Process(context.declArgs());
 
-            OptionInputSymbol optionInputSymbol = new OptionInputSymbol(symbol, symbolArguments.Title, symbolArguments.Default);
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol(symbol, symbolArguments.Title, symbolArguments.Description, symbolArguments.Default);
 
             foreach (QikTemplateParser.SingleOptionContext optionContext in context.optionsBody().singleOption())
             {
@@ -46,7 +46,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                 optionArgs.Process(optionContext.declArgs());
 
                 optionInputSymbol.AddOption(Common.StripOuterQuotes(optionContext.STRING().GetText()),
-                    optionArgs.Title);
+                    optionArgs.Title, optionArgs.Description);
             }
 
             scopeTable.AddSymbol(optionInputSymbol);

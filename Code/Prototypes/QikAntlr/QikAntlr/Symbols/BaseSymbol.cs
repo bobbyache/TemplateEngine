@@ -13,6 +13,8 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
         private string postfix = "}";
 
         public string Title { get; private set; }
+        public string Description { get; private set; }
+        public bool IsPlaceholder { get; private set; }
         public string Symbol { get; private set; }
 
         public abstract string Value { get; }
@@ -28,19 +30,23 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
             }
         }
 
-        public BaseSymbol(string symbol, string title)
+        public BaseSymbol(string symbol, string title, string description, bool isPlaceholder)
         {
             this.Symbol = symbol;
             this.Title = title;
+            this.Description = description;
+            this.IsPlaceholder = isPlaceholder;
         }
 
-        public BaseSymbol(string symbol, string title, string prefix, string postfix)
+        public BaseSymbol(string symbol, string title, string description, bool isPlaceholder, string prefix, string postfix)
         {
             this.prefix = prefix;
             this.postfix = postfix;
 
             this.Symbol = symbol;
             this.Title = title;
+            this.Description = description;
+            this.IsPlaceholder = IsPlaceholder;
         }
     }
 }

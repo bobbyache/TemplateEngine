@@ -10,8 +10,17 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
     internal class SymbolArguments
     {
         public string Title { get; private set; }
+        public string Description { get; private set; }
         public string Default { get; private set; }
         public string Hidden { get; private set; }
+        public bool IsVisibleToEditor { get; private set; }
+        public bool IsPlaceholder { get; private set; }
+
+        public SymbolArguments()
+        {
+            this.IsVisibleToEditor = true;
+            this.IsPlaceholder = true;
+        }
 
         public void Process(QikTemplateParser.DeclArgsContext context)
         {
@@ -27,8 +36,17 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                         case "Title":
                             this.Title = value;
                             break;
+                        case "Description":
+                            this.Description = value;
+                            break;
                         case "Default":
                             this.Default = value;
+                            break;
+                        case "IsVisibleToEditor":
+                            this.IsVisibleToEditor = bool.Parse(value);
+                            break;
+                        case "IsPlaceholder":
+                            this.IsPlaceholder = bool.Parse(value);
                             break;
                         case "Hidden":
                             this.Hidden = value;
