@@ -27,8 +27,10 @@ namespace CygSoft.Qik.LanguageEngine.Scope
         {
             get
             {
-                if (table.Values.Select(r => r).Any())
-                    return table.Values.Select(r => r.Placeholder).ToArray();
+                if (table.Values.Where(r => r.IsPlaceholder == true).Any())
+                    return table.Values.Where(r => r.IsPlaceholder == true).Select(r => r.Placeholder).ToArray();
+                //if (table.Values.Select(r => r).Any())
+                //    return table.Values.Select(r => r.Placeholder).ToArray();
                 else
                     return new string[0];
             }

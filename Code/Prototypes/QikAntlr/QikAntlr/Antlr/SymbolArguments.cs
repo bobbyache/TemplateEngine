@@ -12,7 +12,6 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
         public string Title { get; private set; }
         public string Description { get; private set; }
         public string Default { get; private set; }
-        public string Hidden { get; private set; }
         public bool IsVisibleToEditor { get; private set; }
         public bool IsPlaceholder { get; private set; }
 
@@ -47,9 +46,6 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                             break;
                         case "IsPlaceholder":
                             this.IsPlaceholder = bool.Parse(value);
-                            break;
-                        case "Hidden":
-                            this.Hidden = value;
                             break;
                         default:
                             throw new NotSupportedException(string.Format("Declaration argument \"{0}\" is not supported in this context.", identifier));

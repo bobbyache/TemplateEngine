@@ -31,7 +31,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                 ConcatenateFunction concatenateFunc = GetConcatenateFunction(context.concatExpr());
                 ExpressionSymbol expression = 
                     new ExpressionSymbol(id, symbolArguments.Title, symbolArguments.Description, 
-                        symbolArguments.IsPlaceholder, symbolArguments.IsVisibleToEditor, concatenateFunc, symbolArguments.Hidden);
+                        symbolArguments.IsPlaceholder, symbolArguments.IsVisibleToEditor, concatenateFunc);
                 scopeTable.AddSymbol(expression);
             }
             else if (context.optExpr() != null)
@@ -40,14 +40,14 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                 BaseFunction ifFunc = VisitOptExpr(context.optExpr());
 
                 ExpressionSymbol expression = new ExpressionSymbol(id, symbolArguments.Title, symbolArguments.Description, 
-                    symbolArguments.IsPlaceholder, symbolArguments.IsVisibleToEditor, ifFunc, symbolArguments.Hidden);
+                    symbolArguments.IsPlaceholder, symbolArguments.IsVisibleToEditor, ifFunc);
                 scopeTable.AddSymbol(expression);
             }
             else if (context.expr() != null)
             {
                 BaseFunction function = VisitExpr(context.expr());
                 ExpressionSymbol expression = new ExpressionSymbol(id, symbolArguments.Title, symbolArguments.Description,
-                    symbolArguments.IsPlaceholder, symbolArguments.IsVisibleToEditor, function, symbolArguments.Hidden);
+                    symbolArguments.IsPlaceholder, symbolArguments.IsVisibleToEditor, function);
                 scopeTable.AddSymbol(expression);
             }
 
