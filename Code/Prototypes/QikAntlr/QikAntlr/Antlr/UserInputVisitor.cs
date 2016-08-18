@@ -38,7 +38,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
             SymbolArguments symbolArguments = new SymbolArguments();
             symbolArguments.Process(context.declArgs());
 
-            OptionInputSymbol optionInputSymbol = new OptionInputSymbol(symbol, symbolArguments.Title, symbolArguments.Description, symbolArguments.Default);
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol(symbol, symbolArguments.Title, symbolArguments.Description, symbolArguments.Default, symbolArguments.IsPlaceholder);
 
             foreach (QikTemplateParser.SingleOptionContext optionContext in context.optionsBody().singleOption())
             {

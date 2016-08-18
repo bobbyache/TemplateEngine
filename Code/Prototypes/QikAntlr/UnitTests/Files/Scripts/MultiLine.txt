@@ -1,13 +1,4 @@
-﻿/*
-@filePath = expression [Title="Test It"] {
-	return indentLine("hello world", SPACE, 2);
-};
-
-@filePath2 = expression [Title="Test It Again"] {
-	return indentLine("hello world", TAB, 2);
-};
-*/
-
+﻿
 @codeInput = expression [Title="Code Input"] {
 	return
 		"{" + NEWLINE +
@@ -17,4 +8,10 @@
 			indentLine("else", TAB, 1) + NEWLINE +
 			indentLine("return x;", TAB, 2) + NEWLINE +
 		"}\n"
+};
+
+@displayEvents = expression[Title="Display Events"] {
+	return "events: {" + NEWLINE +
+		doubleQuotes("hello world") + NEWLINE +
+	"};";
 };

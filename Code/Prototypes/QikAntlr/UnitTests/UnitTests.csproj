@@ -79,6 +79,9 @@
     <Content Include="Files\Scripts\MultiLine.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\Scripts\OptionBox.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\Scripts\StoredProc.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

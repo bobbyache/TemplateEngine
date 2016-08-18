@@ -1,1 +1,2 @@
 ﻿@{codeInput}
+@{displayEvents}

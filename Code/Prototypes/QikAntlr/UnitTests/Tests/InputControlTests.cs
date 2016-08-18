@@ -2,10 +2,13 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CygSoft.Qik.LanguageEngine.Symbols;
 using CygSoft.Qik.LanguageEngine.Infrastructure;
+using System.IO;
+using CygSoft.Qik.LanguageEngine;
 
 namespace UnitTests.Tests
 {
     [TestClass]
+    [DeploymentItem(@"Files\Scripts\OptionBox.txt")]
     public class InputControlTests
     {
         [TestMethod]
@@ -161,6 +164,17 @@ namespace UnitTests.Tests
 
             Assert.AreEqual("Adventure Works Database", optionIndex_at_0);
             Assert.AreEqual("Published Books Database", optionIndex_at_1);
+        }
+
+        [TestMethod]
+        public void OptionInput_Parse_IsPlaceholder()
+        {
+            string scriptText = File.ReadAllText("OptionBox.txt");
+            ICompiler compiler = new Compiler();
+            compiler.Compile(scriptText);
+
+            IInputField inputField = compiler.InputFields[0];
+            Assert.IsFalse(inputField.IsPlaceholder);
         }
 
         [TestMethod]
