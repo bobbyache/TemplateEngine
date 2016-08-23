@@ -38,6 +38,7 @@
             this.syntaxDocument1 = new Alsing.SourceCode.SyntaxDocument(this.components);
             this.outputSyntaxDocument = new Alsing.SourceCode.SyntaxDocument(this.components);
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tabControlFile = new System.Windows.Forms.TabControl();
             this.tabScript = new System.Windows.Forms.TabPage();
             this.syntaxBox = new Alsing.Windows.Forms.SyntaxBoxControl();
@@ -45,12 +46,22 @@
             this.blueprintSyntaxBox = new Alsing.Windows.Forms.SyntaxBoxControl();
             this.tabOutput = new System.Windows.Forms.TabPage();
             this.outputSyntaxBox = new Alsing.Windows.Forms.SyntaxBoxControl();
+            this.errorListView = new System.Windows.Forms.ListView();
+            this.colLine = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colMsg = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colStackRule = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colSymbol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.inputPropertyGrid = new QikLanguageEngine_Test.InputPropertyGrid();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             this.tabControlFile.SuspendLayout();
             this.tabScript.SuspendLayout();
             this.tabBlueprint.SuspendLayout();
@@ -126,7 +137,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.tabControlFile);
+            this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
             // 
             // splitContainer1.Panel2
             // 
@@ -134,6 +145,24 @@
             this.splitContainer1.Size = new System.Drawing.Size(1008, 534);
             this.splitContainer1.SplitterDistance = 586;
             this.splitContainer1.TabIndex = 2;
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.tabControlFile);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.errorListView);
+            this.splitContainer2.Size = new System.Drawing.Size(586, 534);
+            this.splitContainer2.SplitterDistance = 375;
+            this.splitContainer2.TabIndex = 0;
             // 
             // tabControlFile
             // 
@@ -144,8 +173,8 @@
             this.tabControlFile.Location = new System.Drawing.Point(0, 0);
             this.tabControlFile.Name = "tabControlFile";
             this.tabControlFile.SelectedIndex = 0;
-            this.tabControlFile.Size = new System.Drawing.Size(586, 534);
-            this.tabControlFile.TabIndex = 3;
+            this.tabControlFile.Size = new System.Drawing.Size(586, 375);
+            this.tabControlFile.TabIndex = 4;
             this.tabControlFile.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlFile_Selected);
             // 
             // tabScript
@@ -153,7 +182,7 @@
             this.tabScript.Controls.Add(this.syntaxBox);
             this.tabScript.Location = new System.Drawing.Point(4, 22);
             this.tabScript.Name = "tabScript";
-            this.tabScript.Size = new System.Drawing.Size(578, 508);
+            this.tabScript.Size = new System.Drawing.Size(578, 349);
             this.tabScript.TabIndex = 2;
             this.tabScript.Text = "Script";
             this.tabScript.UseVisualStyleBackColor = true;
@@ -179,7 +208,7 @@
             this.syntaxBox.LockCursorUpdate = false;
             this.syntaxBox.Name = "syntaxBox";
             this.syntaxBox.ShowScopeIndicator = false;
-            this.syntaxBox.Size = new System.Drawing.Size(578, 508);
+            this.syntaxBox.Size = new System.Drawing.Size(578, 349);
             this.syntaxBox.SmoothScroll = false;
             this.syntaxBox.SplitviewH = -4;
             this.syntaxBox.SplitviewV = -4;
@@ -194,7 +223,7 @@
             this.tabBlueprint.Location = new System.Drawing.Point(4, 22);
             this.tabBlueprint.Name = "tabBlueprint";
             this.tabBlueprint.Padding = new System.Windows.Forms.Padding(3);
-            this.tabBlueprint.Size = new System.Drawing.Size(578, 508);
+            this.tabBlueprint.Size = new System.Drawing.Size(578, 349);
             this.tabBlueprint.TabIndex = 0;
             this.tabBlueprint.Text = "Blueprint";
             this.tabBlueprint.UseVisualStyleBackColor = true;
@@ -220,7 +249,7 @@
             this.blueprintSyntaxBox.LockCursorUpdate = false;
             this.blueprintSyntaxBox.Name = "blueprintSyntaxBox";
             this.blueprintSyntaxBox.ShowScopeIndicator = false;
-            this.blueprintSyntaxBox.Size = new System.Drawing.Size(572, 502);
+            this.blueprintSyntaxBox.Size = new System.Drawing.Size(572, 343);
             this.blueprintSyntaxBox.SmoothScroll = false;
             this.blueprintSyntaxBox.SplitviewH = -4;
             this.blueprintSyntaxBox.SplitviewV = -4;
@@ -236,7 +265,7 @@
             this.tabOutput.Location = new System.Drawing.Point(4, 22);
             this.tabOutput.Name = "tabOutput";
             this.tabOutput.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOutput.Size = new System.Drawing.Size(578, 508);
+            this.tabOutput.Size = new System.Drawing.Size(578, 349);
             this.tabOutput.TabIndex = 1;
             this.tabOutput.Text = "Output";
             this.tabOutput.UseVisualStyleBackColor = true;
@@ -262,7 +291,7 @@
             this.outputSyntaxBox.LockCursorUpdate = false;
             this.outputSyntaxBox.Name = "outputSyntaxBox";
             this.outputSyntaxBox.ShowScopeIndicator = false;
-            this.outputSyntaxBox.Size = new System.Drawing.Size(572, 502);
+            this.outputSyntaxBox.Size = new System.Drawing.Size(572, 343);
             this.outputSyntaxBox.SmoothScroll = false;
             this.outputSyntaxBox.SplitviewH = -4;
             this.outputSyntaxBox.SplitviewV = -4;
@@ -270,6 +299,46 @@
             this.outputSyntaxBox.TabIndex = 1;
             this.outputSyntaxBox.Text = "syntaxBoxControl2";
             this.outputSyntaxBox.WhitespaceColor = System.Drawing.SystemColors.ControlDark;
+            // 
+            // errorListView
+            // 
+            this.errorListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colLine,
+            this.colCol,
+            this.colMsg,
+            this.colStackRule,
+            this.colSymbol});
+            this.errorListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.errorListView.FullRowSelect = true;
+            this.errorListView.Location = new System.Drawing.Point(0, 0);
+            this.errorListView.Name = "errorListView";
+            this.errorListView.Size = new System.Drawing.Size(586, 155);
+            this.errorListView.TabIndex = 0;
+            this.errorListView.UseCompatibleStateImageBehavior = false;
+            this.errorListView.View = System.Windows.Forms.View.Details;
+            // 
+            // colLine
+            // 
+            this.colLine.Text = "Line";
+            // 
+            // colCol
+            // 
+            this.colCol.Text = "Column";
+            // 
+            // colMsg
+            // 
+            this.colMsg.Text = "Error";
+            this.colMsg.Width = 251;
+            // 
+            // colStackRule
+            // 
+            this.colStackRule.Text = "Location";
+            this.colStackRule.Width = 134;
+            // 
+            // colSymbol
+            // 
+            this.colSymbol.Text = "Symbol";
+            this.colSymbol.Width = 75;
             // 
             // inputPropertyGrid
             // 
@@ -294,6 +363,10 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             this.tabControlFile.ResumeLayout(false);
             this.tabScript.ResumeLayout(false);
             this.tabBlueprint.ResumeLayout(false);
@@ -313,6 +386,8 @@
         private Alsing.SourceCode.SyntaxDocument syntaxDocument1;
         private Alsing.SourceCode.SyntaxDocument outputSyntaxDocument;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private InputPropertyGrid inputPropertyGrid;
+        private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.TabControl tabControlFile;
         private System.Windows.Forms.TabPage tabScript;
         private Alsing.Windows.Forms.SyntaxBoxControl syntaxBox;
@@ -320,6 +395,11 @@
         private Alsing.Windows.Forms.SyntaxBoxControl blueprintSyntaxBox;
         private System.Windows.Forms.TabPage tabOutput;
         private Alsing.Windows.Forms.SyntaxBoxControl outputSyntaxBox;
-        private InputPropertyGrid inputPropertyGrid;
+        private System.Windows.Forms.ListView errorListView;
+        private System.Windows.Forms.ColumnHeader colLine;
+        private System.Windows.Forms.ColumnHeader colCol;
+        private System.Windows.Forms.ColumnHeader colMsg;
+        private System.Windows.Forms.ColumnHeader colStackRule;
+        private System.Windows.Forms.ColumnHeader colSymbol;
     }
 }

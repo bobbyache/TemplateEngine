@@ -23,8 +23,10 @@ namespace QikLanguageEngine_Test
             InitializeComponent();
 
             compiler = new Compiler();
+            compiler.BeforeCompile += compiler_BeforeCompile;
             compiler.AfterCompile += compiler_AfterCompile;
             compiler.AfterInput += compiler_AfterInput;
+            compiler.SyntaxError += compiler_SyntaxError;
 
             syntaxBox.Document.SyntaxFile = "qiktemplate.syn";
             syntaxBox.Document.Text = File.ReadAllText("Example.txt");
@@ -38,6 +40,32 @@ namespace QikLanguageEngine_Test
             AddTemplateTab();
             ExecuteScript();
             //tabControlFile.TabPages.RemoveByKey("templateTabPage"); // the key can be the template file name !!!
+        }
+
+
+        private void compiler_SyntaxError(object sender, SyntaxErrorEventArgs e)
+        {
+            AddErrorLine(e.Line, e.Column, e.Message, e.RuleStack, e.OffendingSymbol);
+            AddBookmark(e.Line, e.Column, e.Message, e.RuleStack, e.OffendingSymbol);
+        }
+
+
+        private void AddBookmark(int line, int column, string message, string ruleStack, string symbol)
+        {
+            Row row = syntaxBox.Document[line];
+            row.Bookmarked = true;
+        }
+
+        private void AddErrorLine(int line, int column, string message, string ruleStack, string symbol)
+        {
+            ListViewItem item = new ListViewItem();
+            item.Text = line.ToString();
+            item.SubItems.Add(new ListViewItem.ListViewSubItem(item, column.ToString()));
+            item.SubItems.Add(new ListViewItem.ListViewSubItem(item, message));
+            item.SubItems.Add(new ListViewItem.ListViewSubItem(item, ruleStack));
+            item.SubItems.Add(new ListViewItem.ListViewSubItem(item, symbol));
+
+            errorListView.Items.Add(item);
         }
 
         private void AddTemplateTab()
@@ -55,6 +83,12 @@ namespace QikLanguageEngine_Test
         {
             UpdateOutputDocument();
             UpdateAutoList();
+        }
+
+        private void compiler_BeforeCompile(object sender, EventArgs e)
+        {
+            syntaxBox.Document.ClearBookmarks();
+            errorListView.Items.Clear();
         }
 
         private void compiler_AfterCompile(object sender, EventArgs e)

@@ -14,6 +14,7 @@ namespace CygSoft.Qik.LanguageEngine
 {
     public class Compiler : ICompiler
     {
+        public event EventHandler<SyntaxErrorEventArgs> SyntaxError;
         public event EventHandler BeforeCompile;
         public event EventHandler AfterCompile;
 
@@ -21,6 +22,8 @@ namespace CygSoft.Qik.LanguageEngine
         public event EventHandler AfterInput;
 
         private GlobalTable scopeTable = new GlobalTable();
+
+        public bool HasErrors { get; private set; }
 
         public string[] Symbols
         {
@@ -57,6 +60,7 @@ namespace CygSoft.Qik.LanguageEngine
 
             scopeTable.Clear();
 
+            CheckSyntax(scriptText);
             GetControls(scriptText);
             GetExpressions(scriptText);
 
@@ -73,6 +77,29 @@ namespace CygSoft.Qik.LanguageEngine
 
             if (AfterInput != null)
                 AfterInput(this, new EventArgs());
+        }
+
+        private void CheckSyntax(string scriptText)
+        {
+            AntlrInputStream inputStream = new AntlrInputStream(scriptText);
+            QikTemplateLexer lexer = new QikTemplateLexer(inputStream);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            QikTemplateParser parser = new QikTemplateParser(tokens);
+
+            ErrorListener errorListener = new ErrorListener();
+            errorListener.SyntaxErrorDetected += errorListener_SyntaxErrorDetected;
+            parser.RemoveErrorListeners();
+            parser.AddErrorListener(errorListener);
+            parser.template();
+            errorListener.SyntaxErrorDetected -= errorListener_SyntaxErrorDetected;
+        }
+
+        private void errorListener_SyntaxErrorDetected(object sender, SyntaxErrorEventArgs e)
+        {
+            this.HasErrors = true;
+
+            if (SyntaxError != null)
+                SyntaxError(this, e);
         }
 
         private void GetControls(string scriptText)

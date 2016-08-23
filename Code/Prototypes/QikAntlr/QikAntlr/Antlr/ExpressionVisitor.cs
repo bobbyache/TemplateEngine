@@ -109,6 +109,10 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                         RemoveSpacesFunction removeSpacesFunc = new RemoveSpacesFunction(scopeTable, functionArguments);
                         func = removeSpacesFunc;
                         break;
+                    case "replace":
+                        ReplaceFunction replaceFunc = new ReplaceFunction(scopeTable, functionArguments);
+                        func = replaceFunc;
+                        break;
                     case "indentLine":
                         IndentFunction indentFunc = new IndentFunction(scopeTable, functionArguments);
                         func = indentFunc;

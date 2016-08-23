@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Antlr\ExpressionVisitor.cs" />
+    <Compile Include="Antlr\ErrorListener.cs" />
     <Compile Include="Antlr\QikTemplate.g4.lexer.cs">
       <DependentUpon>QikTemplate.g4</DependentUpon>
     </Compile>
@@ -68,6 +69,7 @@
     <Compile Include="Funcs\LowerCaseFunction.cs" />
     <Compile Include="Funcs\NewlineFunction.cs" />
     <Compile Include="Funcs\RemoveSpacesFunction.cs" />
+    <Compile Include="Funcs\ReplaceFunction.cs" />
     <Compile Include="Funcs\TextFunction.cs" />
     <Compile Include="Funcs\UpperCaseFunction.cs" />
     <Compile Include="Funcs\VariableFunction.cs" />

@@ -106,6 +106,24 @@ namespace UnitTests.Tests
         }
 
         [TestMethod]
+        public void Function_Replace()
+        {
+            GlobalTable globalTable = new GlobalTable();
+
+            List<BaseFunction> functionArguments = new List<BaseFunction>();
+            functionArguments.Add(new TextFunction(globalTable, "Dashboard Usage"));
+            functionArguments.Add(new TextFunction(globalTable, " "));
+            functionArguments.Add(new TextFunction(globalTable, "_"));
+
+            ExpressionSymbol expressionSymbol = new ExpressionSymbol("@classInstance", "Class Instance", "Description", true, true, new ReplaceFunction(globalTable, functionArguments));
+            Assert.AreEqual("@classInstance", expressionSymbol.Symbol);
+            Assert.AreEqual("@{classInstance}", expressionSymbol.Placeholder);
+            Assert.AreEqual("Class Instance", expressionSymbol.Title);
+
+            Assert.AreEqual("Dashboard_Usage", expressionSymbol.Value);
+        }
+
+        [TestMethod]
         public void Function_CurrentDate()
         {
             GlobalTable globalTable = new GlobalTable();
