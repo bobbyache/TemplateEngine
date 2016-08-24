@@ -1,4 +1,5 @@
-﻿using CygSoft.Qik.LanguageEngine.Scope;
+﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
+using CygSoft.Qik.LanguageEngine.Scope;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,24 +11,32 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
     internal class LowerCaseFunction : BaseFunction
     {
 
-        public LowerCaseFunction(GlobalTable scopeTable, List<BaseFunction> functionArguments)
-            : base(scopeTable, functionArguments)
+        public LowerCaseFunction(FuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
+            : base(funcInfo, scopeTable, functionArguments)
         {
 
         }
 
-        public override string Execute()
+        public override string Execute(IErrorReport errorReport)
         {
             if (functionArguments.Count() != 1)
-                throw new ApplicationException("Too many arguments.");
+                errorReport.AddError(new CustomError(this.Line, this.Column, "Too many arguments", this.Name));
 
-            string txt = functionArguments[0].Execute();
-
-            if (txt != null && txt.Length >= 1)
+            string result = null;
+            try
             {
-                return txt.ToLower();
+                string txt = functionArguments[0].Execute(errorReport);
+
+                if (txt != null && txt.Length >= 1)
+                {
+                    result = txt.ToLower();
+                }
             }
-            return txt;
+            catch (Exception)
+            {
+                errorReport.AddError(new CustomError(this.Line, this.Column, "Bad function call.", this.Name));
+            }
+            return result;
         }
     }
 }

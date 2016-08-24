@@ -1,4 +1,5 @@
 ﻿using CygSoft.Qik.LanguageEngine.Funcs;
+using CygSoft.Qik.LanguageEngine.Infrastructure;
 using CygSoft.Qik.LanguageEngine.Scope;
 using CygSoft.Qik.LanguageEngine.Symbols;
 using QikAntlr.Antlr;
@@ -13,24 +14,26 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
     internal class ExpressionVisitor : QikTemplateBaseVisitor<BaseFunction>
     {
         private GlobalTable scopeTable;
+        private IErrorReport errorReport;
 
-        internal ExpressionVisitor(GlobalTable scopeTable)
+        internal ExpressionVisitor(GlobalTable scopeTable, IErrorReport errorReport)
         {
             this.scopeTable = scopeTable;
+            this.errorReport = errorReport;
         }
 
         public override BaseFunction VisitExprDecl(QikTemplateParser.ExprDeclContext context)
         {
             string id = context.VARIABLE().GetText();
 
-            SymbolArguments symbolArguments = new SymbolArguments();
+            SymbolArguments symbolArguments = new SymbolArguments(errorReport);
             symbolArguments.Process(context.declArgs());
 
             if (context.concatExpr() != null)
             {
                 ConcatenateFunction concatenateFunc = GetConcatenateFunction(context.concatExpr());
                 ExpressionSymbol expression = 
-                    new ExpressionSymbol(id, symbolArguments.Title, symbolArguments.Description, 
+                    new ExpressionSymbol(errorReport, id, symbolArguments.Title, symbolArguments.Description, 
                         symbolArguments.IsPlaceholder, symbolArguments.IsVisibleToEditor, concatenateFunc);
                 scopeTable.AddSymbol(expression);
             }
@@ -39,14 +42,14 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                 var expr = context.optExpr();
                 BaseFunction ifFunc = VisitOptExpr(context.optExpr());
 
-                ExpressionSymbol expression = new ExpressionSymbol(id, symbolArguments.Title, symbolArguments.Description, 
+                ExpressionSymbol expression = new ExpressionSymbol(errorReport, id, symbolArguments.Title, symbolArguments.Description, 
                     symbolArguments.IsPlaceholder, symbolArguments.IsVisibleToEditor, ifFunc);
                 scopeTable.AddSymbol(expression);
             }
             else if (context.expr() != null)
             {
                 BaseFunction function = VisitExpr(context.expr());
-                ExpressionSymbol expression = new ExpressionSymbol(id, symbolArguments.Title, symbolArguments.Description,
+                ExpressionSymbol expression = new ExpressionSymbol(errorReport, id, symbolArguments.Title, symbolArguments.Description,
                     symbolArguments.IsPlaceholder, symbolArguments.IsVisibleToEditor, function);
                 scopeTable.AddSymbol(expression);
             }
@@ -56,8 +59,11 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
 
         public override BaseFunction VisitOptExpr(QikTemplateParser.OptExprContext context)
         {
+            int line = context.Start.Line;
+            int column = context.Start.Column;
+
             string id = context.VARIABLE().GetText();
-            IfDecissionFunction ifFunc = new IfDecissionFunction(this.scopeTable, id);
+            IfDecissionFunction ifFunc = new IfDecissionFunction(new FuncInfo("Float", line, column), this.scopeTable, id);
 
             foreach (var ifOptContext in context.ifOptExpr())
             {
@@ -81,44 +87,45 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
         public override BaseFunction VisitFunc(QikTemplateParser.FuncContext context)
         {
             BaseFunction func = null;
-
+            
             if (context.IDENTIFIER() != null)
             {
                 string funcIdentifier = context.IDENTIFIER().GetText();
                 List<BaseFunction> functionArguments = CreateArguments(context.funcArg());
+                FuncInfo funcInfo = new FuncInfo(funcIdentifier, context.Start.Line, context.Start.Column);
 
                 switch (funcIdentifier)
                 {
                     case "camelCase":
-                        CamelCaseFunction camelCaseFunc = new CamelCaseFunction(scopeTable, functionArguments);
+                        CamelCaseFunction camelCaseFunc = new CamelCaseFunction(funcInfo, scopeTable, functionArguments);
                         func = camelCaseFunc;
                         break;
                     case "currentDate":
-                        CurrentDateFunction currentDateFunc = new CurrentDateFunction(scopeTable, functionArguments);
+                        CurrentDateFunction currentDateFunc = new CurrentDateFunction(funcInfo, scopeTable, functionArguments);
                         func = currentDateFunc;
                         break;
                     case "lowerCase":
-                        LowerCaseFunction lowerCaseFunc = new LowerCaseFunction(scopeTable, functionArguments);
+                        LowerCaseFunction lowerCaseFunc = new LowerCaseFunction(funcInfo, scopeTable, functionArguments);
                         func = lowerCaseFunc;
                         break;
                     case "upperCase":
-                        UpperCaseFunction upperCaseFunc = new UpperCaseFunction(scopeTable, functionArguments);
+                        UpperCaseFunction upperCaseFunc = new UpperCaseFunction(funcInfo, scopeTable, functionArguments);
                         func = upperCaseFunc;
                         break;
                     case "removeSpaces":
-                        RemoveSpacesFunction removeSpacesFunc = new RemoveSpacesFunction(scopeTable, functionArguments);
+                        RemoveSpacesFunction removeSpacesFunc = new RemoveSpacesFunction(funcInfo, scopeTable, functionArguments);
                         func = removeSpacesFunc;
                         break;
                     case "replace":
-                        ReplaceFunction replaceFunc = new ReplaceFunction(scopeTable, functionArguments);
+                        ReplaceFunction replaceFunc = new ReplaceFunction(funcInfo, scopeTable, functionArguments);
                         func = replaceFunc;
                         break;
                     case "indentLine":
-                        IndentFunction indentFunc = new IndentFunction(scopeTable, functionArguments);
+                        IndentFunction indentFunc = new IndentFunction(funcInfo, scopeTable, functionArguments);
                         func = indentFunc;
                         break;
                     case "doubleQuotes":
-                        DoubleQuoteFunction doubleQuoteFunction = new DoubleQuoteFunction(scopeTable, functionArguments);
+                        DoubleQuoteFunction doubleQuoteFunction = new DoubleQuoteFunction(funcInfo, scopeTable, functionArguments);
                         func = doubleQuoteFunction;
                         break;
                     default:
@@ -130,26 +137,35 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
 
         public override BaseFunction VisitExpr(QikTemplateParser.ExprContext context)
         {
+            int line = context.Start.Line;
+            int column = context.Start.Column;
+
             if (context.STRING() != null)
-                return new TextFunction(scopeTable, Common.StripOuterQuotes(context.STRING().GetText()));
+            {
+                FuncInfo funcInfo = new FuncInfo("String", line, column);
+                return new TextFunction(funcInfo, scopeTable, Common.StripOuterQuotes(context.STRING().GetText()));
+            }
 
             else if (context.VARIABLE() != null)
-                return new VariableFunction(scopeTable, context.VARIABLE().GetText());
+            {
+                FuncInfo funcInfo = new FuncInfo("Variable", line, column);
+                return new VariableFunction(funcInfo, scopeTable, context.VARIABLE().GetText());
+            }
 
             else if (context.CONST() != null)
             {
                 string constantText = context.CONST().GetText();
                 if (constantText == "NEWLINE")
-                    return new NewlineFunction();
+                    return new NewlineFunction(new FuncInfo("Constant", line, column));
                 else
-                    return new ConstantFunction(scopeTable, context.CONST().GetText());
+                    return new ConstantFunction(new FuncInfo("Constant", line, column), scopeTable, context.CONST().GetText());
             }
 
             else if (context.INT() != null)
-                return new IntegerFunction(scopeTable, context.INT().GetText());
+                return new IntegerFunction(new FuncInfo("Int", line, column), scopeTable, context.INT().GetText());
 
             else if (context.FLOAT() != null)
-                return new FloatFunction(scopeTable, context.FLOAT().GetText());
+                return new FloatFunction(new FuncInfo("Float", line, column), scopeTable, context.FLOAT().GetText());
 
             // recurse...
             else if (context.func() != null)
@@ -184,7 +200,10 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
 
         private ConcatenateFunction GetConcatenateFunction(QikTemplateParser.ConcatExprContext context)
         {
-            ConcatenateFunction concatenateFunc = new ConcatenateFunction(this.scopeTable);
+            int line = context.Start.Line;
+            int column = context.Start.Column;
+
+            ConcatenateFunction concatenateFunc = new ConcatenateFunction(new FuncInfo("Concatenation", line, column), this.scopeTable);
 
             IReadOnlyList<QikTemplateParser.ExprContext> expressions = context.expr();
 

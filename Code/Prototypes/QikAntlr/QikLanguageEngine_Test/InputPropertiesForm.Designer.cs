@@ -316,6 +316,8 @@
             this.errorListView.TabIndex = 0;
             this.errorListView.UseCompatibleStateImageBehavior = false;
             this.errorListView.View = System.Windows.Forms.View.Details;
+            this.errorListView.SelectedIndexChanged += new System.EventHandler(this.errorListView_SelectedIndexChanged);
+            this.errorListView.Leave += new System.EventHandler(this.errorListView_Leave);
             // 
             // colLine
             // 

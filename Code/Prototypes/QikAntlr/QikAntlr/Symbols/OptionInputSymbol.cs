@@ -28,14 +28,14 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
         private SymbolOption currentOption = null;
         private Dictionary<string, SymbolOption> optionsDictionary = new Dictionary<string, SymbolOption>();
 
-        public OptionInputSymbol(string symbol, string title, string description, string defaultValue = null, bool isPlaceholder = true)
-            : base(symbol, title, description, defaultValue, isPlaceholder)
+        public OptionInputSymbol(IErrorReport errorReport, string symbol, string title, string description, string defaultValue = null, bool isPlaceholder = true)
+            : base(errorReport, symbol, title, description, defaultValue, isPlaceholder)
         {
 
         }
 
-        public OptionInputSymbol(string symbol, string title, string description, string defaultValue, bool isPlaceholder, string prefix, string postfix)
-            : base(symbol, title, description, defaultValue, isPlaceholder, prefix, postfix)
+        public OptionInputSymbol(IErrorReport errorReport, string symbol, string title, string description, string defaultValue, bool isPlaceholder, string prefix, string postfix)
+            : base(errorReport, symbol, title, description, defaultValue, isPlaceholder, prefix, postfix)
         {
 
         }

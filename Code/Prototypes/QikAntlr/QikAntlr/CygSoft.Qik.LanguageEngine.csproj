@@ -56,6 +56,7 @@
     <Compile Include="Antlr\SymbolArguments.cs" />
     <Compile Include="Antlr\UserInputVisitor.cs" />
     <Compile Include="Compiler.cs" />
+    <Compile Include="ErrorReport.cs" />
     <Compile Include="Funcs\BaseFunction.cs" />
     <Compile Include="Funcs\CamelCaseFunction.cs" />
     <Compile Include="Funcs\ConcatenateFunction.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Funcs\CurrentDateFunction.cs" />
     <Compile Include="Funcs\DoubleQuoteFunction.cs" />
     <Compile Include="Funcs\FloatFunction.cs" />
+    <Compile Include="Funcs\FuncInfo.cs" />
     <Compile Include="Funcs\IfDecissionFunction.cs" />
     <Compile Include="Funcs\IndentFunction.cs" />
     <Compile Include="Funcs\IntegerFunction.cs" />

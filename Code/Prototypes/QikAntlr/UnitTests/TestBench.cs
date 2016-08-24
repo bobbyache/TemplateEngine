@@ -21,10 +21,10 @@ namespace UnitTests
         {
             GlobalTable globalTable = new GlobalTable();
 
-            TextInputSymbol textInputSymbol = new TextInputSymbol("@authorName", "Author Name", "Description", "Rob Blake", true);
+            TextInputSymbol textInputSymbol = new TextInputSymbol(new ErrorReport(), "@authorName", "Author Name", "Description", "Rob Blake", true);
 
-            List<BaseFunction> functionArguments = new List<BaseFunction> { new VariableFunction(globalTable, "@authorName") };
-            ExpressionSymbol expressionSymbol = new ExpressionSymbol("@upperAuthorName", "Upper Author Name", "Description", true, true, new UpperCaseFunction(globalTable, functionArguments));
+            List<BaseFunction> functionArguments = new List<BaseFunction> { new VariableFunction(new FuncInfo("stub", 1, 1), globalTable, "@authorName") };
+            ExpressionSymbol expressionSymbol = new ExpressionSymbol(new ErrorReport(), "@upperAuthorName", "Upper Author Name", "Description", true, true, new UpperCaseFunction(new FuncInfo("stub", 1, 1), globalTable, functionArguments));
 
             globalTable.AddSymbol(textInputSymbol);
             globalTable.AddSymbol(expressionSymbol);
@@ -51,14 +51,14 @@ namespace UnitTests
             GlobalTable globalTable = new GlobalTable();
 
             List<BaseFunction> functionArguments = new List<BaseFunction>();
-            functionArguments.Add(new TextFunction(globalTable, "dd/MM/yyyy"));
+            functionArguments.Add(new TextFunction(new FuncInfo("stub", 1, 1), globalTable, "dd/MM/yyyy"));
 
-            CurrentDateFunction currentDateFunction = new CurrentDateFunction(globalTable, functionArguments);
-            UpperCaseFunction upperCaseFunction = new UpperCaseFunction(globalTable, functionArguments);
+            CurrentDateFunction currentDateFunction = new CurrentDateFunction(new FuncInfo("stub", 1, 1), globalTable, functionArguments);
+            UpperCaseFunction upperCaseFunction = new UpperCaseFunction(new FuncInfo("stub", 1, 1), globalTable, functionArguments);
 
 
-            ExpressionSymbol expressionSymbol1 = new ExpressionSymbol("@currentDate", "Current Date", "Description", false, true, currentDateFunction);
-            ExpressionSymbol expressionSymbol2 = new ExpressionSymbol("@camelCase", "Camel Cased", "Description", true, true, upperCaseFunction);
+            ExpressionSymbol expressionSymbol1 = new ExpressionSymbol(new ErrorReport(), "@currentDate", "Current Date", "Description", false, true, currentDateFunction);
+            ExpressionSymbol expressionSymbol2 = new ExpressionSymbol(new ErrorReport(), "@camelCase", "Camel Cased", "Description", true, true, upperCaseFunction);
 
             globalTable.AddSymbol(expressionSymbol1);
             globalTable.AddSymbol(expressionSymbol2);

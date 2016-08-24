@@ -1,4 +1,5 @@
-﻿using CygSoft.Qik.LanguageEngine.Scope;
+﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
+using CygSoft.Qik.LanguageEngine.Scope;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,37 +13,28 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
         protected GlobalTable scopeTable = null;
         protected List<BaseFunction> functionArguments;
 
-        internal BaseFunction(GlobalTable scopeTable, List<BaseFunction> functionArguments)
+        public int Line { get; private set; }
+        public int Column { get; private set; }
+        public string Name { get; private set; }
+
+        internal BaseFunction(FuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
         {
+            this.Line = funcInfo.Line;
+            this.Column = funcInfo.Column;
+            this.Name = funcInfo.Name;
             this.scopeTable = scopeTable;
             this.functionArguments = functionArguments;
         }
 
-        internal BaseFunction(GlobalTable scopeTable)
+        internal BaseFunction(FuncInfo funcInfo, GlobalTable scopeTable)
         {
+            this.Line = funcInfo.Line;
+            this.Column = funcInfo.Column;
+            this.Name = funcInfo.Name;
             this.scopeTable = scopeTable;
             this.functionArguments = new List<BaseFunction>();
         }
 
-        public abstract string Execute();
-
-        //public virtual string Execute()
-        //{
-        //    switch (this.InputType)
-        //    {
-        //        case ChildInputTypeEnum.LiteralText:
-        //            return this.literalText.Value;
-                    
-        //        case ChildInputTypeEnum.Variable:
-        //            return scopeTable.GetValueOfSymbol(this.variable.Symbol);
-                    
-        //        case ChildInputTypeEnum.Function:
-        //            return this.childFunction.Execute();
-                    
-        //        default:
-        //            return this.literalText.Value;
-        //    }
-        //}
-
+        public abstract string Execute(IErrorReport errorReport);
     }
 }

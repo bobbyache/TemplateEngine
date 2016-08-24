@@ -14,7 +14,7 @@ namespace UnitTests.Tests
         [TestMethod]
         public void OptionInput_WithoutDefault()
         {
-            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", null);
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol(new ErrorReport(), "@databaseOptions", "Database Options", null);
             optionInputSymbol.AddOption("ADVWORKS", "Adventure Works Database");
             optionInputSymbol.AddOption("PUBBOOKS", "Published Books Database");
 
@@ -42,7 +42,7 @@ namespace UnitTests.Tests
         [TestMethod]
         public void OptionInput_WithDefault()
         {
-            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "Description", "ADVWORKS");
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol(new ErrorReport(), "@databaseOptions", "Database Options", "Description", "ADVWORKS");
             optionInputSymbol.AddOption("ADVWORKS", "Adventure Works Database");
             optionInputSymbol.AddOption("PUBBOOKS", "Published Books Database");
 
@@ -59,7 +59,7 @@ namespace UnitTests.Tests
         [TestMethod]
         public void OptionInput_MakeSelections()
         {
-            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "ADVWORKS");
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol(new ErrorReport(), "@databaseOptions", "Database Options", "ADVWORKS");
             optionInputSymbol.AddOption("ADVWORKS", "Adventure Works Database");
             optionInputSymbol.AddOption("PUBBOOKS", "Published Books Database");
 
@@ -88,7 +88,7 @@ namespace UnitTests.Tests
         [TestMethod]
         public void OptionInput_MakeSelections_Interface()
         {
-            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "ADVWORKS");
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol(new ErrorReport(), "@databaseOptions", "Database Options", "ADVWORKS");
             optionInputSymbol.AddOption("ADVWORKS", "Adventure Works Database");
             optionInputSymbol.AddOption("PUBBOOKS", "Published Books Database");
 
@@ -119,7 +119,7 @@ namespace UnitTests.Tests
         [TestMethod]
         public void OptionInput_GetOptionTitles()
         {
-            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "ADVWORKS");
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol(new ErrorReport(), "@databaseOptions", "Database Options", "ADVWORKS");
             optionInputSymbol.AddOption("ADVWORKS", "Adventure Works Database");
             optionInputSymbol.AddOption("PUBBOOKS", "Published Books Database");
 
@@ -143,7 +143,7 @@ namespace UnitTests.Tests
         [TestMethod]
         public void OptionInput_GetOptionTitles_Interface()
         {
-            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "ADVWORKS");
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol(new ErrorReport(), "@databaseOptions", "Database Options", "ADVWORKS");
             optionInputSymbol.AddOption("ADVWORKS", "Adventure Works Database");
             optionInputSymbol.AddOption("PUBBOOKS", "Published Books Database");
 
@@ -180,7 +180,7 @@ namespace UnitTests.Tests
         [TestMethod]
         public void TextInput_Create()
         {
-            TextInputSymbol textInputSymbol = new TextInputSymbol("@authorName", "Author Name", "Description", null, true);
+            TextInputSymbol textInputSymbol = new TextInputSymbol(new ErrorReport(), "@authorName", "Author Name", "Description", null, true);
             Assert.AreEqual("@authorName", textInputSymbol.Symbol);
             Assert.AreEqual("@{authorName}", textInputSymbol.Placeholder);
             Assert.AreEqual("Author Name", textInputSymbol.Title);
@@ -189,7 +189,7 @@ namespace UnitTests.Tests
         [TestMethod]
         public void TextInput_WithDefault()
         {
-            TextInputSymbol textInputSymbol = new TextInputSymbol("@authorName", "Author Name", "Description", "Rob Blake", true);
+            TextInputSymbol textInputSymbol = new TextInputSymbol(new ErrorReport(), "@authorName", "Author Name", "Description", "Rob Blake", true);
             Assert.AreEqual("@authorName", textInputSymbol.Symbol);
             Assert.AreEqual("@{authorName}", textInputSymbol.Placeholder);
             Assert.AreEqual("Author Name", textInputSymbol.Title);
@@ -200,7 +200,7 @@ namespace UnitTests.Tests
         [TestMethod]
         public void TextInput_WithoutDefault()
         {
-            TextInputSymbol textInputSymbol = new TextInputSymbol("@authorName", "Author Name", "Description", null, true);
+            TextInputSymbol textInputSymbol = new TextInputSymbol(new ErrorReport(), "@authorName", "Author Name", "Description", null, true);
             Assert.AreEqual("@authorName", textInputSymbol.Symbol);
             Assert.AreEqual("@{authorName}", textInputSymbol.Placeholder);
             Assert.AreEqual("Author Name", textInputSymbol.Title);

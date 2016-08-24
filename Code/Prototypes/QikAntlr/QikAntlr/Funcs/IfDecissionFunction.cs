@@ -1,4 +1,5 @@
-﻿using CygSoft.Qik.LanguageEngine.Scope;
+﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
+using CygSoft.Qik.LanguageEngine.Scope;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,24 +16,32 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
         private string symbol = null;
         private GlobalTable scopeTable;
 
-        internal IfDecissionFunction(GlobalTable scopeTable, string symbol)
-            : base(scopeTable)
+        internal IfDecissionFunction(FuncInfo funcInfo, GlobalTable scopeTable, string symbol)
+            : base(funcInfo, scopeTable)
         {
             this.symbol = symbol;
             this.scopeTable = scopeTable;
         }
 
-        public override string Execute()
+        public override string Execute(IErrorReport errorReport)
         {
-            string curOption = scopeTable.GetValueOfSymbol(this.symbol);
-            if (curOption != null && functions.ContainsKey(curOption))
+            string result = null;
+            try
             {
-                BaseFunction func = functions[curOption];
-                string result = func.Execute();
+                string curOption = scopeTable.GetValueOfSymbol(this.symbol);
+                if (curOption != null && functions.ContainsKey(curOption))
+                {
+                    BaseFunction func = functions[curOption];
+                    string txt = func.Execute(errorReport);
 
-                return result;
+                    result = txt;
+                }
             }
-            return null;
+            catch (Exception)
+            {
+                errorReport.AddError(new CustomError(this.Line, this.Column, "If statement failed.", this.Name));
+            }
+            return result;
         }
 
         public void AddFunction(string text, BaseFunction func)

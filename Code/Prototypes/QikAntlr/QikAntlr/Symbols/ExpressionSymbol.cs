@@ -12,26 +12,29 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
     {
         private BaseFunction func;
         public bool IsVisibleToEditor { get; private set; }
+        private IErrorReport errorReport;
 
-        public ExpressionSymbol(string symbol, string title, string description, 
+        public ExpressionSymbol(IErrorReport errorReport, string symbol, string title, string description, 
             bool isPlaceholder, bool isVisibleToEditor, BaseFunction func)
-            : base(symbol, title, description, isPlaceholder)
+            : base(errorReport, symbol, title, description, isPlaceholder)
         {
             this.func = func;
             this.IsVisibleToEditor = isVisibleToEditor;
+            this.errorReport = errorReport;
         }
 
-        public ExpressionSymbol(string symbol, string title, string description, 
+        public ExpressionSymbol(IErrorReport errorReport, string symbol, string title, string description, 
             bool isPlaceholder, bool isVisibleToEditor, BaseFunction func, string prefix, string postfix)
-            : base(symbol, title, description, isPlaceholder, prefix, postfix)
+            : base(errorReport, symbol, title, description, isPlaceholder, prefix, postfix)
         {
             this.func = func;
             this.IsVisibleToEditor = IsVisibleToEditor;
+            this.errorReport = errorReport;
         }
 
         public override string Value
         {
-            get { return func.Execute(); }
+            get { return func.Execute(errorReport); }
         }
     }
 }

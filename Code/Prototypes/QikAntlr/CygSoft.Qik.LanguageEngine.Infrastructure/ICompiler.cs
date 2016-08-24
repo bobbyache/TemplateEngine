@@ -8,6 +8,8 @@ namespace CygSoft.Qik.LanguageEngine.Infrastructure
 {
     public interface ICompiler
     {
+        event EventHandler<UnknownErrorEventArgs> UnknownCompileError;
+        event EventHandler<ExecutionErrorEventArgs> ExecutionError;
         event EventHandler<SyntaxErrorEventArgs> SyntaxError;
 
         event EventHandler BeforeCompile;

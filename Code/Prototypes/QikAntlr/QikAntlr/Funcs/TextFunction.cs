@@ -1,4 +1,5 @@
-﻿using CygSoft.Qik.LanguageEngine.Scope;
+﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
+using CygSoft.Qik.LanguageEngine.Scope;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +12,12 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
     {
         private string text;
 
-        internal TextFunction(GlobalTable scopeTable, string text) : base(scopeTable)
+        internal TextFunction(FuncInfo funcInfo, GlobalTable scopeTable, string text) : base(funcInfo, scopeTable)
         {
             this.text = text;
         }
 
-        public override string Execute()
+        public override string Execute(IErrorReport errorReport)
         {
             // NB !!! You don't ever want to do this, rather create a "doubleQuote" func or something
             // you might want literal text as replacement into code!

@@ -1,4 +1,5 @@
-﻿using CygSoft.Qik.LanguageEngine.Scope;
+﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
+using CygSoft.Qik.LanguageEngine.Scope;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,21 +13,28 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
         private List<BaseFunction> functions = new List<BaseFunction>();
         private GlobalTable scopeTable;
 
-        internal ConcatenateFunction(GlobalTable scopeTable) : base(scopeTable)
+        internal ConcatenateFunction(FuncInfo funcInfo, GlobalTable scopeTable)
+            : base(funcInfo, scopeTable)
         {
             this.scopeTable = scopeTable;
         }
 
-        public override string Execute()
+        public override string Execute(IErrorReport errorReport)
         {
-            string result = "";
-            foreach (BaseFunction func in functions)
+            string result = null;
+            try
             {
-                result += func.Execute();
+                foreach (BaseFunction func in functions)
+                {
+                    result += func.Execute(errorReport);
+                }
+            }
+            catch (Exception)
+            {
+                errorReport.AddError(new CustomError(this.Line, this.Column, "Concatenation error.", this.Name));
             }
             return result;
         }
-
         public void AddFunction(BaseFunction func)
         {
             functions.Add(func);

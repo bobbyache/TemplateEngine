@@ -17,6 +17,7 @@ namespace QikLanguageEngine_Test
     public partial class InputPropertiesForm : Form
     {
         private ICompiler compiler = new Compiler();
+        private Row selectedRow;
 
         public InputPropertiesForm()
         {
@@ -27,6 +28,9 @@ namespace QikLanguageEngine_Test
             compiler.AfterCompile += compiler_AfterCompile;
             compiler.AfterInput += compiler_AfterInput;
             compiler.SyntaxError += compiler_SyntaxError;
+            compiler.ExecutionError += compiler_ExecutionError;
+            compiler.UnknownCompileError += compiler_UnknownCompileError;
+            syntaxBox.RowClick += syntaxBox_RowClick;
 
             syntaxBox.Document.SyntaxFile = "qiktemplate.syn";
             syntaxBox.Document.Text = File.ReadAllText("Example.txt");
@@ -42,18 +46,27 @@ namespace QikLanguageEngine_Test
             //tabControlFile.TabPages.RemoveByKey("templateTabPage"); // the key can be the template file name !!!
         }
 
+        private void compiler_UnknownCompileError(object sender, UnknownErrorEventArgs e)
+        {
+            AddErrorLine(0, 0, e.Message, "Unknown", "");
+        }
 
-        private void compiler_SyntaxError(object sender, SyntaxErrorEventArgs e)
+        private void syntaxBox_RowClick(object sender, Alsing.Windows.Forms.SyntaxBox.RowMouseEventArgs e)
+        {
+            DeselectRow();
+        }
+
+        private void compiler_ExecutionError(object sender, ExecutionErrorEventArgs e)
         {
             AddErrorLine(e.Line, e.Column, e.Message, e.RuleStack, e.OffendingSymbol);
             AddBookmark(e.Line, e.Column, e.Message, e.RuleStack, e.OffendingSymbol);
         }
 
 
-        private void AddBookmark(int line, int column, string message, string ruleStack, string symbol)
+        private void compiler_SyntaxError(object sender, SyntaxErrorEventArgs e)
         {
-            Row row = syntaxBox.Document[line];
-            row.Bookmarked = true;
+            AddErrorLine(e.Line, e.Column, e.Message, e.RuleStack, e.OffendingSymbol);
+            AddBookmark(e.Line, e.Column, e.Message, e.RuleStack, e.OffendingSymbol);
         }
 
         private void AddErrorLine(int line, int column, string message, string ruleStack, string symbol)
@@ -87,6 +100,7 @@ namespace QikLanguageEngine_Test
 
         private void compiler_BeforeCompile(object sender, EventArgs e)
         {
+            DeselectRow();
             syntaxBox.Document.ClearBookmarks();
             errorListView.Items.Clear();
         }
@@ -163,6 +177,60 @@ namespace QikLanguageEngine_Test
                     this.blueprintSyntaxBox.AutoListVisible = true;
                 }
             }
+        }
+
+        private void errorListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (selectedRow != null)
+                selectedRow.BackColor = Color.White;
+
+            if (errorListView.SelectedItems.Count > 0)
+            {
+                ListViewItem item = errorListView.SelectedItems[0];
+                int lineNumber = int.Parse(item.Text);
+                SelectRow(lineNumber);
+            }
+        }
+
+        private void errorListView_Leave(object sender, EventArgs e)
+        {
+            DeselectRow();
+        }
+
+        private void SelectRow(int line)
+        {
+            Row row = RowFromLine(line);
+            if (row != null)
+            {
+                syntaxBox.GotoLine(line);
+                row.BackColor = Color.Gray;
+                selectedRow = row;
+            }
+            else
+                selectedRow = null;
+        }
+
+        private void DeselectRow()
+        {
+            if (selectedRow != null)
+            {
+                selectedRow.BackColor = Color.White;
+                this.selectedRow = null;
+            }
+        }
+
+        private Row RowFromLine(int line)
+        {
+            int index = line > 1 ? line - 1 : line;
+            Row row = syntaxBox.Document[index];
+            return row;
+        }
+
+        private void AddBookmark(int line, int column, string message, string ruleStack, string symbol)
+        {
+            Row row = RowFromLine(line);
+            if (row != null)
+                row.Bookmarked = true;
         }
     }
 }

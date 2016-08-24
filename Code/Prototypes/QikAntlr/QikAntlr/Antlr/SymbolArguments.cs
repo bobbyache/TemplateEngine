@@ -1,4 +1,5 @@
-﻿using QikAntlr.Antlr;
+﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
+using QikAntlr.Antlr;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,13 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
         public bool IsVisibleToEditor { get; private set; }
         public bool IsPlaceholder { get; private set; }
 
-        public SymbolArguments()
+        private IErrorReport errorReport;
+
+        public SymbolArguments(IErrorReport errorReport)
         {
             this.IsVisibleToEditor = true;
             this.IsPlaceholder = true;
+            this.errorReport = errorReport;
         }
 
         public void Process(QikTemplateParser.DeclArgsContext context)
@@ -48,7 +52,8 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                             this.IsPlaceholder = bool.Parse(value);
                             break;
                         default:
-                            throw new NotSupportedException(string.Format("Declaration argument \"{0}\" is not supported in this context.", identifier));
+                            errorReport.AddError(new CustomError(context.Start.Line, context.Start.Column, "Unsupported Declaration Argument", context.Parent.GetText()));
+                            break;
                     }
                 }
             }

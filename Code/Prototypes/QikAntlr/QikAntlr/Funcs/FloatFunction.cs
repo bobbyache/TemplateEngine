@@ -1,4 +1,5 @@
-﻿using CygSoft.Qik.LanguageEngine.Scope;
+﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
+using CygSoft.Qik.LanguageEngine.Scope;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,13 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
     {
         private string text;
 
-        public FloatFunction(GlobalTable scopeTable, string text)
-            : base(scopeTable)
+        public FloatFunction(FuncInfo funcInfo, GlobalTable scopeTable, string text)
+            : base(funcInfo, scopeTable)
         {
             this.text = text;
         }
 
-        public override string Execute()
+        public override string Execute(IErrorReport errorReport)
         {
             return text;
         }

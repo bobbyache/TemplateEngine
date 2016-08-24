@@ -1,4 +1,5 @@
-﻿using CygSoft.Qik.LanguageEngine.Scope;
+﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
+using CygSoft.Qik.LanguageEngine.Scope;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,32 +10,40 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class ReplaceFunction : BaseFunction
     {
-        public ReplaceFunction(GlobalTable scopeTable, List<BaseFunction> functionArguments)
-            : base(scopeTable, functionArguments)
+        public ReplaceFunction(FuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
+            : base(funcInfo, scopeTable, functionArguments)
         {
 
         }
 
-        public override string Execute()
+        public override string Execute(IErrorReport errorReport)
         {
             if (functionArguments.Count() != 3)
-                throw new ApplicationException("Invalid number of arguments.");
+                errorReport.AddError(new CustomError(this.Line, this.Column, "Too many arguments", this.Name));
 
-            List<string> textResults = new List<string>();
-            foreach (BaseFunction funcArg in functionArguments)
+            string result = null;
+            try
             {
-                textResults.Add(funcArg.Execute());
+                List<string> textResults = new List<string>();
+                foreach (BaseFunction funcArg in functionArguments)
+                {
+                    textResults.Add(funcArg.Execute(errorReport));
+                }
+
+                string targetText = functionArguments[0].Execute(errorReport);
+                string textToReplace = functionArguments[1].Execute(errorReport);
+                string replacementText = functionArguments[2].Execute(errorReport);
+
+                if (targetText != null && targetText.Length >= 1)
+                {
+                    result = targetText.Replace(textToReplace, replacementText);
+                }
             }
-
-            string targetText = functionArguments[0].Execute();
-            string textToReplace = functionArguments[1].Execute();
-            string replacementText = functionArguments[2].Execute();
-
-            if (targetText != null && targetText.Length >= 1)
+            catch (Exception)
             {
-                return targetText.Replace(textToReplace, replacementText);
+                errorReport.AddError(new CustomError(this.Line, this.Column, "Bad function call.", this.Name));
             }
-            return targetText;
+            return result;
         }
     }
 }

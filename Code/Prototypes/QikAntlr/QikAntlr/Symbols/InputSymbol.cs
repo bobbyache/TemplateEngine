@@ -11,16 +11,16 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
     {
         public string DefaultValue { get; private set; }
 
-        public InputSymbol(string symbol, string title, string description, string defaultValue, 
-            bool isPlaceholder) 
-            : base(symbol, title, description, isPlaceholder)
+        public InputSymbol(IErrorReport errorReport, string symbol, string title, string description, string defaultValue, 
+            bool isPlaceholder)
+            : base(errorReport, symbol, title, description, isPlaceholder)
         {
             this.DefaultValue = Common.StripOuterQuotes(defaultValue);
         }
 
-        public InputSymbol(string symbol, string title, string description, string defaultValue, bool isPlaceholder,  
+        public InputSymbol(IErrorReport errorReport, string symbol, string title, string description, string defaultValue, bool isPlaceholder,  
             string prefix, string postfix)
-            : base(symbol, title, description, isPlaceholder, prefix, postfix)
+            : base(errorReport, symbol, title, description, isPlaceholder, prefix, postfix)
         {
             this.DefaultValue = defaultValue;
         }

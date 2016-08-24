@@ -15,6 +15,8 @@ namespace CygSoft.Qik.LanguageEngine
     public class Compiler : ICompiler
     {
         public event EventHandler<SyntaxErrorEventArgs> SyntaxError;
+        public event EventHandler<ExecutionErrorEventArgs> ExecutionError;
+        public event EventHandler<UnknownErrorEventArgs> UnknownCompileError;
         public event EventHandler BeforeCompile;
         public event EventHandler AfterCompile;
 
@@ -22,6 +24,7 @@ namespace CygSoft.Qik.LanguageEngine
         public event EventHandler AfterInput;
 
         private GlobalTable scopeTable = new GlobalTable();
+        private IErrorReport errorReport = new ErrorReport();
 
         public bool HasErrors { get; private set; }
 
@@ -55,14 +58,37 @@ namespace CygSoft.Qik.LanguageEngine
 
         public void Compile(string scriptText)
         {
+            this.HasErrors = false;
+
             if (BeforeCompile != null)
                 BeforeCompile(this, new EventArgs());
 
             scopeTable.Clear();
 
-            CheckSyntax(scriptText);
-            GetControls(scriptText);
-            GetExpressions(scriptText);
+            try
+            {
+                CheckSyntax(scriptText);
+                if (!this.HasErrors)
+                {
+                    errorReport.Reporting = true;
+                    errorReport.ExecutionErrorDetected += errorReport_ExecutionErrorDetected;
+
+                    GetControls(scriptText);
+                    GetExpressions(scriptText);
+                    CheckExecution();
+
+                    errorReport.ExecutionErrorDetected -= errorReport_ExecutionErrorDetected;
+                    errorReport.Reporting = false;
+
+                    bool success = !this.errorReport.HasErrors;
+                    this.errorReport.Clear();
+                }
+            }
+            catch (Exception exception)
+            {
+                if (UnknownCompileError != null)
+                    UnknownCompileError(this, new UnknownErrorEventArgs(exception));
+            }
 
             if (AfterCompile != null)
                 AfterCompile(this, new EventArgs());
@@ -79,6 +105,14 @@ namespace CygSoft.Qik.LanguageEngine
                 AfterInput(this, new EventArgs());
         }
 
+        private void CheckExecution()
+        {
+            foreach (IExpression expression in this.Expressions)
+            {
+                string value = expression.Value;
+            }
+        }
+
         private void CheckSyntax(string scriptText)
         {
             AntlrInputStream inputStream = new AntlrInputStream(scriptText);
@@ -92,6 +126,14 @@ namespace CygSoft.Qik.LanguageEngine
             parser.AddErrorListener(errorListener);
             parser.template();
             errorListener.SyntaxErrorDetected -= errorListener_SyntaxErrorDetected;
+        }
+
+        private void errorReport_ExecutionErrorDetected(object sender, ExecutionErrorEventArgs e)
+        {
+            this.HasErrors = true;
+
+            if (ExecutionError != null)
+                ExecutionError(this, e);
         }
 
         private void errorListener_SyntaxErrorDetected(object sender, SyntaxErrorEventArgs e)
@@ -110,8 +152,8 @@ namespace CygSoft.Qik.LanguageEngine
             QikTemplateParser parser = new QikTemplateParser(tokens);
 
             IParseTree tree = parser.template();
-
-            UserInputVisitor controlVisitor = new UserInputVisitor(this.scopeTable);
+            
+            UserInputVisitor controlVisitor = new UserInputVisitor(this.scopeTable, this.errorReport);
             controlVisitor.Visit(tree);
         }
 
@@ -124,7 +166,7 @@ namespace CygSoft.Qik.LanguageEngine
 
             IParseTree tree = parser.template();
 
-            ExpressionVisitor expressionVisitor = new ExpressionVisitor(this.scopeTable);
+            ExpressionVisitor expressionVisitor = new ExpressionVisitor(this.scopeTable, this.errorReport);
             expressionVisitor.Visit(tree);
         }
     }
