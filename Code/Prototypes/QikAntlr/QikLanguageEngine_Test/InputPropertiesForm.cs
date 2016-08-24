@@ -9,6 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -149,9 +150,18 @@ namespace QikLanguageEngine_Test
 
             foreach (string placeholder in compiler.Placeholders)
             {
+                ISymbolInfo symbolInfo = compiler.GetPlaceholderInfo(placeholder);
                 string title = compiler.GetTitleOfPlaceholder(placeholder);
-                blueprintSyntaxBox.AutoListAdd(string.Format("{0} ({1})", title, placeholder), placeholder, 0);
+                string itemText = string.Format("{0} ({1})", symbolInfo.Title, symbolInfo.Placeholder);
+                string toolTip = string.Format("{0}\n{1}", itemText, WrapWords(symbolInfo.Description, 150));
+                
+                blueprintSyntaxBox.AutoListAdd(itemText, placeholder, toolTip, 0);
             }
+        }
+
+        private string WrapWords(string text, int interval)
+        {
+            return WordWrapper.WordWrap(text, interval);
         }
 
         private void blueprintSyntaxBox_KeyDown(object sender, KeyEventArgs e)
@@ -219,5 +229,12 @@ namespace QikLanguageEngine_Test
             if (row != null)
                 row.Bookmarked = true;
         }
+
+        //private void btnInfoTip_Click(object sender, EventArgs e)
+        //{
+        //    blueprintSyntaxBox.InfoTipText = "Hello <b>World</b>";
+        //    blueprintSyntaxBox.InfoTipCount = 0;
+        //    blueprintSyntaxBox.InfoTipVisible = true;
+        //}
     }
 }

@@ -10,6 +10,22 @@ namespace CygSoft.Qik.LanguageEngine.Scope
 {
     internal class GlobalTable
     {
+        private class SymbolInfo : ISymbolInfo
+        {
+            public string Symbol { get; private set; }
+            public string Placeholder { get; private set; }
+            public string Title { get; private set; }
+            public string Description { get; private set; }
+
+            public SymbolInfo(string placeholder, string symbol, string title, string description)
+            {
+                this.Symbol = symbol;
+                this.Placeholder = placeholder;
+                this.Title = title;
+                this.Description = description;
+            }
+        }
+
         private Dictionary<string, BaseSymbol> table = new Dictionary<string, BaseSymbol>();
 
         public string[] Symbols
@@ -64,6 +80,33 @@ namespace CygSoft.Qik.LanguageEngine.Scope
                 if (optionInputSymbol != null)
                     optionInputSymbol.SelectOption(value);
             }
+        }
+
+        public ISymbolInfo GetPlaceholderInfo(string placeholder)
+        {
+            List<BaseSymbol> symbols = table.Values.Cast<BaseSymbol>().ToList();
+
+            if (symbols.Any(s => s.Placeholder == placeholder))
+            {
+                BaseSymbol baseSymbol = symbols.Where(s => s.Placeholder == placeholder).SingleOrDefault() as BaseSymbol;
+                ISymbolInfo placeholderInfo =
+                    new SymbolInfo(baseSymbol.Placeholder, baseSymbol.Symbol, baseSymbol.Title, baseSymbol.Description);
+                return placeholderInfo;
+            }
+
+            return null;
+        }
+
+        public ISymbolInfo GetSymbolInfo(string symbol)
+        {
+            if (table.ContainsKey(symbol))
+            {
+                BaseSymbol baseSymbol = table[symbol];
+                ISymbolInfo symbolInfo =
+                    new SymbolInfo(baseSymbol.Placeholder, baseSymbol.Symbol, baseSymbol.Title, baseSymbol.Description);
+                return symbolInfo;
+            }
+            return null;
         }
 
         public string GetValueOfSymbol(string symbol)

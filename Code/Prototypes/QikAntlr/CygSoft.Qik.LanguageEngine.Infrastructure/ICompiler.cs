@@ -25,6 +25,9 @@ namespace CygSoft.Qik.LanguageEngine.Infrastructure
         void Compile(string scriptText);
         void Input(string symbol, string value);
 
+        ISymbolInfo GetPlaceholderInfo(string placeholder);
+        ISymbolInfo GetSymbolInfo(string symbol);
+
         string GetTitleOfPlaceholder(string placeholder);
         string GetValueOfPlaceholder(string placeholder);
         string GetValueOfSymbol(string symbol);

@@ -36,6 +36,16 @@ namespace CygSoft.Qik.LanguageEngine
             get { return scopeTable.Placeholders; }
         }
 
+        public ISymbolInfo GetPlaceholderInfo(string placeholder)
+        {
+            return scopeTable.GetPlaceholderInfo(placeholder);
+        }
+
+        public ISymbolInfo GetSymbolInfo(string symbol)
+        {
+            return scopeTable.GetSymbolInfo(symbol);
+        }
+
         public string GetValueOfSymbol(string symbol)
         {
             return scopeTable.GetValueOfSymbol(symbol);
