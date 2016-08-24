@@ -40,9 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompileErrorEventArgs.cs" />
     <Compile Include="CustomError.cs" />
     <Compile Include="IErrorReport.cs" />
-    <Compile Include="ExecutionErrorEventArgs.cs" />
     <Compile Include="ICompiler.cs" />
     <Compile Include="IExpression.cs" />
     <Compile Include="IGenerator.cs" />
@@ -52,8 +52,6 @@
     <Compile Include="ISymbol.cs" />
     <Compile Include="ITextField.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SyntaxErrorEventArgs.cs" />
-    <Compile Include="UnknownErrorEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SymbolInterfaces.cd" />

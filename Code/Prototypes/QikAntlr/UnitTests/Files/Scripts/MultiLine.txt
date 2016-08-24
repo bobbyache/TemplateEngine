@@ -7,7 +7,7 @@
 			indentLine("return y;", TAB, 2) + NEWLINE +
 			indentLine("else", TAB, 1) + NEWLINE +
 			indentLine("return x;", TAB, 2) + NEWLINE +
-		"}\n"
+		"}\n";
 };
 
 @displayEvents = expression[Title="Display Events"] {

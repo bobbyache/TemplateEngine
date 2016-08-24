@@ -9,7 +9,7 @@ namespace CygSoft.Qik.LanguageEngine
 {
     internal class ErrorReport : IErrorReport
     {
-        public event EventHandler<ExecutionErrorEventArgs> ExecutionErrorDetected;
+        public event EventHandler<CompileErrorEventArgs> ExecutionErrorDetected;
 
         List<CustomError> errors = new List<CustomError>();
 
@@ -28,7 +28,7 @@ namespace CygSoft.Qik.LanguageEngine
 
             errors.Add(error);
             if (ExecutionErrorDetected != null)
-                ExecutionErrorDetected(this, new ExecutionErrorEventArgs("Execution Error", error.Line, error.Column, "", error.Message));
+                ExecutionErrorDetected(this, new CompileErrorEventArgs("Execution Error", error.Line, error.Column, "", error.Message));
         }
 
         public void Clear()

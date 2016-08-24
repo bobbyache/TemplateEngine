@@ -14,9 +14,7 @@ namespace CygSoft.Qik.LanguageEngine
 {
     public class Compiler : ICompiler
     {
-        public event EventHandler<SyntaxErrorEventArgs> SyntaxError;
-        public event EventHandler<ExecutionErrorEventArgs> ExecutionError;
-        public event EventHandler<UnknownErrorEventArgs> UnknownCompileError;
+        public event EventHandler<CompileErrorEventArgs> CompileError;
         public event EventHandler BeforeCompile;
         public event EventHandler AfterCompile;
 
@@ -86,8 +84,8 @@ namespace CygSoft.Qik.LanguageEngine
             }
             catch (Exception exception)
             {
-                if (UnknownCompileError != null)
-                    UnknownCompileError(this, new UnknownErrorEventArgs(exception));
+                if (CompileError != null)
+                    CompileError(this, new CompileErrorEventArgs(exception));
             }
 
             if (AfterCompile != null)
@@ -128,20 +126,20 @@ namespace CygSoft.Qik.LanguageEngine
             errorListener.SyntaxErrorDetected -= errorListener_SyntaxErrorDetected;
         }
 
-        private void errorReport_ExecutionErrorDetected(object sender, ExecutionErrorEventArgs e)
+        private void errorReport_ExecutionErrorDetected(object sender, CompileErrorEventArgs e)
         {
             this.HasErrors = true;
 
-            if (ExecutionError != null)
-                ExecutionError(this, e);
+            if (CompileError != null)
+                CompileError(this, e);
         }
 
-        private void errorListener_SyntaxErrorDetected(object sender, SyntaxErrorEventArgs e)
+        private void errorListener_SyntaxErrorDetected(object sender, CompileErrorEventArgs e)
         {
             this.HasErrors = true;
 
-            if (SyntaxError != null)
-                SyntaxError(this, e);
+            if (CompileError != null)
+                CompileError(this, e);
         }
 
         private void GetControls(string scriptText)

@@ -8,7 +8,7 @@ namespace CygSoft.Qik.LanguageEngine.Infrastructure
 {
     public interface IErrorReport
     {
-        event EventHandler<ExecutionErrorEventArgs> ExecutionErrorDetected;
+        event EventHandler<CompileErrorEventArgs> ExecutionErrorDetected;
 
         bool HasErrors { get; }
         bool Reporting { get; set; }

@@ -10,7 +10,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
 {
     internal class ErrorListener : BaseErrorListener
     {
-        public event EventHandler<SyntaxErrorEventArgs> SyntaxErrorDetected;
+        public event EventHandler<CompileErrorEventArgs> SyntaxErrorDetected;
 
         public override void SyntaxError(IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
         {
@@ -19,7 +19,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
 
             if (SyntaxErrorDetected != null)
             {
-                SyntaxErrorDetected(this, new SyntaxErrorEventArgs(UserFriendlyContext(stack[0].ToString()), line, charPositionInLine, offendingSymbol.ToString(), msg));
+                SyntaxErrorDetected(this, new CompileErrorEventArgs(UserFriendlyContext(stack[0].ToString()), line, charPositionInLine, offendingSymbol.ToString(), msg));
             }
         }
 

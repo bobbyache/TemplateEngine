@@ -27,9 +27,7 @@ namespace QikLanguageEngine_Test
             compiler.BeforeCompile += compiler_BeforeCompile;
             compiler.AfterCompile += compiler_AfterCompile;
             compiler.AfterInput += compiler_AfterInput;
-            compiler.SyntaxError += compiler_SyntaxError;
-            compiler.ExecutionError += compiler_ExecutionError;
-            compiler.UnknownCompileError += compiler_UnknownCompileError;
+            compiler.CompileError += compiler_CompileError;
             syntaxBox.RowClick += syntaxBox_RowClick;
 
             syntaxBox.Document.SyntaxFile = "qiktemplate.syn";
@@ -46,27 +44,16 @@ namespace QikLanguageEngine_Test
             //tabControlFile.TabPages.RemoveByKey("templateTabPage"); // the key can be the template file name !!!
         }
 
-        private void compiler_UnknownCompileError(object sender, UnknownErrorEventArgs e)
+        private void compiler_CompileError(object sender, CompileErrorEventArgs e)
         {
-            AddErrorLine(0, 0, e.Message, "Unknown", "");
+            AddErrorLine(e.Line, e.Column, e.Message, e.Location, e.OffendingSymbol);
+            if (e.Line > 0)
+                AddBookmark(e.Line, e.Column, e.Message, e.Location, e.OffendingSymbol);
         }
 
         private void syntaxBox_RowClick(object sender, Alsing.Windows.Forms.SyntaxBox.RowMouseEventArgs e)
         {
             DeselectRow();
-        }
-
-        private void compiler_ExecutionError(object sender, ExecutionErrorEventArgs e)
-        {
-            AddErrorLine(e.Line, e.Column, e.Message, e.RuleStack, e.OffendingSymbol);
-            AddBookmark(e.Line, e.Column, e.Message, e.RuleStack, e.OffendingSymbol);
-        }
-
-
-        private void compiler_SyntaxError(object sender, SyntaxErrorEventArgs e)
-        {
-            AddErrorLine(e.Line, e.Column, e.Message, e.RuleStack, e.OffendingSymbol);
-            AddBookmark(e.Line, e.Column, e.Message, e.RuleStack, e.OffendingSymbol);
         }
 
         private void AddErrorLine(int line, int column, string message, string ruleStack, string symbol)
