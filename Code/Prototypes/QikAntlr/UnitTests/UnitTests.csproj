@@ -55,6 +55,9 @@
     <Compile Include="Tests\InputControlTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Files\Scripts\HtmlEncode.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\Scripts\InferPK.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

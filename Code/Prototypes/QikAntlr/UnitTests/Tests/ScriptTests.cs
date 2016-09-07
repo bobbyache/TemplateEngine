@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using CygSoft.Qik.LanguageEngine;
 using CygSoft.Qik.LanguageEngine.Infrastructure;
+using CygSoft.Qik.LanguageEngine.Scope;
 
 namespace UnitTests.Tests
 {
@@ -13,6 +14,7 @@ namespace UnitTests.Tests
     [DeploymentItem(@"Files\Scripts\MultiLine.tpl")]
     [DeploymentItem(@"Files\Scripts\MultiLine.out")]
     [DeploymentItem(@"Files\Scripts\InferPK.txt")]
+    [DeploymentItem(@"Files\Scripts\HtmlEncode.txt")]
     public class ScriptTests
     {
         [TestMethod]
@@ -112,6 +114,22 @@ namespace UnitTests.Tests
             Assert.AreEqual("pRpt_StoredProcName.sql", fileTitle);
             Assert.AreEqual(@"D:\Sandbox\MSDF\Code\SQLQueries\DataMartV2\Reports\pRpt_StoredProcName.sql", filePath);
             Assert.AreEqual("MSDF_DW", database2);
+        }
+
+        [TestMethod]
+        public void Script_HtmlEncodeDecode()
+        {
+            string scriptText = File.ReadAllText("HtmlEncode.txt");
+
+            ICompiler compiler = new Compiler();
+            compiler.Compile(scriptText);
+            compiler.Input("@normalText", @"Hello 'World'");
+
+            string encodedText = compiler.GetValueOfSymbol("@encodedText");
+            string decodedText = compiler.GetValueOfSymbol("@decodedText");
+
+            Assert.AreEqual(@"Hello &#39;World&#39;", encodedText);
+            Assert.AreEqual(@"Hello 'World'", decodedText);
         }
     }
 }

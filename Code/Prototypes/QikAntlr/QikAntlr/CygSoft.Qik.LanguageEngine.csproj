@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -65,6 +66,8 @@
     <Compile Include="Funcs\DoubleQuoteFunction.cs" />
     <Compile Include="Funcs\FloatFunction.cs" />
     <Compile Include="Funcs\FuncInfo.cs" />
+    <Compile Include="Funcs\HtmlDecodeFunction.cs" />
+    <Compile Include="Funcs\HtmlEncodeFunction.cs" />
     <Compile Include="Funcs\IfDecissionFunction.cs" />
     <Compile Include="Funcs\IndentFunction.cs" />
     <Compile Include="Funcs\IntegerFunction.cs" />

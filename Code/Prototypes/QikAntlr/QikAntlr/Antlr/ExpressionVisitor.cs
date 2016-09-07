@@ -128,6 +128,16 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                         DoubleQuoteFunction doubleQuoteFunction = new DoubleQuoteFunction(funcInfo, scopeTable, functionArguments);
                         func = doubleQuoteFunction;
                         break;
+                    case "htmlEncode":
+                        HtmlEncodeFunction htmlEncodeFunction = new HtmlEncodeFunction(funcInfo, scopeTable, functionArguments);
+                        func = htmlEncodeFunction;
+                        break;
+
+                    case "htmlDecode":
+                        HtmlDecodeFunction htmlDecodeFunction = new HtmlDecodeFunction(funcInfo, scopeTable, functionArguments);
+                        func = htmlDecodeFunction;
+                        break;
+
                     default:
                         throw new NotSupportedException(string.Format("Function \"{0}\" is not supported in this context.", funcIdentifier));
                 }
