@@ -112,9 +112,17 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                         UpperCaseFunction upperCaseFunc = new UpperCaseFunction(funcInfo, scopeTable, functionArguments);
                         func = upperCaseFunc;
                         break;
+                    case "properCase":
+                        ProperCaseFunction properCaseFunc = new ProperCaseFunction(funcInfo, scopeTable, functionArguments);
+                        func = properCaseFunc;
+                        break;
                     case "removeSpaces":
                         RemoveSpacesFunction removeSpacesFunc = new RemoveSpacesFunction(funcInfo, scopeTable, functionArguments);
                         func = removeSpacesFunc;
+                        break;
+                    case "removePunctuation":
+                        RemovePunctuationFunction removePunctuationFunc = new RemovePunctuationFunction(funcInfo, scopeTable, functionArguments);
+                        func = removePunctuationFunc;
                         break;
                     case "replace":
                         ReplaceFunction replaceFunc = new ReplaceFunction(funcInfo, scopeTable, functionArguments);
