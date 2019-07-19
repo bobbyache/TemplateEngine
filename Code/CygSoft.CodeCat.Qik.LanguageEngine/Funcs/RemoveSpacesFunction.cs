@@ -9,7 +9,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class RemoveSpacesFunction : BaseFunction
     {
-        public RemoveSpacesFunction(FuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
+        public RemoveSpacesFunction(IFuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
             : base(funcInfo, scopeTable, functionArguments)
         {
 

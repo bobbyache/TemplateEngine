@@ -9,7 +9,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class ReplaceFunction : BaseFunction
     {
-        public ReplaceFunction(FuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
+        public ReplaceFunction(IFuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
             : base(funcInfo, scopeTable, functionArguments)
         {
 

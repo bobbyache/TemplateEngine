@@ -9,7 +9,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class IndentFunction : BaseFunction
     {
-        public IndentFunction(FuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
+        public IndentFunction(IFuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
             : base(funcInfo, scopeTable, functionArguments)
         {
         }

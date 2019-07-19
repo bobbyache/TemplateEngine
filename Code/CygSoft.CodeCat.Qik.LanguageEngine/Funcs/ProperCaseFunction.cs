@@ -10,7 +10,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class ProperCaseFunction : BaseFunction
     {
-        public ProperCaseFunction(FuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
+        public ProperCaseFunction(IFuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
             : base(funcInfo, scopeTable, functionArguments)
         {
 

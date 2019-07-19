@@ -8,7 +8,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
     {
         private readonly string symbol;
 
-        public VariableFunction(FuncInfo funcInfo, GlobalTable scopeTable, string symbol)
+        public VariableFunction(IFuncInfo funcInfo, GlobalTable scopeTable, string symbol)
             : base(funcInfo, scopeTable)
         {
             this.symbol = symbol;

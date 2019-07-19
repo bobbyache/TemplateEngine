@@ -9,7 +9,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class RemovePunctuationFunction : BaseFunction
     {
-        public RemovePunctuationFunction(FuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
+        public RemovePunctuationFunction(IFuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
             : base(funcInfo, scopeTable, functionArguments)
         {
 

@@ -9,7 +9,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class UpperCaseFunction : BaseFunction
     {
-        public UpperCaseFunction(FuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
+        public UpperCaseFunction(IFuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
             : base(funcInfo, scopeTable, functionArguments)
         {
 

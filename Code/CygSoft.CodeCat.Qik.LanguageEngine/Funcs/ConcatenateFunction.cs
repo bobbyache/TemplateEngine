@@ -10,7 +10,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
     {
         private readonly List<BaseFunction> functions = new List<BaseFunction>();
 
-        internal ConcatenateFunction(FuncInfo funcInfo, GlobalTable scopeTable)
+        internal ConcatenateFunction(IFuncInfo funcInfo, GlobalTable scopeTable)
             : base(funcInfo, scopeTable)
         {
             this.scopeTable = scopeTable;

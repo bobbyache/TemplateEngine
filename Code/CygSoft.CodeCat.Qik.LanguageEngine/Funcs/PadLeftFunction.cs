@@ -11,7 +11,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class PadLeftFunction : BaseFunction
     {
-        public PadLeftFunction(FuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments) : base(funcInfo, scopeTable, functionArguments)
+        public PadLeftFunction(IFuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments) : base(funcInfo, scopeTable, functionArguments)
         {
 
         }

@@ -10,7 +10,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
     internal class LowerCaseFunction : BaseFunction
     {
 
-        public LowerCaseFunction(FuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
+        public LowerCaseFunction(IFuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
             : base(funcInfo, scopeTable, functionArguments)
         {
 

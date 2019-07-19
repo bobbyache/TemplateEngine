@@ -10,7 +10,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class HtmlEncodeFunction : BaseFunction
     {
-        public HtmlEncodeFunction(FuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments) : base(funcInfo, scopeTable, functionArguments)
+        public HtmlEncodeFunction(IFuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments) : base(funcInfo, scopeTable, functionArguments)
         {
 
         }

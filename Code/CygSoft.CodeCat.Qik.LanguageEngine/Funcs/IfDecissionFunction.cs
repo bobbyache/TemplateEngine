@@ -13,7 +13,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 
         private readonly string symbol = null;
 
-        internal IfDecissionFunction(FuncInfo funcInfo, GlobalTable scopeTable, string symbol)
+        internal IfDecissionFunction(IFuncInfo funcInfo, GlobalTable scopeTable, string symbol)
             : base(funcInfo, scopeTable)
         {
             this.symbol = symbol;

@@ -14,7 +14,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
         public int Column { get; private set; }
         public string Name { get; private set; }
 
-        internal BaseFunction(FuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
+        internal BaseFunction(IFuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
         {
             this.Line = funcInfo.Line;
             this.Column = funcInfo.Column;
@@ -23,7 +23,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
             this.functionArguments = functionArguments;
         }
 
-        internal BaseFunction(FuncInfo funcInfo, GlobalTable scopeTable)
+        internal BaseFunction(IFuncInfo funcInfo, GlobalTable scopeTable)
         {
             this.Line = funcInfo.Line;
             this.Column = funcInfo.Column;

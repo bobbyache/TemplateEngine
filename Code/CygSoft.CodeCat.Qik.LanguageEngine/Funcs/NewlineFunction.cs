@@ -6,7 +6,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class NewlineFunction : BaseFunction
     {
-        internal NewlineFunction(FuncInfo funcInfo)
+        internal NewlineFunction(IFuncInfo funcInfo)
             : base(funcInfo, null)
         {
         }

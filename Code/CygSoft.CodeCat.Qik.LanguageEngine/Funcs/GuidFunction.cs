@@ -11,7 +11,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class GuidFunction : BaseFunction
     {
-        public GuidFunction(FuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments) : base(funcInfo, scopeTable, functionArguments)
+        public GuidFunction(IFuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments) : base(funcInfo, scopeTable, functionArguments)
         {
 
         }

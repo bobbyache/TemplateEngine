@@ -8,7 +8,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
     {
         private readonly string text;
 
-        public ConstantFunction(FuncInfo funcInfo, GlobalTable scopeTable, string text)
+        public ConstantFunction(IFuncInfo funcInfo, GlobalTable scopeTable, string text)
             : base(funcInfo, scopeTable)
         {
             this.text = text;
