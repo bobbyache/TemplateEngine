@@ -1,17 +1,19 @@
-﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
+﻿using CygSoft.Qik.LanguageEngine.Funcs;
+using CygSoft.Qik.LanguageEngine.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
-namespace CygSoft.Qik.LanguageEngine.Funcs
+namespace CygSoft.Qik.LanguageEngine.Functions.Core
 {
-    public class HtmlEncodeFunction : BaseFunction
+    public class UpperCaseFunction : BaseFunction
     {
-        public HtmlEncodeFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments) : base(funcInfo, scopeTable, functionArguments)
+        public UpperCaseFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments)
+            : base(funcInfo, scopeTable, functionArguments)
         {
 
         }
+
         public override string Execute(IErrorReport errorReport)
         {
             if (functionArguments.Count() != 1)
@@ -24,7 +26,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 
                 if (txt != null && txt.Length >= 1)
                 {
-                    result = HttpUtility.HtmlEncode(txt); 
+                    result = txt.ToUpper();
                 }
             }
             catch (Exception)

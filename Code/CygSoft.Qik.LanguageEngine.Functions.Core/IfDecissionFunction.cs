@@ -1,8 +1,9 @@
-﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
+﻿using CygSoft.Qik.LanguageEngine.Funcs;
+using CygSoft.Qik.LanguageEngine.Infrastructure;
 using System;
 using System.Collections.Generic;
 
-namespace CygSoft.Qik.LanguageEngine.Funcs
+namespace CygSoft.Qik.LanguageEngine.Functions.Core
 {
     public class IfDecissionFunction : BaseFunction
     {
@@ -41,7 +42,21 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 
         public void AddFunction(string text, IFunction func)
         {
-            functions.Add(Common.StripOuterQuotes(text), func);
+            functions.Add(StripOuterQuotes(text), func);
+        }
+
+        private string StripOuterQuotes(string text)
+        {
+            if (text != null && text.Length >= 2)
+            {
+                if (text.Substring(0, 1) == "\"" && text.Substring(text.Length - 1, 1) == "\"")
+                {
+                    if (text.Length != 0)
+                        return text.Substring(1, text.Length - 2);
+                }
+            }
+
+            return text;
         }
     }
 }

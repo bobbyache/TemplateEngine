@@ -1,14 +1,15 @@
-﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
+﻿using CygSoft.Qik.LanguageEngine.Funcs;
+using CygSoft.Qik.LanguageEngine.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 
-namespace CygSoft.Qik.LanguageEngine.Funcs
+namespace CygSoft.Qik.LanguageEngine.Functions.Core
 {
-    public class RemovePunctuationFunction : BaseFunction
+    public class HtmlDecodeFunction : BaseFunction
     {
-        public RemovePunctuationFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments)
-            : base(funcInfo, scopeTable, functionArguments)
+        public HtmlDecodeFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments) : base(funcInfo, scopeTable, functionArguments)
         {
 
         }
@@ -25,7 +26,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 
                 if (txt != null && txt.Length >= 1)
                 {
-                    result = txt.Where(c => !char.IsPunctuation(c)).Aggregate("", (current, c) => current + c);
+                    result = HttpUtility.HtmlDecode(txt); 
                 }
             }
             catch (Exception)
@@ -36,16 +37,3 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
         }
     }
 }
-
-
-// http://stackoverflow.com/questions/421616/how-can-i-strip-punctuation-from-a-string
-//string s = "sxrdct?fvzguh,bij.";
-//var sb = new StringBuilder();
-
-//foreach (char c in s)
-//{
-//   if (!char.IsPunctuation(c))
-//      sb.Append(c);
-//}
-
-//s = sb.ToString();

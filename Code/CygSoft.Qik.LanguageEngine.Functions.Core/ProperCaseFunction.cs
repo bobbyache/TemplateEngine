@@ -1,13 +1,15 @@
-﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
+﻿using CygSoft.Qik.LanguageEngine.Funcs;
+using CygSoft.Qik.LanguageEngine.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
-namespace CygSoft.Qik.LanguageEngine.Funcs
+namespace CygSoft.Qik.LanguageEngine.Functions.Core
 {
-    public class DoubleQuoteFunction : BaseFunction
+    public class ProperCaseFunction : BaseFunction
     {
-        public DoubleQuoteFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments)
+        public ProperCaseFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments)
             : base(funcInfo, scopeTable, functionArguments)
         {
 
@@ -25,9 +27,9 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 
                 if (txt != null && txt.Length >= 1)
                 {
-                    return "\"" + txt + "\"";
+                    CultureInfo cultureInfo = System.Threading.Thread.CurrentThread.CurrentCulture;
+                    result = cultureInfo.TextInfo.ToTitleCase(txt.ToLower());
                 }
-                result = txt;
             }
             catch (Exception)
             {

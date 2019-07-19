@@ -1,14 +1,14 @@
-﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
+﻿using CygSoft.Qik.LanguageEngine.Funcs;
+using CygSoft.Qik.LanguageEngine.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 
-namespace CygSoft.Qik.LanguageEngine.Funcs
+namespace CygSoft.Qik.LanguageEngine.Functions.Core
 {
-    public class ProperCaseFunction : BaseFunction
+    public class CurrentDateFunction : BaseFunction
     {
-        public ProperCaseFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments)
+        public CurrentDateFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments)
             : base(funcInfo, scopeTable, functionArguments)
         {
 
@@ -22,12 +22,12 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
             string result = null;
             try
             {
-                string txt = functionArguments[0].Execute(errorReport);
+                string dateFormatText = functionArguments[0].Execute(errorReport);
 
-                if (txt != null && txt.Length >= 1)
+                if (dateFormatText != null && dateFormatText.Length >= 1)
                 {
-                    CultureInfo cultureInfo = System.Threading.Thread.CurrentThread.CurrentCulture;
-                    result = cultureInfo.TextInfo.ToTitleCase(txt.ToLower());
+                    string dateText = DateTime.Now.ToString(dateFormatText);
+                    result = dateText;
                 }
             }
             catch (Exception)

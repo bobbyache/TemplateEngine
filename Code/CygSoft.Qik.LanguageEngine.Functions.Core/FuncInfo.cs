@@ -1,6 +1,6 @@
 ﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
 
-namespace CygSoft.Qik.LanguageEngine.Funcs
+namespace CygSoft.Qik.LanguageEngine.Functions.Core
 {
     public class FuncInfo : IFuncInfo
     {

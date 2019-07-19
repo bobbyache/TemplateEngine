@@ -61,29 +61,6 @@
     <Compile Include="CompileEngine.cs" />
     <Compile Include="Compiler.cs" />
     <Compile Include="ErrorReport.cs" />
-    <Compile Include="Funcs\ConcatenateFunction.cs" />
-    <Compile Include="Funcs\ConstantFunction.cs" />
-    <Compile Include="Funcs\CurrentDateFunction.cs" />
-    <Compile Include="Funcs\DoubleQuoteFunction.cs" />
-    <Compile Include="Funcs\FloatFunction.cs" />
-    <Compile Include="Funcs\FuncInfo.cs" />
-    <Compile Include="Funcs\GuidFunction.cs" />
-    <Compile Include="Funcs\HtmlDecodeFunction.cs" />
-    <Compile Include="Funcs\HtmlEncodeFunction.cs" />
-    <Compile Include="Funcs\IfDecissionFunction.cs" />
-    <Compile Include="Funcs\IndentFunction.cs" />
-    <Compile Include="Funcs\IntegerFunction.cs" />
-    <Compile Include="Funcs\LowerCaseFunction.cs" />
-    <Compile Include="Funcs\NewlineFunction.cs" />
-    <Compile Include="Funcs\PadLeftFunction.cs" />
-    <Compile Include="Funcs\PadRightFunction.cs" />
-    <Compile Include="Funcs\ProperCaseFunction.cs" />
-    <Compile Include="Funcs\RemovePunctuationFunction.cs" />
-    <Compile Include="Funcs\RemoveSpacesFunction.cs" />
-    <Compile Include="Funcs\ReplaceFunction.cs" />
-    <Compile Include="Funcs\TextFunction.cs" />
-    <Compile Include="Funcs\UpperCaseFunction.cs" />
-    <Compile Include="Funcs\VariableFunction.cs" />
     <Compile Include="FunctionFactory.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -104,6 +81,10 @@
     <ProjectReference Include="..\CygSoft.Qik.LanguageEngine.Functions.Core\CygSoft.Qik.LanguageEngine.Functions.Core.csproj">
       <Project>{a9b06732-3295-4fec-8489-8e1b130c481f}</Project>
       <Name>CygSoft.Qik.LanguageEngine.Functions.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CygSoft.Qik.LanguageEngine.Functions.Http\CygSoft.Qik.LanguageEngine.Functions.Http.csproj">
+      <Project>{8780a5ee-ebfe-4a1e-b0f4-cd6eb666a974}</Project>
+      <Name>CygSoft.Qik.LanguageEngine.Functions.Http</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
