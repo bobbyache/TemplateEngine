@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal class RemovePunctuationFunction : BaseFunction
+    public class RemovePunctuationFunction : BaseFunction
     {
         public RemovePunctuationFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments)
             : base(funcInfo, scopeTable, functionArguments)

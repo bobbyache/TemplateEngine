@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal class ReplaceFunction : BaseFunction
+    public class ReplaceFunction : BaseFunction
     {
         public ReplaceFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments)
             : base(funcInfo, scopeTable, functionArguments)

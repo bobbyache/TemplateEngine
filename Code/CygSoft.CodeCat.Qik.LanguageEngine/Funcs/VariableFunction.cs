@@ -2,7 +2,7 @@
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal class VariableFunction : BaseFunction
+    public class VariableFunction : BaseFunction
     {
         private readonly string symbol;
 

@@ -2,7 +2,7 @@
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal class IntegerFunction : BaseFunction
+    public class IntegerFunction : BaseFunction
     {
         private readonly string text;
 

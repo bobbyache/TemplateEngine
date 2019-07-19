@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal class ConcatenateFunction : BaseFunction
+    public class ConcatenateFunction : BaseFunction
     {
         private readonly List<IFunction> functions = new List<IFunction>();
 
-        internal ConcatenateFunction(IFuncInfo funcInfo, IGlobalTable scopeTable)
+        public ConcatenateFunction(IFuncInfo funcInfo, IGlobalTable scopeTable)
             : base(funcInfo, scopeTable)
         {
             this.scopeTable = scopeTable;

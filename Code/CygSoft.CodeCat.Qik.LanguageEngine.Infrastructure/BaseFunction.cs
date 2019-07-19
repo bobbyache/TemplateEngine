@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal abstract class BaseFunction : IFunction
+    public abstract class BaseFunction : IFunction
     {
         protected IGlobalTable scopeTable = null;
         protected List<IFunction> functionArguments;
@@ -12,7 +12,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
         public int Column { get; private set; }
         public string Name { get; private set; }
 
-        internal BaseFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments)
+        public BaseFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments)
         {
             this.Line = funcInfo.Line;
             this.Column = funcInfo.Column;
@@ -21,7 +21,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
             this.functionArguments = functionArguments;
         }
 
-        internal BaseFunction(IFuncInfo funcInfo, IGlobalTable scopeTable)
+        public BaseFunction(IFuncInfo funcInfo, IGlobalTable scopeTable)
         {
             this.Line = funcInfo.Line;
             this.Column = funcInfo.Column;

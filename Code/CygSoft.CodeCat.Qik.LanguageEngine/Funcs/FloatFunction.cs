@@ -2,7 +2,7 @@
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal class FloatFunction : BaseFunction
+    public class FloatFunction : BaseFunction
     {
         private readonly string text;
 

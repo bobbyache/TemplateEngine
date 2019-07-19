@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E73234B4-5BFA-40AD-B1FD-A35226CA0BB4}</ProjectGuid>
+    <ProjectGuid>{A9B06732-3295-4FEC-8489-8E1B130C481F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CygSoft.Qik.LanguageEngine.Infrastructure</RootNamespace>
-    <AssemblyName>CygSoft.Qik.LanguageEngine.Infrastructure</AssemblyName>
+    <RootNamespace>CygSoft.Qik.LanguageEngine.Functions.Core</RootNamespace>
+    <AssemblyName>CygSoft.Qik.LanguageEngine.Functions.Core</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,36 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SharedAssemblyInfo.cs">
-      <Link>Properties\SharedAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="BaseFunction.cs" />
-    <Compile Include="CompileErrorEventArgs.cs" />
-    <Compile Include="CustomError.cs" />
-    <Compile Include="IFunction.cs" />
-    <Compile Include="IBatchCompiler.cs" />
-    <Compile Include="ICompileEngine.cs" />
-    <Compile Include="ICompiler.cs" />
-    <Compile Include="IErrorReport.cs" />
-    <Compile Include="IExpression.cs" />
-    <Compile Include="IFuncInfo.cs" />
-    <Compile Include="IGenerator.cs" />
-    <Compile Include="IGlobalTable.cs" />
-    <Compile Include="IInputField.cs" />
-    <Compile Include="IOption.cs" />
-    <Compile Include="IOptionsField.cs" />
-    <Compile Include="ISymbol.cs" />
-    <Compile Include="ISymbolInfo.cs" />
-    <Compile Include="ISyntaxValidator.cs" />
-    <Compile Include="ITextField.cs" />
+    <Compile Include="CamelCaseFunction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CygSoft.CodeCat.Qik.LanguageEngine.Infrastructure\CygSoft.Qik.LanguageEngine.Infrastructure.csproj">
+      <Project>{e73234b4-5bfa-40ad-b1fd-a35226ca0bb4}</Project>
+      <Name>CygSoft.Qik.LanguageEngine.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

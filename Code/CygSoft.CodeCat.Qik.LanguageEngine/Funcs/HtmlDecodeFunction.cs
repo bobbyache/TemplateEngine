@@ -6,7 +6,7 @@ using System.Web;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal class HtmlDecodeFunction : BaseFunction
+    public class HtmlDecodeFunction : BaseFunction
     {
         public HtmlDecodeFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments) : base(funcInfo, scopeTable, functionArguments)
         {

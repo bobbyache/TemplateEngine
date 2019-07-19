@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal class PadLeftFunction : BaseFunction
+    public class PadLeftFunction : BaseFunction
     {
         public PadLeftFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments) : base(funcInfo, scopeTable, functionArguments)
         {

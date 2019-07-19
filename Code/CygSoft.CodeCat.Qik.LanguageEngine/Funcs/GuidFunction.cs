@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal class GuidFunction : BaseFunction
+    public class GuidFunction : BaseFunction
     {
         public GuidFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments) : base(funcInfo, scopeTable, functionArguments)
         {

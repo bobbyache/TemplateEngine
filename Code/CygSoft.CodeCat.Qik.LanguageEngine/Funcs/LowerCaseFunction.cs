@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal class LowerCaseFunction : BaseFunction
+    public class LowerCaseFunction : BaseFunction
     {
 
         public LowerCaseFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments)

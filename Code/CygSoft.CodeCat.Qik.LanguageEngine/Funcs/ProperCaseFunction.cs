@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal class ProperCaseFunction : BaseFunction
+    public class ProperCaseFunction : BaseFunction
     {
         public ProperCaseFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments)
             : base(funcInfo, scopeTable, functionArguments)

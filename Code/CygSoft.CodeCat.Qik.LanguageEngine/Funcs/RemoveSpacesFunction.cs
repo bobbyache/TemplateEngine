@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal class RemoveSpacesFunction : BaseFunction
+    public class RemoveSpacesFunction : BaseFunction
     {
         public RemoveSpacesFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments)
             : base(funcInfo, scopeTable, functionArguments)

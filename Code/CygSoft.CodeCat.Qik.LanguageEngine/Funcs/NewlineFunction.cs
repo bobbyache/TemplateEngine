@@ -3,9 +3,9 @@ using System;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal class NewlineFunction : BaseFunction
+    public class NewlineFunction : BaseFunction
     {
-        internal NewlineFunction(IFuncInfo funcInfo)
+        public NewlineFunction(IFuncInfo funcInfo)
             : base(funcInfo, null)
         {
         }

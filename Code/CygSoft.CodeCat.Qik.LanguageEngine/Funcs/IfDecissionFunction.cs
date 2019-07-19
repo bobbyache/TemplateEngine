@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal class IfDecissionFunction : BaseFunction
+    public class IfDecissionFunction : BaseFunction
     {
         private readonly Dictionary<string, IFunction> functions = new Dictionary<string, IFunction>();
         private readonly List<string> options = new List<string>();
 
         private readonly string symbol = null;
 
-        internal IfDecissionFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, string symbol)
+        public IfDecissionFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, string symbol)
             : base(funcInfo, scopeTable)
         {
             this.symbol = symbol;

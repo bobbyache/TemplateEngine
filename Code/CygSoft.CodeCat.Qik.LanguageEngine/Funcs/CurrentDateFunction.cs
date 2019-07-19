@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal class CurrentDateFunction : BaseFunction
+    public class CurrentDateFunction : BaseFunction
     {
-        internal CurrentDateFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments)
+        public CurrentDateFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments)
             : base(funcInfo, scopeTable, functionArguments)
         {
 
