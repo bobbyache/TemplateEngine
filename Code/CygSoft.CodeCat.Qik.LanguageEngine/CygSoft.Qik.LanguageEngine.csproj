@@ -86,6 +86,7 @@
     <Compile Include="Funcs\TextFunction.cs" />
     <Compile Include="Funcs\UpperCaseFunction.cs" />
     <Compile Include="Funcs\VariableFunction.cs" />
+    <Compile Include="FunctionFactory.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scope\GlobalTable.cs" />
@@ -101,6 +102,10 @@
     <ProjectReference Include="..\CygSoft.CodeCat.Qik.LanguageEngine.Infrastructure\CygSoft.Qik.LanguageEngine.Infrastructure.csproj">
       <Project>{e73234b4-5bfa-40ad-b1fd-a35226ca0bb4}</Project>
       <Name>CygSoft.Qik.LanguageEngine.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CygSoft.Qik.LanguageEngine.FunctionPlugins\CygSoft.Qik.LanguageEngine.FunctionPlugins.csproj">
+      <Project>{a643f23d-47ba-4219-89e3-3ca3a2e6762f}</Project>
+      <Name>CygSoft.Qik.LanguageEngine.FunctionPlugins</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,5 @@
-﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
+﻿using CygSoft.Qik.LanguageEngine.FunctionPlugins;
+using CygSoft.Qik.LanguageEngine.Infrastructure;
 using System;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs

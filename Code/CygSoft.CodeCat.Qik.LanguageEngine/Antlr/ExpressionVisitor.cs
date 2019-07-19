@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using CygSoft.Qik.LanguageEngine.Scope;
 using CygSoft.CodeCat.Qik.LanguageEngine.Antlr;
 using CygSoft.Qik.LanguageEngine.Infrastructure;
+using CygSoft.Qik.LanguageEngine.FunctionPlugins;
 
 namespace CygSoft.Qik.LanguageEngine.Antlr
 {
