@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace CygSoft.Qik.LanguageEngine.Scope
 {
-    internal class GlobalTable
+    public class GlobalTable : IGlobalTable
     {
         private class SymbolInfo : ISymbolInfo
         {
@@ -23,7 +23,7 @@ namespace CygSoft.Qik.LanguageEngine.Scope
             }
         }
 
-        private readonly Dictionary<string, BaseSymbol> table = new Dictionary<string, BaseSymbol>();
+        private readonly Dictionary<string, ISymbol> table = new Dictionary<string, ISymbol>();
 
         public string[] Symbols
         {
@@ -50,12 +50,12 @@ namespace CygSoft.Qik.LanguageEngine.Scope
         public IInputField[] InputFields { get { return this.table.Values.OfType<IInputField>().ToArray(); } }
         public IExpression[] Expressions { get { return this.table.Values.OfType<IExpression>().ToArray(); } }
 
-        internal void Clear()
+        public void Clear()
         {
             table.Clear();
         }
 
-        internal void AddSymbol(BaseSymbol symbol)
+        public void AddSymbol(ISymbol symbol)
         {
             if (!table.ContainsKey(symbol.Symbol))
             {
@@ -63,11 +63,11 @@ namespace CygSoft.Qik.LanguageEngine.Scope
             }
         }
 
-        internal void Input(string inputSymbol, string value)
+        public void Input(string inputSymbol, string value)
         {
             if (table.ContainsKey(inputSymbol))
             {
-                BaseSymbol symbol = table[inputSymbol];
+                ISymbol symbol = table[inputSymbol];
 
                 if (symbol is AutoInputSymbol)
                 {
@@ -106,7 +106,7 @@ namespace CygSoft.Qik.LanguageEngine.Scope
         {
             if (table.ContainsKey(symbol))
             {
-                BaseSymbol baseSymbol = table[symbol];
+                ISymbol baseSymbol = table[symbol];
                 ISymbolInfo symbolInfo =
                     new SymbolInfo(baseSymbol.Placeholder, baseSymbol.Symbol, baseSymbol.Title, baseSymbol.Description);
                 return symbolInfo;
@@ -130,7 +130,7 @@ namespace CygSoft.Qik.LanguageEngine.Scope
         {
             if (table.ContainsKey(symbol))
             {
-                BaseSymbol baseSymbol = table[symbol];
+                ISymbol baseSymbol = table[symbol];
                 return baseSymbol.Value;
             }
             return null;

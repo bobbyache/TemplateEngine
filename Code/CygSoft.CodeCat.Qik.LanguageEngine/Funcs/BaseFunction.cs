@@ -1,20 +1,18 @@
-﻿using CygSoft.Qik.LanguageEngine.FunctionPlugins;
-using CygSoft.Qik.LanguageEngine.Infrastructure;
-using CygSoft.Qik.LanguageEngine.Scope;
+﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
 using System.Collections.Generic;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal abstract class BaseFunction
     {
-        protected GlobalTable scopeTable = null;
+        protected IGlobalTable scopeTable = null;
         protected List<BaseFunction> functionArguments;
 
         public int Line { get; private set; }
         public int Column { get; private set; }
         public string Name { get; private set; }
 
-        internal BaseFunction(IFuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
+        internal BaseFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<BaseFunction> functionArguments)
         {
             this.Line = funcInfo.Line;
             this.Column = funcInfo.Column;
@@ -23,7 +21,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
             this.functionArguments = functionArguments;
         }
 
-        internal BaseFunction(IFuncInfo funcInfo, GlobalTable scopeTable)
+        internal BaseFunction(IFuncInfo funcInfo, IGlobalTable scopeTable)
         {
             this.Line = funcInfo.Line;
             this.Column = funcInfo.Column;

@@ -3,10 +3,10 @@ using Antlr4.Runtime.Tree;
 using CygSoft.CodeCat.Qik.LanguageEngine.Antlr;
 using CygSoft.Qik.LanguageEngine.Infrastructure;
 using CygSoft.Qik.LanguageEngine.Antlr;
-using CygSoft.Qik.LanguageEngine.Scope;
 using CygSoft.Qik.LanguageEngine.Symbols;
 using System;
 using System.Linq;
+using CygSoft.Qik.LanguageEngine.Scope;
 
 namespace CygSoft.Qik.LanguageEngine
 {
@@ -18,7 +18,7 @@ namespace CygSoft.Qik.LanguageEngine
         public event EventHandler AfterCompile;
         public event EventHandler<CompileErrorEventArgs> CompileError;
 
-        private readonly GlobalTable scopeTable = new GlobalTable();
+        private readonly IGlobalTable scopeTable = new GlobalTable();
         private readonly IErrorReport errorReport = new ErrorReport();
 
         public bool HasErrors { get; private set; }

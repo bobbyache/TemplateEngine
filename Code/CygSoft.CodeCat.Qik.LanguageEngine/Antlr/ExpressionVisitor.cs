@@ -2,19 +2,17 @@
 using CygSoft.Qik.LanguageEngine.Symbols;
 using System;
 using System.Collections.Generic;
-using CygSoft.Qik.LanguageEngine.Scope;
 using CygSoft.CodeCat.Qik.LanguageEngine.Antlr;
 using CygSoft.Qik.LanguageEngine.Infrastructure;
-using CygSoft.Qik.LanguageEngine.FunctionPlugins;
 
 namespace CygSoft.Qik.LanguageEngine.Antlr
 {
     internal class ExpressionVisitor : QikTemplateBaseVisitor<BaseFunction>
     {
-        private readonly GlobalTable scopeTable;
+        private readonly IGlobalTable scopeTable;
         private readonly IErrorReport errorReport;
 
-        internal ExpressionVisitor(GlobalTable scopeTable, IErrorReport errorReport)
+        internal ExpressionVisitor(IGlobalTable scopeTable, IErrorReport errorReport)
         {
             this.scopeTable = scopeTable;
             this.errorReport = errorReport;

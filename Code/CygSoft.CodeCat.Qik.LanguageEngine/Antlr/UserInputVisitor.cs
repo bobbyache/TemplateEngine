@@ -1,5 +1,4 @@
 ﻿using CygSoft.Qik.LanguageEngine.Symbols;
-using CygSoft.Qik.LanguageEngine.Scope;
 using CygSoft.CodeCat.Qik.LanguageEngine.Antlr;
 using CygSoft.Qik.LanguageEngine.Infrastructure;
 
@@ -7,10 +6,10 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
 {
     internal class UserInputVisitor : QikTemplateBaseVisitor<string>
     {
-        private readonly GlobalTable scopeTable;
+        private readonly IGlobalTable scopeTable;
         private readonly IErrorReport errorReport;
 
-        internal UserInputVisitor(GlobalTable scopeTable, IErrorReport errorReport)
+        internal UserInputVisitor(IGlobalTable scopeTable, IErrorReport errorReport)
         {
             this.scopeTable = scopeTable;
             this.errorReport = errorReport;

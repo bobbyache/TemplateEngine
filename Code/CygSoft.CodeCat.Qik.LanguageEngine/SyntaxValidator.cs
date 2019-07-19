@@ -11,7 +11,7 @@ namespace CygSoft.Qik.LanguageEngine
     {
         public event EventHandler<CompileErrorEventArgs> CompileError;
 
-        private readonly GlobalTable scopeTable = new GlobalTable();
+        private readonly IGlobalTable scopeTable = new GlobalTable();
         private readonly IErrorReport errorReport = new ErrorReport();
 
         public bool HasErrors { get; private set; }

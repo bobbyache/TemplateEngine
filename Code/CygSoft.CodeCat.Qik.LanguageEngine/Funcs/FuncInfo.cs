@@ -1,4 +1,4 @@
-﻿using CygSoft.Qik.LanguageEngine.FunctionPlugins;
+﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {

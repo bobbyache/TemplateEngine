@@ -2,7 +2,7 @@
 
 namespace CygSoft.Qik.LanguageEngine.Symbols
 {
-    internal abstract class BaseSymbol : ISymbol 
+    public abstract class BaseSymbol : ISymbol 
     {
         private readonly string prefix = "@{";
         private readonly string postfix = "}";

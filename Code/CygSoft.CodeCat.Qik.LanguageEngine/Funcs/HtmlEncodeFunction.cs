@@ -1,6 +1,4 @@
-﻿using CygSoft.Qik.LanguageEngine.FunctionPlugins;
-using CygSoft.Qik.LanguageEngine.Infrastructure;
-using CygSoft.Qik.LanguageEngine.Scope;
+﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +8,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class HtmlEncodeFunction : BaseFunction
     {
-        public HtmlEncodeFunction(IFuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments) : base(funcInfo, scopeTable, functionArguments)
+        public HtmlEncodeFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<BaseFunction> functionArguments) : base(funcInfo, scopeTable, functionArguments)
         {
 
         }

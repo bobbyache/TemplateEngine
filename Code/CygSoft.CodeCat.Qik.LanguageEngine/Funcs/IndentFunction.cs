@@ -1,6 +1,4 @@
-﻿using CygSoft.Qik.LanguageEngine.FunctionPlugins;
-using CygSoft.Qik.LanguageEngine.Infrastructure;
-using CygSoft.Qik.LanguageEngine.Scope;
+﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +7,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class IndentFunction : BaseFunction
     {
-        public IndentFunction(IFuncInfo funcInfo, GlobalTable scopeTable, List<BaseFunction> functionArguments)
+        public IndentFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<BaseFunction> functionArguments)
             : base(funcInfo, scopeTable, functionArguments)
         {
         }

@@ -1,6 +1,4 @@
-﻿using CygSoft.Qik.LanguageEngine.FunctionPlugins;
-using CygSoft.Qik.LanguageEngine.Infrastructure;
-using CygSoft.Qik.LanguageEngine.Scope;
+﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
@@ -8,7 +6,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
     {
         private readonly string text;
 
-        internal TextFunction(IFuncInfo funcInfo, GlobalTable scopeTable, string text) : base(funcInfo, scopeTable)
+        internal TextFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, string text) : base(funcInfo, scopeTable)
         {
             this.text = text;
         }

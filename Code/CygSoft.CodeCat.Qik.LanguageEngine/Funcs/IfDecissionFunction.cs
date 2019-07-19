@@ -1,6 +1,4 @@
-﻿using CygSoft.Qik.LanguageEngine.FunctionPlugins;
-using CygSoft.Qik.LanguageEngine.Infrastructure;
-using CygSoft.Qik.LanguageEngine.Scope;
+﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
 using System;
 using System.Collections.Generic;
 
@@ -13,7 +11,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 
         private readonly string symbol = null;
 
-        internal IfDecissionFunction(IFuncInfo funcInfo, GlobalTable scopeTable, string symbol)
+        internal IfDecissionFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, string symbol)
             : base(funcInfo, scopeTable)
         {
             this.symbol = symbol;
