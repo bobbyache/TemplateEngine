@@ -7,7 +7,7 @@ using CygSoft.Qik.LanguageEngine.Infrastructure;
 
 namespace CygSoft.Qik.LanguageEngine.Antlr
 {
-    internal class ExpressionVisitor : QikTemplateBaseVisitor<BaseFunction>
+    internal class ExpressionVisitor : QikTemplateBaseVisitor<IFunction>
     {
         private readonly IGlobalTable scopeTable;
         private readonly IErrorReport errorReport;
@@ -18,7 +18,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
             this.errorReport = errorReport;
         }
 
-        public override BaseFunction VisitExprDecl(QikTemplateParser.ExprDeclContext context)
+        public override IFunction VisitExprDecl(QikTemplateParser.ExprDeclContext context)
         {
             string id = context.VARIABLE().GetText();
 
@@ -35,7 +35,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
             }
             else if (context.optExpr() != null)
             {
-                BaseFunction ifFunc = VisitOptExpr(context.optExpr());
+                IFunction ifFunc = VisitOptExpr(context.optExpr());
 
                 ExpressionSymbol expression = new ExpressionSymbol(errorReport, id, symbolArguments.Title, symbolArguments.Description,
                     symbolArguments.IsPlaceholder, symbolArguments.IsVisibleToEditor, ifFunc);
@@ -43,7 +43,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
             }
             else if (context.expr() != null)
             {
-                BaseFunction function = VisitExpr(context.expr());
+                IFunction function = VisitExpr(context.expr());
                 ExpressionSymbol expression = new ExpressionSymbol(errorReport, id, symbolArguments.Title, symbolArguments.Description,
                     symbolArguments.IsPlaceholder, symbolArguments.IsVisibleToEditor, function);
                 scopeTable.AddSymbol(expression);
@@ -52,7 +52,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
             return null;
         }
 
-        public override BaseFunction VisitOptExpr(QikTemplateParser.OptExprContext context)
+        public override IFunction VisitOptExpr(QikTemplateParser.OptExprContext context)
         {
             int line = context.Start.Line;
             int column = context.Start.Column;
@@ -71,7 +71,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                 }
                 else if (ifOptContext.expr() != null)
                 {
-                    BaseFunction function = VisitExpr(ifOptContext.expr());
+                    IFunction function = VisitExpr(ifOptContext.expr());
                     ifFunc.AddFunction(text, function);
                 }
             }
@@ -79,9 +79,9 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
             return ifFunc;
         }
 
-        public override BaseFunction VisitFunc(QikTemplateParser.FuncContext context)
+        public override IFunction VisitFunc(QikTemplateParser.FuncContext context)
         {
-            BaseFunction func = null;
+            IFunction func = null;
 
             if (context.IDENTIFIER() != null)
             {
@@ -89,82 +89,13 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                 List<IFunction> functionArguments = CreateArguments(context.funcArg());
                 IFuncInfo funcInfo = new FuncInfo(funcIdentifier, context.Start.Line, context.Start.Column);
 
-                switch (funcIdentifier)
-                {
-                    case "camelCase":
-                        CamelCaseFunction camelCaseFunc = new CamelCaseFunction(funcInfo, scopeTable, functionArguments);
-                        func = camelCaseFunc;
-                        break;
-                    case "currentDate":
-                        CurrentDateFunction currentDateFunc = new CurrentDateFunction(funcInfo, scopeTable, functionArguments);
-                        func = currentDateFunc;
-                        break;
-                    case "lowerCase":
-                        LowerCaseFunction lowerCaseFunc = new LowerCaseFunction(funcInfo, scopeTable, functionArguments);
-                        func = lowerCaseFunc;
-                        break;
-                    case "upperCase":
-                        UpperCaseFunction upperCaseFunc = new UpperCaseFunction(funcInfo, scopeTable, functionArguments);
-                        func = upperCaseFunc;
-                        break;
-                    case "properCase":
-                        ProperCaseFunction properCaseFunc = new ProperCaseFunction(funcInfo, scopeTable, functionArguments);
-                        func = properCaseFunc;
-                        break;
-                    case "removeSpaces":
-                        RemoveSpacesFunction removeSpacesFunc = new RemoveSpacesFunction(funcInfo, scopeTable, functionArguments);
-                        func = removeSpacesFunc;
-                        break;
-                    case "removePunctuation":
-                        RemovePunctuationFunction removePunctuationFunc = new RemovePunctuationFunction(funcInfo, scopeTable, functionArguments);
-                        func = removePunctuationFunc;
-                        break;
-                    case "replace":
-                        ReplaceFunction replaceFunc = new ReplaceFunction(funcInfo, scopeTable, functionArguments);
-                        func = replaceFunc;
-                        break;
-                    case "indentLine":
-                        IndentFunction indentFunc = new IndentFunction(funcInfo, scopeTable, functionArguments);
-                        func = indentFunc;
-                        break;
-                    case "doubleQuotes": // for backward compatibility...
-                        DoubleQuoteFunction doubleQuoteFunction = new DoubleQuoteFunction(funcInfo, scopeTable, functionArguments);
-                        func = doubleQuoteFunction;
-                        break;
-                    case "doubleQuote":
-                        DoubleQuoteFunction doubleQuoteFunction_Ex = new DoubleQuoteFunction(funcInfo, scopeTable, functionArguments);
-                        func = doubleQuoteFunction_Ex;
-                        break;
-                    case "htmlEncode":
-                        HtmlEncodeFunction htmlEncodeFunction = new HtmlEncodeFunction(funcInfo, scopeTable, functionArguments);
-                        func = htmlEncodeFunction;
-                        break;
-
-                    case "htmlDecode":
-                        HtmlDecodeFunction htmlDecodeFunction = new HtmlDecodeFunction(funcInfo, scopeTable, functionArguments);
-                        func = htmlDecodeFunction;
-                        break;
-                    case "guid":
-                        GuidFunction guidFunction = new GuidFunction(funcInfo, scopeTable, functionArguments);
-                        func = guidFunction;
-                        break;
-                    case "padLeft":
-                        PadLeftFunction padLeftFunction = new PadLeftFunction(funcInfo, scopeTable, functionArguments);
-                        func = padLeftFunction;
-                        break;
-                    case "padRight":
-                        PadRightFunction padRightFunction = new PadRightFunction(funcInfo, scopeTable, functionArguments);
-                        func = padRightFunction;
-                        break;
-
-                    default:
-                        throw new NotSupportedException(string.Format("Function \"{0}\" is not supported in this context.", funcIdentifier));
-                }
+                FunctionFactory functionFactory = new FunctionFactory(scopeTable);
+                func = functionFactory.GetFunction(funcIdentifier, funcInfo, functionArguments);
             }
             return func;
         }
 
-        public override BaseFunction VisitExpr(QikTemplateParser.ExprContext context)
+        public override IFunction VisitExpr(QikTemplateParser.ExprContext context)
         {
             int line = context.Start.Line;
             int column = context.Start.Column;
@@ -220,7 +151,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                 }
                 else if (expr != null)
                 {
-                    BaseFunction function = VisitExpr(expr);
+                    IFunction function = VisitExpr(expr);
                     functionArguments.Add(function);
                 }
             }

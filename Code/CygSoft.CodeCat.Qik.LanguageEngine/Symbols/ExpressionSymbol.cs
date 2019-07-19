@@ -5,12 +5,12 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
 {
     internal class ExpressionSymbol : BaseSymbol, IExpression
     {
-        private readonly BaseFunction func;
+        private readonly IFunction func;
         public bool IsVisibleToEditor { get; private set; }
         private readonly IErrorReport errorReport;
 
         public ExpressionSymbol(IErrorReport errorReport, string symbol, string title, string description, 
-            bool isPlaceholder, bool isVisibleToEditor, BaseFunction func)
+            bool isPlaceholder, bool isVisibleToEditor, IFunction func)
             : base(errorReport, symbol, title, description, isPlaceholder)
         {
             this.func = func;
@@ -19,7 +19,7 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
         }
 
         public ExpressionSymbol(IErrorReport errorReport, string symbol, string title, string description, 
-            bool isPlaceholder, bool isVisibleToEditor, BaseFunction func, string prefix, string postfix)
+            bool isPlaceholder, bool isVisibleToEditor, IFunction func, string prefix, string postfix)
             : base(errorReport, symbol, title, description, isPlaceholder, prefix, postfix)
         {
             this.func = func;
