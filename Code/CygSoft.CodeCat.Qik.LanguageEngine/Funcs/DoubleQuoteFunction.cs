@@ -7,7 +7,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class DoubleQuoteFunction : BaseFunction
     {
-        public DoubleQuoteFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<BaseFunction> functionArguments)
+        public DoubleQuoteFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments)
             : base(funcInfo, scopeTable, functionArguments)
         {
 

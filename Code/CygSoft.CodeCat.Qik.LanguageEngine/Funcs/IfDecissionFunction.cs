@@ -6,7 +6,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class IfDecissionFunction : BaseFunction
     {
-        private readonly Dictionary<string, BaseFunction> functions = new Dictionary<string, BaseFunction>();
+        private readonly Dictionary<string, IFunction> functions = new Dictionary<string, IFunction>();
         private readonly List<string> options = new List<string>();
 
         private readonly string symbol = null;
@@ -26,7 +26,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
                 string curOption = scopeTable.GetValueOfSymbol(this.symbol);
                 if (curOption != null && functions.ContainsKey(curOption))
                 {
-                    BaseFunction func = functions[curOption];
+                    IFunction func = functions[curOption];
                     string txt = func.Execute(errorReport);
 
                     result = txt;
@@ -39,7 +39,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
             return result;
         }
 
-        public void AddFunction(string text, BaseFunction func)
+        public void AddFunction(string text, IFunction func)
         {
             functions.Add(Common.StripOuterQuotes(text), func);
         }

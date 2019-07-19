@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace CygSoft.Qik.LanguageEngine.Funcs
 {
-    internal abstract class BaseFunction
+    internal abstract class BaseFunction : IFunction
     {
         protected IGlobalTable scopeTable = null;
-        protected List<BaseFunction> functionArguments;
+        protected List<IFunction> functionArguments;
 
         public int Line { get; private set; }
         public int Column { get; private set; }
         public string Name { get; private set; }
 
-        internal BaseFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<BaseFunction> functionArguments)
+        internal BaseFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments)
         {
             this.Line = funcInfo.Line;
             this.Column = funcInfo.Column;
@@ -27,7 +27,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
             this.Column = funcInfo.Column;
             this.Name = funcInfo.Name;
             this.scopeTable = scopeTable;
-            this.functionArguments = new List<BaseFunction>();
+            this.functionArguments = new List<IFunction>();
         }
 
         public abstract string Execute(IErrorReport errorReport);

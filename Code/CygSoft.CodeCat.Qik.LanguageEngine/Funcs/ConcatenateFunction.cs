@@ -6,7 +6,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class ConcatenateFunction : BaseFunction
     {
-        private readonly List<BaseFunction> functions = new List<BaseFunction>();
+        private readonly List<IFunction> functions = new List<IFunction>();
 
         internal ConcatenateFunction(IFuncInfo funcInfo, IGlobalTable scopeTable)
             : base(funcInfo, scopeTable)
@@ -30,7 +30,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
             }
             return result;
         }
-        public void AddFunction(BaseFunction func)
+        public void AddFunction(IFunction func)
         {
             functions.Add(func);
         }

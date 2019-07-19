@@ -86,8 +86,8 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
             if (context.IDENTIFIER() != null)
             {
                 string funcIdentifier = context.IDENTIFIER().GetText();
-                List<BaseFunction> functionArguments = CreateArguments(context.funcArg());
-                FuncInfo funcInfo = new FuncInfo(funcIdentifier, context.Start.Line, context.Start.Column);
+                List<IFunction> functionArguments = CreateArguments(context.funcArg());
+                IFuncInfo funcInfo = new FuncInfo(funcIdentifier, context.Start.Line, context.Start.Column);
 
                 switch (funcIdentifier)
                 {
@@ -204,9 +204,9 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                 return null;
         }
 
-        private List<BaseFunction> CreateArguments(IReadOnlyList<QikTemplateParser.FuncArgContext> funcArgs)
+        private List<IFunction> CreateArguments(IReadOnlyList<QikTemplateParser.FuncArgContext> funcArgs)
         {
-            List<BaseFunction> functionArguments = new List<BaseFunction>();
+            List<IFunction> functionArguments = new List<IFunction>();
 
             foreach (QikTemplateParser.FuncArgContext funcArg in funcArgs)
             {
@@ -238,7 +238,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
 
             foreach (QikTemplateParser.ExprContext expr in expressions)
             {
-                BaseFunction result = VisitExpr(expr);
+                IFunction result = VisitExpr(expr);
                 concatenateFunc.AddFunction(result);
             }
 

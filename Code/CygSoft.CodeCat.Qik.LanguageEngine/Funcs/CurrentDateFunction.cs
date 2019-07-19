@@ -7,7 +7,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class CurrentDateFunction : BaseFunction
     {
-        internal CurrentDateFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<BaseFunction> functionArguments)
+        internal CurrentDateFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments)
             : base(funcInfo, scopeTable, functionArguments)
         {
 

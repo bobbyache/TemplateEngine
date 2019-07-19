@@ -46,6 +46,7 @@
     </Compile>
     <Compile Include="CompileErrorEventArgs.cs" />
     <Compile Include="CustomError.cs" />
+    <Compile Include="IFunction.cs" />
     <Compile Include="IBatchCompiler.cs" />
     <Compile Include="ICompileEngine.cs" />
     <Compile Include="ICompiler.cs" />

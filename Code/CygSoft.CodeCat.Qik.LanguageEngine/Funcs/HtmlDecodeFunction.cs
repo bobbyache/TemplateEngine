@@ -8,7 +8,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class HtmlDecodeFunction : BaseFunction
     {
-        public HtmlDecodeFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<BaseFunction> functionArguments) : base(funcInfo, scopeTable, functionArguments)
+        public HtmlDecodeFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments) : base(funcInfo, scopeTable, functionArguments)
         {
 
         }
