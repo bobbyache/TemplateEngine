@@ -5,7 +5,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class IntegerFunction : BaseFunction
     {
-        private string text;
+        private readonly string text;
 
         public IntegerFunction(FuncInfo funcInfo, GlobalTable scopeTable, string text)
             : base(funcInfo, scopeTable)

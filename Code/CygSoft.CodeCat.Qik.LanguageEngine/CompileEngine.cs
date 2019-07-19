@@ -18,8 +18,8 @@ namespace CygSoft.Qik.LanguageEngine
         public event EventHandler AfterCompile;
         public event EventHandler<CompileErrorEventArgs> CompileError;
 
-        private GlobalTable scopeTable = new GlobalTable();
-        private IErrorReport errorReport = new ErrorReport();
+        private readonly GlobalTable scopeTable = new GlobalTable();
+        private readonly IErrorReport errorReport = new ErrorReport();
 
         public bool HasErrors { get; private set; }
 

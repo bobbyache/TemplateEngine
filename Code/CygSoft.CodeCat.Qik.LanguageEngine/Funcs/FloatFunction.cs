@@ -5,7 +5,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class FloatFunction : BaseFunction
     {
-        private string text;
+        private readonly string text;
 
         public FloatFunction(FuncInfo funcInfo, GlobalTable scopeTable, string text)
             : base(funcInfo, scopeTable)

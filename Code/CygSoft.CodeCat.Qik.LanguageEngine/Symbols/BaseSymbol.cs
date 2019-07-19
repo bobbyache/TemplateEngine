@@ -1,13 +1,12 @@
 ﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
-using CygSoft.Qik.LanguageEngine.Infrastructure;
 
 namespace CygSoft.Qik.LanguageEngine.Symbols
 {
     internal abstract class BaseSymbol : ISymbol 
     {
-        private string prefix = "@{";
-        private string postfix = "}";
-        private IErrorReport errorReport;
+        private readonly string prefix = "@{";
+        private readonly string postfix = "}";
+        private readonly IErrorReport errorReport;
 
         public string Title { get; private set; }
         public string Description { get; private set; }

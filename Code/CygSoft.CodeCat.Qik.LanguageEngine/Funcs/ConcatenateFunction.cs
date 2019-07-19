@@ -7,7 +7,7 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class ConcatenateFunction : BaseFunction
     {
-        private List<BaseFunction> functions = new List<BaseFunction>();
+        private readonly List<BaseFunction> functions = new List<BaseFunction>();
 
         internal ConcatenateFunction(FuncInfo funcInfo, GlobalTable scopeTable)
             : base(funcInfo, scopeTable)

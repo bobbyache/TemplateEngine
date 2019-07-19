@@ -11,7 +11,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
         public bool IsVisibleToEditor { get; private set; }
         public bool IsPlaceholder { get; private set; }
 
-        private IErrorReport errorReport;
+        private readonly IErrorReport errorReport;
 
         public SymbolArguments(IErrorReport errorReport)
         {

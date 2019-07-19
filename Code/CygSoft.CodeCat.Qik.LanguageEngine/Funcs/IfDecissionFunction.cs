@@ -7,10 +7,10 @@ namespace CygSoft.Qik.LanguageEngine.Funcs
 {
     internal class IfDecissionFunction : BaseFunction
     {
-        private Dictionary<string, BaseFunction> functions = new Dictionary<string, BaseFunction>();
-        private List<string> options = new List<string>();
+        private readonly Dictionary<string, BaseFunction> functions = new Dictionary<string, BaseFunction>();
+        private readonly List<string> options = new List<string>();
 
-        private string symbol = null;
+        private readonly string symbol = null;
 
         internal IfDecissionFunction(FuncInfo funcInfo, GlobalTable scopeTable, string symbol)
             : base(funcInfo, scopeTable)

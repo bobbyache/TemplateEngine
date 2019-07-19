@@ -23,7 +23,7 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
         }
 
         private SymbolOption currentOption = null;
-        private Dictionary<string, SymbolOption> optionsDictionary = new Dictionary<string, SymbolOption>();
+        private readonly Dictionary<string, SymbolOption> optionsDictionary = new Dictionary<string, SymbolOption>();
 
         public OptionInputSymbol(IErrorReport errorReport, string symbol, string title, string description, string defaultValue = null, bool isPlaceholder = true)
             : base(errorReport, symbol, title, description, defaultValue, isPlaceholder)

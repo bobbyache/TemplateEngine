@@ -9,7 +9,7 @@ namespace CygSoft.Qik.LanguageEngine
     {
         public event EventHandler<CompileErrorEventArgs> ExecutionErrorDetected;
 
-        List<CustomError> errors = new List<CustomError>();
+        readonly List<CustomError> errors = new List<CustomError>();
 
         public bool HasErrors { get { return this.errors.Count() > 0; } }
         public bool Reporting { get; set; }

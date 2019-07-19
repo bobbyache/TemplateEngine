@@ -23,7 +23,7 @@ namespace CygSoft.Qik.LanguageEngine.Scope
             }
         }
 
-        private Dictionary<string, BaseSymbol> table = new Dictionary<string, BaseSymbol>();
+        private readonly Dictionary<string, BaseSymbol> table = new Dictionary<string, BaseSymbol>();
 
         public string[] Symbols
         {

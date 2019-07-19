@@ -5,9 +5,9 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
 {
     internal class ExpressionSymbol : BaseSymbol, IExpression
     {
-        private BaseFunction func;
+        private readonly BaseFunction func;
         public bool IsVisibleToEditor { get; private set; }
-        private IErrorReport errorReport;
+        private readonly IErrorReport errorReport;
 
         public ExpressionSymbol(IErrorReport errorReport, string symbol, string title, string description, 
             bool isPlaceholder, bool isVisibleToEditor, BaseFunction func)
