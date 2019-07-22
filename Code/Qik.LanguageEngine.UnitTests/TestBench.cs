@@ -1,5 +1,7 @@
 ﻿using CygSoft.Qik.LanguageEngine;
 using CygSoft.Qik.LanguageEngine.Funcs;
+using CygSoft.Qik.LanguageEngine.Functions.Core;
+using CygSoft.Qik.LanguageEngine.Infrastructure;
 using CygSoft.Qik.LanguageEngine.Scope;
 using CygSoft.Qik.LanguageEngine.Symbols;
 using Moq;
@@ -40,7 +42,7 @@ namespace LanguageEngine.Tests.UnitTests
         {
             GlobalTable globalTable = new GlobalTable();
 
-            List<BaseFunction> functionArguments = new List<BaseFunction>();
+            List<IFunction> functionArguments = new List<IFunction>();
             functionArguments.Add(new TextFunction(new FuncInfo("stub", 1, 1), globalTable, "dd/MM/yyyy"));
 
             CurrentDateFunction currentDateFunction = new CurrentDateFunction(new FuncInfo("stub", 1, 1), globalTable, functionArguments);
@@ -66,7 +68,7 @@ namespace LanguageEngine.Tests.UnitTests
 
             TextInputSymbol textInputSymbol = new TextInputSymbol(new ErrorReport(), "@authorName", "Author Name", "Description", "Rob Blake", true);
 
-            List<BaseFunction> functionArguments = new List<BaseFunction> { new VariableFunction(new FuncInfo("stub", 1, 1), globalTable, "@authorName") };
+            List<IFunction> functionArguments = new List<IFunction> { new VariableFunction(new FuncInfo("stub", 1, 1), globalTable, "@authorName") };
             ExpressionSymbol expressionSymbol = new ExpressionSymbol(new ErrorReport(), "@upperAuthorName", "Upper Author Name", "Description", true, true, new UpperCaseFunction(new FuncInfo("stub", 1, 1), globalTable, functionArguments));
 
             globalTable.AddSymbol(textInputSymbol);

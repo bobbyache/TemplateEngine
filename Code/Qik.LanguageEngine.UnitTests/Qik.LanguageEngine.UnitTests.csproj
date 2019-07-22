@@ -93,6 +93,10 @@
       <Project>{fade2bf1-6916-457c-9b0c-442227c59e62}</Project>
       <Name>CygSoft.Qik.LanguageEngine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CygSoft.Qik.LanguageEngine.Functions.Core\CygSoft.Qik.LanguageEngine.Functions.Core.csproj">
+      <Project>{A9B06732-3295-4FEC-8489-8E1B130C481F}</Project>
+      <Name>CygSoft.Qik.LanguageEngine.Functions.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
