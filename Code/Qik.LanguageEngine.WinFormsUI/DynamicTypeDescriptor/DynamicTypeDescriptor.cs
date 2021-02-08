@@ -1418,7 +1418,7 @@ namespace DynamicTypeDescriptor
                             pd.Attributes.Add(new Scm.CategoryAttribute(sResult), true);
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         Console.WriteLine(String.Format("Key '{0}' does not exist in the resource.", sKey));
                     }
@@ -1435,7 +1435,7 @@ namespace DynamicTypeDescriptor
                         pd.Attributes.Add(new Scm.DisplayNameAttribute(sResult), typeof(Scm.DisplayNameAttribute));
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     Console.WriteLine(String.Format("Key '{0}' does not exist in the resource.", sKey));
                 }
@@ -1451,7 +1451,7 @@ namespace DynamicTypeDescriptor
                         pd.Attributes.Add(new Scm.DescriptionAttribute(sResult), true);
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     Console.WriteLine(String.Format("Key '{0}' does not exist in the resource.", sKey));
                 }

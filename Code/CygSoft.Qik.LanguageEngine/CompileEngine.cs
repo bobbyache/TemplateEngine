@@ -2,7 +2,6 @@
 using Antlr4.Runtime.Tree;
 using CygSoft.Qik.LanguageEngine.Antlr;
 using CygSoft.Qik.LanguageEngine.Infrastructure;
-using CygSoft.Qik.LanguageEngine.Antlr;
 using CygSoft.Qik.LanguageEngine.Symbols;
 using System;
 using System.Linq;
