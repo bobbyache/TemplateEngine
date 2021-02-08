@@ -1,6 +1,6 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
-using CygSoft.CodeCat.Qik.LanguageEngine.Antlr;
+using CygSoft.Qik.LanguageEngine.Antlr;
 using CygSoft.Qik.LanguageEngine.Infrastructure;
 using CygSoft.Qik.LanguageEngine.Antlr;
 using CygSoft.Qik.LanguageEngine.Symbols;

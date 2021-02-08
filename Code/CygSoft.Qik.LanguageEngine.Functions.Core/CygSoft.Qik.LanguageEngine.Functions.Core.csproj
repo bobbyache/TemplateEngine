@@ -66,7 +66,7 @@
     <Compile Include="VariableFunction.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CygSoft.CodeCat.Qik.LanguageEngine.Infrastructure\CygSoft.Qik.LanguageEngine.Infrastructure.csproj">
+    <ProjectReference Include="..\CygSoft.Qik.LanguageEngine.Infrastructure\CygSoft.Qik.LanguageEngine.Infrastructure.csproj">
       <Project>{e73234b4-5bfa-40ad-b1fd-a35226ca0bb4}</Project>
       <Name>CygSoft.Qik.LanguageEngine.Infrastructure</Name>
     </ProjectReference>

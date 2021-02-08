@@ -1,5 +1,5 @@
 ﻿using CygSoft.Qik.LanguageEngine.Symbols;
-using CygSoft.CodeCat.Qik.LanguageEngine.Antlr;
+using CygSoft.Qik.LanguageEngine.Antlr;
 using CygSoft.Qik.LanguageEngine.Infrastructure;
 
 namespace CygSoft.Qik.LanguageEngine.Antlr

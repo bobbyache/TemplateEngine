@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qik.LanguageEngine.WinFormsUI", "Qik.LanguageEngine.WinFormsUI\Qik.LanguageEngine.WinFormsUI.csproj", "{86A9F2C4-B07C-4045-AA88-80AAEDD5C5AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CygSoft.Qik.LanguageEngine.Infrastructure", "CygSoft.CodeCat.Qik.LanguageEngine.Infrastructure\CygSoft.Qik.LanguageEngine.Infrastructure.csproj", "{E73234B4-5BFA-40AD-B1FD-A35226CA0BB4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CygSoft.Qik.LanguageEngine.Infrastructure", "CygSoft.Qik.LanguageEngine.Infrastructure\CygSoft.Qik.LanguageEngine.Infrastructure.csproj", "{E73234B4-5BFA-40AD-B1FD-A35226CA0BB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CygSoft.Qik.LanguageEngine", "CygSoft.CodeCat.Qik.LanguageEngine\CygSoft.Qik.LanguageEngine.csproj", "{FADE2BF1-6916-457C-9B0C-442227C59E62}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CygSoft.Qik.LanguageEngine", "CygSoft.Qik.LanguageEngine\CygSoft.Qik.LanguageEngine.csproj", "{FADE2BF1-6916-457C-9B0C-442227C59E62}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qik.LanguageEngine.IntegrationTests", "Qik.LanguageEngine.IntegrationTests\Qik.LanguageEngine.IntegrationTests.csproj", "{9FFC7814-DCEF-4723-9E4B-6B1154488E1B}"
 EndProject
