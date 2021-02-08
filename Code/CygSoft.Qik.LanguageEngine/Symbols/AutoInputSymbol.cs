@@ -6,13 +6,13 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
     {
         private string value = null;
 
-        public AutoInputSymbol(IErrorReport errorReport, string symbol, string title, string description) : base(errorReport, symbol, title, description, null, true)
+        public AutoInputSymbol(string symbol, string title, string description) : base(symbol, title, description, null, true)
         {
             this.value = null;
         }
 
-        public AutoInputSymbol(IErrorReport errorReport, string symbol, string title, string description, string prefix, string postfix)
-            : base(errorReport, symbol,title, description, null, true, prefix, postfix)
+        public AutoInputSymbol(string symbol, string title, string description, string prefix, string postfix)
+            : base(symbol, title, description, null, true, prefix, postfix)
         {
             this.value = null;
         }

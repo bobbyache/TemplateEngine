@@ -15,10 +15,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
             IList<string> stack = ((Parser)recognizer).GetRuleInvocationStack();
             stack.Reverse();
 
-            if (SyntaxErrorDetected != null)
-            {
-                SyntaxErrorDetected(this, new CompileErrorEventArgs(UserFriendlyContext(stack[0].ToString()), line, charPositionInLine, offendingSymbol.ToString(), msg));
-            }
+            SyntaxErrorDetected?.Invoke(this, new CompileErrorEventArgs(UserFriendlyContext(stack[0].ToString()), line, charPositionInLine, offendingSymbol.ToString(), msg));
         }
 
         private string UserFriendlyContext(string stackId)

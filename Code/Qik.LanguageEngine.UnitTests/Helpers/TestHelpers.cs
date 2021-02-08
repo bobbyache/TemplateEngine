@@ -19,7 +19,7 @@ namespace LanguageEngine.Tests.UnitTests.Helpers
 
         internal static OptionInputSymbol CreateOptionInputSymbol_DatabaseOptions(string symbol = "@databaseOptions", string title = "Database Options", string description = null, string defaultValue = null, bool isPlaceholder = true)
         {
-            OptionInputSymbol optionInputSymbol = new OptionInputSymbol(new ErrorReport(), symbol, title, description, defaultValue, isPlaceholder);
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol(symbol, title, description, defaultValue, isPlaceholder);
             optionInputSymbol.AddOption("ADVWORKS", "Adventure Works Database");
             optionInputSymbol.AddOption("PUBBOOKS", "Published Books Database");
 
@@ -28,7 +28,7 @@ namespace LanguageEngine.Tests.UnitTests.Helpers
 
         internal static IOptionsField CreateOptionInputSymbol_DatabaseOptions_AsInterface(string symbol = "@databaseOptions", string title = "Database Options", string description = null, string defaultValue = null, bool isPlaceholder = true)
         {
-            OptionInputSymbol optionInputSymbol = new OptionInputSymbol(new ErrorReport(), symbol, title, description, defaultValue, isPlaceholder);
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol(symbol, title, description, defaultValue, isPlaceholder);
             optionInputSymbol.AddOption("ADVWORKS", "Adventure Works Database");
             optionInputSymbol.AddOption("PUBBOOKS", "Published Books Database");
 
@@ -37,7 +37,7 @@ namespace LanguageEngine.Tests.UnitTests.Helpers
 
         internal static TextInputSymbol CreateTextInputSymbol_Author(string symbol = "@authorName", string title = "Author Name", string description = null, string defaultValue = null, bool isPlaceholder = true)
         {
-            TextInputSymbol textInputSymbol = new TextInputSymbol(new ErrorReport(), symbol, title, description, defaultValue, isPlaceholder);
+            TextInputSymbol textInputSymbol = new TextInputSymbol(symbol, title, description, defaultValue, isPlaceholder);
             return textInputSymbol;
         }
 

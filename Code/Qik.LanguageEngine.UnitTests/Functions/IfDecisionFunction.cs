@@ -20,7 +20,7 @@ namespace LanguageEngine.Tests.UnitTests.Functions
 
             GlobalTable globalTable = new GlobalTable();
 
-            OptionInputSymbol optionInputSymbol = new OptionInputSymbol(new ErrorReport(), "@databaseOptions", "Database Options", "Description", "ADVWORKS");
+            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "Description", "ADVWORKS");
             optionInputSymbol.AddOption("ADVWORKS", "Adventure Works Database");
             optionInputSymbol.AddOption("PUBBOOKS", "Published Books Database");
 

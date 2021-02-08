@@ -11,8 +11,8 @@ namespace CygSoft.Qik.LanguageEngine
         public event EventHandler AfterCompile;
         public event EventHandler<CompileErrorEventArgs> CompileError;
 
-        private ISyntaxValidator syntaxValidator = null;
-        private ICompileEngine compileEngine = null;
+        private readonly ISyntaxValidator syntaxValidator = null;
+        private readonly ICompileEngine compileEngine = null;
 
         public bool HasErrors { get { return syntaxValidator.HasErrors; } }
 
@@ -87,15 +87,6 @@ namespace CygSoft.Qik.LanguageEngine
         public string GetValueOfPlaceholder(string placeholder)
         {
             return compileEngine.GetValueOfPlaceholder(placeholder);
-        }
-
-        // And this is for ???
-        private void CheckExecution()
-        {
-            foreach (IExpression expression in this.Expressions)
-            {
-                string value = expression.Value;
-            }
         }
 
         private void CheckSyntax(string scriptText)

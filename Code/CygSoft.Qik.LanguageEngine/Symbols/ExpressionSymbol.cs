@@ -11,7 +11,7 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
 
         public ExpressionSymbol(IErrorReport errorReport, string symbol, string title, string description, 
             bool isPlaceholder, bool isVisibleToEditor, IFunction func)
-            : base(errorReport, symbol, title, description, isPlaceholder)
+            : base(symbol, title, description, isPlaceholder)
         {
             this.func = func;
             this.IsVisibleToEditor = isVisibleToEditor;
@@ -20,7 +20,7 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
 
         public ExpressionSymbol(IErrorReport errorReport, string symbol, string title, string description, 
             bool isPlaceholder, bool isVisibleToEditor, IFunction func, string prefix, string postfix)
-            : base(errorReport, symbol, title, description, isPlaceholder, prefix, postfix)
+            : base(symbol, title, description, isPlaceholder, prefix, postfix)
         {
             this.func = func;
             this.IsVisibleToEditor = IsVisibleToEditor;

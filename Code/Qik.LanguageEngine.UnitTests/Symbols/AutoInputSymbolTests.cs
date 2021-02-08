@@ -14,7 +14,7 @@ namespace LanguageEngine.Tests.UnitTests.Symbols
         [Test]
         public void AutoInputSymbol__Cast_CanCastToIInputFieldInterface()
         {
-            AutoInputSymbol autoInputSymbol = new AutoInputSymbol(new ErrorReport(), "@columnA", "Column 1", "Description for Column 1");
+            AutoInputSymbol autoInputSymbol = new AutoInputSymbol("@columnA", "Column 1", "Description for Column 1");
             Assert.That(autoInputSymbol is IInputField);
         }
 
@@ -22,7 +22,7 @@ namespace LanguageEngine.Tests.UnitTests.Symbols
         public void AutoInputSymbol_WithDefault()
         {
             
-            AutoInputSymbol autoInputSymbol = new AutoInputSymbol(new ErrorReport(), "@columnA", "Column 1", "Description for Column 1");
+            AutoInputSymbol autoInputSymbol = new AutoInputSymbol("@columnA", "Column 1", "Description for Column 1");
             Assert.AreEqual("@columnA", autoInputSymbol.Symbol);
             Assert.AreEqual("@{columnA}", autoInputSymbol.Placeholder);
             Assert.AreEqual("Column 1", autoInputSymbol.Title);

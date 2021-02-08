@@ -7,16 +7,16 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
     {
         private string value = null;
 
-        public TextInputSymbol(IErrorReport errorReport, string symbol, string title, string description, string defaultValue, 
+        public TextInputSymbol(string symbol, string title, string description, string defaultValue, 
             bool isPlaceholder)
-            : base(errorReport, symbol, title, description, defaultValue, isPlaceholder)
+            : base(symbol, title, description, defaultValue, isPlaceholder)
         {
             this.value = defaultValue;
         }
 
-        public TextInputSymbol(IErrorReport errorReport, string symbol, string title, string description, string defaultValue, bool isPlaceholder,
+        public TextInputSymbol(string symbol, string title, string description, string defaultValue, bool isPlaceholder,
             string prefix, string postfix)
-            : base(errorReport, symbol, title, description, defaultValue, isPlaceholder, prefix, postfix)
+            : base(symbol, title, description, defaultValue, isPlaceholder, prefix, postfix)
         {
             this.value = defaultValue;
         }

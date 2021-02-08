@@ -38,7 +38,7 @@ namespace CygSoft.Qik.LanguageEngine
         {
             HasErrors = false;
 
-            AutoInputSymbol autoInputSymbol = new AutoInputSymbol(this.errorReport, symbol, fieldName, description);
+            AutoInputSymbol autoInputSymbol = new AutoInputSymbol(symbol, fieldName, description);
             if (!scopeTable.Symbols.Contains(autoInputSymbol.Symbol))
                 scopeTable.AddSymbol(autoInputSymbol);
         }
