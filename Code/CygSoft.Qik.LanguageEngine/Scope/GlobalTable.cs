@@ -9,17 +9,17 @@ namespace CygSoft.Qik.LanguageEngine.Scope
     {
         private class SymbolInfo : ISymbolInfo
         {
-            public string Symbol { get; private set; }
-            public string Placeholder { get; private set; }
-            public string Title { get; private set; }
-            public string Description { get; private set; }
+            public string Symbol { get; }
+            public string Placeholder { get; }
+            public string Title { get; }
+            public string Description { get; }
 
             public SymbolInfo(string placeholder, string symbol, string title, string description)
             {
-                this.Symbol = symbol;
-                this.Placeholder = placeholder;
-                this.Title = title;
-                this.Description = description;
+                Symbol = symbol;
+                Placeholder = placeholder;
+                Title = title;
+                Description = description;
             }
         }
 
@@ -47,8 +47,8 @@ namespace CygSoft.Qik.LanguageEngine.Scope
             }
         }
 
-        public IInputField[] InputFields { get { return this.table.Values.OfType<IInputField>().ToArray(); } }
-        public IExpression[] Expressions { get { return this.table.Values.OfType<IExpression>().ToArray(); } }
+        public IInputField[] InputFields => table.Values.OfType<IInputField>().ToArray();
+        public IExpression[] Expressions => table.Values.OfType<IExpression>().ToArray();
 
         public void Clear()
         {
@@ -58,9 +58,7 @@ namespace CygSoft.Qik.LanguageEngine.Scope
         public void AddSymbol(ISymbol symbol)
         {
             if (!table.ContainsKey(symbol.Symbol))
-            {
                 table.Add(symbol.Symbol, symbol);
-            }
         }
 
         public void Input(string inputSymbol, string value)

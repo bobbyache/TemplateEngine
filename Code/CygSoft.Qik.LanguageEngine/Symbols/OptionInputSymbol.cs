@@ -9,16 +9,16 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
         private class SymbolOption : IOption
         {
             public string Value { get; set; }
-            public int Index { get; private set; }
-            public string Title { get; private set; }
-            public string Description { get; private set; }
+            public int Index { get; }
+            public string Title { get; }
+            public string Description { get; }
 
             internal SymbolOption(string value, int index, string title, string description)
             {
-                this.Value = value;
-                this.Index = index;
-                this.Title = title;
-                this.Description = description;
+                Value = value;
+                Index = index;
+                Title = title;
+                Description = description;
             }
         }
 
@@ -37,7 +37,7 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
 
         }
 
-        public IOption[] Options { get { return this.optionsDictionary.Values.ToArray(); } }
+        public IOption[] Options => optionsDictionary.Values.ToArray();
 
         public override string Value
         {
@@ -62,76 +62,65 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
         public void AddOption(string value, string title, string description = null)
         {
 
-            if (this.optionsDictionary.ContainsKey(value))
+            if (optionsDictionary.ContainsKey(value))
             {
-                SymbolOption option = this.optionsDictionary[value];
+                var option = optionsDictionary[value];
                 option.Value = value;
             }
             else
             {
-                SymbolOption option = new SymbolOption(value, this.optionsDictionary.Count(), title, description);
-                this.optionsDictionary.Add(value, option);
+                var option = new SymbolOption(value, optionsDictionary.Count(), title, description);
+                optionsDictionary.Add(value, option);
             }
 
-            if (value == this.DefaultValue)
+            if (value == DefaultValue)
                 currentOption = optionsDictionary[value];
         }
 
         public void SelectOption(string option)
         {
-            SymbolOption[] options = optionsDictionary.Values.ToArray();
+            var options = optionsDictionary.Values.ToArray();
 
-            int index;
-            bool isIndex = int.TryParse(option, out index);
-
-            if (isIndex)
+            if (int.TryParse(option, out int index))
             {
                 if (options.Any(o => o.Index == index))
                 {
                     string value = options.Where(o => o.Index == index).SingleOrDefault().Value;
-                    this.currentOption = options.Where(o => o.Index == index).SingleOrDefault();
+                    currentOption = options.Where(o => o.Index == index).SingleOrDefault();
                 }
             }
 
             else if (options.Any(o => o.Value == option))
             {
                 string value = options.Where(o => o.Value == option).SingleOrDefault().Value;
-                this.currentOption = options.Where(o => o.Value == option).SingleOrDefault();
+                currentOption = options.Where(o => o.Value == option).SingleOrDefault();
             }
 
             else
-                this.currentOption = null;
+                currentOption = null;
         }
 
         public void SelectOption(int optionIndex)
         {
             // will always look at the index.
-            SymbolOption[] options = optionsDictionary.Values.ToArray();
+            var options = optionsDictionary.Values.ToArray();
 
-            int index = optionIndex;
-
-            if (options.Any(o => o.Index == index))
+            if (options.Any(o => o.Index == optionIndex))
             {
-                string value = options.Where(o => o.Index == index).SingleOrDefault().Value;
-                this.currentOption = options.Where(o => o.Index == index).SingleOrDefault();
+                string value = options.Where(o => o.Index == optionIndex).SingleOrDefault().Value;
+                currentOption = options.Where(o => o.Index == optionIndex).SingleOrDefault();
             }
         }
 
         public string OptionTitle(string option)
         {
-            SymbolOption[] options = optionsDictionary.Values.ToArray();
-
-            int index;
-            bool isIndex = int.TryParse(option, out index);
-
+            var options = optionsDictionary.Values.ToArray();
             string title = null;
 
-            if (isIndex)
+            if (int.TryParse(option, out int index))
             {
                 if (options.Any(o => o.Index == index))
-                {
                     title = options.Where(o => o.Index == index).SingleOrDefault().Title;
-                }
             }
 
             else if (options.Any(o => o.Value == option))
@@ -144,14 +133,11 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
 
         public string OptionTitle(int optionIndex)
         {
-            SymbolOption[] options = optionsDictionary.Values.ToArray();
-            int index = optionIndex;
+            var options = optionsDictionary.Values.ToArray();
             string title = null;
 
-            if (options.Any(o => o.Index == index))
-            {
-                title = options.Where(o => o.Index == index).SingleOrDefault().Title;
-            }
+            if (options.Any(o => o.Index == optionIndex))
+                title = options.Where(o => o.Index == optionIndex).SingleOrDefault().Title;
 
             return title;
         }

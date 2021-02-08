@@ -22,15 +22,15 @@ namespace LanguageEngine.Tests.UnitTests.Functions
             // BEFORE REMOVING THIS TEST METHOD YOU NEED TO WRITE TESTS FOR ALL ITS POSSIBILITIES IN THE NEW STYLE BELOW
             GlobalTable globalTable = new GlobalTable();
 
-            List<IFunction> functionArguments = new List<IFunction>();
-            functionArguments.Add(new TextFunction(new FuncInfo("stub", 1, 1), globalTable, "dd/MM/yyyy"));
+            List<IFunction> functionArguments = new List<IFunction>
+            {
+                new TextFunction(new FuncInfo("stub", 1, 1), globalTable, "dd/MM/yyyy")
+            };
 
             ExpressionSymbol expressionSymbol = new ExpressionSymbol(new ErrorReport(), "@currentDate", "Current Date", "Description", true, true, new CurrentDateFunction(new FuncInfo("stub", 1, 1), globalTable, functionArguments));
             Assert.AreEqual("@currentDate", expressionSymbol.Symbol);
             Assert.AreEqual("@{currentDate}", expressionSymbol.Placeholder);
             Assert.AreEqual("Current Date", expressionSymbol.Title);
-
-            DateTime dateTime = DateTime.Now;
 
             Assert.AreEqual(DateTime.Now.ToString("dd/MM/yyyy"), expressionSymbol.Value);
         }

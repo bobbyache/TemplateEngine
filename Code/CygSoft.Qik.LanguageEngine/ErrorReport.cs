@@ -11,7 +11,7 @@ namespace CygSoft.Qik.LanguageEngine
 
         readonly List<CustomError> errors = new List<CustomError>();
 
-        public bool HasErrors { get { return this.errors.Count() > 0; } }
+        public bool HasErrors { get { return errors.Count() > 0; } }
         public bool Reporting { get; set; }
         
         public CustomError[] Errors

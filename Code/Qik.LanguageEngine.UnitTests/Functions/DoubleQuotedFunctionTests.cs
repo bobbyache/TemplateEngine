@@ -23,8 +23,10 @@ namespace LanguageEngine.Tests.UnitTests.Functions
 
             GlobalTable globalTable = new GlobalTable();
 
-            List<IFunction> functionArguments = new List<IFunction>();
-            functionArguments.Add(new TextFunction(new FuncInfo("stub", 1, 1), globalTable, "literal text"));
+            List<IFunction> functionArguments = new List<IFunction>
+            {
+                new TextFunction(new FuncInfo("stub", 1, 1), globalTable, "literal text")
+            };
 
             ExpressionSymbol expressionSymbol = new ExpressionSymbol(new ErrorReport(), "@classInstance", "Class Instance", "Description", true, true, new DoubleQuoteFunction(new FuncInfo("stub", 1, 1), globalTable, functionArguments));
             Assert.AreEqual("@classInstance", expressionSymbol.Symbol);

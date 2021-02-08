@@ -6,7 +6,7 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
     internal class ExpressionSymbol : BaseSymbol, IExpression
     {
         private readonly IFunction func;
-        public bool IsVisibleToEditor { get; private set; }
+        public bool IsVisibleToEditor { get; }
         private readonly IErrorReport errorReport;
 
         public ExpressionSymbol(IErrorReport errorReport, string symbol, string title, string description, 
@@ -14,8 +14,8 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
             : base(symbol, title, description, isPlaceholder)
         {
             this.func = func;
-            this.IsVisibleToEditor = isVisibleToEditor;
             this.errorReport = errorReport;
+            IsVisibleToEditor = isVisibleToEditor;
         }
 
         public ExpressionSymbol(IErrorReport errorReport, string symbol, string title, string description, 
@@ -23,13 +23,10 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
             : base(symbol, title, description, isPlaceholder, prefix, postfix)
         {
             this.func = func;
-            this.IsVisibleToEditor = IsVisibleToEditor;
             this.errorReport = errorReport;
+            IsVisibleToEditor = isVisibleToEditor;
         }
 
-        public override string Value
-        {
-            get { return func.Execute(errorReport); }
-        }
+        public override string Value => func.Execute(errorReport);
     }
 }

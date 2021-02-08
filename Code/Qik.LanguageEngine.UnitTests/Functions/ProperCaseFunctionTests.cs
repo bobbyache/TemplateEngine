@@ -23,8 +23,10 @@ namespace LanguageEngine.Tests.UnitTests.Functions
 
             GlobalTable globalTable = new GlobalTable();
 
-            List<IFunction> functionArguments = new List<IFunction>();
-            functionArguments.Add(new TextFunction(new FuncInfo("stub", 1, 1), globalTable, "LITERAL TEXT"));
+            List<IFunction> functionArguments = new List<IFunction>
+            {
+                new TextFunction(new FuncInfo("stub", 1, 1), globalTable, "LITERAL TEXT")
+            };
 
             ExpressionSymbol expressionSymbol = new ExpressionSymbol(new ErrorReport(), "@toProperCase", "Proper Case Function", "Proper Case Function", true, true, new ProperCaseFunction(new FuncInfo("stub", 1, 1), globalTable, functionArguments));
             Assert.AreEqual("@toProperCase", expressionSymbol.Symbol);

@@ -42,8 +42,10 @@ namespace LanguageEngine.Tests.UnitTests
         {
             GlobalTable globalTable = new GlobalTable();
 
-            List<IFunction> functionArguments = new List<IFunction>();
-            functionArguments.Add(new TextFunction(new FuncInfo("stub", 1, 1), globalTable, "dd/MM/yyyy"));
+            List<IFunction> functionArguments = new List<IFunction>
+            {
+                new TextFunction(new FuncInfo("stub", 1, 1), globalTable, "dd/MM/yyyy")
+            };
 
             CurrentDateFunction currentDateFunction = new CurrentDateFunction(new FuncInfo("stub", 1, 1), globalTable, functionArguments);
             UpperCaseFunction upperCaseFunction = new UpperCaseFunction(new FuncInfo("stub", 1, 1), globalTable, functionArguments);

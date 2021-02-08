@@ -8,23 +8,17 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
 
         public AutoInputSymbol(string symbol, string title, string description) : base(symbol, title, description, null, true)
         {
-            this.value = null;
+            value = null;
         }
 
         public AutoInputSymbol(string symbol, string title, string description, string prefix, string postfix)
             : base(symbol, title, description, null, true, prefix, postfix)
         {
-            this.value = null;
+            value = null;
         }
 
-        public override string Value
-        {
-            get { return this.value; }
-        }
+        public override string Value => value;
 
-        public void SetValue(string value)
-        {
-            this.value = value;
-        }
+        public void SetValue(string value) => this.value = value;
     }
 }

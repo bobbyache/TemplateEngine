@@ -1,5 +1,4 @@
-﻿using CygSoft.Qik.LanguageEngine.Funcs;
-using CygSoft.Qik.LanguageEngine.Functions.Core;
+﻿using CygSoft.Qik.LanguageEngine.Functions.Core;
 using CygSoft.Qik.LanguageEngine.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -17,79 +16,80 @@ namespace CygSoft.Qik.LanguageEngine
 
         public IFunction GetFunction(string functionIdentifier, IFuncInfo funcInfo, List<IFunction> functionArguments)
         {
-            IFunction func = null;
+            IFunction func;
 
             switch (functionIdentifier)
             {
                 case "camelCase":
-                    CamelCaseFunction camelCaseFunc = new CamelCaseFunction(funcInfo, scopeTable, functionArguments);
-                    func = camelCaseFunc;
+                    func = new CamelCaseFunction(funcInfo, scopeTable, functionArguments);
                     break;
+
                 case "currentDate":
-                    CurrentDateFunction currentDateFunc = new CurrentDateFunction(funcInfo, scopeTable, functionArguments);
-                    func = currentDateFunc;
+                    func = new CurrentDateFunction(funcInfo, scopeTable, functionArguments);
                     break;
+
                 case "lowerCase":
-                    LowerCaseFunction lowerCaseFunc = new LowerCaseFunction(funcInfo, scopeTable, functionArguments);
-                    func = lowerCaseFunc;
+                    func = new LowerCaseFunction(funcInfo, scopeTable, functionArguments);
                     break;
+
                 case "upperCase":
-                    UpperCaseFunction upperCaseFunc = new UpperCaseFunction(funcInfo, scopeTable, functionArguments);
-                    func = upperCaseFunc;
+                    func = new UpperCaseFunction(funcInfo, scopeTable, functionArguments);
                     break;
+
                 case "properCase":
-                    ProperCaseFunction properCaseFunc = new ProperCaseFunction(funcInfo, scopeTable, functionArguments);
-                    func = properCaseFunc;
+                    func = new ProperCaseFunction(funcInfo, scopeTable, functionArguments);
                     break;
+
                 case "removeSpaces":
-                    RemoveSpacesFunction removeSpacesFunc = new RemoveSpacesFunction(funcInfo, scopeTable, functionArguments);
-                    func = removeSpacesFunc;
+                    func = new RemoveSpacesFunction(funcInfo, scopeTable, functionArguments);
                     break;
+
                 case "removePunctuation":
-                    RemovePunctuationFunction removePunctuationFunc = new RemovePunctuationFunction(funcInfo, scopeTable, functionArguments);
-                    func = removePunctuationFunc;
+                    func = new RemovePunctuationFunction(funcInfo, scopeTable, functionArguments);
                     break;
+
                 case "replace":
-                    ReplaceFunction replaceFunc = new ReplaceFunction(funcInfo, scopeTable, functionArguments);
-                    func = replaceFunc;
+                    func = new ReplaceFunction(funcInfo, scopeTable, functionArguments);
                     break;
+
                 case "indentLine":
-                    IndentFunction indentFunc = new IndentFunction(funcInfo, scopeTable, functionArguments);
-                    func = indentFunc;
+                    func = new IndentFunction(funcInfo, scopeTable, functionArguments);
                     break;
+
                 case "doubleQuotes": // for backward compatibility...
-                    DoubleQuoteFunction doubleQuoteFunction = new DoubleQuoteFunction(funcInfo, scopeTable, functionArguments);
-                    func = doubleQuoteFunction;
+                    func = new DoubleQuoteFunction(funcInfo, scopeTable, functionArguments);
                     break;
+
                 case "doubleQuote":
-                    DoubleQuoteFunction doubleQuoteFunction_Ex = new DoubleQuoteFunction(funcInfo, scopeTable, functionArguments);
-                    func = doubleQuoteFunction_Ex;
+                    func = new DoubleQuoteFunction(funcInfo, scopeTable, functionArguments);
                     break;
+
                 case "htmlEncode":
-                    HtmlEncodeFunction htmlEncodeFunction = new HtmlEncodeFunction(funcInfo, scopeTable, functionArguments);
-                    func = htmlEncodeFunction;
+                    func = new HtmlEncodeFunction(funcInfo, scopeTable, functionArguments);
                     break;
 
                 case "htmlDecode":
-                    HtmlDecodeFunction htmlDecodeFunction = new HtmlDecodeFunction(funcInfo, scopeTable, functionArguments);
-                    func = htmlDecodeFunction;
+                    func = new HtmlDecodeFunction(funcInfo, scopeTable, functionArguments);
                     break;
+
                 case "guid":
-                    GuidFunction guidFunction = new GuidFunction(funcInfo, scopeTable, functionArguments);
+                    var guidFunction = new GuidFunction(funcInfo, scopeTable, functionArguments);
                     func = guidFunction;
                     break;
                 case "padLeft":
-                    PadLeftFunction padLeftFunction = new PadLeftFunction(funcInfo, scopeTable, functionArguments);
-                    func = padLeftFunction;
+                    func = new PadLeftFunction(funcInfo, scopeTable, functionArguments);
                     break;
                 case "padRight":
-                    PadRightFunction padRightFunction = new PadRightFunction(funcInfo, scopeTable, functionArguments);
-                    func = padRightFunction;
+                    func = new PadRightFunction(funcInfo, scopeTable, functionArguments);
                     break;
 
                 default:
-                    throw new NotSupportedException(string.Format("Function \"{0}\" is not supported in this context.", functionIdentifier));
+                    func = null;
+                    break;
             }
+
+            if (func == null)
+                throw new NotSupportedException(string.Format("Function \"{0}\" is not supported in this context.", functionIdentifier));
 
             return func;
         }

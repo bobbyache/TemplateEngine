@@ -11,15 +11,14 @@ namespace CygSoft.Qik.LanguageEngine
         public event EventHandler AfterCompile;
         public event EventHandler<CompileErrorEventArgs> CompileError;
 
-        private ISyntaxValidator syntaxValidator = null;
-        private ICompileEngine compileEngine = null;
+        private readonly ISyntaxValidator syntaxValidator = null;
+        private readonly ICompileEngine compileEngine = null;
 
-        public bool HasErrors { get { return syntaxValidator.HasErrors || compileEngine.HasErrors; } }
-
-        public string[] Symbols { get { return compileEngine.Symbols; } }
-        public string[] Placeholders { get { return compileEngine.Placeholders; } }
-        public IInputField[] InputFields { get { return compileEngine.InputFields; } }
-        public IExpression[] Expressions { get { return compileEngine.Expressions; } }
+        public bool HasErrors => syntaxValidator.HasErrors || compileEngine.HasErrors;
+        public string[] Symbols => compileEngine.Symbols;
+        public string[] Placeholders => compileEngine.Placeholders;
+        public IInputField[] InputFields => compileEngine.InputFields;
+        public IExpression[] Expressions => compileEngine.Expressions;
 
         public Compiler()
         {
@@ -53,45 +52,21 @@ namespace CygSoft.Qik.LanguageEngine
             compileEngine.AfterInput -= CompileEngine_AfterInput;
         }
 
-        public ISymbolInfo GetPlaceholderInfo(string placeholder)
-        {
-            return compileEngine.GetPlaceholderInfo(placeholder);
-        }
+        public ISymbolInfo GetPlaceholderInfo(string placeholder) => compileEngine.GetPlaceholderInfo(placeholder);
 
-        public ISymbolInfo GetSymbolInfo(string symbol)
-        {
-            return compileEngine.GetSymbolInfo(symbol);
-        }
+        public ISymbolInfo GetSymbolInfo(string symbol) => compileEngine.GetSymbolInfo(symbol);
 
-        public ISymbolInfo[] GetSymbolInfoSet(string[] symbols)
-        {
-            return compileEngine.GetSymbolInfoSet(symbols);
-        }
+        public ISymbolInfo[] GetSymbolInfoSet(string[] symbols) => compileEngine.GetSymbolInfoSet(symbols);
 
-        public string GetValueOfSymbol(string symbol)
-        {
-            return compileEngine.GetValueOfSymbol(symbol);
-        }
+        public string GetValueOfSymbol(string symbol) => compileEngine.GetValueOfSymbol(symbol);
 
-        public string GetValueOfPlaceholder(string placeholder)
-        {
-            return compileEngine.GetValueOfPlaceholder(placeholder);
-        }
+        public string GetValueOfPlaceholder(string placeholder) => compileEngine.GetValueOfPlaceholder(placeholder);
 
-        public string GetTitleOfPlaceholder(string placeholder)
-        {
-            return compileEngine.GetTitleOfPlaceholder(placeholder);
-        }
+        public string GetTitleOfPlaceholder(string placeholder) => compileEngine.GetTitleOfPlaceholder(placeholder);
 
-        public string TextToSymbol(string text)
-        {
-            return "@" + text;
-        }
+        public string TextToSymbol(string text) => "@" + text;
 
-        public string TextToPlaceholder(string text)
-        {
-            return "@{" + text + "}";
-        }
+        public string TextToPlaceholder(string text) => "@{" + text + "}";
 
         private void CheckCompilation(string scriptText)
         {
@@ -113,29 +88,14 @@ namespace CygSoft.Qik.LanguageEngine
             syntaxValidator.CompileError -= Compiler_CompileError;
         }
 
-        private void Compiler_AfterCompile(object sender, EventArgs e)
-        {
-            AfterCompile?.Invoke(this, e);
-        }
+        private void Compiler_AfterCompile(object sender, EventArgs e) => AfterCompile?.Invoke(this, e);
 
-        private void Compiler_BeforeCompile(object sender, EventArgs e)
-        {
-            BeforeCompile?.Invoke(this, e);
-        }
+        private void Compiler_BeforeCompile(object sender, EventArgs e) => BeforeCompile?.Invoke(this, e);
 
-        private void CompileEngine_AfterInput(object sender, EventArgs e)
-        {
-            AfterInput?.Invoke(this, e);
-        }
+        private void CompileEngine_AfterInput(object sender, EventArgs e) => AfterInput?.Invoke(this, e);
 
-        private void CompileEngine_BeforeInput(object sender, EventArgs e)
-        {
-            BeforeInput?.Invoke(this, e);
-        }
+        private void CompileEngine_BeforeInput(object sender, EventArgs e) => BeforeInput?.Invoke(this, e);
 
-        private void Compiler_CompileError(object sender, CompileErrorEventArgs e)
-        {
-            CompileError?.Invoke(this, e);
-        }
+        private void Compiler_CompileError(object sender, CompileErrorEventArgs e) => CompileError?.Invoke(this, e);
     }
 }

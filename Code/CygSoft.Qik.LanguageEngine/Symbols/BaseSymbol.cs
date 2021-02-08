@@ -7,10 +7,10 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
         private readonly string prefix = "@{";
         private readonly string postfix = "}";
 
-        public string Title { get; private set; }
-        public string Description { get; private set; }
-        public bool IsPlaceholder { get; private set; }
-        public string Symbol { get; private set; }
+        public string Title { get; }
+        public string Description { get; }
+        public bool IsPlaceholder { get; }
+        public string Symbol { get; }
 
         public abstract string Value { get; }
 
@@ -18,8 +18,8 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
         {
             get
             {
-                if (this.Symbol != null)
-                    return prefix + this.Symbol.Substring(1, this.Symbol.Length - 1) + postfix;
+                if (Symbol != null)
+                    return prefix + Symbol.Substring(1, Symbol.Length - 1) + postfix;
                 else
                     return null;
             }
@@ -27,10 +27,10 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
 
         public BaseSymbol(string symbol, string title, string description, bool isPlaceholder)
         {
-            this.Symbol = symbol;
-            this.Title = title;
-            this.Description = description;
-            this.IsPlaceholder = isPlaceholder;
+            Symbol = symbol;
+            Title = title;
+            Description = description;
+            IsPlaceholder = isPlaceholder;
         }
 
         public BaseSymbol(string symbol, string title, string description, bool isPlaceholder, string prefix, string postfix)
@@ -38,10 +38,10 @@ namespace CygSoft.Qik.LanguageEngine.Symbols
             this.prefix = prefix;
             this.postfix = postfix;
 
-            this.Symbol = symbol;
-            this.Title = title;
-            this.Description = description;
-            this.IsPlaceholder = IsPlaceholder;
+            Symbol = symbol;
+            Title = title;
+            Description = description;
+            IsPlaceholder = isPlaceholder;
         }
     }
 }

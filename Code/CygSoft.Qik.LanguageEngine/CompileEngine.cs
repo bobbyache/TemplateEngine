@@ -22,23 +22,21 @@ namespace CygSoft.Qik.LanguageEngine
 
         public bool HasErrors { get; private set; }
 
-        public string[] Symbols { get { return scopeTable.Symbols; } }
+        public string[] Symbols => scopeTable.Symbols;
 
-        public IInputField[] InputFields { get { return scopeTable.InputFields; } }
-        public IExpression[] Expressions { get { return scopeTable.Expressions; } }
+        public IInputField[] InputFields => scopeTable.InputFields;
+        public IExpression[] Expressions => scopeTable.Expressions;
 
-        public string[] Placeholders { get { return scopeTable.Placeholders; } }
+        public string[] Placeholders => scopeTable.Placeholders;
 
-        public CompileEngine()
-        {
-            HasErrors = false;
-        }
+        public CompileEngine() => HasErrors = false;
 
         public void CreateFieldInput(string symbol, string fieldName, string description)
         {
             HasErrors = false;
 
-            AutoInputSymbol autoInputSymbol = new AutoInputSymbol(symbol, fieldName, description);
+            var autoInputSymbol = new AutoInputSymbol(symbol, fieldName, description);
+
             if (!scopeTable.Symbols.Contains(autoInputSymbol.Symbol))
                 scopeTable.AddSymbol(autoInputSymbol);
         }
@@ -64,12 +62,12 @@ namespace CygSoft.Qik.LanguageEngine
                 scopeTable.Clear();
 
                 errorReport.Reporting = true;
-                errorReport.ExecutionErrorDetected += errorReport_ExecutionErrorDetected;
+                errorReport.ExecutionErrorDetected += ErrorReport_ExecutionErrorDetected;
 
                 CompileInputs(scriptText);
                 CompileExpressions(scriptText);
 
-                errorReport.ExecutionErrorDetected -= errorReport_ExecutionErrorDetected;
+                errorReport.ExecutionErrorDetected -= ErrorReport_ExecutionErrorDetected;
                 errorReport.Reporting = false;
 
                 // this doesn't appear to be used...
@@ -89,64 +87,46 @@ namespace CygSoft.Qik.LanguageEngine
 
         private void CompileExpressions(string scriptText)
         {
-            AntlrInputStream inputStream = new AntlrInputStream(scriptText);
-            QikTemplateLexer lexer = new QikTemplateLexer(inputStream);
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
-            QikTemplateParser parser = new QikTemplateParser(tokens);
+            var inputStream = new AntlrInputStream(scriptText);
+            var lexer = new QikTemplateLexer(inputStream);
+            var tokens = new CommonTokenStream(lexer);
+            var parser = new QikTemplateParser(tokens);
 
-            IParseTree tree = parser.template();
+            var tree = parser.template();
 
-            ExpressionVisitor expressionVisitor = new ExpressionVisitor(this.scopeTable, this.errorReport);
+            var expressionVisitor = new ExpressionVisitor(this.scopeTable, this.errorReport);
             expressionVisitor.Visit(tree);
         }
 
         private void CompileInputs(string scriptText)
         {
-            AntlrInputStream inputStream = new AntlrInputStream(scriptText);
-            QikTemplateLexer lexer = new QikTemplateLexer(inputStream);
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
-            QikTemplateParser parser = new QikTemplateParser(tokens);
+            var inputStream = new AntlrInputStream(scriptText);
+            var lexer = new QikTemplateLexer(inputStream);
+            var tokens = new CommonTokenStream(lexer);
+            var parser = new QikTemplateParser(tokens);
 
-            IParseTree tree = parser.template();
+            var tree = parser.template();
 
-            UserInputVisitor controlVisitor = new UserInputVisitor(this.scopeTable, this.errorReport);
+            var controlVisitor = new UserInputVisitor(this.scopeTable, this.errorReport);
             controlVisitor.Visit(tree);
         }
 
-        private void errorReport_ExecutionErrorDetected(object sender, CompileErrorEventArgs e)
+        private void ErrorReport_ExecutionErrorDetected(object sender, CompileErrorEventArgs e)
         {
             HasErrors = true;
             CompileError?.Invoke(this, e);
         }
 
-        public ISymbolInfo GetSymbolInfo(string symbol)
-        {
-            return scopeTable.GetSymbolInfo(symbol);
-        }
+        public ISymbolInfo GetSymbolInfo(string symbol) => scopeTable.GetSymbolInfo(symbol);
 
-        public ISymbolInfo GetPlaceholderInfo(string placeholder)
-        {
-            return scopeTable.GetPlaceholderInfo(placeholder);
-        }
+        public ISymbolInfo GetPlaceholderInfo(string placeholder) => scopeTable.GetPlaceholderInfo(placeholder);
 
-        public ISymbolInfo[] GetSymbolInfoSet(string[] symbols)
-        {
-            return scopeTable.GetSymbolInfoSet(symbols);
-        }
+        public ISymbolInfo[] GetSymbolInfoSet(string[] symbols) => scopeTable.GetSymbolInfoSet(symbols);
 
-        public string GetValueOfSymbol(string symbol)
-        {
-            return scopeTable.GetValueOfSymbol(symbol);
-        }
+        public string GetValueOfSymbol(string symbol) => scopeTable.GetValueOfSymbol(symbol);
 
-        public string GetValueOfPlaceholder(string placeholder)
-        {
-            return scopeTable.GetValueOfPlacholder(placeholder);
-        }
+        public string GetValueOfPlaceholder(string placeholder) => scopeTable.GetValueOfPlacholder(placeholder);
 
-        public string GetTitleOfPlaceholder(string placeholder)
-        {
-            return scopeTable.GetTitleOfPlacholder(placeholder);
-        }
+        public string GetTitleOfPlaceholder(string placeholder) => scopeTable.GetTitleOfPlacholder(placeholder);
     }
 }
