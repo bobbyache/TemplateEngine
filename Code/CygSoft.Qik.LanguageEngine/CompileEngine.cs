@@ -68,7 +68,6 @@ namespace CygSoft.Qik.LanguageEngine
 
                 CompileInputs(scriptText);
                 CompileExpressions(scriptText);
-                CheckExecution();
 
                 errorReport.ExecutionErrorDetected -= errorReport_ExecutionErrorDetected;
                 errorReport.Reporting = false;
@@ -85,17 +84,6 @@ namespace CygSoft.Qik.LanguageEngine
             finally
             {
                 AfterCompile?.Invoke(this, new EventArgs());
-            }
-        }
-
-        /// <summary>
-        /// What is this doing here???
-        /// </summary>
-        private void CheckExecution()
-        {
-            foreach (IExpression expression in this.Expressions)
-            {
-                string value = expression.Value;
             }
         }
 
