@@ -11,21 +11,18 @@ namespace CygSoft.Qik.LanguageEngine
 
         public bool HasErrors { get; private set; }
 
-        public SyntaxValidator()
-        {
-            HasErrors = false;
-        }
+        public SyntaxValidator() => HasErrors = false;
 
         public void Validate(string scriptText)
         {
             HasErrors = false;
 
-            AntlrInputStream inputStream = new AntlrInputStream(scriptText);
-            QikTemplateLexer lexer = new QikTemplateLexer(inputStream);
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
-            QikTemplateParser parser = new QikTemplateParser(tokens);
+            var inputStream = new AntlrInputStream(scriptText);
+            var lexer = new QikTemplateLexer(inputStream);
+            var tokens = new CommonTokenStream(lexer);
+            var parser = new QikTemplateParser(tokens);
 
-            ErrorListener errorListener = new ErrorListener();
+            var errorListener = new ErrorListener();
             errorListener.SyntaxErrorDetected += ErrorListener_SyntaxErrorDetected;
             parser.RemoveErrorListeners();
             parser.AddErrorListener(errorListener);

@@ -6,11 +6,11 @@ namespace CygSoft.Qik.LanguageEngine
     {
         public string Generate(IBatchCompiler batchCompiler, string templateText)
         {
-            string input = templateText;
+            var input = templateText;
 
-            foreach (string placeholder in batchCompiler.Placeholders)
+            foreach (var placeholder in batchCompiler.Placeholders)
             {
-                string output = batchCompiler.GetValueOfPlaceholder(placeholder);
+                var output = batchCompiler.GetValueOfPlaceholder(placeholder);
                 input = input.Replace(placeholder, output);
             }
 
@@ -19,11 +19,11 @@ namespace CygSoft.Qik.LanguageEngine
 
         public string Generate(ICompiler compiler, string templateText)
         {
-            string input = templateText;
+            var input = templateText;
 
-            foreach (string placeholder in compiler.Placeholders)
+            foreach (var placeholder in compiler.Placeholders)
             {
-                string output = compiler.GetValueOfPlaceholder(placeholder);
+                var output = compiler.GetValueOfPlaceholder(placeholder);
                 input = input.Replace(placeholder, output);
             }
 

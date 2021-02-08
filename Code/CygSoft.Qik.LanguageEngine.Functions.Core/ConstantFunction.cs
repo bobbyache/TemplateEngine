@@ -13,9 +13,6 @@ namespace CygSoft.Qik.LanguageEngine.Functions.Core
             this.text = text;
         }
 
-        public override string Execute(IErrorReport errorReport)
-        {
-            return text;
-        }
+        public override string Execute(IErrorReport errorReport) => text;
     }
 }
