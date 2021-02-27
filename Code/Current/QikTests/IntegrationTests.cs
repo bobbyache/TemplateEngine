@@ -3,6 +3,9 @@ using CygSoft.Qik.LanguageEngine.Infrastructure;
 using NUnit.Framework;
 using Qik.LanguageEngine.IntegrationTests.Helpers;
 using System;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using LanguageEngine.Tests.UnitTests.Helpers;
 
 namespace Qik.LanguageEngine.IntegrationTests
 {

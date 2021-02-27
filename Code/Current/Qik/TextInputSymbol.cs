@@ -5,7 +5,7 @@ using CygSoft.Qik.LanguageEngine.Infrastructure;
 
 namespace CygSoft.Qik.LanguageEngine.Symbols
 {
-    internal class TextInputSymbol : InputSymbol, ITextField
+    public class TextInputSymbol : InputSymbol, ITextField
     {
         private string value = null;
 

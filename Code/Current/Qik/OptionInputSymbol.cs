@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace CygSoft.Qik.LanguageEngine.Symbols
 {
-    internal class OptionInputSymbol : InputSymbol, IOptionsField
+    public class OptionInputSymbol : InputSymbol, IOptionsField
     {
         private class SymbolOption : IOption
         {

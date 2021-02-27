@@ -2,7 +2,7 @@
 
 namespace CygSoft.Qik.LanguageEngine.Symbols
 {
-    internal abstract class InputSymbol : BaseSymbol, IInputField
+    public abstract class InputSymbol : BaseSymbol, IInputField
     {
         public string DefaultValue { get; }
 
