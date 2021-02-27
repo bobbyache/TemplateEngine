@@ -45,3 +45,14 @@ dotnet test ./qiktests/qiktests.csproj
 
 - [MarketPlace](https://marketplace.visualstudio.com/items?itemName=mike-lischke.vscode-antlr4&ssr=false#qna)
 - [Github](https://github.com/mike-lischke/vscode-antlr4)
+
+### Usage
+
+ Item | Value |
+| --- | :--- |
+| mode | external  |
+| language | CSharp  |
+| listeners | true  |
+| visitors | true  |
+| outputDir | _antlr  |
+| package | CygSoft.Qik.LanguageEngine.Antlr  |
