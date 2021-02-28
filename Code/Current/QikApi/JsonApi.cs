@@ -2,6 +2,7 @@
 using CygSoft.Qik.LanguageEngine.Symbols;
 using CygSoft.Qik.LanguageEngine;
 using System;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -18,11 +19,11 @@ namespace CygSoft.Qik.Api
             //return new string[0];
         }
 
-        public string ReadScript(string script)
+        public string ReadScript(string scriptFilePath)
         {
             var result = new StringBuilder();
             var compiler = new Compiler();
-            compiler.Compile(script);
+            compiler.Compile(ReadFileContents(scriptFilePath));
 
             result.Append("[");
 
@@ -33,6 +34,21 @@ namespace CygSoft.Qik.Api
             Console.WriteLine(result.ToString());
 
             return result.ToString();
+        }
+
+        private string ReadFileContents(string filePath)
+        {
+            string contents = null;
+            // Specify file, instructions, and priveledges
+            using (var file = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Read))
+            {
+                // Create a new stream to read from a file
+                using (StreamReader sr = new StreamReader(file))
+                {
+                    contents = sr.ReadToEnd();
+                }
+            }
+            return contents;
         }
 
         private string SerializeInputSymbols(ICompiler compiler)

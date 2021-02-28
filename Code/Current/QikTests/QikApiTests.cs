@@ -18,7 +18,7 @@ namespace Qik.LanguageEngine.IntegrationTests
         public void Test_It()
         {
             JsonApi qikApi = new JsonApi();
-            var resultJson = qikApi.ReadScript(TxtFile.ReadText("InferPK.txt"));
+            var resultJson = qikApi.ReadScript(TxtFile.ResolvePath("InferPK.txt"));
             var expectedJson = TxtFile.ReadText("InferPk_ReadScript_Json.txt");
             Assert.AreEqual(expectedJson, resultJson);
         }
