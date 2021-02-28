@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from c:\Code\you\Qik\Code\Current\Qik\QikTemplate.g4 by ANTLR 4.8
+// Generated from c:\Code\you\Qik\Code\Current\QikAntlr\QikTemplate.g4 by ANTLR 4.8
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -19,7 +19,7 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
-namespace CygSoft.Qik.LanguageEngine.Antlr {
+namespace CygSoft.Qik.Antlr {
 using Antlr4.Runtime.Misc;
 using IParseTreeListener = Antlr4.Runtime.Tree.IParseTreeListener;
 using IToken = Antlr4.Runtime.IToken;
@@ -182,4 +182,4 @@ public interface IQikTemplateListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitFuncArg([NotNull] QikTemplateParser.FuncArgContext context);
 }
-} // namespace CygSoft.Qik.LanguageEngine.Antlr
+} // namespace CygSoft.Qik.Antlr

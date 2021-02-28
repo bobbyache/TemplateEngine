@@ -6,6 +6,9 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="QikTests" /> <!-- [assembly: InternalsVisibleTo("CustomTest1")] -->
-    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.9.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\QikAntlr\QikAntlr.csproj" />
   </ItemGroup>
 </Project>

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from c:\Code\you\Qik\Code\Current\Qik\QikTemplate.g4 by ANTLR 4.8
+// Generated from c:\Code\you\Qik\Code\Current\QikAntlr\QikTemplate.g4 by ANTLR 4.8
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -19,7 +19,7 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
-namespace CygSoft.Qik.LanguageEngine.Antlr {
+namespace CygSoft.Qik.Antlr {
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using IToken = Antlr4.Runtime.IToken;
@@ -185,4 +185,4 @@ public partial class QikTemplateBaseVisitor<Result> : AbstractParseTreeVisitor<R
 	/// <return>The visitor result.</return>
 	public virtual Result VisitFuncArg([NotNull] QikTemplateParser.FuncArgContext context) { return VisitChildren(context); }
 }
-} // namespace CygSoft.Qik.LanguageEngine.Antlr
+} // namespace CygSoft.Qik.Antlr
