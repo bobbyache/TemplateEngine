@@ -64,7 +64,14 @@ dotnet test ./qiktests/qiktests.csproj
 - https://marketplace.visualstudio.com/items?itemName=formulahendry.dotnet-test-explorer&ssr=false#overview
 - https://marketplace.visualstudio.com/items?itemName=wghats.vscode-nxunit-test-adapter&ssr=false#overview
 
-### Console Command Line
+### Console Application
+
+- Important that the `externalTerminal` is set for the `console` setting in hyour launch.json. Otherwise you'll run the program in your `internalConsole` and it will break. 
+- For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+
+```
+            "console": "externalTerminal",
+```
 
 - [System.CommandLine (Nuget)](https://www.nuget.org/packages/System.CommandLine)
 - [System.CommandLine (Github)](https://github.com/dotnet/command-line-api/blob/master/docs/Your-first-app-with-System-CommandLine.md)

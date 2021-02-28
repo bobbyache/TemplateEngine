@@ -34,6 +34,7 @@ class Program
                 Console.WriteLine($"The value for --int-option is: {intOption}");
                 Console.WriteLine($"The value for --bool-option is: {boolOption}");
                 Console.WriteLine($"The value for --file-option is: {fileOption?.FullName ?? "null"}");
+                Console.ReadLine();
             });
 
             var builder = new ConfigurationBuilder()
@@ -53,10 +54,6 @@ class Program
             appHost.Run();
 
             // Parse the incoming args and invoke the handler
-            var result = rootCommand.InvokeAsync(args).Result;
-
-            Console.ReadLine();
-            
-            return result;
+            return rootCommand.InvokeAsync(args).Result;
         }
 }
