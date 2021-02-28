@@ -2,6 +2,7 @@
 {
     internal class Common
     {
+        //TODO: Consider using a string extension method.
         public static string StripOuterQuotes(string text)
         {
             if (text != null && text.Length >= 2)

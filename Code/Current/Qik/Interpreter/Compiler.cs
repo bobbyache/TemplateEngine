@@ -1,9 +1,10 @@
 ﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
 using System;
+using CygSoft.Qik.Antlr;
 
 namespace CygSoft.Qik.LanguageEngine
 {
-    public class BatchCompiler : IBatchCompiler
+    public class Compiler : ICompiler
     {
         public event EventHandler BeforeInput;
         public event EventHandler AfterInput;
@@ -14,17 +15,19 @@ namespace CygSoft.Qik.LanguageEngine
         private readonly ISyntaxValidator syntaxValidator = null;
         private readonly ICompileEngine compileEngine = null;
 
-        public bool HasErrors => syntaxValidator.HasErrors;
+        public bool HasErrors => syntaxValidator.HasErrors || compileEngine.HasErrors;
+        public string[] Symbols => compileEngine.Symbols;
         public string[] Placeholders => compileEngine.Placeholders;
+        public IInputField[] InputFields => compileEngine.InputFields;
         public IExpression[] Expressions => compileEngine.Expressions;
 
-        public BatchCompiler()
+        public Compiler()
         {
             syntaxValidator = new SyntaxValidator();
             compileEngine = new CompileEngine();
         }
 
-        public BatchCompiler(ISyntaxValidator syntaxValidator, ICompileEngine compileEngine)
+        public Compiler(ISyntaxValidator syntaxValidator, ICompileEngine compileEngine)
         {
             this.syntaxValidator = syntaxValidator;
             this.compileEngine = compileEngine;
@@ -33,33 +36,38 @@ namespace CygSoft.Qik.LanguageEngine
         public void Compile(string scriptText)
         {
             CheckSyntax(scriptText);
+
             if (!syntaxValidator.HasErrors)
-            {
                 CheckCompilation(scriptText);
-            }
+            
         }
 
-        public string SymbolFromField(string fieldName) => "@" + fieldName;
+        public void Input(string symbol, string value)
+        {
+            compileEngine.BeforeInput += CompileEngine_BeforeInput;
+            compileEngine.AfterInput += CompileEngine_AfterInput;
 
-        public void CreateFieldInput(string symbol, string fieldName, string description) => 
-            compileEngine.CreateFieldInput(symbol, fieldName, description);
+            compileEngine.Input(symbol, value);
+
+            compileEngine.BeforeInput -= CompileEngine_BeforeInput;
+            compileEngine.AfterInput -= CompileEngine_AfterInput;
+        }
+
+        public ISymbolInfo GetPlaceholderInfo(string placeholder) => compileEngine.GetPlaceholderInfo(placeholder);
 
         public ISymbolInfo GetSymbolInfo(string symbol) => compileEngine.GetSymbolInfo(symbol);
 
         public ISymbolInfo[] GetSymbolInfoSet(string[] symbols) => compileEngine.GetSymbolInfoSet(symbols);
 
+        public string GetValueOfSymbol(string symbol) => compileEngine.GetValueOfSymbol(symbol);
+
         public string GetValueOfPlaceholder(string placeholder) => compileEngine.GetValueOfPlaceholder(placeholder);
 
-        public void Input(string symbol, string fieldValue)
-        {
-            compileEngine.BeforeInput += CompileEngine_BeforeInput;
-            compileEngine.AfterInput += CompileEngine_AfterInput;
+        public string GetTitleOfPlaceholder(string placeholder) => compileEngine.GetTitleOfPlaceholder(placeholder);
 
-            compileEngine.Input(symbol, fieldValue);
+        public string TextToSymbol(string text) => "@" + text;
 
-            compileEngine.BeforeInput -= CompileEngine_BeforeInput;
-            compileEngine.AfterInput -= CompileEngine_AfterInput;
-        }
+        public string TextToPlaceholder(string text) => "@{" + text + "}";
 
         private void CheckCompilation(string scriptText)
         {

@@ -1,13 +1,12 @@
 ﻿using Antlr4.Runtime;
-using CygSoft.Qik.Antlr;
-using CygSoft.Qik.LanguageEngine.Antlr;
+using CygSoft.Qik.LanguageEngine;
 using CygSoft.Qik.LanguageEngine.Infrastructure;
 using CygSoft.Qik.LanguageEngine.Symbols;
 using System;
 using System.Linq;
 using CygSoft.Qik.LanguageEngine.Scope;
 
-namespace CygSoft.Qik.LanguageEngine
+namespace CygSoft.Qik.Antlr
 {
     public class CompileEngine : ICompileEngine
     {
@@ -17,6 +16,7 @@ namespace CygSoft.Qik.LanguageEngine
         public event EventHandler AfterCompile;
         public event EventHandler<CompileErrorEventArgs> CompileError;
 
+        //TODO: Inject these rather than new them up inside the class.
         private readonly IGlobalTable scopeTable = new GlobalTable();
         private readonly IErrorReport errorReport = new ErrorReport();
 

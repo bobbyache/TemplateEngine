@@ -56,3 +56,10 @@ dotnet test ./qiktests/qiktests.csproj
 | visitors | true  |
 | outputDir | _antlr  |
 | package | CygSoft.Qik.LanguageEngine.Antlr  |
+
+
+### Possible Test Explorers/Runners
+
+- https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-test-explorer&ssr=false#overview
+- https://marketplace.visualstudio.com/items?itemName=formulahendry.dotnet-test-explorer&ssr=false#overview
+- https://marketplace.visualstudio.com/items?itemName=wghats.vscode-nxunit-test-adapter&ssr=false#overview

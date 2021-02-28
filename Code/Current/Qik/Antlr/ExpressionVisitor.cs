@@ -1,11 +1,10 @@
-﻿using CygSoft.Qik.LanguageEngine.Symbols;
+﻿using CygSoft.Qik.LanguageEngine;
+using CygSoft.Qik.LanguageEngine.Symbols;
 using System.Collections.Generic;
-using CygSoft.Qik.Antlr;
 using CygSoft.Qik.LanguageEngine.Infrastructure;
 using CygSoft.Qik.LanguageEngine.Functions.Core;
-using CygSoft.Qik.Antlr;
 
-namespace CygSoft.Qik.LanguageEngine.Antlr
+namespace CygSoft.Qik.Antlr
 {
     internal class ExpressionVisitor : QikTemplateBaseVisitor<IFunction>
     {
@@ -89,6 +88,7 @@ namespace CygSoft.Qik.LanguageEngine.Antlr
                 List<IFunction> functionArguments = CreateArguments(context.funcArg());
                 IFuncInfo funcInfo = new FuncInfo(funcIdentifier, context.Start.Line, context.Start.Column);
 
+                //TODO: Consider Injecting this. Does this need to be newed up every time? Don't think so...
                 FunctionFactory functionFactory = new FunctionFactory(scopeTable);
                 func = functionFactory.GetFunction(funcIdentifier, funcInfo, functionArguments);
             }

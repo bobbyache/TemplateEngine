@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace CygSoft.Qik.LanguageEngine.Antlr
+namespace CygSoft.Qik.Antlr
 {
     internal class ErrorListener : BaseErrorListener
     {

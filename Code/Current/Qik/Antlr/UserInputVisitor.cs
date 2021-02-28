@@ -1,8 +1,8 @@
 ﻿using CygSoft.Qik.LanguageEngine.Symbols;
 using CygSoft.Qik.LanguageEngine.Infrastructure;
-using CygSoft.Qik.Antlr;
+using CygSoft.Qik.LanguageEngine;
 
-namespace CygSoft.Qik.LanguageEngine.Antlr
+namespace CygSoft.Qik.Antlr
 {
     internal class UserInputVisitor : QikTemplateBaseVisitor<string>
     {
