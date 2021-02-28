@@ -1,5 +1,4 @@
 ﻿using CygSoft.Qik.LanguageEngine;
-using CygSoft.Qik.LanguageEngine.Funcs;
 using CygSoft.Qik.LanguageEngine.Functions.Core;
 using CygSoft.Qik.LanguageEngine.Scope;
 using CygSoft.Qik.LanguageEngine.Symbols;
@@ -8,9 +7,6 @@ using NUnit.Framework;
 namespace LanguageEngine.Tests.UnitTests.Functions
 {
     [TestFixture]
-    [Category("Qik")]
-    [Category("Qik.Functions")]
-    [Category("Tests.UnitTests")]
     class IfDecisionFunction
     {
         [Test]
@@ -18,17 +14,17 @@ namespace LanguageEngine.Tests.UnitTests.Functions
         {
             // BEFORE REMOVING THIS TEST METHOD YOU NEED TO WRITE TESTS FOR ALL ITS POSSIBILITIES IN THE NEW STYLE BELOW
 
-            GlobalTable globalTable = new GlobalTable();
+            var globalTable = new GlobalTable();
 
-            OptionInputSymbol optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "Description", "ADVWORKS");
+            var optionInputSymbol = new OptionInputSymbol("@databaseOptions", "Database Options", "Description", "ADVWORKS");
             optionInputSymbol.AddOption("ADVWORKS", "Adventure Works Database");
             optionInputSymbol.AddOption("PUBBOOKS", "Published Books Database");
 
-            IfDecissionFunction decissionFunc = new IfDecissionFunction(new FuncInfo("stub", 1, 1), globalTable, "@databaseOptions");
+            var decissionFunc = new IfDecissionFunction(new FuncInfo("stub", 1, 1), globalTable, "@databaseOptions");
             decissionFunc.AddFunction("ADVWORKS", new TextFunction(new FuncInfo("stub", 1, 1), globalTable, "You chose DM"));
             decissionFunc.AddFunction("PUBBOOKS", new TextFunction(new FuncInfo("stub", 1, 1), globalTable, "You chose Published Books Database"));
 
-            ExpressionSymbol expressionSymbol = new ExpressionSymbol(new ErrorReport(), "@selectedDatabase", "Selected Database", "Description", true, true, decissionFunc);
+            var expressionSymbol = new ExpressionSymbol(new ErrorReport(), "@selectedDatabase", "Selected Database", "Description", true, true, decissionFunc);
 
             globalTable.AddSymbol(optionInputSymbol);
             globalTable.AddSymbol(expressionSymbol);

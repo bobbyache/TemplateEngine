@@ -1,20 +1,9 @@
 ﻿using CygSoft.Qik.LanguageEngine;
-using CygSoft.Qik.LanguageEngine.Funcs;
-using CygSoft.Qik.LanguageEngine.Scope;
-using CygSoft.Qik.LanguageEngine.Symbols;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Qik.LanguageEngine.UnitTests
 {
     [TestFixture]
-    [Category("Qik")]
-    [Category("Qik.Compiler")]
-    [Category("Tests.UnitTests")]
     class CompilerTests
     {
         [Test]

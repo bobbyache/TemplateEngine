@@ -7,9 +7,6 @@ using NUnit.Framework;
 namespace LanguageEngine.Tests.UnitTests.Symbols
 {
     [TestFixture]
-    [Category("Qik")]
-    [Category("Qik.Symbol")]
-    [Category("Tests.UnitTests")]
     public class TextInputSymbolTests
     {
         [Test]

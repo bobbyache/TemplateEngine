@@ -1,5 +1,4 @@
 ﻿using CygSoft.Qik.LanguageEngine;
-using CygSoft.Qik.LanguageEngine.Funcs;
 using CygSoft.Qik.LanguageEngine.Functions.Core;
 using CygSoft.Qik.LanguageEngine.Scope;
 using CygSoft.Qik.LanguageEngine.Symbols;
@@ -9,24 +8,21 @@ using NUnit.Framework;
 namespace LanguageEngine.Tests.UnitTests.Functions
 {
     [TestFixture]
-    [Category("Qik")]
-    [Category("Qik.Functions")]
-    [Category("Tests.UnitTests")]
     class ConcatenateFunctionTests
     {
         [Test]
         public void ConcatenateFunction_Input3Strings_ConcatenatesToSingleString_1()
         {
-            // BEFORE REMOVING THIS TEST METHOD YOU NEED TO WRITE TESTS FOR ALL ITS POSSIBILITIES IN THE NEW STYLE BELOW
-            GlobalTable globalTable = new GlobalTable();
+            var globalTable = new GlobalTable();
 
-            ConcatenateFunction concatFunc = new ConcatenateFunction(new FuncInfo("stub", 1, 1), globalTable);
+            var concatFunc = new ConcatenateFunction(new FuncInfo("stub", 1, 1), globalTable);
 
             concatFunc.AddFunction(new TextFunction(new FuncInfo("stub", 1, 1), globalTable, "hello"));
             concatFunc.AddFunction(new TextFunction(new FuncInfo("stub", 1, 1), globalTable, " "));
             concatFunc.AddFunction(new TextFunction(new FuncInfo("stub", 1, 1), globalTable, "world"));
 
-            ExpressionSymbol expressionSymbol = new ExpressionSymbol(new ErrorReport(), "@concat", "Concatenated String", "Description", true, true, concatFunc);
+            var expressionSymbol = new ExpressionSymbol(new ErrorReport(), "@concat", "Concatenated String", "Description", true, true, concatFunc);
+
             Assert.AreEqual("@concat", expressionSymbol.Symbol);
             Assert.AreEqual("@{concat}", expressionSymbol.Placeholder);
             Assert.AreEqual("Concatenated String", expressionSymbol.Title);
@@ -37,8 +33,8 @@ namespace LanguageEngine.Tests.UnitTests.Functions
         [Test]
         public void ConcatenateFunction_Input3Strings_ConcatenatesToSingleString()
         {
-            string concatExpression = "\"hello\" + \" \" + \"world\"";
-            string output = TestHelpers.EvaluateCompilerFunction(concatExpression);
+            var concatExpression = "\"hello\" + \" \" + \"world\"";
+            var output = TestHelpers.EvaluateCompilerFunction(concatExpression);
             Assert.AreEqual("hello world", output);
         }
     }

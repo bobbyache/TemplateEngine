@@ -6,9 +6,6 @@ using NUnit.Framework;
 namespace LanguageEngine.Tests.UnitTests.Symbols
 {
     [TestFixture]
-    [Category("Qik")]
-    [Category("Qik.Symbol")]
-    [Category("Tests.UnitTests")]
     public class OptionInputSymbolTests
     {
         [Test]
@@ -109,19 +106,19 @@ namespace LanguageEngine.Tests.UnitTests.Symbols
             OptionInputSymbol optionInputSymbol = TestHelpers.CreateOptionInputSymbol_DatabaseOptions(defaultValue: "ADVWORKS");
 
             optionInputSymbol.SelectOption("0");
-            string indexOption_at_0 = optionInputSymbol.Value;
+            var indexOption_at_0 = optionInputSymbol.Value;
 
             optionInputSymbol.SelectOption("1");
-            string indexOption_at_1 = optionInputSymbol.Value;
+            var indexOption_at_1 = optionInputSymbol.Value;
 
             optionInputSymbol.SelectOption(0);
-            string indexOption_index_at_0 = optionInputSymbol.Value;
+            var indexOption_index_at_0 = optionInputSymbol.Value;
 
             optionInputSymbol.SelectOption("ADVWORKS");
-            string valueOption_at_0 = optionInputSymbol.Value;
+            var valueOption_at_0 = optionInputSymbol.Value;
 
             optionInputSymbol.SelectOption("PUBBOOKS");
-            string valueOption_at_1 = optionInputSymbol.Value;
+            var valueOption_at_1 = optionInputSymbol.Value;
 
             Assert.AreEqual("ADVWORKS", indexOption_at_0);
             Assert.AreEqual("PUBBOOKS", indexOption_at_1);
@@ -136,19 +133,19 @@ namespace LanguageEngine.Tests.UnitTests.Symbols
             IOptionsField optionsField = TestHelpers.CreateOptionInputSymbol_DatabaseOptions_AsInterface(defaultValue: "ADVWORKS");
 
             optionsField.SelectOption("0");
-            string indexOption_at_0 = optionsField.Value;
+            var indexOption_at_0 = optionsField.Value;
 
             optionsField.SelectOption("1");
-            string indexOption_at_1 = optionsField.Value;
+            var indexOption_at_1 = optionsField.Value;
 
             optionsField.SelectOption(0);
-            string indexOption_index_at_0 = optionsField.Value;
+            var indexOption_index_at_0 = optionsField.Value;
 
             optionsField.SelectOption("ADVWORKS");
-            string valueOption_at_0 = optionsField.Value;
+            var valueOption_at_0 = optionsField.Value;
 
             optionsField.SelectOption("PUBBOOKS");
-            string valueOption_at_1 = optionsField.Value;
+            var valueOption_at_1 = optionsField.Value;
 
             Assert.AreEqual("ADVWORKS", indexOption_at_0);
             Assert.AreEqual("PUBBOOKS", indexOption_at_1);
@@ -162,13 +159,13 @@ namespace LanguageEngine.Tests.UnitTests.Symbols
         {
             OptionInputSymbol optionInputSymbol = TestHelpers.CreateOptionInputSymbol_DatabaseOptions(defaultValue: "ADVWORKS");
 
-            string indexOption_at_0 = optionInputSymbol.OptionTitle("0");
-            string indexOption_at_1 = optionInputSymbol.OptionTitle("1");
-            string valueOption_at_0 = optionInputSymbol.OptionTitle("ADVWORKS");
-            string valueOption_at_1 = optionInputSymbol.OptionTitle("PUBBOOKS");
+            var indexOption_at_0 = optionInputSymbol.OptionTitle("0");
+            var indexOption_at_1 = optionInputSymbol.OptionTitle("1");
+            var valueOption_at_0 = optionInputSymbol.OptionTitle("ADVWORKS");
+            var valueOption_at_1 = optionInputSymbol.OptionTitle("PUBBOOKS");
 
-            string optionIndex_at_0 = optionInputSymbol.OptionTitle(0);
-            string optionIndex_at_1 = optionInputSymbol.OptionTitle(1);
+            var optionIndex_at_0 = optionInputSymbol.OptionTitle(0);
+            var optionIndex_at_1 = optionInputSymbol.OptionTitle(1);
 
             Assert.AreEqual("Adventure Works Database", indexOption_at_0);
             Assert.AreEqual("Published Books Database", indexOption_at_1);
@@ -184,13 +181,13 @@ namespace LanguageEngine.Tests.UnitTests.Symbols
         {
             IOptionsField optionsField = TestHelpers.CreateOptionInputSymbol_DatabaseOptions_AsInterface(defaultValue: "ADVWORKS");
 
-            string indexOption_at_0 = optionsField.OptionTitle("0");
-            string indexOption_at_1 = optionsField.OptionTitle("1");
-            string valueOption_at_0 = optionsField.OptionTitle("ADVWORKS");
-            string valueOption_at_1 = optionsField.OptionTitle("PUBBOOKS");
+            var indexOption_at_0 = optionsField.OptionTitle("0");
+            var indexOption_at_1 = optionsField.OptionTitle("1");
+            var valueOption_at_0 = optionsField.OptionTitle("ADVWORKS");
+            var valueOption_at_1 = optionsField.OptionTitle("PUBBOOKS");
 
-            string optionIndex_at_0 = optionsField.OptionTitle(0);
-            string optionIndex_at_1 = optionsField.OptionTitle(1);
+            var optionIndex_at_0 = optionsField.OptionTitle(0);
+            var optionIndex_at_1 = optionsField.OptionTitle(1);
 
             Assert.AreEqual("Adventure Works Database", indexOption_at_0);
             Assert.AreEqual("Published Books Database", indexOption_at_1);

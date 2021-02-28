@@ -1,11 +1,5 @@
-using CygSoft.Qik.LanguageEngine;
-using CygSoft.Qik.LanguageEngine.Infrastructure;
 using NUnit.Framework;
 using Qik.LanguageEngine.IntegrationTests.Helpers;
-using System;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using LanguageEngine.Tests.UnitTests.Helpers;
 using CygSoft.Qik.Api;
 
 namespace Qik.LanguageEngine.IntegrationTests
@@ -15,7 +9,7 @@ namespace Qik.LanguageEngine.IntegrationTests
     {
 
         [Test]
-        public void Test_It()
+        public void Should_Read_Script_And_Return_Input_Manifest()
         {
             JsonApi qikApi = new JsonApi();
             var resultJson = qikApi.ReadScript(TxtFile.ResolvePath("InferPK.txt"));
