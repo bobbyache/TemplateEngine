@@ -23,8 +23,20 @@ namespace QikApi
             var compiler = new Compiler();
             compiler.Compile(script);
 
-            result.Append("{");
-            result.Append("\"inputs\": [");
+            result.Append("[");
+
+            result.Append(SerializeInputSymbols(compiler));
+
+            result.Append("]");
+
+            Console.WriteLine(result.ToString());
+
+            return result.ToString();
+        }
+
+        private string SerializeInputSymbols(ICompiler compiler)
+        {
+            var result = new StringBuilder();
 
             for (var i = 0; i < compiler.InputFields.Length; i++)
             {
@@ -44,27 +56,6 @@ namespace QikApi
                     result.Append(",");
                 }
             }
-            result.Append("],");
-            result.Append("\"expressions\": [");
-
-            for (var i = 0; i < compiler.Expressions.Length; i++)
-            {
-                var expression = compiler.Expressions[i];
-
-                if (expression is ExpressionSymbol)
-                {
-                    result.Append(JsonSerializer.Serialize<ExpressionSymbol>(expression as ExpressionSymbol));
-                }
-                if (i < compiler.Expressions.Length - 1)
-                {
-                    result.Append(",");
-                }
-            }
-            result.Append("]");
-
-            result.Append("}");
-
-            Console.WriteLine(result.ToString());
 
             return result.ToString();
         }
