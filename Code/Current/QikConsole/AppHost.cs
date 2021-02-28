@@ -3,16 +3,16 @@ namespace CygSoft.Qik.Console
 {
     public class AppHost : IAppHost
     {
-        private readonly IServiceA serviceA;
+        private readonly IInputManifestHandler inputManifestHandler;
 
-        public AppHost(IServiceA mailService)
+        public AppHost(IInputManifestHandler inputManifestHandler)
         {
-            serviceA = mailService;
+            this.inputManifestHandler = inputManifestHandler;
         }
 
-        public void Run()
+        public string ReadInputManfest(string scriptFilePath)
         {
-            serviceA.Log("hello world!");
+            return inputManifestHandler.Read(scriptFilePath);
         }
     }
 }

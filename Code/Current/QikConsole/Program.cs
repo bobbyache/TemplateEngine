@@ -10,48 +10,62 @@ class Program
 {
         public static int Main(string[] args)
         {
+            IAppHost appHost = null;
 
             // Create a root command with some options
             var rootCommand = new RootCommand
             {
-                new Option<int>(
-                    "--int-option",
-                    getDefaultValue: () => 42,
-                    description: "An option whose argument is parsed as an int"),
-                new Option<bool>(
-                    "--bool-option",
-                    "An option whose argument is parsed as a bool"),
-                new Option<FileInfo>(
-                    "--file-option",
-                    "An option whose argument is parsed as a FileInfo")
+                // new Option<bool>("--test", "Some description")
+                new Option("--get-inputs", "Do not process. Just provide input information"),
+                new Option<string>(
+                    "--script-file",
+                    "Qik Script that will be interpreted"
+                ),
+                new Option<string>(
+                    "--blueprints-folder",
+                    "Folder in which files will be processed"
+                ),
+                new Option<string>(
+                    "--inputs",
+                    "Description"
+                )
             };
 
-            rootCommand.Description = "Boiler Plate Console App";
+            rootCommand.Description = "Qik Console Application";
 
             // Note that the parameters of the handler method are matched according to the names of the options
-            rootCommand.Handler = CommandHandler.Create<int, bool, FileInfo>((intOption, boolOption, fileOption) =>
+            rootCommand.Handler = CommandHandler.Create<bool, string, string, string>((Action<bool, string, string, string>)((getInputs, scriptFile, blueprintsFolder, inputs) =>
             {
-                Console.WriteLine($"The value for --int-option is: {intOption}");
-                Console.WriteLine($"The value for --bool-option is: {boolOption}");
-                Console.WriteLine($"The value for --file-option is: {fileOption?.FullName ?? "null"}");
-                Console.ReadLine();
-            });
+                Console.WriteLine(getInputs);
+                Console.WriteLine(scriptFile);
+                Console.WriteLine(blueprintsFolder);
+
+                if (getInputs)
+                {
+                    Console.WriteLine(appHost.ReadInputManfest(scriptFile));
+                    Console.Read();
+                }
+                else
+                {
+                    //TODO: Do a generate based on blueprint folder and script file...
+                    // Consider just adding a single folder and have the Api generate based on ".qik" and other ".blu" file types.
+                    throw new NotImplementedException();
+                }
+            }));
 
             var builder = new ConfigurationBuilder()
              .SetBasePath(Directory.GetCurrentDirectory())
              .AddJsonFile("appsettings.json");
-            // .AddEnvironmentVariables("JRTech_");
 
             var config = builder.Build();
             var author = config.GetSection("author").Get<Person>();
 
             var serviceProvider = new ServiceCollection()
                 .AddSingleton<IAppHost, AppHost>()
-                .AddSingleton<IServiceA, ServiceA>()
+                .AddSingleton<IInputManifestHandler, InputManifestHandler>()
             .BuildServiceProvider();
 
-            var appHost = serviceProvider.GetService<IAppHost>();
-            appHost.Run();
+            appHost = serviceProvider.GetService<IAppHost>();
 
             // Parse the incoming args and invoke the handler
             return rootCommand.InvokeAsync(args).Result;

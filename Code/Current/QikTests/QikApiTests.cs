@@ -6,7 +6,7 @@ using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using LanguageEngine.Tests.UnitTests.Helpers;
-using QikApi;
+using CygSoft.Qik.Api;
 
 namespace Qik.LanguageEngine.IntegrationTests
 {

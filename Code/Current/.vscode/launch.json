@@ -11,7 +11,16 @@
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/QikConsole/bin/Debug/net5.0/QikConsole.dll",
-            "args": [],
+            "args": [
+                // ****************************************
+                // Test 
+                // ****************************************
+                // "--script-file", 
+                // "C:\\Code\\files\\qik\\example.qik", 
+                // "--blueprints-folder", 
+                // "\"C:\\source_files\\process.txt\"", 
+                // "--get-inputs"
+            ],
             "cwd": "${workspaceFolder}/QikConsole",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "externalTerminal",

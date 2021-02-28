@@ -6,16 +6,17 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 
-namespace QikApi
+namespace CygSoft.Qik.Api
 {
     public class JsonApi
     {
 
         //TODO: You want to input a JSON array here for key values pairs (symbol, value)
-        // public string Input(string inputData)
-        // {
-        //     compiler.Input("@table", "MyTable");
-        // }
+        public string[] Generate(string inputData, string[] bluePrintTexts)
+        {
+            throw new NotImplementedException();
+            //return new string[0];
+        }
 
         public string ReadScript(string script)
         {
