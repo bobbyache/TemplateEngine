@@ -3,7 +3,7 @@ using CygSoft.Qik.LanguageEngine.Infrastructure;
 
 namespace CygSoft.Qik.LanguageEngine.Symbols
 {
-    internal class ExpressionSymbol : BaseSymbol, IExpression
+    public class ExpressionSymbol : BaseSymbol, IExpression
     {
         private readonly IFunction func;
         public bool IsVisibleToEditor { get; }

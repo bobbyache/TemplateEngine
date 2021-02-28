@@ -1,8 +1,7 @@
-﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
-
+﻿
 namespace CygSoft.Qik.LanguageEngine.Symbols
 {
-    internal class AutoInputSymbol : InputSymbol
+    public class AutoInputSymbol : InputSymbol
     {
         private string value = null;
 

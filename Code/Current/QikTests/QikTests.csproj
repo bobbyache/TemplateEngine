@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Qik\Qik.csproj" />
+    <ProjectReference Include="..\QikApi\QikApi.csproj" />
   </ItemGroup>
 
 </Project>
