@@ -12,11 +12,8 @@ class Program
         {
             IAppHost appHost = null;
 
-            // Create a root command with some options
             var rootCommand = new RootCommand
             {
-                // new Option<bool>("--test", "Some description")
-                new Option("--get-inputs", "Do not process. Just provide input information"),
                 new Option<string>(
                     "--script-file",
                     "Qik Script that will be interpreted"
@@ -25,30 +22,40 @@ class Program
                     "--blueprints-folder",
                     "Folder in which files will be processed"
                 ),
-                new Option<string>(
-                    "--inputs",
-                    "Description"
-                )
+
+                new Option("--get-inputs", "Do not process. Just provide input information"),
+                // new Option("--path", "The path (can be a qik file or a folder containining a qik file"),
+                new Option<string>("--inputs", "Description")
             };
 
             rootCommand.Description = "Qik Console Application";
 
             // Note that the parameters of the handler method are matched according to the names of the options
             rootCommand.Handler = CommandHandler.Create<bool, string, string, string>((Action<bool, string, string, string>)((getInputs, scriptFile, blueprintsFolder, inputs) =>
+            // rootCommand.Handler = CommandHandler.Create<bool, string, string>((Action<bool, string, string>)((getInputs, path, inputs) =>
             {
-                Console.WriteLine(getInputs);
                 Console.WriteLine(scriptFile);
                 Console.WriteLine(blueprintsFolder);
 
+                Console.WriteLine(getInputs);
+                // Console.WriteLine(path);
+                Console.WriteLine(inputs);
+
                 if (getInputs)
                 {
-                    Console.WriteLine(appHost.ReadInputManfest(scriptFile));
+                    Console.WriteLine(appHost.Read(scriptFile));
+                    // TODO: If a project folder is provided, find the qik file and process generate the input manifest for it.
+                    //      If the file path is provided generate the input manifest from it.
+                    // So a single --path should actually be enough
+                    // Console.WriteLine(appHost.ReadInputManfest(path));
                     Console.Read();
                 }
                 else
                 {
-                    //TODO: Do a generate based on blueprint folder and script file...
-                    // Consider just adding a single folder and have the Api generate based on ".qik" and other ".blu" file types.
+                    // TODO: If a project folder is provided, find the qik file and process all the other *.blu files.
+                    //      If the file path is provided, use the qik file's folder to process all *.blu files.
+                    //      Look at CodeCat to see what the file structure looks like
+                    // So a single --path should actually be enough
                     throw new NotImplementedException();
                 }
             }));
@@ -58,11 +65,9 @@ class Program
              .AddJsonFile("appsettings.json");
 
             var config = builder.Build();
-            var author = config.GetSection("author").Get<Person>();
 
             var serviceProvider = new ServiceCollection()
                 .AddSingleton<IAppHost, AppHost>()
-                .AddSingleton<IInputManifestHandler, InputManifestHandler>()
             .BuildServiceProvider();
 
             appHost = serviceProvider.GetService<IAppHost>();

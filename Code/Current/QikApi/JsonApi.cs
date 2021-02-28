@@ -18,6 +18,7 @@ namespace CygSoft.Qik.Api
             //return new string[0];
         }
 
+        // TODO: Should just pass a path. Have the Api decide what to do with it.
         public string ReadScript(string scriptFilePath)
         {
             var result = new StringBuilder();
@@ -30,7 +31,16 @@ namespace CygSoft.Qik.Api
 
             result.Append("]");
 
-            Console.WriteLine(result.ToString());
+            // var scriptFilePath = Directory.EnumerateFiles(projectFolder, "*.qik").SingleOrDefault();
+
+            // if (scriptFilePath is not null)
+            // {
+            //     compiler.Compile(ReadFileContents(scriptFilePath));
+            //     result.Append("[");
+            //     result.Append(SerializeInputSymbols(compiler));
+            //     result.Append("]");
+            //     Console.WriteLine(result.ToString());
+            // }
 
             return result.ToString();
         }

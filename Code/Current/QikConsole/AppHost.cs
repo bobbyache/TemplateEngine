@@ -1,18 +1,27 @@
 
+using CygSoft.Qik.Api;
+using System;
+
 namespace CygSoft.Qik.Console
 {
     public class AppHost : IAppHost
     {
-        private readonly IInputManifestHandler inputManifestHandler;
-
-        public AppHost(IInputManifestHandler inputManifestHandler)
+        public string Read(string scriptFilePath)
         {
-            this.inputManifestHandler = inputManifestHandler;
+            JsonApi jsonApi = new JsonApi();
+            return jsonApi.ReadScript(scriptFilePath);
         }
 
-        public string ReadInputManfest(string scriptFilePath)
+        // TODO: Use the path to determine whether its a qik file or a folder
+        // public string Read(string path)
+        // {
+        //     JsonApi jsonApi = new JsonApi();
+        //     return jsonApi.ReadScript(projectFolder);
+        // }
+
+        public void Generate(string scriptFilePath, string inputs, string blueprintFileFolder)
         {
-            return inputManifestHandler.Read(scriptFilePath);
+            throw new NotImplementedException();
         }
     }
 }
