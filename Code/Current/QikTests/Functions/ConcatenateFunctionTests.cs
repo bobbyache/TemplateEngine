@@ -10,6 +10,11 @@ namespace LanguageEngine.Tests.UnitTests.Functions
     [TestFixture]
     class ConcatenateFunctionTests
     {
+
+        //TODO: Wherever this message is in the function tests look to convert to the new form of the function test see 
+            // var output = TestHelpers.EvaluateCompilerFunction(funcText);
+
+        // BEFORE REMOVING THIS TEST METHOD YOU NEED TO WRITE TESTS FOR ALL ITS POSSIBILITIES IN THE NEW STYLE BELOW
         [Test]
         public void ConcatenateFunction_Input3Strings_ConcatenatesToSingleString_1()
         {

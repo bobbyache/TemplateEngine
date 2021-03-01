@@ -16,13 +16,23 @@ namespace Qik.LanguageEngine.UnitTests.Functions
         }
 
         [Test]
+        public void GuidFunction_Returns_UpperCase_Guid_When_No_Case_Specified()
+        {
+            var funcText = $"guid()";
+            var original = TestHelpers.EvaluateCompilerFunction(funcText);
+            var ucased = original;
+
+            Assert.AreEqual(original.ToLower(), ucased, "Guid does not match or is in the incorrect case.");
+        }
+
+        [Test]
         public void GuidFunction_Returns_UpperCase_Guid_When_UpperCase_Specified()
         {
             var funcText = $"guid(\"u\")";
             var original = TestHelpers.EvaluateCompilerFunction(funcText);
             var ucased = original.ToUpper();
 
-            Assert.AreEqual(original, ucased);
+            Assert.AreEqual(original, ucased, "Guid does not match or is in the incorrect case.");
         }
 
         [Test]
@@ -32,7 +42,7 @@ namespace Qik.LanguageEngine.UnitTests.Functions
             var original = TestHelpers.EvaluateCompilerFunction(funcText);
             var lcased = original.ToLower();
 
-            Assert.AreEqual(original, lcased);
+            Assert.AreEqual(original, lcased, "Guid does not match or is in the incorrect case.");
         }
 
         [Test]
@@ -42,7 +52,7 @@ namespace Qik.LanguageEngine.UnitTests.Functions
             var original = TestHelpers.EvaluateCompilerFunction(funcText);
             var lcased = original.ToLower();
 
-            Assert.AreEqual(original, lcased);
+            Assert.AreEqual(original, lcased, "Guid does not match or is in the incorrect case.");
         }
     }
 }

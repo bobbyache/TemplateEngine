@@ -6,19 +6,33 @@ using CygSoft.Qik.LanguageEngine.Symbols;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using LanguageEngine.Tests.UnitTests.Helpers;
 
 namespace LanguageEngine.Tests.UnitTests.Functions
 {
     [TestFixture]
     class CurrentDateFunctionTests
     {
+
+        [Test]
+        public void Should_Return_Correct_Date_In_Default_Format_When_No_Argument_Specified()
+        {
+            var funcText = $"currentDate()";
+            var output = TestHelpers.EvaluateCompilerFunction(funcText);
+            Assert.AreEqual(DateTime.Now.ToLongDateString(), output);
+        }
+
+        [Test]
+        public void Should_Return_Correct_Date_In_Default_Format_When_Format_Argument_Specified()
+        {
+            var funcText = $"currentDate(\"dd/MM/yyyy\")";
+            var output = TestHelpers.EvaluateCompilerFunction(funcText);
+            Assert.AreEqual(DateTime.Now.ToString("dd/MM/yyyy"), output);
+        }
+
         [Test]
         public void CurrentDateFunction_RequestDate_ReturnsCurrentDate_1()
         {
-            //TODO: Wherever this message is in the function tests look to convert to the new form of the function test see 
-                // var output = TestHelpers.EvaluateCompilerFunction(funcText);
-
-            // BEFORE REMOVING THIS TEST METHOD YOU NEED TO WRITE TESTS FOR ALL ITS POSSIBILITIES IN THE NEW STYLE BELOW
             var globalTable = new GlobalTable();
 
             var functionArguments = new List<IFunction>

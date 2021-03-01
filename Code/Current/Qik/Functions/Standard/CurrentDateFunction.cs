@@ -16,18 +16,25 @@ namespace CygSoft.Qik.LanguageEngine.Functions.Core
 
         public override string Execute(IErrorReport errorReport)
         {
-            if (functionArguments.Count() != 1)
+            if (functionArguments.Count() > 1)
                 errorReport.AddError(new CustomError(this.Line, this.Column, "Too many arguments", this.Name));
 
             string result = null;
             try
             {
-                string dateFormatText = functionArguments[0].Execute(errorReport);
-
-                if (dateFormatText != null && dateFormatText.Length >= 1)
+                if (functionArguments.Count() == 1) 
                 {
-                    string dateText = DateTime.Now.ToString(dateFormatText);
-                    result = dateText;
+                    string dateFormatText = functionArguments[0].Execute(errorReport);
+
+                    if (dateFormatText != null && dateFormatText.Length >= 1)
+                    {
+                        string dateText = DateTime.Now.ToString(dateFormatText);
+                        result = dateText;
+                    }
+                }
+                else
+                {
+                    result = DateTime.Now.ToLongDateString();
                 }
             }
             catch (Exception)

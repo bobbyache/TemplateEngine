@@ -17,14 +17,21 @@ namespace CygSoft.Qik.LanguageEngine.Functions.Core
 
         public override string Execute(IErrorReport errorReport)
         {
-            if (functionArguments.Count() != 1)
+            if (functionArguments.Count() > 1)
                 errorReport.AddError(new CustomError(this.Line, this.Column, "Guid function requires a single empty string parameter.", this.Name));
 
             string result = null;
             try
             {
-                string txt = functionArguments[0].Execute(errorReport);
-                result = txt == "u" ? Guid.NewGuid().ToString().ToUpper() : Guid.NewGuid().ToString();
+                if (functionArguments.Count() == 1) 
+                {
+                    string txt = functionArguments[0].Execute(errorReport);
+                    result = txt == "u" ? Guid.NewGuid().ToString().ToUpper() : Guid.NewGuid().ToString();
+                }
+                else
+                {
+                    result = Guid.NewGuid().ToString();
+                }
             }
             catch (Exception)
             {
