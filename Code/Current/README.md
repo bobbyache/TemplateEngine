@@ -79,7 +79,7 @@ Important that the settings are set up correctly or your grammar file will not g
 | listeners | true  |
 | visitors | true  |
 | outputDir | _antlr  |
-| package | CygSoft.Qik.LanguageEngine.Antlr  |
+| package | CygSoft.Qik.Antlr  |
 
 
 ### Possible Test Explorers/Runners

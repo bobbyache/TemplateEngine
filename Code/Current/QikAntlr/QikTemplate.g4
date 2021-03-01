@@ -80,9 +80,9 @@ concatExpr
     ;
 
 func
-    : IDENTIFIER '(' funcArg (',' funcArg)* ')'
+    : IDENTIFIER ('()'|'(' funcArg (',' funcArg)* ')')
     ;
-
+    
 funcArg
     : expr | concatExpr
     ;
