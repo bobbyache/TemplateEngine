@@ -1,20 +1,36 @@
 
-## Run the Console
-Run the console application
+## Get up and Running
+
+### Run the Console
+To run the console application only the `dotnet run` command is necessary unless running for the first time.
+
 ```
+dotnet clean
+dotnet restore
 dotnet run --project QikConsole/QikConsole.csproj
 ```
-Run the tests
+
+### Run the tests
+
+```
+dotnet test
+```
+
 ```
 dotnet test ./qiktests/qiktests.csproj
 ```
+
+## Tips and Tricks
+
+### Deep Testing
+
 Adding `InternalsVisibleTo` for tests.
 ```
 <InternalsVisibleTo Include="CustomTest1" /> <!-- [assembly: InternalsVisibleTo("CustomTest1")] -->
 ```
 
-## Creation
-Project was created using these commands
+### Console Project Creation
+The initial steps to create the project are as follows. Later, more projects were added using commands similar to those below.
 
 ```
 dotnet new sln -n Qik
@@ -26,7 +42,8 @@ dotnet new console -o QikConsole
 dotnet sln add QikConsole/QikConsole.csproj
 dotnet add QikConsole/QikConsole.csproj reference Qik/Qik.csproj
 ```
-## Install NUnit Template and Create an NUnit Test Project
+### Install and create NUnit tests
+
 Install the template
 ```
 dotnet new -i NUnit3.DotNetNew.Template
@@ -40,13 +57,20 @@ Run the tests
 ```
 dotnet test ./qiktests/qiktests.csproj
 ```
+Note that the tests can be run using CodeLens. In the NUnit test classes each test method will have a `Run Test` and a `Debug Test` above the method declaration.
 
-## ANTLR4 grammar syntax support VS Code Plugin
+## Antlr
 
-- [MarketPlace](https://marketplace.visualstudio.com/items?itemName=mike-lischke.vscode-antlr4&ssr=false#qna)
-- [Github](https://github.com/mike-lischke/vscode-antlr4)
+### ANTLR4 grammar syntax support VS Code Plugin
+
+The extension for ANTLR4 support in Visual Studio code. Provides Code Completion + Symbol Information, Grammar Validations, and Visualizations.
+
+- ANTLR4 grammar syntax support [MarketPlace](https://marketplace.visualstudio.com/items?itemName=mike-lischke.vscode-antlr4&ssr=false#qna)
+- ANTLR4 grammar syntax support [Github](https://github.com/mike-lischke/vscode-antlr4)
 
 ### Usage
+
+Important that the settings are set up correctly or your grammar file will not generate into C# source code. The mode must be external in order to use the CSharp option and it is important to set the output directory and namespace using the item keys below:
 
  Item | Value |
 | --- | :--- |
@@ -64,7 +88,9 @@ dotnet test ./qiktests/qiktests.csproj
 - https://marketplace.visualstudio.com/items?itemName=formulahendry.dotnet-test-explorer&ssr=false#overview
 - https://marketplace.visualstudio.com/items?itemName=wghats.vscode-nxunit-test-adapter&ssr=false#overview
 
-### Console Application
+## Console Application
+
+### Debugging
 
 - Important that the `externalTerminal` is set for the `console` setting in hyour launch.json. Otherwise you'll run the program in your `internalConsole` and it will break. 
 - For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
@@ -72,6 +98,8 @@ dotnet test ./qiktests/qiktests.csproj
 ```
             "console": "externalTerminal",
 ```
+
+### System.Commandline
 
 - [System.CommandLine (Nuget)](https://www.nuget.org/packages/System.CommandLine)
 - [System.CommandLine (Github)](https://github.com/dotnet/command-line-api/blob/master/docs/Your-first-app-with-System-CommandLine.md)
