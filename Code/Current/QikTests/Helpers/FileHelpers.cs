@@ -2,9 +2,9 @@
 
 namespace Qik.LanguageEngine.IntegrationTests.Helpers
 {
-    public class TxtFile
+    public class FileHelpers
     {
-        public static string GetFolder() => "../../../../QikTests/Scripts";
+        public static string GetFolder() => "../../../../QikTests/Files";
         public static string ResolvePath(string fileName) => Path.Combine(GetFolder(), fileName);
         public static string ReadText(string fileName) => File.ReadAllText(ResolvePath(fileName));
     }

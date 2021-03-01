@@ -14,7 +14,7 @@ namespace Qik.LanguageEngine.IntegrationTests
         [Test]
         public void ScriptExamples_InferPrimaryKeyFromPrimaryKeyOption_OutputsPrimaryKey()
         {
-            string scriptText = TxtFile.ReadText("InferPK.txt");
+            string scriptText = FileHelpers.ReadText("InferPrimaryKey.qik");
             ICompiler compiler = new Compiler();
             compiler.Compile(scriptText);
 
@@ -55,19 +55,19 @@ namespace Qik.LanguageEngine.IntegrationTests
         public void ScriptExamples_CreateMultilineScriptInExpression_OutputsCorrectly()
         {
             ICompiler compiler = new Compiler();
-            compiler.Compile(TxtFile.ReadText("MultiLine.txt"));
+            compiler.Compile(FileHelpers.ReadText("MultiLine.qik"));
 
             IGenerator generator = new Generator();
-            string output = generator.Generate(compiler, TxtFile.ReadText("MultiLine.tpl"));
+            string output = generator.Generate(compiler, FileHelpers.ReadText("MultiLine.tpl"));
 
-            Assert.AreEqual(TxtFile.ReadText("MultiLine.out"), output);
+            Assert.AreEqual(FileHelpers.ReadText("MultiLine.out"), output);
         }
 
         [Test]
         public void ScriptExamples_CreateStoredProcOutput_BuildsCorrectSymbolsAndOutputValues()
         {
             ICompiler compiler = new Compiler();
-            compiler.Compile(TxtFile.ReadText("StoredProc.txt"));
+            compiler.Compile(FileHelpers.ReadText("StoredProc.qik"));
 
             IExpression[] expressions = compiler.Expressions;
             IInputField[] inputFields = compiler.InputFields;
@@ -107,7 +107,7 @@ namespace Qik.LanguageEngine.IntegrationTests
         public void ScriptExamples_HtmlEncodeFunction_Encodes()
         {
             ICompiler compiler = new Compiler();
-            compiler.Compile(TxtFile.ReadText("HtmlEncode.txt"));
+            compiler.Compile(FileHelpers.ReadText("HtmlEncode.txt"));
             compiler.Input("@normalText", @"Hello 'World'");
 
             string encodedText = compiler.GetValueOfSymbol("@encodedText");
@@ -121,7 +121,7 @@ namespace Qik.LanguageEngine.IntegrationTests
         public void ScriptExamples_BatchCompileFields_GeneratesBatchOutput()
         {
             IBatchCompiler batchCompiler = new BatchCompiler();
-            batchCompiler.Compile(TxtFile.ReadText("Batch.tpl"));
+            batchCompiler.Compile(FileHelpers.ReadText("Batch.tpl"));
 
             // this must take place afterwards, otherwise it will be cleared by the compile.
             batchCompiler.CreateFieldInput("@Column1", "Title", "Description");
@@ -143,7 +143,7 @@ namespace Qik.LanguageEngine.IntegrationTests
         [Test]
         public void ScriptExamples_OptionInput_Parsed_IsNotAPlaceholder()
         {
-            string scriptText = TxtFile.ReadText("OptionBox.txt");
+            string scriptText = FileHelpers.ReadText("OptionBox.qik");
             ICompiler compiler = new Compiler();
             compiler.Compile(scriptText);
 
