@@ -17,20 +17,30 @@ namespace CygSoft.Qik.Console
             this.jsonFunctions = jsonFunctions ?? throw new ArgumentNullException("IJsonFunctions cannot be null.");
         }
 
-        // TODO: Should just pass a path. Have the Api decide what to do with it.
         public string GetJsonInputInterface(string path)
         {
             compiler.Compile(fileFunctions.ReadTextFile(GetQikScriptPath(path)));
             return jsonFunctions.SerializeInputSymbols(compiler);
         }
 
-        //TODO: You want to input a JSON array here for key values pairs (symbol, value)
         public void Generate(string path)
         {
+            var inputFile = GetInputPath(path);
             var scriptFile = GetQikScriptPath(path);
             var bluePrintFiles = GetBlueprintPaths(path);
 
             compiler.Compile(fileFunctions.ReadTextFile(scriptFile));
+
+            if (fileFunctions.FileExists(inputFile))
+            {
+                var txt = fileFunctions.ReadTextFile(inputFile);
+                var inputs = jsonFunctions.DeserializeInput(fileFunctions.ReadTextFile(inputFile));
+
+                foreach (var input in inputs)
+                {
+                    compiler.Input(input.Symbol, input.Value);
+                }
+            }
 
             foreach (var bluePrintFile in bluePrintFiles)
             {
@@ -53,6 +63,19 @@ namespace CygSoft.Qik.Console
                 if (fileFunctions.IsBlueprint(path)) return new List<string>() { path };     
 
             throw new FileNotFoundException("Blueprint file not found.");
+        }
+
+        private string GetInputPath(string path)
+        {
+            if (fileFunctions.IsFolder(path))
+            {
+                var scriptFound = fileFunctions.FindInputsFileInFolder(path, out var scriptPath);
+                if (scriptFound) return scriptPath;
+            }
+            else
+                if (fileFunctions.IsInputsFile(path)) return path;             
+
+            throw new FileNotFoundException("Input file not found.");
         }
 
         private string GetQikScriptPath(string path)

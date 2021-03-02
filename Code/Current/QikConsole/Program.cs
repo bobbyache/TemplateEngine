@@ -20,7 +20,7 @@ class Program
                 new Option("--get-inputs", "Do not process. Just provide input information"),
                 // new Option("--path", "The path (can be a qik file or a folder containining a qik file"),
                 new Option<string>("--inputs", "Description"),
-                new Option("--prompt")
+                new Option("--prompt"),
             };
 
             rootCommand.Description = "Qik Console Application";

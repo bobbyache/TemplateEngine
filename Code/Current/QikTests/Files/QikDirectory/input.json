@@ -1,0 +1,14 @@
+[
+    {
+        "Symbol":"@table",
+        "Value": "Table_1"
+    },
+    {
+        "Symbol":"@userPrimaryKey",
+        "Value": "User_Primary_Key"
+    },
+    {
+        "Symbol":"@primaryKeyOption",
+        "Value": "INFERRED"
+    }
+]

@@ -20,6 +20,7 @@
                 // "--blueprints-folder", 
                 // "\"C:\\source_files\\process.txt\"", 
                 // "--get-inputs"
+                "--prompt"
             ],
             "cwd": "${workspaceFolder}/QikConsole",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console

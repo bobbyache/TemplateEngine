@@ -6,10 +6,13 @@ namespace CygSoft.Qik.Console
 {
     public interface IFileFunctions
     {
+        bool FileExists(string filePath);
         string ReadTextFile(string filePath);
         void WriteTextFile(string path, string contents);
         bool FindQikScriptInFolder(string directoryPath, out string scriptPath);
         bool FindBlueprintFilesInFolder(string directoryPath, out IEnumerable<string> blueprintPaths);
+        bool FindInputsFileInFolder(string directoryPath, out string jsonInputFile);
+        bool IsInputsFile(string path);
         bool IsFolder(string path);
         bool IsQikScript(string path);
         bool IsBlueprint(string path);
@@ -18,6 +21,12 @@ namespace CygSoft.Qik.Console
 
     public class FileFunctions : IFileFunctions
     {
+
+        public bool FileExists(string filePath)
+        {
+            return File.Exists(filePath);
+        }
+
         public string ReadTextFile(string filePath)
         {
             string contents = null;
@@ -41,6 +50,14 @@ namespace CygSoft.Qik.Console
                 streamWriter.Write(contents);
                 streamWriter.Flush();
             }
+        }
+
+        public bool FindInputsFileInFolder(string directoryPath, out string jsonInputFile)
+        {
+            var path = Directory.EnumerateFiles(directoryPath, "*.json").SingleOrDefault();
+            jsonInputFile = path;
+
+            return path is not null;
         }
 
         public bool FindQikScriptInFolder(string directoryPath, out string scriptPath)
@@ -70,6 +87,16 @@ namespace CygSoft.Qik.Console
             if (!IsFolder(path))
             {
                 if (Path.GetExtension(path) == ".qik" && File.Exists(path))
+                    return true;
+            }
+            return false;
+        }
+
+        public bool IsInputsFile(string path)
+        {
+            if (!IsFolder(path))
+            {
+                if (Path.GetExtension(path) == ".json" && File.Exists(path))
                     return true;
             }
             return false;

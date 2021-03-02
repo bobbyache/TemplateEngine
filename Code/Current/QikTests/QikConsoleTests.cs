@@ -37,8 +37,8 @@ namespace Qik.LanguageEngine.IntegrationTests
             FileHelpers.DeleteFile(@"QikDirectory\blueprint_1_output.txt");
             FileHelpers.DeleteFile(@"QikDirectory\blueprint_2_output.txt");
 
-            Assert.AreEqual(output_1, "PK_Primary_Key");
-            Assert.AreEqual(output_2, "PK_Primary_Key\r\nPK_Primary_Key");
+            Assert.AreEqual(output_1, "Table_1Id");
+            Assert.AreEqual(output_2, "Table_1Id\r\nTable_1Id");
         }
     }
 }
