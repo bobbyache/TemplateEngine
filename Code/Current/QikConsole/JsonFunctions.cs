@@ -24,6 +24,8 @@ namespace CygSoft.Qik.Console
         {
             var result = new StringBuilder();
 
+            result.Append("[");
+
             for (var i = 0; i < compiler.InputFields.Length; i++)
             {
                 var inputField = compiler.InputFields[i];
@@ -42,6 +44,8 @@ namespace CygSoft.Qik.Console
                     result.Append(",");
                 }
             }
+
+            result.Append("]");
 
             return result.ToString();
         }

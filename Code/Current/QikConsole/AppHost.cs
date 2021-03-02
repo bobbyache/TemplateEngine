@@ -1,10 +1,6 @@
 
 using System;
-using System.Text;
-using System.Text.Json;
-
 using CygSoft.Qik.LanguageEngine.Infrastructure;
-using CygSoft.Qik.LanguageEngine.Symbols;
 
 namespace CygSoft.Qik.Console
 {
@@ -23,14 +19,9 @@ namespace CygSoft.Qik.Console
         // TODO: Should just pass a path. Have the Api decide what to do with it.
         public string Read(string scriptFilePath)
         {
-            var result = new StringBuilder();
             compiler.Compile(fileFunctions.ReadTextFile(scriptFilePath));
 
-            result.Append("[");
-
-            result.Append(jsonFunctions.SerializeInputSymbols(compiler));
-
-            result.Append("]");
+            return jsonFunctions.SerializeInputSymbols(compiler);
 
             // var scriptFilePath = Directory.EnumerateFiles(projectFolder, "*.qik").SingleOrDefault();
 
@@ -41,17 +32,8 @@ namespace CygSoft.Qik.Console
             //     result.Append(SerializeInputSymbols(compiler));
             //     result.Append("]");
             //     Console.WriteLine(result.ToString());
-            // }
-
-            return result.ToString();
+            // 
         }
-
-        // TODO: Use the path to determine whether its a qik file or a folder
-        // public string Read(string path)
-        // {
-        //     JsonApi jsonApi = new JsonApi();
-        //     return jsonApi.ReadScript(projectFolder);
-        // }
 
         //TODO: You want to input a JSON array here for key values pairs (symbol, value)
         public void Generate(string scriptFilePath, string inputs, string blueprintFileFolder)
