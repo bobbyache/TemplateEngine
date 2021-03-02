@@ -1,3 +1,4 @@
+using CygSoft.Qik;
 using CygSoft.Qik.LanguageEngine;
 using CygSoft.Qik.LanguageEngine.Infrastructure;
 using NUnit.Framework;
@@ -7,8 +8,6 @@ using System;
 namespace Qik.LanguageEngine.IntegrationTests
 {
     [TestFixture]
-    [Category("Qik.ScriptExamples")]
-    [Category("Tests.Integration")]
     public class IntegrationTests
     {
         [Test]

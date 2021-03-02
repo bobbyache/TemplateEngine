@@ -1,5 +1,5 @@
 ﻿
-namespace CygSoft.Qik.LanguageEngine.Symbols
+namespace CygSoft.Qik
 {
     public class AutoInputSymbol : InputSymbol
     {

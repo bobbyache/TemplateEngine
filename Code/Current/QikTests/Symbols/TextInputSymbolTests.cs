@@ -1,6 +1,4 @@
-﻿using CygSoft.Qik.LanguageEngine;
-using CygSoft.Qik.LanguageEngine.Infrastructure;
-using CygSoft.Qik.LanguageEngine.Symbols;
+﻿using CygSoft.Qik;
 using LanguageEngine.Tests.UnitTests.Helpers;
 using NUnit.Framework;
 

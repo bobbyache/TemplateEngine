@@ -1,6 +1,4 @@
-﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
-
-namespace CygSoft.Qik.LanguageEngine.Symbols
+﻿namespace CygSoft.Qik
 {
     public abstract class BaseSymbol : ISymbol 
     {

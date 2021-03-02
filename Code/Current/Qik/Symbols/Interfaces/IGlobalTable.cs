@@ -1,5 +1,5 @@
 ﻿
-namespace CygSoft.Qik.LanguageEngine.Infrastructure
+namespace CygSoft.Qik
 {
     public interface IGlobalTable
     {

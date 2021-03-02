@@ -1,7 +1,6 @@
 ﻿
-using CygSoft.Qik.LanguageEngine.Infrastructure;
 
-namespace CygSoft.Qik.LanguageEngine.Symbols
+namespace CygSoft.Qik
 {
     public class TextInputSymbol : InputSymbol, ITextField
     {

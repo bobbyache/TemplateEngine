@@ -1,4 +1,4 @@
-﻿namespace CygSoft.Qik.LanguageEngine
+﻿namespace CygSoft.Qik
 {
     internal class Common
     {

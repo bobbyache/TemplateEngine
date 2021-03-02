@@ -1,8 +1,7 @@
-﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace CygSoft.Qik.LanguageEngine.Symbols
+namespace CygSoft.Qik
 {
     public class OptionInputSymbol : InputSymbol, IOptionsField
     {

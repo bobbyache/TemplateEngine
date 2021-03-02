@@ -1,9 +1,7 @@
-﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
-using CygSoft.Qik.LanguageEngine.Symbols;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace CygSoft.Qik.LanguageEngine.Scope
+namespace CygSoft.Qik
 {
     public class GlobalTable : IGlobalTable
     {

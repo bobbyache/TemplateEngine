@@ -1,10 +1,7 @@
 ﻿using Antlr4.Runtime;
-using CygSoft.Qik.LanguageEngine;
 using CygSoft.Qik.LanguageEngine.Infrastructure;
-using CygSoft.Qik.LanguageEngine.Symbols;
 using System;
 using System.Linq;
-using CygSoft.Qik.LanguageEngine.Scope;
 
 namespace CygSoft.Qik.Antlr
 {

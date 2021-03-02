@@ -1,7 +1,5 @@
 ﻿using CygSoft.Qik;
 using CygSoft.Qik.Functions;
-using CygSoft.Qik.LanguageEngine.Scope;
-using CygSoft.Qik.LanguageEngine.Symbols;
 using LanguageEngine.Tests.UnitTests.Helpers;
 using NUnit.Framework;
 using System.Collections.Generic;
