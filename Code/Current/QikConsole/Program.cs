@@ -48,7 +48,8 @@ class Program
                     Console.WriteLine("Welcome to Qik");
                     Console.WriteLine("Please supply a folder that contains a *.qik file or a *.qik file:");
                     var path = Console.ReadLine();
-                    Console.WriteLine($"You entered ${path}");
+                    // Console.WriteLine($"You entered ${path}");
+                    appHost.Generate(path);
                     // appHost
                 }
                 else if (getInputs)

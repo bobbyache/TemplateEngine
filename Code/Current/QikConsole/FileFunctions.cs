@@ -1,14 +1,19 @@
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace CygSoft.Qik.Console
 {
     public interface IFileFunctions
     {
         string ReadTextFile(string filePath);
+        void WriteTextFile(string path, string contents);
         bool FindQikScriptInFolder(string directoryPath, out string scriptPath);
+        bool FindBlueprintFilesInFolder(string directoryPath, out IEnumerable<string> blueprintPaths);
         bool IsFolder(string path);
         bool IsQikScript(string path);
+        bool IsBlueprint(string path);
+        string GeneratOutputPath(string blueprintFilePath);
     }
 
     public class FileFunctions : IFileFunctions
@@ -28,12 +33,30 @@ namespace CygSoft.Qik.Console
             return contents;
         }
 
+        public void WriteTextFile(string path, string contents)
+        {
+            using (FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write))
+            using (StreamWriter streamWriter = new StreamWriter(fileStream))
+            {
+                streamWriter.Write(contents);
+                streamWriter.Flush();
+            }
+        }
+
         public bool FindQikScriptInFolder(string directoryPath, out string scriptPath)
         {
             var path = Directory.EnumerateFiles(directoryPath, "*.qik").SingleOrDefault();
             scriptPath = path;
 
             return path is not null;
+        }
+
+        public bool FindBlueprintFilesInFolder(string directoryPath, out IEnumerable<string> blueprintPaths)
+        {
+            var paths = Directory.EnumerateFiles(directoryPath, "*.blu");
+            blueprintPaths = paths;
+
+            return paths is not null && paths.Count() > 0;
         }
 
         public bool IsFolder(string path)
@@ -50,6 +73,23 @@ namespace CygSoft.Qik.Console
                     return true;
             }
             return false;
+        }
+
+        public bool IsBlueprint(string path)
+        {
+            if (!IsFolder(path))
+            {
+                if (Path.GetExtension(path) == ".blu" && File.Exists(path))
+                    return true;
+            }
+            return false;
+        }
+
+        public string GeneratOutputPath(string blueprintFilePath)
+        {
+            var directory = Path.GetDirectoryName(blueprintFilePath);
+            var fileName = Path.GetFileNameWithoutExtension(blueprintFilePath);
+            return Path.Combine(directory, $"{fileName}_output.txt");
         }
     }
 }

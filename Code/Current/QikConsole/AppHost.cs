@@ -1,6 +1,7 @@
 
 using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace CygSoft.Qik.Console
 {
@@ -24,7 +25,35 @@ namespace CygSoft.Qik.Console
         }
 
         //TODO: You want to input a JSON array here for key values pairs (symbol, value)
-        public void Generate(string scriptFilePath, string inputs, string blueprintFileFolder) => throw new NotImplementedException();
+        public void Generate(string path)
+        {
+            var scriptFile = GetQikScriptPath(path);
+            var bluePrintFiles = GetBlueprintPaths(path);
+
+            compiler.Compile(fileFunctions.ReadTextFile(scriptFile));
+
+            foreach (var bluePrintFile in bluePrintFiles)
+            {
+                var generator = new Generator();
+                string output = generator.Generate(compiler, fileFunctions.ReadTextFile(bluePrintFile));
+
+                var outputPath = fileFunctions.GeneratOutputPath(bluePrintFile);
+                fileFunctions.WriteTextFile(outputPath, output);
+            }
+        }
+
+        private IEnumerable<string> GetBlueprintPaths(string path)
+        {
+            if (fileFunctions.IsFolder(path))
+            {
+                var scriptFound = fileFunctions.FindBlueprintFilesInFolder(path, out var bluePrints);
+                if (scriptFound) return bluePrints;
+            }
+            else
+                if (fileFunctions.IsBlueprint(path)) return new List<string>() { path };     
+
+            throw new FileNotFoundException("Blueprint file not found.");
+        }
 
         private string GetQikScriptPath(string path)
         {

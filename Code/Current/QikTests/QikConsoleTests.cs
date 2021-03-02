@@ -22,16 +22,23 @@ namespace Qik.LanguageEngine.IntegrationTests
         }
 
         [Test]
-        public void Should_Find_Script_In_Direcctory_And_Return_Input_Manifest()
+        public void Should_Find_Script_In_Directory_And_Generate_Valid_Output()
         {
             var fileFunctions = new FileFunctions();
             var compiler = new Compiler();
             var jsonFunctions = new JsonFunctions(compiler);
 
             var appHost = new AppHost(compiler, fileFunctions, jsonFunctions);
-            var resultJson = appHost.GetJsonInputInterface(FileHelpers.GetSubFolder("QikDirectory"));
-            var expectedJson = FileHelpers.ReadText("InferPk_ReadScript_Json.txt");
-            Assert.AreEqual(expectedJson, resultJson);
+            appHost.Generate(FileHelpers.GetSubFolder("QikDirectory"));
+
+            var output_1 = FileHelpers.ReadText(@"QikDirectory\blueprint_1_output.txt");
+            var output_2 = FileHelpers.ReadText(@"QikDirectory\blueprint_2_output.txt");
+
+            FileHelpers.DeleteFile(@"QikDirectory\blueprint_1_output.txt");
+            FileHelpers.DeleteFile(@"QikDirectory\blueprint_2_output.txt");
+
+            Assert.AreEqual(output_1, "PK_Primary_Key");
+            Assert.AreEqual(output_2, "PK_Primary_Key\r\nPK_Primary_Key");
         }
     }
 }
