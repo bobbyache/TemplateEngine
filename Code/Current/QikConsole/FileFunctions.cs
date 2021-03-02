@@ -7,6 +7,7 @@ namespace CygSoft.Qik.Console
     public interface IFileFunctions
     {
         bool FileExists(string filePath);
+        string GetFileDirectory(string filePath);
         string ReadTextFile(string filePath);
         void WriteTextFile(string path, string contents);
         bool FindQikScriptInFolder(string directoryPath, out string scriptPath);
@@ -21,11 +22,8 @@ namespace CygSoft.Qik.Console
 
     public class FileFunctions : IFileFunctions
     {
-
-        public bool FileExists(string filePath)
-        {
-            return File.Exists(filePath);
-        }
+        public bool FileExists(string filePath) => File.Exists(filePath);
+        public string GetFileDirectory(string filePath) => Path.GetDirectoryName(filePath);
 
         public string ReadTextFile(string filePath)
         {

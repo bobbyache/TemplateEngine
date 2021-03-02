@@ -56,11 +56,14 @@ namespace CygSoft.Qik.Console
         {
             if (fileFunctions.IsFolder(path))
             {
-                var scriptFound = fileFunctions.FindBlueprintFilesInFolder(path, out var bluePrints);
-                if (scriptFound) return bluePrints;
+                var blueprintsFound = fileFunctions.FindBlueprintFilesInFolder(path, out var bluePrints);
+                if (blueprintsFound) return bluePrints;
             }
             else
-                if (fileFunctions.IsBlueprint(path)) return new List<string>() { path };     
+            {
+                var blueprintsFound = fileFunctions.FindBlueprintFilesInFolder(fileFunctions.GetFileDirectory(path), out var blueprintPaths);
+                if (blueprintsFound) return blueprintPaths;
+            } 
 
             throw new FileNotFoundException("Blueprint file not found.");
         }
@@ -69,11 +72,14 @@ namespace CygSoft.Qik.Console
         {
             if (fileFunctions.IsFolder(path))
             {
-                var scriptFound = fileFunctions.FindInputsFileInFolder(path, out var scriptPath);
-                if (scriptFound) return scriptPath;
+                var inputFound = fileFunctions.FindInputsFileInFolder(path, out var inputPath);
+                if (inputFound) return inputPath;
             }
             else
-                if (fileFunctions.IsInputsFile(path)) return path;             
+            {
+                var inputFound = fileFunctions.FindInputsFileInFolder(fileFunctions.GetFileDirectory(path), out var inputPath);
+                if (inputFound) return inputPath;
+            }         
 
             throw new FileNotFoundException("Input file not found.");
         }
