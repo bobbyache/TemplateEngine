@@ -68,13 +68,13 @@ namespace CygSoft.Qik.Api
             {
                 var inputField = compiler.InputFields[i];
 
-                if (inputField is TextInputSymbol)
+                if (inputField is TextInputSymbol textInputField)
                 {
-                    result.Append(JsonSerializer.Serialize<TextInputSymbol>(inputField as TextInputSymbol));
+                    result.Append(JsonSerializer.Serialize<TextInputSymbol>(textInputField));
                 }
-                else if (inputField is OptionInputSymbol)
+                else if (inputField is OptionInputSymbol optionInputField)
                 {
-                    result.Append(JsonSerializer.Serialize<OptionInputSymbol>(inputField as OptionInputSymbol));
+                    result.Append(JsonSerializer.Serialize<OptionInputSymbol>(optionInputField));
                 }
 
                 if (i < compiler.InputFields.Length - 1)
