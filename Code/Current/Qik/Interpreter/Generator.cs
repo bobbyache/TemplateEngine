@@ -1,6 +1,5 @@
-﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
-
-namespace CygSoft.Qik.LanguageEngine
+﻿
+namespace CygSoft.Qik
 {
     public class Generator : IGenerator
     {

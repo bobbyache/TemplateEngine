@@ -1,4 +1,4 @@
-﻿using CygSoft.Qik.LanguageEngine;
+﻿using CygSoft.Qik;
 using NUnit.Framework;
 
 namespace Qik.LanguageEngine.UnitTests

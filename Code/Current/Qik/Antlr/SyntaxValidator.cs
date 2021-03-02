@@ -1,7 +1,4 @@
 ﻿using Antlr4.Runtime;
-using CygSoft.Qik.LanguageEngine;
-using CygSoft.Qik.LanguageEngine.Infrastructure;
-using CygSoft.Qik.Antlr;
 using System;
 
 namespace CygSoft.Qik.Antlr
@@ -30,8 +27,6 @@ namespace CygSoft.Qik.Antlr
             parser.template();
             errorListener.SyntaxErrorDetected -= ErrorListener_SyntaxErrorDetected;
         }
-
-
 
         private void ErrorListener_SyntaxErrorDetected(object sender, CompileErrorEventArgs e)
         {

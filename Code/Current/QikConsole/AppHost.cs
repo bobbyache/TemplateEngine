@@ -1,6 +1,5 @@
 
 using System;
-using CygSoft.Qik.LanguageEngine.Infrastructure;
 
 namespace CygSoft.Qik.Console
 {

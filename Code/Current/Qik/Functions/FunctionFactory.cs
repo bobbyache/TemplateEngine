@@ -1,5 +1,4 @@
-﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace CygSoft.Qik.Functions

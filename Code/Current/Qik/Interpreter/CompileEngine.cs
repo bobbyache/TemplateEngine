@@ -1,9 +1,9 @@
 ﻿using Antlr4.Runtime;
-using CygSoft.Qik.LanguageEngine.Infrastructure;
 using System;
 using System.Linq;
+using CygSoft.Qik.Antlr;
 
-namespace CygSoft.Qik.Antlr
+namespace CygSoft.Qik
 {
     public class CompileEngine : ICompileEngine
     {

@@ -1,8 +1,7 @@
-﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
-using System;
+﻿using System;
 using CygSoft.Qik.Antlr;
 
-namespace CygSoft.Qik.LanguageEngine
+namespace CygSoft.Qik
 {
     public class Compiler : ICompiler
     {

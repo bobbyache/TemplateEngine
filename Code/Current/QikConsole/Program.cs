@@ -4,9 +4,8 @@ using System;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.IO;
+using CygSoft.Qik;
 using CygSoft.Qik.Console;
-using CygSoft.Qik.LanguageEngine;
-using CygSoft.Qik.LanguageEngine.Infrastructure;
 
 class Program
 {

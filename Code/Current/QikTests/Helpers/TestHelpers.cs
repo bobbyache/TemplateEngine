@@ -1,6 +1,4 @@
 ﻿using CygSoft.Qik;
-using CygSoft.Qik.LanguageEngine;
-
 
 namespace LanguageEngine.Tests.UnitTests.Helpers
 {
