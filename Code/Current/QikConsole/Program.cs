@@ -5,6 +5,8 @@ using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.IO;
 using CygSoft.Qik.Console;
+using CygSoft.Qik.LanguageEngine;
+using CygSoft.Qik.LanguageEngine.Infrastructure;
 
 class Program
 {
@@ -67,6 +69,9 @@ class Program
             var config = builder.Build();
 
             var serviceProvider = new ServiceCollection()
+                .AddSingleton<IJsonFunctions, JsonFunctions>()
+                .AddSingleton<IFileFunctions, FileFunctions>()
+                .AddSingleton<ICompiler, Compiler>()
                 .AddSingleton<IAppHost, AppHost>()
             .BuildServiceProvider();
 

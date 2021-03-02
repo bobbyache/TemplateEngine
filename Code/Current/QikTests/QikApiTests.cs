@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using Qik.LanguageEngine.IntegrationTests.Helpers;
 using CygSoft.Qik.Console;
+using CygSoft.Qik.LanguageEngine;
 
 namespace Qik.LanguageEngine.IntegrationTests
 {
@@ -13,8 +14,12 @@ namespace Qik.LanguageEngine.IntegrationTests
         [Test]
         public void Should_Read_Script_And_Return_Input_Manifest()
         {
-            var appHost = new AppHost();
-            var resultJson = appHost.ReadScript(FileHelpers.ResolvePath("InferPrimaryKey.qik"));
+            var fileFunctions = new FileFunctions();
+            var compiler = new Compiler();
+            var jsonFunctions = new JsonFunctions(compiler);
+
+            var appHost = new AppHost(compiler, fileFunctions, jsonFunctions);
+            var resultJson = appHost.Read(FileHelpers.ResolvePath("InferPrimaryKey.qik"));
             var expectedJson = FileHelpers.ReadText("InferPk_ReadScript_Json.txt");
             Assert.AreEqual(expectedJson, resultJson);
         }

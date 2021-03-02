@@ -1,51 +1,34 @@
 
 using System;
-using System.IO;
 using System.Text;
 using System.Text.Json;
 
 using CygSoft.Qik.LanguageEngine.Infrastructure;
 using CygSoft.Qik.LanguageEngine.Symbols;
-using CygSoft.Qik.LanguageEngine;
 
 namespace CygSoft.Qik.Console
 {
     public class AppHost : IAppHost
     {
-        public string Read(string scriptFilePath)
+        private readonly ICompiler compiler;
+        private readonly IFileFunctions fileFunctions;
+        private readonly IJsonFunctions jsonFunctions;
+        public AppHost(ICompiler compiler, IFileFunctions fileFunctions, IJsonFunctions jsonFunctions)
         {
-            return ReadScript(scriptFilePath);
-        }
-
-        // TODO: Use the path to determine whether its a qik file or a folder
-        // public string Read(string path)
-        // {
-        //     JsonApi jsonApi = new JsonApi();
-        //     return jsonApi.ReadScript(projectFolder);
-        // }
-
-        public void Generate(string scriptFilePath, string inputs, string blueprintFileFolder)
-        {
-            throw new NotImplementedException();
-        }
-
-                //TODO: You want to input a JSON array here for key values pairs (symbol, value)
-        public string[] Generate(string inputData, string[] bluePrintTexts)
-        {
-            throw new NotImplementedException();
-            //return new string[0];
+            this.compiler = compiler ?? throw new ArgumentNullException("ICompiler cannot be null.");
+            this.fileFunctions = fileFunctions ?? throw new ArgumentNullException("IFileFunctions cannot be null.");
+            this.jsonFunctions = jsonFunctions ?? throw new ArgumentNullException("IJsonFunctions cannot be null.");
         }
 
         // TODO: Should just pass a path. Have the Api decide what to do with it.
-        public string ReadScript(string scriptFilePath)
+        public string Read(string scriptFilePath)
         {
             var result = new StringBuilder();
-            var compiler = new Compiler();
-            compiler.Compile(ReadFileContents(scriptFilePath));
+            compiler.Compile(fileFunctions.ReadTextFile(scriptFilePath));
 
             result.Append("[");
 
-            result.Append(SerializeInputSymbols(compiler));
+            result.Append(jsonFunctions.SerializeInputSymbols(compiler));
 
             result.Append("]");
 
@@ -63,45 +46,17 @@ namespace CygSoft.Qik.Console
             return result.ToString();
         }
 
-        private string ReadFileContents(string filePath)
+        // TODO: Use the path to determine whether its a qik file or a folder
+        // public string Read(string path)
+        // {
+        //     JsonApi jsonApi = new JsonApi();
+        //     return jsonApi.ReadScript(projectFolder);
+        // }
+
+        //TODO: You want to input a JSON array here for key values pairs (symbol, value)
+        public void Generate(string scriptFilePath, string inputs, string blueprintFileFolder)
         {
-            string contents = null;
-            // Specify file, instructions, and priveledges
-            using (var file = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Read))
-            {
-                // Create a new stream to read from a file
-                using (StreamReader sr = new StreamReader(file))
-                {
-                    contents = sr.ReadToEnd();
-                }
-            }
-            return contents;
-        }
-
-        private string SerializeInputSymbols(ICompiler compiler)
-        {
-            var result = new StringBuilder();
-
-            for (var i = 0; i < compiler.InputFields.Length; i++)
-            {
-                var inputField = compiler.InputFields[i];
-
-                if (inputField is TextInputSymbol textInputField)
-                {
-                    result.Append(JsonSerializer.Serialize<TextInputSymbol>(textInputField));
-                }
-                else if (inputField is OptionInputSymbol optionInputField)
-                {
-                    result.Append(JsonSerializer.Serialize<OptionInputSymbol>(optionInputField));
-                }
-
-                if (i < compiler.InputFields.Length - 1)
-                {
-                    result.Append(",");
-                }
-            }
-
-            return result.ToString();
+            throw new NotImplementedException();
         }
     }
 }
