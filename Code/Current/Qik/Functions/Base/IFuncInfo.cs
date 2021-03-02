@@ -1,4 +1,4 @@
-﻿namespace CygSoft.Qik.LanguageEngine.Infrastructure
+﻿namespace CygSoft.Qik.Functions
 {
     public interface IFuncInfo
     {

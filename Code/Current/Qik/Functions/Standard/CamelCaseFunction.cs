@@ -1,11 +1,9 @@
-﻿using CygSoft.Qik.LanguageEngine.Funcs;
-using CygSoft.Qik.LanguageEngine.Functions.Core;
-using CygSoft.Qik.LanguageEngine.Infrastructure;
+﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CygSoft.Qik.LanguageEngine.Functions.Core
+namespace CygSoft.Qik.Functions
 {
     public class CamelCaseFunction : BaseFunction
     {

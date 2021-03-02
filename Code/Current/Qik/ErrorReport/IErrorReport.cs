@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CygSoft.Qik.LanguageEngine.Infrastructure
+namespace CygSoft.Qik
 {
     public interface IErrorReport
     {

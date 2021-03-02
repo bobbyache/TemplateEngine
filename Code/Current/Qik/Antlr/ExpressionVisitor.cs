@@ -2,7 +2,7 @@
 using CygSoft.Qik.LanguageEngine.Symbols;
 using System.Collections.Generic;
 using CygSoft.Qik.LanguageEngine.Infrastructure;
-using CygSoft.Qik.LanguageEngine.Functions.Core;
+using CygSoft.Qik.Functions;
 
 namespace CygSoft.Qik.Antlr
 {

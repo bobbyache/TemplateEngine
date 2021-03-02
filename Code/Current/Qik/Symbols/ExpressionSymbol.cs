@@ -1,4 +1,4 @@
-﻿using CygSoft.Qik.LanguageEngine.Funcs;
+﻿using CygSoft.Qik.Functions;
 using CygSoft.Qik.LanguageEngine.Infrastructure;
 
 namespace CygSoft.Qik.LanguageEngine.Symbols

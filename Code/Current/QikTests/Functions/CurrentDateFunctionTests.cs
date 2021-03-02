@@ -1,6 +1,5 @@
-﻿using CygSoft.Qik.LanguageEngine;
-using CygSoft.Qik.LanguageEngine.Functions.Core;
-using CygSoft.Qik.LanguageEngine.Infrastructure;
+﻿using CygSoft.Qik;
+using CygSoft.Qik.Functions;
 using CygSoft.Qik.LanguageEngine.Scope;
 using CygSoft.Qik.LanguageEngine.Symbols;
 using NUnit.Framework;

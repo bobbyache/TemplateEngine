@@ -1,7 +1,7 @@
 ﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
 using System.Collections.Generic;
 
-namespace CygSoft.Qik.LanguageEngine.Funcs
+namespace CygSoft.Qik.Functions
 {
     public abstract class BaseFunction : IFunction
     {

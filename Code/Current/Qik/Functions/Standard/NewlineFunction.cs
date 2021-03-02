@@ -1,8 +1,6 @@
-﻿using CygSoft.Qik.LanguageEngine.Funcs;
-using CygSoft.Qik.LanguageEngine.Infrastructure;
-using System;
+﻿using System;
 
-namespace CygSoft.Qik.LanguageEngine.Functions.Core
+namespace CygSoft.Qik.Functions
 {
     public class NewlineFunction : BaseFunction
     {

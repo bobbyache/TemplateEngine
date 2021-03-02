@@ -1,9 +1,8 @@
-﻿using CygSoft.Qik.LanguageEngine.Functions.Core;
-using CygSoft.Qik.LanguageEngine.Infrastructure;
+﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
 using System;
 using System.Collections.Generic;
 
-namespace CygSoft.Qik.LanguageEngine
+namespace CygSoft.Qik.Functions
 {
     public class FunctionFactory
     {

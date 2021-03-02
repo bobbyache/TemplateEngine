@@ -1,7 +1,6 @@
-﻿using CygSoft.Qik.LanguageEngine.Funcs;
-using CygSoft.Qik.LanguageEngine.Infrastructure;
+﻿using CygSoft.Qik.LanguageEngine.Infrastructure;
 
-namespace CygSoft.Qik.LanguageEngine.Functions.Core
+namespace CygSoft.Qik.Functions
 {
     public class IntegerFunction : BaseFunction
     {
