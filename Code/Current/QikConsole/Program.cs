@@ -15,36 +15,45 @@ class Program
 
             var rootCommand = new RootCommand
             {
-                new Option<string>(
-                    "--script-file",
-                    "Qik Script that will be interpreted"
-                ),
-                new Option<string>(
-                    "--blueprints-folder",
-                    "Folder in which files will be processed"
-                ),
-
+                new Option<string>("--script-file", "Qik Script that will be interpreted"),
+                new Option<string>("--blueprints-folder", "Folder in which files will be processed"),
                 new Option("--get-inputs", "Do not process. Just provide input information"),
                 // new Option("--path", "The path (can be a qik file or a folder containining a qik file"),
-                new Option<string>("--inputs", "Description")
+                new Option<string>("--inputs", "Description"),
+                new Option("--prompt")
             };
 
             rootCommand.Description = "Qik Console Application";
 
             // Note that the parameters of the handler method are matched according to the names of the options
-            rootCommand.Handler = CommandHandler.Create<bool, string, string, string>((Action<bool, string, string, string>)((getInputs, scriptFile, blueprintsFolder, inputs) =>
-            // rootCommand.Handler = CommandHandler.Create<bool, string, string>((Action<bool, string, string>)((getInputs, path, inputs) =>
+            rootCommand.Handler = CommandHandler.Create<bool, bool, string, string, string>((Action<bool, bool, string, string, string>)(
+                (
+                    getInputs, 
+                    prompt, 
+                    scriptFile, 
+                    blueprintsFolder, 
+                    inputs
+                ) =>
             {
-                Console.WriteLine(scriptFile);
-                Console.WriteLine(blueprintsFolder);
+                // Console.WriteLine(scriptFile);
+                // Console.WriteLine(blueprintsFolder);
 
-                Console.WriteLine(getInputs);
-                // Console.WriteLine(path);
-                Console.WriteLine(inputs);
+                // Console.WriteLine(getInputs);
+                // // Console.WriteLine(path);
+                // Console.WriteLine(inputs);
 
-                if (getInputs)
+                if (prompt)
                 {
-                    Console.WriteLine(appHost.Read(scriptFile));
+                    Console.Clear();
+                    Console.WriteLine("Welcome to Qik");
+                    Console.WriteLine("Please supply a folder that contains a *.qik file or a *.qik file:");
+                    var path = Console.ReadLine();
+                    Console.WriteLine($"You entered ${path}");
+                    // appHost
+                }
+                else if (getInputs)
+                {
+                    Console.WriteLine(appHost.GetJsonInputInterface(scriptFile));
                     // TODO: If a project folder is provided, find the qik file and process generate the input manifest for it.
                     //      If the file path is provided generate the input manifest from it.
                     // So a single --path should actually be enough

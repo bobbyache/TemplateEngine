@@ -1,5 +1,6 @@
 
 using System;
+using System.IO;
 
 namespace CygSoft.Qik.Console
 {
@@ -16,28 +17,26 @@ namespace CygSoft.Qik.Console
         }
 
         // TODO: Should just pass a path. Have the Api decide what to do with it.
-        public string Read(string scriptFilePath)
+        public string GetJsonInputInterface(string path)
         {
-            compiler.Compile(fileFunctions.ReadTextFile(scriptFilePath));
-
+            compiler.Compile(fileFunctions.ReadTextFile(GetQikScriptPath(path)));
             return jsonFunctions.SerializeInputSymbols(compiler);
-
-            // var scriptFilePath = Directory.EnumerateFiles(projectFolder, "*.qik").SingleOrDefault();
-
-            // if (scriptFilePath is not null)
-            // {
-            //     compiler.Compile(ReadFileContents(scriptFilePath));
-            //     result.Append("[");
-            //     result.Append(SerializeInputSymbols(compiler));
-            //     result.Append("]");
-            //     Console.WriteLine(result.ToString());
-            // 
         }
 
         //TODO: You want to input a JSON array here for key values pairs (symbol, value)
-        public void Generate(string scriptFilePath, string inputs, string blueprintFileFolder)
+        public void Generate(string scriptFilePath, string inputs, string blueprintFileFolder) => throw new NotImplementedException();
+
+        private string GetQikScriptPath(string path)
         {
-            throw new NotImplementedException();
+            if (fileFunctions.IsFolder(path))
+            {
+                var scriptFound = fileFunctions.FindQikScriptInFolder(path, out var scriptPath);
+                if (scriptFound) return scriptPath;
+            }
+            else
+                if (fileFunctions.IsQikScript(path)) return path;             
+
+            throw new FileNotFoundException("Qik file not found.");
         }
     }
 }
