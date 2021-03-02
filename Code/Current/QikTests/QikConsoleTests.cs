@@ -6,7 +6,7 @@ using CygSoft.Qik.Console;
 namespace Qik.LanguageEngine.IntegrationTests
 {
     [TestFixture]
-    public class QikApiTests
+    public class QikConsoleTests
     {
         // TODO: If the API will take the "path" and determine whether it's a qik file or
         //  a folder, there needs to be a test for handling both cases.
