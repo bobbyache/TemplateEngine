@@ -6,13 +6,28 @@ using System.CommandLine.Invocation;
 using System.IO;
 using CygSoft.Qik;
 using CygSoft.Qik.Console;
+using System.Reflection.Metadata.Ecma335;
 
 class Program
 {
+        public class Resources
+        {
+            public string GetWelcomeHeader()
+            {
+                using Stream stream = this.GetType().Assembly.
+                                GetManifestResourceStream($"QikConsole.welcome.txt");
+                using StreamReader sr = new StreamReader(stream);
+
+                return sr.ReadToEnd();
+            }
+        }
+
         public static int Main(string[] args)
         {
             IAppHost appHost = null;
 
+            // TODO: Investigate why when you run after cd ~ with the *.exe fule path you get an error about a missing appsettings.json
+            // TODO: Why, when executing with Powershell... does the program not end but remain running?
             var rootCommand = new RootCommand
             {
                 new Option(new[] { "--inputs", "-i" }, "Do not process. Just provide input information"),
@@ -31,24 +46,45 @@ class Program
                 // Console.WriteLine(inputs);
                 // Console.WriteLine(path);
 
+                
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine(new Resources().GetWelcomeHeader());
+                Console.ForegroundColor = ConsoleColor.White;
+
                 if (string.IsNullOrWhiteSpace(path))
                 {
-                    Console.WriteLine("Welcome to Qik");
                     Console.WriteLine("Please specify a path. See --help for more information.");
                 }
 
                 if (inputs && !string.IsNullOrWhiteSpace(path))
                 {
-                    Console.WriteLine("Welcome to Qik");
-                    Console.WriteLine("Generating inputs");
-
-                    Console.WriteLine(appHost.GetJsonInputInterface(path));
+                    try
+                    {
+                        Console.WriteLine("Generating inputs...");
+                        Console.WriteLine(appHost.GetJsonInputInterface(path));
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("...Success!");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    catch (Exception ex)
+                    {
+                        LogConsoleError(ex);
+                    }
                 }
                 else if (!string.IsNullOrWhiteSpace(path))
                 {
-                    Console.WriteLine("Welcome to Qik");
-                    Console.WriteLine("Generating output files");
-                    appHost.Generate(path);
+                    try
+                    {
+                        Console.WriteLine("Generating output files...");
+                        appHost.Generate(path);
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("...Success!");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    catch (Exception ex)
+                    {
+                        LogConsoleError(ex);
+                    }
                 }
                 else
                 {
@@ -73,5 +109,14 @@ class Program
 
             // Parse the incoming args and invoke the handler
             return rootCommand.InvokeAsync(args).Result;
+        }
+
+        private static void LogConsoleError(Exception ex)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("An error occurred!");
+            Console.WriteLine($"\t{ex.Message}");
+            Console.WriteLine("Please check the error logs");
+            Console.ForegroundColor = ConsoleColor.White;
         }
 }

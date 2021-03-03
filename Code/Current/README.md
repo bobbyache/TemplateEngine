@@ -10,6 +10,16 @@ dotnet restore
 dotnet run --project QikConsole/QikConsole.csproj
 ```
 
+### Cmd Execution
+```
+cd "C:\Code\you\Qik\Code\Current\QikConsole\bin\Debug\net5.0"
+qikconsole -i -p "C:\Users\RobB\Desktop\TestQik"
+```
+
+### Powershell Execution
+```
+Start-Process -NoNewWindow -FilePath "C:\Code\you\Qik\Code\Current\QikConsole\bin\Debug\net5.0\qikconsole.exe" -ArgumentList "--inputs","--path=C:\Users\RobB\Desktop\TestQik"
+```
 ### Run the tests
 
 ```

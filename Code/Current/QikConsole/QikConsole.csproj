@@ -24,4 +24,10 @@
     <ProjectReference Include="..\Qik\Qik.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="welcome.txt">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
