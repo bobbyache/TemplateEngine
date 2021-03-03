@@ -6,7 +6,6 @@ using System.CommandLine.Invocation;
 using System.IO;
 using CygSoft.Qik;
 using CygSoft.Qik.Console;
-using System.Reflection.Metadata.Ecma335;
 
 class Program
 {
@@ -93,8 +92,8 @@ class Program
             }));
 
             var builder = new ConfigurationBuilder()
-             .SetBasePath(Directory.GetCurrentDirectory())
-             .AddJsonFile("appsettings.json");
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
 
             var config = builder.Build();
 
