@@ -9,18 +9,6 @@ using CygSoft.Qik.Console;
 
 class Program
 {
-        public class Resources
-        {
-            public string GetWelcomeHeader()
-            {
-                using Stream stream = this.GetType().Assembly.
-                                GetManifestResourceStream($"QikConsole.welcome.txt");
-                using StreamReader sr = new StreamReader(stream);
-
-                return sr.ReadToEnd();
-            }
-        }
-
         public static int Main(string[] args)
         {
             IAppHost appHost = null;
