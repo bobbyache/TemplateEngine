@@ -116,6 +116,7 @@ namespace CygSoft.Qik.Console
         {
             var directory = Path.GetDirectoryName(blueprintFilePath);
             var fileName = Path.GetFileNameWithoutExtension(blueprintFilePath);
+            // TODO: Add a prefix of _ here so that all the output files show up in the same place
             return Path.Combine(directory, $"{fileName}_output.txt");
         }
     }

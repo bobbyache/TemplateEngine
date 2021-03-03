@@ -7,11 +7,21 @@ using System.IO;
 using CygSoft.Qik;
 using CygSoft.Qik.Console;
 
+using NLog;
+using NLog.Extensions.Logging;
+
+// TODO: Find out how to dependency inject the logger in order to mock the interface for unit tests.
+// Do we need these extensions? Check your QikConsole.csproj file. Remove them if you can't find a use for them.
+
+// using Microsoft.Extensions.Logging;
+// using Microsoft.Extensions.DependencyInjection.Extensions;
+
 class Program
 {
         public static int Main(string[] args)
         {
             IAppHost appHost = null;
+            NLog.ILogger logger = null;
 
             // TODO: Investigate why when you run after cd ~ with the *.exe fule path you get an error about a missing appsettings.json
             // TODO: Why, when executing with Powershell... does the program not end but remain running?
@@ -55,6 +65,7 @@ class Program
                     }
                     catch (Exception ex)
                     {
+                        logger.Error(ex, "ooops and exception occurred.");
                         LogConsoleError(ex);
                     }
                 }
@@ -70,6 +81,7 @@ class Program
                     }
                     catch (Exception ex)
                     {
+                        logger.Error(ex, "ooops and exception occurred.");
                         LogConsoleError(ex);
                     }
                 }
@@ -79,12 +91,16 @@ class Program
                 }
             }));
 
-            var builder = new ConfigurationBuilder()
+            var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json");
+                .AddJsonFile("appsettings.json").Build();
 
-            var config = builder.Build();
+            LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
 
+            logger = LogManager.Setup()
+                                .LoadConfigurationFromSection(config)
+                                .GetCurrentClassLogger();
+            
             var serviceProvider = new ServiceCollection()
                 .AddSingleton<IJsonFunctions, JsonFunctions>()
                 .AddSingleton<IFileFunctions, FileFunctions>()

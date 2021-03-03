@@ -129,3 +129,9 @@ Important that the settings are set up correctly or your grammar file will not g
 - Commandline Option commands have a ParseArguments parameter:
   - [ParseArguments Example 1](https://csharp.hotexamples.com/examples/CommandLine/Parser/ParseArguments/php-parser-parsearguments-method-examples.html)
   - [ParseArguments Example 2](https://csharp.hotexamples.com/examples/CommandLine/CommandLineParser/ParseArguments/php-commandlineparser-parsearguments-method-examples.html)
+
+
+### System Logging
+
+- [NLog Tutorial - The essential guide for logging from C#](https://blog.elmah.io/nlog-tutorial-the-essential-guide-for-logging-from-csharp/)
+- [NLog on Github](https://github.com/NLog/NLog)
