@@ -76,6 +76,8 @@ namespace CygSoft.Qik.Console
 
         public bool IsFolder(string path)
         {
+            // TODO: To generate an error here you can pass a path with a trailing "\" in the --path prompt
+            // You can use this to start some form of error handling in the app
             var fileSystemInfo = new DirectoryInfo(path);
             return fileSystemInfo.IsDirectory();
         }

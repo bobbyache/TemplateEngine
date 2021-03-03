@@ -15,59 +15,44 @@ class Program
 
             var rootCommand = new RootCommand
             {
-                new Option<string>("--script-file", "Qik Script that will be interpreted"),
-                new Option<string>("--blueprints-folder", "Folder in which files will be processed"),
-                new Option("--get-inputs", "Do not process. Just provide input information"),
-                // new Option("--path", "The path (can be a qik file or a folder containining a qik file"),
-                new Option<string>("--inputs", "Description"),
-                new Option("--prompt"),
+                new Option(new[] { "--inputs", "-i" }, "Do not process. Just provide input information"),
+                new Option<string>( new[] { "--path", "-p" } , "The path (can be a qik file or a folder containining a qik file")
             };
 
             rootCommand.Description = "Qik Console Application";
 
             // Note that the parameters of the handler method are matched according to the names of the options
-            rootCommand.Handler = CommandHandler.Create<bool, bool, string, string, string>((Action<bool, bool, string, string, string>)(
+            rootCommand.Handler = CommandHandler.Create<bool, string>((Action<bool, string>)(
                 (
-                    getInputs, 
-                    prompt, 
-                    scriptFile, 
-                    blueprintsFolder, 
-                    inputs
+                    inputs,
+                    path
                 ) =>
             {
-                // Console.WriteLine(scriptFile);
-                // Console.WriteLine(blueprintsFolder);
-
-                // Console.WriteLine(getInputs);
-                // // Console.WriteLine(path);
                 // Console.WriteLine(inputs);
+                // Console.WriteLine(path);
 
-                if (prompt)
+                if (string.IsNullOrWhiteSpace(path))
                 {
-                    Console.Clear();
                     Console.WriteLine("Welcome to Qik");
-                    Console.WriteLine("Please supply a folder that contains a *.qik file or a *.qik file:");
-                    var path = Console.ReadLine();
-                    // Console.WriteLine($"You entered ${path}");
-                    appHost.Generate(path);
-                    // appHost
+                    Console.WriteLine("Please specify a path. See --help for more information.");
                 }
-                else if (getInputs)
+
+                if (inputs && !string.IsNullOrWhiteSpace(path))
                 {
-                    Console.WriteLine(appHost.GetJsonInputInterface(scriptFile));
-                    // TODO: If a project folder is provided, find the qik file and process generate the input manifest for it.
-                    //      If the file path is provided generate the input manifest from it.
-                    // So a single --path should actually be enough
-                    // Console.WriteLine(appHost.ReadInputManfest(path));
-                    Console.Read();
+                    Console.WriteLine("Welcome to Qik");
+                    Console.WriteLine("Generating inputs");
+
+                    Console.WriteLine(appHost.GetJsonInputInterface(path));
+                }
+                else if (!string.IsNullOrWhiteSpace(path))
+                {
+                    Console.WriteLine("Welcome to Qik");
+                    Console.WriteLine("Generating output files");
+                    appHost.Generate(path);
                 }
                 else
                 {
-                    // TODO: If a project folder is provided, find the qik file and process all the other *.blu files.
-                    //      If the file path is provided, use the qik file's folder to process all *.blu files.
-                    //      Look at CodeCat to see what the file structure looks like
-                    // So a single --path should actually be enough
-                    throw new NotImplementedException();
+                    Console.WriteLine("Invalid input. Please see --help for information.");
                 }
             }));
 

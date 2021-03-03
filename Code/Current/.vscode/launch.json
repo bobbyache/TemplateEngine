@@ -13,14 +13,17 @@
             "program": "${workspaceFolder}/QikConsole/bin/Debug/net5.0/QikConsole.dll",
             "args": [
                 // ****************************************
-                // Test 
+                // Generate Inputs 
                 // ****************************************
-                // "--script-file", 
-                // "C:\\Code\\files\\qik\\example.qik", 
-                // "--blueprints-folder", 
-                // "\"C:\\source_files\\process.txt\"", 
-                // "--get-inputs"
-                "--prompt"
+                "--path", 
+                "C:\\Users\\RobB\\Desktop\\TestQik\\", 
+                "--inputs"
+                
+                // ****************************************
+                // Prompt to Generate
+                // ****************************************
+                // "--path", 
+                // "C:\\Users\\RobB\\Desktop\\TestQik\\", 
             ],
             "cwd": "${workspaceFolder}/QikConsole",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console

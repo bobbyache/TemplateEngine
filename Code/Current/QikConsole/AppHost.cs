@@ -17,8 +17,11 @@ namespace CygSoft.Qik.Console
             this.jsonFunctions = jsonFunctions ?? throw new ArgumentNullException("IJsonFunctions cannot be null.");
         }
 
+        // TODO: Generate a human readable text file that explains how the options can be
+        // set from the InputSymbols Json. Call it input_manual.txt.
         public string GetJsonInputInterface(string path)
         {
+            var scriptFile = GetQikScriptPath(path);
             compiler.Compile(fileFunctions.ReadTextFile(GetQikScriptPath(path)));
             return jsonFunctions.SerializeInputSymbols(compiler);
         }

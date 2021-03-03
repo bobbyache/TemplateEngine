@@ -81,7 +81,18 @@ Important that the settings are set up correctly or your grammar file will not g
 | outputDir | _antlr  |
 | package | CygSoft.Qik.Antlr  |
 
-
+### Plugin Workspace Settings
+```
+{
+    "antlr4.generation": {
+        "mode": "external",
+        "language": "CSharp",
+        "visitors": true,
+        "outputDir": "_antlr",
+        "package": "CygSoft.Qik.Antlr"
+    }
+}
+```
 ### Possible Test Explorers/Runners
 
 - https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-test-explorer&ssr=false#overview
@@ -104,3 +115,7 @@ Important that the settings are set up correctly or your grammar file will not g
 - [System.CommandLine (Nuget)](https://www.nuget.org/packages/System.CommandLine)
 - [System.CommandLine (Github)](https://github.com/dotnet/command-line-api/blob/master/docs/Your-first-app-with-System-CommandLine.md)
 - [Dependency Injection and Settings](https://espressocoder.com/2018/12/03/build-a-console-app-in-net-core-like-a-pro/)
+- [Getting Started with System.CommandLine](https://dotnetdevaddict.co.za/2020/09/25/getting-started-with-system-commandline/)
+- Commandline Option commands have a ParseArguments parameter:
+  - [ParseArguments Example 1](https://csharp.hotexamples.com/examples/CommandLine/Parser/ParseArguments/php-parser-parsearguments-method-examples.html)
+  - [ParseArguments Example 2](https://csharp.hotexamples.com/examples/CommandLine/CommandLineParser/ParseArguments/php-commandlineparser-parsearguments-method-examples.html)
