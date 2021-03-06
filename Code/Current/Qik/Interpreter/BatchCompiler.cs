@@ -3,6 +3,7 @@ using CygSoft.Qik.Antlr;
 
 namespace CygSoft.Qik
 {
+    // TODO: Need BatchCompiler? If want this in future, then tag this branch and move on. Come back to it if necessary.
     public class BatchCompiler : IBatchCompiler
     {
         public event EventHandler BeforeInput;

@@ -20,6 +20,8 @@ namespace CygSoft.Qik
         public IInputField[] InputFields => compileEngine.InputFields;
         public IExpression[] Expressions => compileEngine.Expressions;
 
+        // TODO: Only allow inject (see below constructor). Fix refs in tests to make it clear what is being used
+        // + can mock out and deeply test.
         public Compiler()
         {
             syntaxValidator = new SyntaxValidator();
@@ -37,7 +39,7 @@ namespace CygSoft.Qik
             CheckSyntax(scriptText);
 
             if (!syntaxValidator.HasErrors)
-                CheckCompilation(scriptText);
+                CompileInstructions(scriptText);
             
         }
 
@@ -64,11 +66,13 @@ namespace CygSoft.Qik
 
         public string GetTitleOfPlaceholder(string placeholder) => compileEngine.GetTitleOfPlaceholder(placeholder);
 
+        // TODO: Looks like placeholder is configurable. What happens if we change it?
+        // Tests need to be configurable!
         public string TextToSymbol(string text) => "@" + text;
 
         public string TextToPlaceholder(string text) => "@{" + text + "}";
 
-        private void CheckCompilation(string scriptText)
+        private void CompileInstructions(string scriptText)
         {
             compileEngine.BeforeCompile += Compiler_BeforeCompile;
             compileEngine.AfterCompile += Compiler_AfterCompile;
@@ -88,6 +92,8 @@ namespace CygSoft.Qik
             syntaxValidator.CompileError -= Compiler_CompileError;
         }
 
+        // TODO: Should this not inherit from the base class? Investigate why not?
+        // If necessary, look for other places where this occurs.
         private void Compiler_AfterCompile(object sender, EventArgs e) => AfterCompile?.Invoke(this, e);
 
         private void Compiler_BeforeCompile(object sender, EventArgs e) => BeforeCompile?.Invoke(this, e);

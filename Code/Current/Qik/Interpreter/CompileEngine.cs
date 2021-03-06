@@ -67,7 +67,7 @@ namespace CygSoft.Qik
                 errorReport.ExecutionErrorDetected -= ErrorReport_ExecutionErrorDetected;
                 errorReport.Reporting = false;
 
-                // this doesn't appear to be used...
+                // TODO: This doesn't appear to be used...
                 bool success = !this.errorReport.HasErrors;
                 this.errorReport.Clear();
             }
@@ -84,6 +84,7 @@ namespace CygSoft.Qik
 
         private void CompileExpressions(string scriptText)
         {
+            // TODO: Can't this stuff all be injected and mocked out for testing?
             var inputStream = new AntlrInputStream(scriptText);
             var lexer = new QikTemplateLexer(inputStream);
             var tokens = new CommonTokenStream(lexer);
@@ -97,6 +98,7 @@ namespace CygSoft.Qik
 
         private void CompileInputs(string scriptText)
         {
+            // TODO: Can't this stuff all be injected and mocked out for testing?
             var inputStream = new AntlrInputStream(scriptText);
             var lexer = new QikTemplateLexer(inputStream);
             var tokens = new CommonTokenStream(lexer);

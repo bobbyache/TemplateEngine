@@ -3,6 +3,7 @@ using System;
 
 namespace CygSoft.Qik.Antlr
 {
+    // TODO: Move into Interpreter folder where it belongs.
     public class SyntaxValidator : ISyntaxValidator
     {
         public event EventHandler<CompileErrorEventArgs> CompileError;
@@ -14,7 +15,8 @@ namespace CygSoft.Qik.Antlr
         public void Validate(string scriptText)
         {
             HasErrors = false;
-
+            
+            // TODO: Can't this stuff all be injected and mocked out for testing?
             var inputStream = new AntlrInputStream(scriptText);
             var lexer = new QikTemplateLexer(inputStream);
             var tokens = new CommonTokenStream(lexer);
