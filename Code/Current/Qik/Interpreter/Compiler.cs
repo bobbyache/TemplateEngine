@@ -22,12 +22,15 @@ namespace CygSoft.Qik
 
         // TODO: Only allow inject (see below constructor). Fix refs in tests to make it clear what is being used
         // + can mock out and deeply test.
+        // QUESTION: How does one inject a service that requires constructor arguments.
+        // Should we even do this? This is probably enough to make it testable. Inject to test, just use as top level service.
         public Compiler()
         {
             syntaxValidator = new SyntaxValidator();
             compileEngine = new CompileEngine();
         }
 
+        // For testing purposes:
         public Compiler(ISyntaxValidator syntaxValidator, ICompileEngine compileEngine)
         {
             this.syntaxValidator = syntaxValidator;
@@ -39,7 +42,7 @@ namespace CygSoft.Qik
             CheckSyntax(scriptText);
 
             if (!syntaxValidator.HasErrors)
-                CompileInstructions(scriptText);
+                InterpretInstructions(scriptText);
             
         }
 
@@ -72,7 +75,7 @@ namespace CygSoft.Qik
 
         public string TextToPlaceholder(string text) => "@{" + text + "}";
 
-        private void CompileInstructions(string scriptText)
+        private void InterpretInstructions(string scriptText)
         {
             compileEngine.BeforeCompile += Compiler_BeforeCompile;
             compileEngine.AfterCompile += Compiler_AfterCompile;
