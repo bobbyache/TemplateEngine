@@ -5,7 +5,7 @@ using Moq;
 namespace Qik.LanguageEngine.UnitTests
 {
     [TestFixture]
-    class CompilerTests
+    class InterpreterTests
     {
         [Test]
         public void Should_Validate_Script()

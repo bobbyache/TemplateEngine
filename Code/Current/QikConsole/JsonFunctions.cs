@@ -21,7 +21,7 @@ namespace CygSoft.Qik.Console
         private readonly IInterpreter interpreter;
         public JsonFunctions(IInterpreter interpreter)
         {
-            this.interpreter = interpreter ?? throw new ArgumentNullException("ICompiler cannot be null.");
+            this.interpreter = interpreter ?? throw new ArgumentNullException("IInterpreter cannot be null.");
         }
 
         public InputSymbol[] DeserializeInput(string jsonKeyValues)

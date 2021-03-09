@@ -35,7 +35,7 @@ namespace LanguageEngine.Tests.UnitTests.Functions
         public void RemoveSpacesFunction_InputSpacedText_RemovesSpaces()
         {
             var funcText = $"removeSpaces(\"literal text ya all\")";
-            var output = TestHelpers.EvaluateCompilerFunction(funcText);
+            var output = TestHelpers.EvaluateFunction(funcText);
             Assert.AreEqual("literaltextyaall", output);
         }
     }

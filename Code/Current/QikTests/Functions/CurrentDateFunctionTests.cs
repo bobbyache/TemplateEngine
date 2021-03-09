@@ -15,7 +15,7 @@ namespace LanguageEngine.Tests.UnitTests.Functions
         public void Should_Return_Correct_Date_In_Default_Format_When_No_Argument_Specified()
         {
             var funcText = $"currentDate()";
-            var output = TestHelpers.EvaluateCompilerFunction(funcText);
+            var output = TestHelpers.EvaluateFunction(funcText);
             Assert.AreEqual(DateTime.Now.ToLongDateString(), output);
         }
 
@@ -23,7 +23,7 @@ namespace LanguageEngine.Tests.UnitTests.Functions
         public void Should_Return_Correct_Date_In_Default_Format_When_Format_Argument_Specified()
         {
             var funcText = $"currentDate(\"dd/MM/yyyy\")";
-            var output = TestHelpers.EvaluateCompilerFunction(funcText);
+            var output = TestHelpers.EvaluateFunction(funcText);
             Assert.AreEqual(DateTime.Now.ToString("dd/MM/yyyy"), output);
         }
 

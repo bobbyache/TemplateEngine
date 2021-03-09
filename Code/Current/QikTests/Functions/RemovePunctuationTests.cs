@@ -34,7 +34,7 @@ namespace LanguageEngine.Tests.UnitTests.Functions
         public void RemovePunctuationFunction_InputPunctuatedText_OutputPunctuationRemoved()
         {
             var funcText = $"removePunctuation(\"LITERAL?!..TEXT.\")";
-            var output = TestHelpers.EvaluateCompilerFunction(funcText);
+            var output = TestHelpers.EvaluateFunction(funcText);
             Assert.AreEqual("LITERALTEXT", output);
         }
     }

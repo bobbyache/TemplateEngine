@@ -10,7 +10,7 @@ namespace LanguageEngine.Tests.UnitTests.Functions
     {
 
         //TODO: Wherever this message is in the function tests look to convert to the new form of the function test see 
-            // var output = TestHelpers.EvaluateCompilerFunction(funcText);
+            // var output = TestHelpers.EvaluateFunction(funcText);
 
         // BEFORE REMOVING THIS TEST METHOD YOU NEED TO WRITE TESTS FOR ALL ITS POSSIBILITIES IN THE NEW STYLE BELOW
         [Test]
@@ -37,7 +37,7 @@ namespace LanguageEngine.Tests.UnitTests.Functions
         public void ConcatenateFunction_Input3Strings_ConcatenatesToSingleString()
         {
             var concatExpression = "\"hello\" + \" \" + \"world\"";
-            var output = TestHelpers.EvaluateCompilerFunction(concatExpression);
+            var output = TestHelpers.EvaluateFunction(concatExpression);
             Assert.AreEqual("hello world", output);
         }
     }

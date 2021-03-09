@@ -12,7 +12,7 @@ namespace CygSoft.Qik.Console
         private readonly IJsonFunctions jsonFunctions;
         public AppHost(IInterpreter interpreter, IFileFunctions fileFunctions, IJsonFunctions jsonFunctions)
         {
-            this.interpreter = interpreter ?? throw new ArgumentNullException("ICompiler cannot be null.");
+            this.interpreter = interpreter ?? throw new ArgumentNullException("IInterpreter cannot be null.");
             this.fileFunctions = fileFunctions ?? throw new ArgumentNullException("IFileFunctions cannot be null.");
             this.jsonFunctions = jsonFunctions ?? throw new ArgumentNullException("IJsonFunctions cannot be null.");
         }

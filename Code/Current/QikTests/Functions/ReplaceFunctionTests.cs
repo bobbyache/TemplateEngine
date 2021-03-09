@@ -35,7 +35,7 @@ namespace LanguageEngine.Tests.UnitTests.Functions
         public void ReplaceFunction_InputText_ReplacesCorrectly()
         {
             var funcText = $"replace(\"literal text ya all\", \" \", \"_\")";
-            var output = TestHelpers.EvaluateCompilerFunction(funcText);
+            var output = TestHelpers.EvaluateFunction(funcText);
             Assert.AreEqual("literal_text_ya_all", output);
         }
     }

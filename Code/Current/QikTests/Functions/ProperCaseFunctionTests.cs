@@ -35,7 +35,7 @@ namespace LanguageEngine.Tests.UnitTests.Functions
         public void ProperCaseFunction_InputUpperCase_OutputsProperCase()
         {
             var funcText = $"properCase(\"PROPERCASE TEXT\")";
-            var output = TestHelpers.EvaluateCompilerFunction(funcText);
+            var output = TestHelpers.EvaluateFunction(funcText);
             Assert.AreEqual("Propercase Text", output);
         }
     }

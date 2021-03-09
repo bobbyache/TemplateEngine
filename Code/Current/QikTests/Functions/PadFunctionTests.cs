@@ -10,7 +10,7 @@ namespace Qik.LanguageEngine.UnitTests.Functions
         public void PadLeftFunction_Pads_Correctly()
         {
             var funcText = $"padLeft(\"12\", \"0\", 5)";
-            var output = TestHelpers.EvaluateCompilerFunction(funcText);
+            var output = TestHelpers.EvaluateFunction(funcText);
             Assert.AreEqual("00012", output);
         }
 
@@ -18,7 +18,7 @@ namespace Qik.LanguageEngine.UnitTests.Functions
         public void PadRightFunction_Pads_Correctly()
         {
             var funcText = $"padRight(\"12\", \"0\", 5)";
-            var output = TestHelpers.EvaluateCompilerFunction(funcText);
+            var output = TestHelpers.EvaluateFunction(funcText);
             Assert.AreEqual("12000", output);
         }
     }

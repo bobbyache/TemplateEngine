@@ -4,7 +4,7 @@ namespace LanguageEngine.Tests.UnitTests.Helpers
 {
     public class TestHelpers
     {
-        internal static string EvaluateCompilerFunction(string functionText)
+        internal static string EvaluateFunction(string functionText)
         {
             var interpreter = new Intepreter();
             var expression = TestHelpers.BuildExpressionForFunction(functionText);

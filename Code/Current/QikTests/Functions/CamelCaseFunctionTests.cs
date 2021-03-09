@@ -33,7 +33,7 @@ namespace LanguageEngine.Tests.UnitTests.Functions
         public void CamelCaseFunction_InputPascalCase_OutputsCamelCase()
         {
             var funcText = $"camelCase(\"LiteralText\")";
-            var output = TestHelpers.EvaluateCompilerFunction(funcText);
+            var output = TestHelpers.EvaluateFunction(funcText);
             Assert.AreEqual("literalText", output);
         }
     }

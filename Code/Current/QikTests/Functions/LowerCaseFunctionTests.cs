@@ -35,7 +35,7 @@ namespace LanguageEngine.Tests.UnitTests.Functions
         public void LowerCaseFunction_InputCAPS_OutputsLowerCase()
         {
             var funcText = $"lowerCase(\"LOWERCASE TEXT\")";
-            var output = TestHelpers.EvaluateCompilerFunction(funcText);
+            var output = TestHelpers.EvaluateFunction(funcText);
             Assert.AreEqual("lowercase text", output);
         }
     }
