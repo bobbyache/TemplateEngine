@@ -6,7 +6,7 @@ namespace CygSoft.Qik.Antlr
     // TODO: Move into Interpreter folder where it belongs.
     public class SyntaxValidator : ISyntaxValidator
     {
-        public event EventHandler<CompileErrorEventArgs> CompileError;
+        public event EventHandler<InterpretErrorEventArgs> CompileError;
 
         public bool HasErrors { get; private set; }
 
@@ -30,7 +30,7 @@ namespace CygSoft.Qik.Antlr
             errorListener.SyntaxErrorDetected -= ErrorListener_SyntaxErrorDetected;
         }
 
-        private void ErrorListener_SyntaxErrorDetected(object sender, CompileErrorEventArgs e)
+        private void ErrorListener_SyntaxErrorDetected(object sender, InterpretErrorEventArgs e)
         {
             HasErrors = true;
             CompileError?.Invoke(this, e);

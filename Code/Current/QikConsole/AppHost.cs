@@ -7,12 +7,12 @@ namespace CygSoft.Qik.Console
 {
     public class AppHost : IAppHost
     {
-        private readonly ICompiler compiler;
+        private readonly IInterpreter interpreter;
         private readonly IFileFunctions fileFunctions;
         private readonly IJsonFunctions jsonFunctions;
-        public AppHost(ICompiler compiler, IFileFunctions fileFunctions, IJsonFunctions jsonFunctions)
+        public AppHost(IInterpreter interpreter, IFileFunctions fileFunctions, IJsonFunctions jsonFunctions)
         {
-            this.compiler = compiler ?? throw new ArgumentNullException("ICompiler cannot be null.");
+            this.interpreter = interpreter ?? throw new ArgumentNullException("ICompiler cannot be null.");
             this.fileFunctions = fileFunctions ?? throw new ArgumentNullException("IFileFunctions cannot be null.");
             this.jsonFunctions = jsonFunctions ?? throw new ArgumentNullException("IJsonFunctions cannot be null.");
         }
@@ -22,8 +22,8 @@ namespace CygSoft.Qik.Console
         public string GetJsonInputInterface(string path)
         {
             var scriptFile = GetQikScriptPath(path);
-            compiler.Compile(fileFunctions.ReadTextFile(GetQikScriptPath(path)));
-            return jsonFunctions.SerializeInputSymbols(compiler);
+            interpreter.Interpret(fileFunctions.ReadTextFile(GetQikScriptPath(path)));
+            return jsonFunctions.SerializeInputSymbols(interpreter);
         }
 
         public void Generate(string path)
@@ -32,7 +32,7 @@ namespace CygSoft.Qik.Console
             var scriptFile = GetQikScriptPath(path);
             var bluePrintFiles = GetBlueprintPaths(path);
 
-            compiler.Compile(fileFunctions.ReadTextFile(scriptFile));
+            interpreter.Interpret(fileFunctions.ReadTextFile(scriptFile));
 
             if (fileFunctions.FileExists(inputFile))
             {
@@ -41,14 +41,14 @@ namespace CygSoft.Qik.Console
 
                 foreach (var input in inputs)
                 {
-                    compiler.Input(input.Symbol, input.Value);
+                    interpreter.Input(input.Symbol, input.Value);
                 }
             }
 
             foreach (var bluePrintFile in bluePrintFiles)
             {
                 var generator = new Generator();
-                string output = generator.Generate(compiler, fileFunctions.ReadTextFile(bluePrintFile));
+                string output = generator.Generate(interpreter, fileFunctions.ReadTextFile(bluePrintFile));
 
                 var outputPath = fileFunctions.GeneratOutputPath(bluePrintFile);
                 fileFunctions.WriteTextFile(outputPath, output);

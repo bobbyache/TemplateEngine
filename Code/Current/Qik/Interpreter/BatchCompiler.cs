@@ -10,7 +10,7 @@ namespace CygSoft.Qik
         public event EventHandler AfterInput;
         public event EventHandler BeforeCompile;
         public event EventHandler AfterCompile;
-        public event EventHandler<CompileErrorEventArgs> CompileError;
+        public event EventHandler<InterpretErrorEventArgs> CompileError;
 
         private readonly ISyntaxValidator syntaxValidator = null;
         private readonly IInterpreterEngine interpreterEngine = null;
@@ -90,6 +90,6 @@ namespace CygSoft.Qik
 
         private void interpreterEngine_BeforeInput(object sender, EventArgs e) => BeforeInput?.Invoke(this, e);
 
-        private void Compiler_CompileError(object sender, CompileErrorEventArgs e) => CompileError?.Invoke(this, e);
+        private void Compiler_CompileError(object sender, InterpretErrorEventArgs e) => CompileError?.Invoke(this, e);
     }
 }

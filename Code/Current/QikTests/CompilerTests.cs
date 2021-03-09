@@ -13,8 +13,8 @@ namespace Qik.LanguageEngine.UnitTests
             var syntaxValidatorMock = new Mock<ISyntaxValidator>();
             var interpreterEngineMock = new Mock<IInterpreterEngine>();
 
-            var compiler = new Compiler(syntaxValidatorMock.Object, interpreterEngineMock.Object);
-            compiler.Compile("// Script text");
+            var interpreter = new Intepreter(syntaxValidatorMock.Object, interpreterEngineMock.Object);
+            interpreter.Interpret("// Script text");
 
             syntaxValidatorMock.Verify(validator => validator.Validate(It.IsAny<string>()), Times.Once);
         }
@@ -27,8 +27,8 @@ namespace Qik.LanguageEngine.UnitTests
 
             var interpreterEngineMock = new Mock<IInterpreterEngine>();
 
-            var compiler = new Compiler(syntaxValidatorMock.Object, interpreterEngineMock.Object);
-            compiler.Compile("// Script text has no errors");
+            var interpreter = new Intepreter(syntaxValidatorMock.Object, interpreterEngineMock.Object);
+            interpreter.Interpret("// Script text has no errors");
 
             interpreterEngineMock.Verify(engine => engine.Interpret(It.IsAny<string>()), Times.Once);
         }
@@ -41,8 +41,8 @@ namespace Qik.LanguageEngine.UnitTests
 
             var interpreterEngineMock = new Mock<IInterpreterEngine>();
 
-            var compiler = new Compiler(syntaxValidatorMock.Object, interpreterEngineMock.Object);
-            compiler.Compile("// Script text has errors");
+            var interpreter = new Intepreter(syntaxValidatorMock.Object, interpreterEngineMock.Object);
+            interpreter.Interpret("// Script text has errors");
 
             interpreterEngineMock.Verify(engine => engine.Interpret(It.IsAny<string>()), Times.Never);
         }
@@ -51,10 +51,10 @@ namespace Qik.LanguageEngine.UnitTests
         public void Should_Fire_SyntaxErrorDetected_When_Interpreted_With_Incorrect_Title_Case()
         {
             bool wasCalled = false;
-            Compiler compiler = new Compiler();
-            compiler.CompileError += (s, e) => wasCalled = true;
+            Intepreter interpreter = new Intepreter();
+            interpreter.CompileError += (s, e) => wasCalled = true;
 
-            compiler.Compile("@dataType = text[title=\"5.Field Datatype)\", Description=\"The datatype for the field (column).\"];");
+            interpreter.Interpret("@dataType = text[title=\"5.Field Datatype)\", Description=\"The datatype for the field (column).\"];");
 
             Assert.IsTrue(wasCalled, "Expect that CompileError event is fired when a syntax error is discovered.");
         }
@@ -63,13 +63,13 @@ namespace Qik.LanguageEngine.UnitTests
         public void Should_Fire_SyntaxErrorDetected_When_Interpreted_With_Incorrect_Description_Case()
         {
             bool wasCalled = false;
-            Compiler compiler = new Compiler();
-            compiler.CompileError += (s, e) =>
+            Intepreter interpreter = new Intepreter();
+            interpreter.CompileError += (s, e) =>
             {
                 wasCalled = true;
             };
 
-            compiler.Compile("@dataType = Text[title=\"5.Field Datatype)\", description=\"The datatype for the field (column).\"];");
+            interpreter.Interpret("@dataType = Text[title=\"5.Field Datatype)\", description=\"The datatype for the field (column).\"];");
 
             Assert.IsTrue(wasCalled, "Expect that CompileError event is fired when a syntax error is discovered.");
         }

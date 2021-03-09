@@ -4,7 +4,7 @@ namespace CygSoft.Qik
 {
     public interface IBatchCompiler
     {
-        event EventHandler<CompileErrorEventArgs> CompileError;
+        event EventHandler<InterpretErrorEventArgs> CompileError;
 
         event EventHandler BeforeCompile;
         event EventHandler AfterCompile;

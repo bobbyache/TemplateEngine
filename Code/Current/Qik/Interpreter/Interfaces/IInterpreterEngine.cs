@@ -8,7 +8,7 @@ namespace CygSoft.Qik
         event EventHandler AfterInput;
         event EventHandler BeforeInterpret;
         event EventHandler AfterInterpret;
-        event EventHandler<CompileErrorEventArgs> InterpretError;
+        event EventHandler<InterpretErrorEventArgs> InterpretError;
 
         string[] Placeholders { get; }
         string[] Symbols { get; }

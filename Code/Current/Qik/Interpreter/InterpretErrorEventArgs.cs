@@ -2,7 +2,7 @@
 
 namespace CygSoft.Qik
 {
-    public class CompileErrorEventArgs
+    public class InterpretErrorEventArgs
     {
         public int Line { get; }
         public int Column { get; }
@@ -10,7 +10,7 @@ namespace CygSoft.Qik
         public string OffendingSymbol { get; }
         public string Location { get; }
 
-        public CompileErrorEventArgs(string location, int line, int column, string offendingSymbol, string message)
+        public InterpretErrorEventArgs(string location, int line, int column, string offendingSymbol, string message)
         {
             Line = line;
             Column = column;
@@ -19,7 +19,7 @@ namespace CygSoft.Qik
             Location = location;
         }
 
-        public CompileErrorEventArgs(Exception exception)
+        public InterpretErrorEventArgs(Exception exception)
         {
             Line = 0;
             Column = 0;

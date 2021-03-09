@@ -11,7 +11,7 @@ namespace CygSoft.Qik
         public event EventHandler AfterInput;
         public event EventHandler BeforeInterpret;
         public event EventHandler AfterInterpret;
-        public event EventHandler<CompileErrorEventArgs> InterpretError;
+        public event EventHandler<InterpretErrorEventArgs> InterpretError;
 
         //TODO: Inject these rather than new them up inside the class.
         private readonly IGlobalTable scopeTable = new GlobalTable();
@@ -74,7 +74,7 @@ namespace CygSoft.Qik
             catch (Exception exception)
             {
                 HasErrors = true;
-                InterpretError?.Invoke(this, new CompileErrorEventArgs(exception));
+                InterpretError?.Invoke(this, new InterpretErrorEventArgs(exception));
             }
             finally
             {
@@ -110,7 +110,7 @@ namespace CygSoft.Qik
             controlVisitor.Visit(tree);
         }
 
-        private void ErrorReport_ExecutionErrorDetected(object sender, CompileErrorEventArgs e)
+        private void ErrorReport_ExecutionErrorDetected(object sender, InterpretErrorEventArgs e)
         {
             HasErrors = true;
             InterpretError?.Invoke(this, e);

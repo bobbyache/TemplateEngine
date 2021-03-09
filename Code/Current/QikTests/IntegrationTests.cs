@@ -12,28 +12,28 @@ namespace Qik.LanguageEngine.IntegrationTests
         public void ScriptExamples_InferPrimaryKeyFromPrimaryKeyOption_OutputsPrimaryKey()
         {
             string scriptText = FileHelpers.ReadText("InferPrimaryKey.qik");
-            ICompiler compiler = new Compiler();
-            compiler.Compile(scriptText);
+            IInterpreter interpreter = new Intepreter();
+            interpreter.Interpret(scriptText);
 
-            compiler.Input("@table", "MyTable");
-            compiler.Input("@userPrimaryKey", "CustomMyTableId");
+            interpreter.Input("@table", "MyTable");
+            interpreter.Input("@userPrimaryKey", "CustomMyTableId");
 
-            string table = compiler.GetValueOfSymbol("@table");
-            string userPrimaryKey = compiler.GetValueOfSymbol("@userPrimaryKey");
+            string table = interpreter.GetValueOfSymbol("@table");
+            string userPrimaryKey = interpreter.GetValueOfSymbol("@userPrimaryKey");
 
             // there is no default, so primaryKeyOption1 = null, inferredKeyOption1 should be null?
-            string primaryKeyOption1 = compiler.GetValueOfSymbol("@primaryKeyOption");
-            string inferredKeyOption1 = compiler.GetValueOfSymbol("@inferredPrimaryKey");
+            string primaryKeyOption1 = interpreter.GetValueOfSymbol("@primaryKeyOption");
+            string inferredKeyOption1 = interpreter.GetValueOfSymbol("@inferredPrimaryKey");
 
             // made a selection: inferredKeyOption2 expected to be @userPrimaryKey.
-            compiler.Input("@primaryKeyOption", "CUSTOM");
-            string primaryKeyOption2 = compiler.GetValueOfSymbol("@primaryKeyOption");
-            string inferredKeyOption2 = compiler.GetValueOfSymbol("@inferredPrimaryKey");
+            interpreter.Input("@primaryKeyOption", "CUSTOM");
+            string primaryKeyOption2 = interpreter.GetValueOfSymbol("@primaryKeyOption");
+            string inferredKeyOption2 = interpreter.GetValueOfSymbol("@inferredPrimaryKey");
 
             // made a selection: inferredKeyOption2 expected to be @table + "Id".
-            compiler.Input("@primaryKeyOption", "INFERRED");
-            string primaryKeyOption3 = compiler.GetValueOfSymbol("@primaryKeyOption");
-            string inferredKeyOption3 = compiler.GetValueOfSymbol("@inferredPrimaryKey");
+            interpreter.Input("@primaryKeyOption", "INFERRED");
+            string primaryKeyOption3 = interpreter.GetValueOfSymbol("@primaryKeyOption");
+            string inferredKeyOption3 = interpreter.GetValueOfSymbol("@inferredPrimaryKey");
 
             // ensure both are null
             Assert.AreEqual(null, primaryKeyOption1);
@@ -51,11 +51,11 @@ namespace Qik.LanguageEngine.IntegrationTests
         [Test]
         public void ScriptExamples_CreateMultilineScriptInExpression_OutputsCorrectly()
         {
-            ICompiler compiler = new Compiler();
-            compiler.Compile(FileHelpers.ReadText("MultiLine.qik"));
+            IInterpreter interpreter = new Intepreter();
+            interpreter.Interpret(FileHelpers.ReadText("MultiLine.qik"));
 
             IGenerator generator = new Generator();
-            string output = generator.Generate(compiler, FileHelpers.ReadText("MultiLine.tpl"));
+            string output = generator.Generate(interpreter, FileHelpers.ReadText("MultiLine.tpl"));
 
             Assert.AreEqual(FileHelpers.ReadText("MultiLine.out"), output);
         }
@@ -63,29 +63,29 @@ namespace Qik.LanguageEngine.IntegrationTests
         [Test]
         public void ScriptExamples_CreateStoredProcOutput_BuildsCorrectSymbolsAndOutputValues()
         {
-            ICompiler compiler = new Compiler();
-            compiler.Compile(FileHelpers.ReadText("StoredProc.qik"));
+            IInterpreter interpreter = new Intepreter();
+            interpreter.Interpret(FileHelpers.ReadText("StoredProc.qik"));
 
-            IExpression[] expressions = compiler.Expressions;
-            IInputField[] inputFields = compiler.InputFields;
+            IExpression[] expressions = interpreter.Expressions;
+            IInputField[] inputFields = interpreter.InputFields;
 
             Assert.IsTrue(expressions.Length > 0);
             Assert.IsTrue(inputFields.Length > 0);
 
-            string authorName = compiler.GetValueOfSymbol("@authorName");
-            string database = compiler.GetValueOfSymbol("@database");
-            string todayDate = compiler.GetValueOfSymbol("@date");
-            string authorCode = compiler.GetValueOfSymbol("@authorCode");
-            string description = compiler.GetValueOfSymbol("@desc");
-            string procTitle = compiler.GetValueOfSymbol("@name");
+            string authorName = interpreter.GetValueOfSymbol("@authorName");
+            string database = interpreter.GetValueOfSymbol("@database");
+            string todayDate = interpreter.GetValueOfSymbol("@date");
+            string authorCode = interpreter.GetValueOfSymbol("@authorCode");
+            string description = interpreter.GetValueOfSymbol("@desc");
+            string procTitle = interpreter.GetValueOfSymbol("@name");
 
-            compiler.Input("@name", "StoredProcName");
-            compiler.Input("@database", "MSDF_DW");
-            compiler.Input("@context", "BE");
-            string procName = compiler.GetValueOfSymbol("@procName");
-            string fileTitle = compiler.GetValueOfSymbol("@fileTitle");
-            string filePath = compiler.GetValueOfSymbol("@filePath");
-            string database2 = compiler.GetValueOfSymbol("@database");
+            interpreter.Input("@name", "StoredProcName");
+            interpreter.Input("@database", "MSDF_DW");
+            interpreter.Input("@context", "BE");
+            string procName = interpreter.GetValueOfSymbol("@procName");
+            string fileTitle = interpreter.GetValueOfSymbol("@fileTitle");
+            string filePath = interpreter.GetValueOfSymbol("@filePath");
+            string database2 = interpreter.GetValueOfSymbol("@database");
 
             Assert.AreEqual("Rob Blake", authorName);
             Assert.AreEqual("MSDF_DM", database);
@@ -103,12 +103,12 @@ namespace Qik.LanguageEngine.IntegrationTests
         [Test]
         public void ScriptExamples_HtmlEncodeFunction_Encodes()
         {
-            ICompiler compiler = new Compiler();
-            compiler.Compile(FileHelpers.ReadText("HtmlEncode.txt"));
-            compiler.Input("@normalText", @"Hello 'World'");
+            IInterpreter interpreter = new Intepreter();
+            interpreter.Interpret(FileHelpers.ReadText("HtmlEncode.txt"));
+            interpreter.Input("@normalText", @"Hello 'World'");
 
-            string encodedText = compiler.GetValueOfSymbol("@encodedText");
-            string decodedText = compiler.GetValueOfSymbol("@decodedText");
+            string encodedText = interpreter.GetValueOfSymbol("@encodedText");
+            string decodedText = interpreter.GetValueOfSymbol("@decodedText");
 
             Assert.AreEqual(@"Hello &#39;World&#39;", encodedText);
             Assert.AreEqual(@"Hello 'World'", decodedText);
@@ -141,10 +141,10 @@ namespace Qik.LanguageEngine.IntegrationTests
         public void ScriptExamples_OptionInput_Parsed_IsNotAPlaceholder()
         {
             string scriptText = FileHelpers.ReadText("OptionBox.qik");
-            ICompiler compiler = new Compiler();
-            compiler.Compile(scriptText);
+            IInterpreter interpreter = new Intepreter();
+            interpreter.Interpret(scriptText);
 
-            IInputField inputField = compiler.InputFields[0];
+            IInputField inputField = interpreter.InputFields[0];
             Assert.IsFalse(inputField.IsPlaceholder);
         }
     }

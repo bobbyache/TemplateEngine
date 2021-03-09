@@ -4,7 +4,7 @@ namespace CygSoft.Qik
 {
     public interface IErrorReport
     {
-        event EventHandler<CompileErrorEventArgs> ExecutionErrorDetected;
+        event EventHandler<InterpretErrorEventArgs> ExecutionErrorDetected;
 
         bool HasErrors { get; }
         bool Reporting { get; set; }

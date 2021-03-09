@@ -6,7 +6,7 @@ namespace CygSoft.Qik.Console
 {
     public interface IJsonFunctions
     {
-        string SerializeInputSymbols(ICompiler compiler);
+        string SerializeInputSymbols(IInterpreter interpreter);
         InputSymbol[] DeserializeInput(string jsonKeyValues);
     }
 
@@ -18,10 +18,10 @@ namespace CygSoft.Qik.Console
 
     public class JsonFunctions : IJsonFunctions
     {
-        private readonly ICompiler compiler;
-        public JsonFunctions(ICompiler compiler)
+        private readonly IInterpreter interpreter;
+        public JsonFunctions(IInterpreter interpreter)
         {
-            this.compiler = compiler ?? throw new ArgumentNullException("ICompiler cannot be null.");
+            this.interpreter = interpreter ?? throw new ArgumentNullException("ICompiler cannot be null.");
         }
 
         public InputSymbol[] DeserializeInput(string jsonKeyValues)
@@ -34,15 +34,15 @@ namespace CygSoft.Qik.Console
             return values;
         }
 
-        public string SerializeInputSymbols(ICompiler compiler)
+        public string SerializeInputSymbols(IInterpreter interpreter)
         {
             var result = new StringBuilder();
 
             result.Append("[");
 
-            for (var i = 0; i < compiler.InputFields.Length; i++)
+            for (var i = 0; i < interpreter.InputFields.Length; i++)
             {
-                var inputField = compiler.InputFields[i];
+                var inputField = interpreter.InputFields[i];
 
                 if (inputField is TextInputSymbol textInputField)
                 {
@@ -53,7 +53,7 @@ namespace CygSoft.Qik.Console
                     result.Append(JsonSerializer.Serialize<OptionInputSymbol>(optionInputField));
                 }
 
-                if (i < compiler.InputFields.Length - 1)
+                if (i < interpreter.InputFields.Length - 1)
                 {
                     result.Append(",");
                 }

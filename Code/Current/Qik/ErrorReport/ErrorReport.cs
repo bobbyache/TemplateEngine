@@ -6,7 +6,7 @@ namespace CygSoft.Qik
 {
     internal class ErrorReport : IErrorReport
     {
-        public event EventHandler<CompileErrorEventArgs> ExecutionErrorDetected;
+        public event EventHandler<InterpretErrorEventArgs> ExecutionErrorDetected;
 
         readonly List<CustomError> errors = new List<CustomError>();
 
@@ -24,7 +24,7 @@ namespace CygSoft.Qik
                 return;
 
             errors.Add(error);
-            ExecutionErrorDetected?.Invoke(this, new CompileErrorEventArgs("Execution Error", error.Line, error.Column, "", error.Message));
+            ExecutionErrorDetected?.Invoke(this, new InterpretErrorEventArgs("Execution Error", error.Line, error.Column, "", error.Message));
         }
 
         public void Clear()

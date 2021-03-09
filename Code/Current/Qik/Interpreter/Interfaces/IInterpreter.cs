@@ -2,9 +2,9 @@
 
 namespace CygSoft.Qik
 {
-    public interface ICompiler
+    public interface IInterpreter
     {
-        event EventHandler<CompileErrorEventArgs> CompileError;
+        event EventHandler<InterpretErrorEventArgs> CompileError;
 
         event EventHandler BeforeCompile;
         event EventHandler AfterCompile;
@@ -18,7 +18,7 @@ namespace CygSoft.Qik
         IExpression[] Expressions { get; }
         IInputField[] InputFields { get; }
 
-        void Compile(string scriptText);
+        void Interpret(string scriptText);
 
         void Input(string symbol, string value);
 

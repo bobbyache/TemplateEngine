@@ -104,7 +104,7 @@ class Program
             var serviceProvider = new ServiceCollection()
                 .AddSingleton<IJsonFunctions, JsonFunctions>()
                 .AddSingleton<IFileFunctions, FileFunctions>()
-                .AddSingleton<ICompiler, Compiler>()
+                .AddSingleton<IInterpreter, Intepreter>()
                 .AddSingleton<IAppHost, AppHost>()
             .BuildServiceProvider();
 

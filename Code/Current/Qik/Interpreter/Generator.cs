@@ -16,13 +16,13 @@ namespace CygSoft.Qik
             return input;
         }
 
-        public string Generate(ICompiler compiler, string templateText)
+        public string Generate(IInterpreter interpreter, string templateText)
         {
             var input = templateText;
 
-            foreach (var placeholder in compiler.Placeholders)
+            foreach (var placeholder in interpreter.Placeholders)
             {
-                var output = compiler.GetValueOfPlaceholder(placeholder);
+                var output = interpreter.GetValueOfPlaceholder(placeholder);
                 input = input.Replace(placeholder, output);
             }
 

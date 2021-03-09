@@ -12,10 +12,10 @@ namespace Qik.LanguageEngine.IntegrationTests
         public void Should_Read_Script_And_Return_Input_Manifest()
         {
             var fileFunctions = new FileFunctions();
-            var compiler = new Compiler();
-            var jsonFunctions = new JsonFunctions(compiler);
+            var interpreter = new Intepreter();
+            var jsonFunctions = new JsonFunctions(interpreter);
 
-            var appHost = new AppHost(compiler, fileFunctions, jsonFunctions);
+            var appHost = new AppHost(interpreter, fileFunctions, jsonFunctions);
             var resultJson = appHost.GetJsonInputInterface(FileHelpers.ResolvePath("InferPrimaryKey.qik"));
             var expectedJson = FileHelpers.ReadText("InferPk_ReadScript_Json.txt");
             Assert.AreEqual(expectedJson, resultJson);
@@ -25,10 +25,10 @@ namespace Qik.LanguageEngine.IntegrationTests
         public void Should_Find_Script_In_Directory_And_Generate_Valid_Output()
         {
             var fileFunctions = new FileFunctions();
-            var compiler = new Compiler();
-            var jsonFunctions = new JsonFunctions(compiler);
+            var interpreter = new Intepreter();
+            var jsonFunctions = new JsonFunctions(interpreter);
 
-            var appHost = new AppHost(compiler, fileFunctions, jsonFunctions);
+            var appHost = new AppHost(interpreter, fileFunctions, jsonFunctions);
             appHost.Generate(FileHelpers.GetSubFolder("QikDirectory"));
 
             var output_1 = FileHelpers.ReadText(@"QikDirectory\blueprint_1_output.txt");

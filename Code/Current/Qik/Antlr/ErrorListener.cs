@@ -8,14 +8,14 @@ namespace CygSoft.Qik.Antlr
 {
     internal class ErrorListener : BaseErrorListener
     {
-        public event EventHandler<CompileErrorEventArgs> SyntaxErrorDetected;
+        public event EventHandler<InterpretErrorEventArgs> SyntaxErrorDetected;
 
         public override void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
         {
             IList<string> stack = ((Parser)recognizer).GetRuleInvocationStack();
             stack.Reverse();
 
-            SyntaxErrorDetected?.Invoke(this, new CompileErrorEventArgs(UserFriendlyContext(stack[0].ToString()), line, charPositionInLine, offendingSymbol.ToString(), msg));
+            SyntaxErrorDetected?.Invoke(this, new InterpretErrorEventArgs(UserFriendlyContext(stack[0].ToString()), line, charPositionInLine, offendingSymbol.ToString(), msg));
         }
 
         private string UserFriendlyContext(string stackId)

@@ -6,11 +6,11 @@ namespace LanguageEngine.Tests.UnitTests.Helpers
     {
         internal static string EvaluateCompilerFunction(string functionText)
         {
-            var compiler = new Compiler();
+            var interpreter = new Intepreter();
             var expression = TestHelpers.BuildExpressionForFunction(functionText);
 
-            compiler.Compile(expression);
-            var val = compiler.GetValueOfSymbol("@output");
+            interpreter.Interpret(expression);
+            var val = interpreter.GetValueOfSymbol("@output");
 
             return val;
         }

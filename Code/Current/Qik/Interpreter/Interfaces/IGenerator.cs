@@ -2,7 +2,7 @@
 {
     public interface IGenerator
     {
-        string Generate(ICompiler compiler, string templateText);
-        string Generate(IBatchCompiler compiler, string templateText);
+        string Generate(IInterpreter interpreter, string templateText);
+        string Generate(IBatchCompiler interpreter, string templateText);
     }
 }
