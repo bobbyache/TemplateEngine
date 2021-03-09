@@ -115,29 +115,6 @@ namespace Qik.LanguageEngine.IntegrationTests
         }
 
         [Test]
-        public void ScriptExamples_BatchCompileFields_GeneratesBatchOutput()
-        {
-            IBatchCompiler batchCompiler = new BatchCompiler();
-            batchCompiler.Compile(FileHelpers.ReadText("Batch.tpl"));
-
-            // this must take place afterwards, otherwise it will be cleared by the compile.
-            batchCompiler.CreateFieldInput("@Column1", "Title", "Description");
-            batchCompiler.CreateFieldInput("@Column2", "Title", "Description");
-            batchCompiler.Input("@Column1", "COL 1");
-            batchCompiler.Input("@Column2", "COL 2");
-
-            ISymbolInfo[] symbolInfo = batchCompiler.GetSymbolInfoSet(new string[] { "@Column1", "@Column2" });
-
-            Generator generator = new Generator();
-            string output = generator.Generate(batchCompiler, "@{combination}");
-
-            Assert.AreEqual("COL 1 - COL 2", output);
-
-            Assert.AreEqual(2, symbolInfo.Length);
-        }
-
-
-        [Test]
         public void ScriptExamples_OptionInput_Parsed_IsNotAPlaceholder()
         {
             string scriptText = FileHelpers.ReadText("OptionBox.qik");
