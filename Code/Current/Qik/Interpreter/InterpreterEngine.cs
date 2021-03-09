@@ -5,13 +5,13 @@ using CygSoft.Qik.Antlr;
 
 namespace CygSoft.Qik
 {
-    public class CompileEngine : ICompileEngine
+    public class InterpreterEngine : IInterpreterEngine
     {
         public event EventHandler BeforeInput;
         public event EventHandler AfterInput;
-        public event EventHandler BeforeCompile;
-        public event EventHandler AfterCompile;
-        public event EventHandler<CompileErrorEventArgs> CompileError;
+        public event EventHandler BeforeInterpret;
+        public event EventHandler AfterInterpret;
+        public event EventHandler<CompileErrorEventArgs> InterpretError;
 
         //TODO: Inject these rather than new them up inside the class.
         private readonly IGlobalTable scopeTable = new GlobalTable();
@@ -26,7 +26,7 @@ namespace CygSoft.Qik
 
         public string[] Placeholders => scopeTable.Placeholders;
 
-        public CompileEngine() => HasErrors = false;
+        public InterpreterEngine() => HasErrors = false;
 
         public void CreateFieldInput(string symbol, string fieldName, string description)
         {
@@ -49,10 +49,10 @@ namespace CygSoft.Qik
             AfterInput?.Invoke(this, new EventArgs());
         }
 
-        public void Compile(string scriptText)
+        public void Interpret(string scriptText)
         {
             HasErrors = false;
-            BeforeCompile?.Invoke(this, new EventArgs());
+            BeforeInterpret?.Invoke(this, new EventArgs());
 
             try
             {
@@ -61,8 +61,8 @@ namespace CygSoft.Qik
                 errorReport.Reporting = true;
                 errorReport.ExecutionErrorDetected += ErrorReport_ExecutionErrorDetected;
 
-                CompileInputs(scriptText);
-                CompileExpressions(scriptText);
+                InterpretInputs(scriptText);
+                InterpretExpressions(scriptText);
 
                 errorReport.ExecutionErrorDetected -= ErrorReport_ExecutionErrorDetected;
                 errorReport.Reporting = false;
@@ -74,15 +74,15 @@ namespace CygSoft.Qik
             catch (Exception exception)
             {
                 HasErrors = true;
-                CompileError?.Invoke(this, new CompileErrorEventArgs(exception));
+                InterpretError?.Invoke(this, new CompileErrorEventArgs(exception));
             }
             finally
             {
-                AfterCompile?.Invoke(this, new EventArgs());
+                AfterInterpret?.Invoke(this, new EventArgs());
             }
         }
 
-        private void CompileExpressions(string scriptText)
+        private void InterpretExpressions(string scriptText)
         {
             // TODO: Can't this stuff all be injected and mocked out for testing?
             var inputStream = new AntlrInputStream(scriptText);
@@ -96,7 +96,7 @@ namespace CygSoft.Qik
             expressionVisitor.Visit(tree);
         }
 
-        private void CompileInputs(string scriptText)
+        private void InterpretInputs(string scriptText)
         {
             // TODO: Can't this stuff all be injected and mocked out for testing?
             var inputStream = new AntlrInputStream(scriptText);
@@ -113,7 +113,7 @@ namespace CygSoft.Qik
         private void ErrorReport_ExecutionErrorDetected(object sender, CompileErrorEventArgs e)
         {
             HasErrors = true;
-            CompileError?.Invoke(this, e);
+            InterpretError?.Invoke(this, e);
         }
 
         public ISymbolInfo GetSymbolInfo(string symbol) => scopeTable.GetSymbolInfo(symbol);

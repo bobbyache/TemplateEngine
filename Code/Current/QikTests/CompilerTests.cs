@@ -11,9 +11,9 @@ namespace Qik.LanguageEngine.UnitTests
         public void Should_Validate_Script()
         {
             var syntaxValidatorMock = new Mock<ISyntaxValidator>();
-            var compileEngineMock = new Mock<ICompileEngine>();
+            var interpreterEngineMock = new Mock<IInterpreterEngine>();
 
-            var compiler = new Compiler(syntaxValidatorMock.Object, compileEngineMock.Object);
+            var compiler = new Compiler(syntaxValidatorMock.Object, interpreterEngineMock.Object);
             compiler.Compile("// Script text");
 
             syntaxValidatorMock.Verify(validator => validator.Validate(It.IsAny<string>()), Times.Once);
@@ -25,12 +25,12 @@ namespace Qik.LanguageEngine.UnitTests
             var syntaxValidatorMock = new Mock<ISyntaxValidator>();
             syntaxValidatorMock.Setup(validator => validator.HasErrors).Returns(false);
 
-            var compileEngineMock = new Mock<ICompileEngine>();
+            var interpreterEngineMock = new Mock<IInterpreterEngine>();
 
-            var compiler = new Compiler(syntaxValidatorMock.Object, compileEngineMock.Object);
+            var compiler = new Compiler(syntaxValidatorMock.Object, interpreterEngineMock.Object);
             compiler.Compile("// Script text has no errors");
 
-            compileEngineMock.Verify(engine => engine.Compile(It.IsAny<string>()), Times.Once);
+            interpreterEngineMock.Verify(engine => engine.Interpret(It.IsAny<string>()), Times.Once);
         }
 
         [Test]
@@ -39,12 +39,12 @@ namespace Qik.LanguageEngine.UnitTests
             var syntaxValidatorMock = new Mock<ISyntaxValidator>();
             syntaxValidatorMock.Setup(validator => validator.HasErrors).Returns(true);
 
-            var compileEngineMock = new Mock<ICompileEngine>();
+            var interpreterEngineMock = new Mock<IInterpreterEngine>();
 
-            var compiler = new Compiler(syntaxValidatorMock.Object, compileEngineMock.Object);
+            var compiler = new Compiler(syntaxValidatorMock.Object, interpreterEngineMock.Object);
             compiler.Compile("// Script text has errors");
 
-            compileEngineMock.Verify(engine => engine.Compile(It.IsAny<string>()), Times.Never);
+            interpreterEngineMock.Verify(engine => engine.Interpret(It.IsAny<string>()), Times.Never);
         }
 
         [Test]

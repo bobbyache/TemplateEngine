@@ -13,22 +13,22 @@ namespace CygSoft.Qik
         public event EventHandler<CompileErrorEventArgs> CompileError;
 
         private readonly ISyntaxValidator syntaxValidator = null;
-        private readonly ICompileEngine compileEngine = null;
+        private readonly IInterpreterEngine interpreterEngine = null;
 
         public bool HasErrors => syntaxValidator.HasErrors;
-        public string[] Placeholders => compileEngine.Placeholders;
-        public IExpression[] Expressions => compileEngine.Expressions;
+        public string[] Placeholders => interpreterEngine.Placeholders;
+        public IExpression[] Expressions => interpreterEngine.Expressions;
 
         public BatchCompiler()
         {
             syntaxValidator = new SyntaxValidator();
-            compileEngine = new CompileEngine();
+            interpreterEngine = new InterpreterEngine();
         }
 
-        public BatchCompiler(ISyntaxValidator syntaxValidator, ICompileEngine compileEngine)
+        public BatchCompiler(ISyntaxValidator syntaxValidator, IInterpreterEngine interpreterEngine)
         {
             this.syntaxValidator = syntaxValidator;
-            this.compileEngine = compileEngine;
+            this.interpreterEngine = interpreterEngine;
         }
 
         public void Compile(string scriptText)
@@ -43,36 +43,36 @@ namespace CygSoft.Qik
         public string SymbolFromField(string fieldName) => "@" + fieldName;
 
         public void CreateFieldInput(string symbol, string fieldName, string description) => 
-            compileEngine.CreateFieldInput(symbol, fieldName, description);
+            interpreterEngine.CreateFieldInput(symbol, fieldName, description);
 
-        public ISymbolInfo GetSymbolInfo(string symbol) => compileEngine.GetSymbolInfo(symbol);
+        public ISymbolInfo GetSymbolInfo(string symbol) => interpreterEngine.GetSymbolInfo(symbol);
 
-        public ISymbolInfo[] GetSymbolInfoSet(string[] symbols) => compileEngine.GetSymbolInfoSet(symbols);
+        public ISymbolInfo[] GetSymbolInfoSet(string[] symbols) => interpreterEngine.GetSymbolInfoSet(symbols);
 
-        public string GetValueOfPlaceholder(string placeholder) => compileEngine.GetValueOfPlaceholder(placeholder);
+        public string GetValueOfPlaceholder(string placeholder) => interpreterEngine.GetValueOfPlaceholder(placeholder);
 
         public void Input(string symbol, string fieldValue)
         {
-            compileEngine.BeforeInput += CompileEngine_BeforeInput;
-            compileEngine.AfterInput += CompileEngine_AfterInput;
+            interpreterEngine.BeforeInput += interpreterEngine_BeforeInput;
+            interpreterEngine.AfterInput += interpreterEngine_AfterInput;
 
-            compileEngine.Input(symbol, fieldValue);
+            interpreterEngine.Input(symbol, fieldValue);
 
-            compileEngine.BeforeInput -= CompileEngine_BeforeInput;
-            compileEngine.AfterInput -= CompileEngine_AfterInput;
+            interpreterEngine.BeforeInput -= interpreterEngine_BeforeInput;
+            interpreterEngine.AfterInput -= interpreterEngine_AfterInput;
         }
 
         private void CheckCompilation(string scriptText)
         {
-            compileEngine.BeforeCompile += Compiler_BeforeCompile;
-            compileEngine.AfterCompile += Compiler_AfterCompile;
-            compileEngine.CompileError += Compiler_CompileError;
+            interpreterEngine.BeforeInterpret += Compiler_BeforeCompile;
+            interpreterEngine.AfterInterpret += Compiler_AfterCompile;
+            interpreterEngine.InterpretError += Compiler_CompileError;
 
-            compileEngine.Compile(scriptText);
+            interpreterEngine.Interpret(scriptText);
 
-            compileEngine.CompileError -= Compiler_CompileError;
-            compileEngine.BeforeCompile -= Compiler_BeforeCompile;
-            compileEngine.AfterCompile -= Compiler_AfterCompile;
+            interpreterEngine.InterpretError -= Compiler_CompileError;
+            interpreterEngine.BeforeInterpret -= Compiler_BeforeCompile;
+            interpreterEngine.AfterInterpret -= Compiler_AfterCompile;
         }
 
         private void CheckSyntax(string scriptText)
@@ -86,9 +86,9 @@ namespace CygSoft.Qik
 
         private void Compiler_BeforeCompile(object sender, EventArgs e) => BeforeCompile?.Invoke(this, e);
 
-        private void CompileEngine_AfterInput(object sender, EventArgs e) => AfterInput?.Invoke(this, e);
+        private void interpreterEngine_AfterInput(object sender, EventArgs e) => AfterInput?.Invoke(this, e);
 
-        private void CompileEngine_BeforeInput(object sender, EventArgs e) => BeforeInput?.Invoke(this, e);
+        private void interpreterEngine_BeforeInput(object sender, EventArgs e) => BeforeInput?.Invoke(this, e);
 
         private void Compiler_CompileError(object sender, CompileErrorEventArgs e) => CompileError?.Invoke(this, e);
     }

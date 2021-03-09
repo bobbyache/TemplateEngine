@@ -12,13 +12,13 @@ namespace CygSoft.Qik
         public event EventHandler<CompileErrorEventArgs> CompileError;
 
         private readonly ISyntaxValidator syntaxValidator = null;
-        private readonly ICompileEngine compileEngine = null;
+        private readonly IInterpreterEngine interpreterEngine = null;
 
-        public bool HasErrors => syntaxValidator.HasErrors || compileEngine.HasErrors;
-        public string[] Symbols => compileEngine.Symbols;
-        public string[] Placeholders => compileEngine.Placeholders;
-        public IInputField[] InputFields => compileEngine.InputFields;
-        public IExpression[] Expressions => compileEngine.Expressions;
+        public bool HasErrors => syntaxValidator.HasErrors || interpreterEngine.HasErrors;
+        public string[] Symbols => interpreterEngine.Symbols;
+        public string[] Placeholders => interpreterEngine.Placeholders;
+        public IInputField[] InputFields => interpreterEngine.InputFields;
+        public IExpression[] Expressions => interpreterEngine.Expressions;
 
         // TODO: Only allow inject (see below constructor). Fix refs in tests to make it clear what is being used
         // + can mock out and deeply test.
@@ -27,14 +27,14 @@ namespace CygSoft.Qik
         public Compiler()
         {
             syntaxValidator = new SyntaxValidator();
-            compileEngine = new CompileEngine();
+            interpreterEngine = new InterpreterEngine();
         }
 
         // For testing purposes:
-        public Compiler(ISyntaxValidator syntaxValidator, ICompileEngine compileEngine)
+        public Compiler(ISyntaxValidator syntaxValidator, IInterpreterEngine interpreterEngine)
         {
             this.syntaxValidator = syntaxValidator;
-            this.compileEngine = compileEngine;
+            this.interpreterEngine = interpreterEngine;
         }
 
         public void Compile(string scriptText)
@@ -48,26 +48,26 @@ namespace CygSoft.Qik
 
         public void Input(string symbol, string value)
         {
-            compileEngine.BeforeInput += CompileEngine_BeforeInput;
-            compileEngine.AfterInput += CompileEngine_AfterInput;
+            interpreterEngine.BeforeInput += interpreterEngine_BeforeInput;
+            interpreterEngine.AfterInput += interpreterEngine_AfterInput;
 
-            compileEngine.Input(symbol, value);
+            interpreterEngine.Input(symbol, value);
 
-            compileEngine.BeforeInput -= CompileEngine_BeforeInput;
-            compileEngine.AfterInput -= CompileEngine_AfterInput;
+            interpreterEngine.BeforeInput -= interpreterEngine_BeforeInput;
+            interpreterEngine.AfterInput -= interpreterEngine_AfterInput;
         }
 
-        public ISymbolInfo GetPlaceholderInfo(string placeholder) => compileEngine.GetPlaceholderInfo(placeholder);
+        public ISymbolInfo GetPlaceholderInfo(string placeholder) => interpreterEngine.GetPlaceholderInfo(placeholder);
 
-        public ISymbolInfo GetSymbolInfo(string symbol) => compileEngine.GetSymbolInfo(symbol);
+        public ISymbolInfo GetSymbolInfo(string symbol) => interpreterEngine.GetSymbolInfo(symbol);
 
-        public ISymbolInfo[] GetSymbolInfoSet(string[] symbols) => compileEngine.GetSymbolInfoSet(symbols);
+        public ISymbolInfo[] GetSymbolInfoSet(string[] symbols) => interpreterEngine.GetSymbolInfoSet(symbols);
 
-        public string GetValueOfSymbol(string symbol) => compileEngine.GetValueOfSymbol(symbol);
+        public string GetValueOfSymbol(string symbol) => interpreterEngine.GetValueOfSymbol(symbol);
 
-        public string GetValueOfPlaceholder(string placeholder) => compileEngine.GetValueOfPlaceholder(placeholder);
+        public string GetValueOfPlaceholder(string placeholder) => interpreterEngine.GetValueOfPlaceholder(placeholder);
 
-        public string GetTitleOfPlaceholder(string placeholder) => compileEngine.GetTitleOfPlaceholder(placeholder);
+        public string GetTitleOfPlaceholder(string placeholder) => interpreterEngine.GetTitleOfPlaceholder(placeholder);
 
         // TODO: Looks like placeholder is configurable. What happens if we change it?
         // Tests need to be configurable!
@@ -77,15 +77,15 @@ namespace CygSoft.Qik
 
         private void InterpretInstructions(string scriptText)
         {
-            compileEngine.BeforeCompile += Compiler_BeforeCompile;
-            compileEngine.AfterCompile += Compiler_AfterCompile;
-            compileEngine.CompileError += Compiler_CompileError;
+            interpreterEngine.BeforeInterpret += Compiler_BeforeCompile;
+            interpreterEngine.AfterInterpret += Compiler_AfterCompile;
+            interpreterEngine.InterpretError += Compiler_CompileError;
 
-            compileEngine.Compile(scriptText);
+            interpreterEngine.Interpret(scriptText);
 
-            compileEngine.CompileError -= Compiler_CompileError;
-            compileEngine.BeforeCompile -= Compiler_BeforeCompile;
-            compileEngine.AfterCompile -= Compiler_AfterCompile;
+            interpreterEngine.InterpretError -= Compiler_CompileError;
+            interpreterEngine.BeforeInterpret -= Compiler_BeforeCompile;
+            interpreterEngine.AfterInterpret -= Compiler_AfterCompile;
         }
 
         private void CheckSyntax(string scriptText)
@@ -101,9 +101,9 @@ namespace CygSoft.Qik
 
         private void Compiler_BeforeCompile(object sender, EventArgs e) => BeforeCompile?.Invoke(this, e);
 
-        private void CompileEngine_AfterInput(object sender, EventArgs e) => AfterInput?.Invoke(this, e);
+        private void interpreterEngine_AfterInput(object sender, EventArgs e) => AfterInput?.Invoke(this, e);
 
-        private void CompileEngine_BeforeInput(object sender, EventArgs e) => BeforeInput?.Invoke(this, e);
+        private void interpreterEngine_BeforeInput(object sender, EventArgs e) => BeforeInput?.Invoke(this, e);
 
         private void Compiler_CompileError(object sender, CompileErrorEventArgs e) => CompileError?.Invoke(this, e);
     }

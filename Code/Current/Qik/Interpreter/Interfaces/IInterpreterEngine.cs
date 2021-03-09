@@ -2,13 +2,13 @@
 
 namespace CygSoft.Qik
 {
-    public interface ICompileEngine
+    public interface IInterpreterEngine
     {
         event EventHandler BeforeInput;
         event EventHandler AfterInput;
-        event EventHandler BeforeCompile;
-        event EventHandler AfterCompile;
-        event EventHandler<CompileErrorEventArgs> CompileError;
+        event EventHandler BeforeInterpret;
+        event EventHandler AfterInterpret;
+        event EventHandler<CompileErrorEventArgs> InterpretError;
 
         string[] Placeholders { get; }
         string[] Symbols { get; }
@@ -19,7 +19,7 @@ namespace CygSoft.Qik
 
         void CreateFieldInput(string symbol, string fieldName, string description);
 
-        void Compile(string scriptText);
+        void Interpret(string scriptText);
         void Input(string symbol, string value);
 
         ISymbolInfo GetSymbolInfo(string symbol);
