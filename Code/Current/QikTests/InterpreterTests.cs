@@ -13,7 +13,7 @@ namespace Qik.LanguageEngine.UnitTests
             var syntaxValidatorMock = new Mock<ISyntaxValidator>();
             var interpreterEngineMock = new Mock<IInterpreterEngine>();
 
-            var interpreter = new Intepreter(syntaxValidatorMock.Object, interpreterEngineMock.Object);
+            var interpreter = new Interpreter(syntaxValidatorMock.Object, interpreterEngineMock.Object);
             interpreter.Interpret("// Script text");
 
             syntaxValidatorMock.Verify(validator => validator.Validate(It.IsAny<string>()), Times.Once);
@@ -27,7 +27,7 @@ namespace Qik.LanguageEngine.UnitTests
 
             var interpreterEngineMock = new Mock<IInterpreterEngine>();
 
-            var interpreter = new Intepreter(syntaxValidatorMock.Object, interpreterEngineMock.Object);
+            var interpreter = new Interpreter(syntaxValidatorMock.Object, interpreterEngineMock.Object);
             interpreter.Interpret("// Script text has no errors");
 
             interpreterEngineMock.Verify(engine => engine.Interpret(It.IsAny<string>()), Times.Once);
@@ -41,7 +41,7 @@ namespace Qik.LanguageEngine.UnitTests
 
             var interpreterEngineMock = new Mock<IInterpreterEngine>();
 
-            var interpreter = new Intepreter(syntaxValidatorMock.Object, interpreterEngineMock.Object);
+            var interpreter = new Interpreter(syntaxValidatorMock.Object, interpreterEngineMock.Object);
             interpreter.Interpret("// Script text has errors");
 
             interpreterEngineMock.Verify(engine => engine.Interpret(It.IsAny<string>()), Times.Never);
@@ -51,7 +51,7 @@ namespace Qik.LanguageEngine.UnitTests
         public void Should_Fire_SyntaxErrorDetected_When_Interpreted_With_Incorrect_Title_Case()
         {
             var wasCalled = false;
-            var interpreter = new Intepreter();
+            var interpreter = new Interpreter();
             interpreter.CompileError += (s, e) => wasCalled = true;
 
             interpreter.Interpret("@dataType = text[title=\"5.Field Datatype)\", Description=\"The datatype for the field (column).\"];");
@@ -63,7 +63,7 @@ namespace Qik.LanguageEngine.UnitTests
         public void Should_Fire_SyntaxErrorDetected_When_Interpreted_With_Incorrect_Description_Case()
         {
             var wasCalled = false;
-            var interpreter = new Intepreter();
+            var interpreter = new Interpreter();
 
             interpreter.CompileError += (s, e) =>
             {

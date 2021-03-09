@@ -3,7 +3,7 @@ using CygSoft.Qik.Antlr;
 
 namespace CygSoft.Qik
 {
-    public class Intepreter : IInterpreter
+    public class Interpreter : IInterpreter
     {
         public event EventHandler BeforeInput;
         public event EventHandler AfterInput;
@@ -24,14 +24,14 @@ namespace CygSoft.Qik
         // + can mock out and deeply test.
         // QUESTION: How does one inject a service that requires constructor arguments.
         // Should we even do this? This is probably enough to make it testable. Inject to test, just use as top level service.
-        public Intepreter()
+        public Interpreter()
         {
             syntaxValidator = new SyntaxValidator();
             interpreterEngine = new InterpreterEngine();
         }
 
         // For testing purposes:
-        public Intepreter(ISyntaxValidator syntaxValidator, IInterpreterEngine interpreterEngine)
+        public Interpreter(ISyntaxValidator syntaxValidator, IInterpreterEngine interpreterEngine)
         {
             this.syntaxValidator = syntaxValidator;
             this.interpreterEngine = interpreterEngine;

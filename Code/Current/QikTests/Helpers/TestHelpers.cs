@@ -6,7 +6,7 @@ namespace LanguageEngine.Tests.UnitTests.Helpers
     {
         internal static string EvaluateFunction(string functionText)
         {
-            var interpreter = new Intepreter();
+            var interpreter = new Interpreter();
             var expression = TestHelpers.BuildExpressionForFunction(functionText);
 
             interpreter.Interpret(expression);

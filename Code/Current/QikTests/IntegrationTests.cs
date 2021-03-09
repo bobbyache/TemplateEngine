@@ -12,7 +12,7 @@ namespace Qik.LanguageEngine.IntegrationTests
         public void ScriptExamples_InferPrimaryKeyFromPrimaryKeyOption_OutputsPrimaryKey()
         {
             string scriptText = FileHelpers.ReadText("InferPrimaryKey.qik");
-            IInterpreter interpreter = new Intepreter();
+            IInterpreter interpreter = new Interpreter();
             interpreter.Interpret(scriptText);
 
             interpreter.Input("@table", "MyTable");
@@ -51,7 +51,7 @@ namespace Qik.LanguageEngine.IntegrationTests
         [Test]
         public void ScriptExamples_CreateMultilineScriptInExpression_OutputsCorrectly()
         {
-            IInterpreter interpreter = new Intepreter();
+            IInterpreter interpreter = new Interpreter();
             interpreter.Interpret(FileHelpers.ReadText("MultiLine.qik"));
 
             IGenerator generator = new Generator();
@@ -63,7 +63,7 @@ namespace Qik.LanguageEngine.IntegrationTests
         [Test]
         public void ScriptExamples_CreateStoredProcOutput_BuildsCorrectSymbolsAndOutputValues()
         {
-            IInterpreter interpreter = new Intepreter();
+            IInterpreter interpreter = new Interpreter();
             interpreter.Interpret(FileHelpers.ReadText("StoredProc.qik"));
 
             IExpression[] expressions = interpreter.Expressions;
@@ -105,7 +105,7 @@ namespace Qik.LanguageEngine.IntegrationTests
         public void ScriptExamples_OptionInput_Parsed_IsNotAPlaceholder()
         {
             var scriptText = FileHelpers.ReadText("OptionBox.qik");
-            var interpreter = new Intepreter();
+            var interpreter = new Interpreter();
             interpreter.Interpret(scriptText);
 
             var inputField = interpreter.InputFields[0];

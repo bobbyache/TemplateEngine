@@ -12,7 +12,7 @@ namespace Qik.LanguageEngine.IntegrationTests
         public void Should_Read_Script_And_Return_Input_Manifest()
         {
             var fileFunctions = new FileFunctions();
-            var interpreter = new Intepreter();
+            var interpreter = new Interpreter();
             var jsonFunctions = new JsonFunctions(interpreter);
 
             var appHost = new AppHost(interpreter, fileFunctions, jsonFunctions);
@@ -25,7 +25,7 @@ namespace Qik.LanguageEngine.IntegrationTests
         public void Should_Find_Script_In_Directory_And_Generate_Valid_Output()
         {
             var fileFunctions = new FileFunctions();
-            var interpreter = new Intepreter();
+            var interpreter = new Interpreter();
             var jsonFunctions = new JsonFunctions(interpreter);
 
             var appHost = new AppHost(interpreter, fileFunctions, jsonFunctions);
