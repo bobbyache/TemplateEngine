@@ -20,14 +20,11 @@ namespace CygSoft.Qik
         public IInputField[] InputFields => interpreterEngine.InputFields;
         public IExpression[] Expressions => interpreterEngine.Expressions;
 
-        // TODO: Only allow inject (see below constructor). Fix refs in tests to make it clear what is being used
-        // + can mock out and deeply test.
-        // QUESTION: How does one inject a service that requires constructor arguments.
-        // Should we even do this? This is probably enough to make it testable. Inject to test, just use as top level service.
+        // Default functionality
         public Interpreter()
         {
             syntaxValidator = new SyntaxValidator();
-            interpreterEngine = new InterpreterEngine();
+            interpreterEngine = new InterpreterEngine(new GlobalTable(), new ErrorReport());
         }
 
         // For testing purposes:

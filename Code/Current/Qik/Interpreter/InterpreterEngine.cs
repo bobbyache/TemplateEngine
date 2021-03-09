@@ -13,11 +13,10 @@ namespace CygSoft.Qik
         public event EventHandler AfterInterpret;
         public event EventHandler<InterpretErrorEventArgs> InterpretError;
 
-        //TODO: Inject these rather than new them up inside the class.
-        private readonly IGlobalTable scopeTable = new GlobalTable();
-        private readonly IErrorReport errorReport = new ErrorReport();
+        private readonly IGlobalTable scopeTable;
+        private readonly IErrorReport errorReport;
 
-        public bool HasErrors { get; private set; }
+        public bool HasErrors { get; private set; } = false;
 
         public string[] Symbols => scopeTable.Symbols;
 
@@ -26,12 +25,14 @@ namespace CygSoft.Qik
 
         public string[] Placeholders => scopeTable.Placeholders;
 
-        public InterpreterEngine() => HasErrors = false;
+        public InterpreterEngine(IGlobalTable scopeTable, IErrorReport errorReport )
+        {
+            this.scopeTable = scopeTable;
+            this.errorReport = errorReport;
+        }
 
         public void CreateFieldInput(string symbol, string fieldName, string description)
         {
-            HasErrors = false;
-
             var autoInputSymbol = new AutoInputSymbol(symbol, fieldName, description);
 
             if (!scopeTable.Symbols.Contains(autoInputSymbol.Symbol))
