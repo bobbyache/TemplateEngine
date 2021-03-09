@@ -31,11 +31,12 @@ namespace Qik.LanguageEngine.IntegrationTests
             var appHost = new AppHost(interpreter, fileFunctions, jsonFunctions);
             appHost.Generate(FileHelpers.GetSubFolder("QikDirectory"));
 
-            var output_1 = FileHelpers.ReadText(@"QikDirectory\blueprint_1_output.txt");
-            var output_2 = FileHelpers.ReadText(@"QikDirectory\blueprint_2_output.txt");
+            var output_1 = FileHelpers.ReadText(@"QikDirectory\output\blueprint_1.txt");
+            var output_2 = FileHelpers.ReadText(@"QikDirectory\output\blueprint_2.txt");
 
-            FileHelpers.DeleteFile(@"QikDirectory\blueprint_1_output.txt");
-            FileHelpers.DeleteFile(@"QikDirectory\blueprint_2_output.txt");
+            FileHelpers.DeleteFile(@"QikDirectory\output\blueprint_1.txt");
+            FileHelpers.DeleteFile(@"QikDirectory\output\blueprint_2.txt");
+            FileHelpers.DeleteDirectory(@"QikDirectory\output");
 
             Assert.AreEqual(output_1, "Table_1Id");
             Assert.AreEqual(output_2, "Table_1Id\r\nTable_1Id");

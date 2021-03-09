@@ -7,6 +7,8 @@ namespace CygSoft.Qik.Console
     public interface IFileFunctions
     {
         bool FileExists(string filePath);
+        bool DirectoryExists(string directoryPath);
+        void CreateDirectory(string directoryPath);
         string GetFileDirectory(string filePath);
         string ReadTextFile(string filePath);
         void WriteTextFile(string path, string contents);
@@ -49,6 +51,10 @@ namespace CygSoft.Qik.Console
                 streamWriter.Flush();
             }
         }
+
+        public bool DirectoryExists(string directoryPath) => Directory.Exists(directoryPath);
+
+        public void CreateDirectory(string directoryPath) => Directory.CreateDirectory(directoryPath);
 
         public bool FindInputsFileInFolder(string directoryPath, out string jsonInputFile)
         {
@@ -116,8 +122,8 @@ namespace CygSoft.Qik.Console
         {
             var directory = Path.GetDirectoryName(blueprintFilePath);
             var fileName = Path.GetFileNameWithoutExtension(blueprintFilePath);
-            // TODO: Add a prefix of _ here so that all the output files show up in the same place
-            return Path.Combine(directory, $"{fileName}_output.txt");
+
+            return Path.Combine(directory, "output", $"{fileName}.txt");
         }
     }
 }

@@ -9,5 +9,6 @@ namespace Qik.LanguageEngine.IntegrationTests.Helpers
         public static string ResolvePath(string fileName) => Path.Combine(GetFolder(), fileName);
         public static string ReadText(string fileName) => File.ReadAllText(ResolvePath(fileName));
         public static void DeleteFile(string fileName) => File.Delete(ResolvePath(fileName));
+        public static void DeleteDirectory(string directoryName) => Directory.Delete(ResolvePath(directoryName));
     }
 }

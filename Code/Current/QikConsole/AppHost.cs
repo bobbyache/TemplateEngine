@@ -49,8 +49,14 @@ namespace CygSoft.Qik.Console
             {
                 var generator = new Generator();
                 string output = generator.Generate(interpreter, fileFunctions.ReadTextFile(bluePrintFile));
-
+                
                 var outputPath = fileFunctions.GeneratOutputPath(bluePrintFile);
+
+                if (!fileFunctions.DirectoryExists(fileFunctions.GetFileDirectory(outputPath)))
+                {
+                    fileFunctions.CreateDirectory(fileFunctions.GetFileDirectory(outputPath));
+                }
+
                 fileFunctions.WriteTextFile(outputPath, output);
             }
         }
