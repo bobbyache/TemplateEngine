@@ -69,12 +69,6 @@ namespace CygSoft.Qik
 
         public string GetTitleOfPlaceholder(string placeholder) => interpreterEngine.GetTitleOfPlaceholder(placeholder);
 
-        // TODO: Looks like placeholder is configurable. What happens if we change it?
-        // Tests need to be configurable!
-        public string TextToSymbol(string text) => "@" + text;
-
-        public string TextToPlaceholder(string text) => "@{" + text + "}";
-
         private void InterpretInstructions(string scriptText)
         {
             interpreterEngine.BeforeInterpret += Interpreter_BeforeCompile;

@@ -22,9 +22,6 @@ namespace CygSoft.Qik
 
         void Input(string symbol, string value);
 
-        string TextToPlaceholder(string text);
-        string TextToSymbol(string text);
-
         ISymbolInfo GetPlaceholderInfo(string placeholder);
         ISymbolInfo GetSymbolInfo(string symbol);
         ISymbolInfo[] GetSymbolInfoSet(string[] symbols);
