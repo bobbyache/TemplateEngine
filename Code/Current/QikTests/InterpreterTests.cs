@@ -50,8 +50,8 @@ namespace Qik.LanguageEngine.UnitTests
         [Test]
         public void Should_Fire_SyntaxErrorDetected_When_Interpreted_With_Incorrect_Title_Case()
         {
-            bool wasCalled = false;
-            Intepreter interpreter = new Intepreter();
+            var wasCalled = false;
+            var interpreter = new Intepreter();
             interpreter.CompileError += (s, e) => wasCalled = true;
 
             interpreter.Interpret("@dataType = text[title=\"5.Field Datatype)\", Description=\"The datatype for the field (column).\"];");
@@ -62,8 +62,9 @@ namespace Qik.LanguageEngine.UnitTests
         [Test]
         public void Should_Fire_SyntaxErrorDetected_When_Interpreted_With_Incorrect_Description_Case()
         {
-            bool wasCalled = false;
-            Intepreter interpreter = new Intepreter();
+            var wasCalled = false;
+            var interpreter = new Intepreter();
+
             interpreter.CompileError += (s, e) =>
             {
                 wasCalled = true;

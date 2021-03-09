@@ -72,20 +72,21 @@ namespace Qik.LanguageEngine.IntegrationTests
             Assert.IsTrue(expressions.Length > 0);
             Assert.IsTrue(inputFields.Length > 0);
 
-            string authorName = interpreter.GetValueOfSymbol("@authorName");
-            string database = interpreter.GetValueOfSymbol("@database");
-            string todayDate = interpreter.GetValueOfSymbol("@date");
-            string authorCode = interpreter.GetValueOfSymbol("@authorCode");
-            string description = interpreter.GetValueOfSymbol("@desc");
-            string procTitle = interpreter.GetValueOfSymbol("@name");
+            var authorName = interpreter.GetValueOfSymbol("@authorName");
+            var database = interpreter.GetValueOfSymbol("@database");
+            var todayDate = interpreter.GetValueOfSymbol("@date");
+            var authorCode = interpreter.GetValueOfSymbol("@authorCode");
+            var description = interpreter.GetValueOfSymbol("@desc");
+            var procTitle = interpreter.GetValueOfSymbol("@name");
 
             interpreter.Input("@name", "StoredProcName");
             interpreter.Input("@database", "MSDF_DW");
             interpreter.Input("@context", "BE");
-            string procName = interpreter.GetValueOfSymbol("@procName");
-            string fileTitle = interpreter.GetValueOfSymbol("@fileTitle");
-            string filePath = interpreter.GetValueOfSymbol("@filePath");
-            string database2 = interpreter.GetValueOfSymbol("@database");
+
+            var procName = interpreter.GetValueOfSymbol("@procName");
+            var fileTitle = interpreter.GetValueOfSymbol("@fileTitle");
+            var filePath = interpreter.GetValueOfSymbol("@filePath");
+            var database2 = interpreter.GetValueOfSymbol("@database");
 
             Assert.AreEqual("Rob Blake", authorName);
             Assert.AreEqual("MSDF_DM", database);
@@ -94,34 +95,20 @@ namespace Qik.LanguageEngine.IntegrationTests
             Assert.AreEqual(null, procTitle);
             Assert.AreEqual(DateTime.Now.ToString("dd/MM/yyyy"), todayDate);
 
-            Assert.AreEqual("pRpt_StoredProcName", procName);
-            Assert.AreEqual("pRpt_StoredProcName.sql", fileTitle);
-            Assert.AreEqual(@"D:\Sandbox\MSDF\Code\SQLQueries\DataMartV2\Reports\pRpt_StoredProcName.sql", filePath);
-            Assert.AreEqual("MSDF_DW", database2);
-        }
-
-        [Test]
-        public void ScriptExamples_HtmlEncodeFunction_Encodes()
-        {
-            IInterpreter interpreter = new Intepreter();
-            interpreter.Interpret(FileHelpers.ReadText("HtmlEncode.txt"));
-            interpreter.Input("@normalText", @"Hello 'World'");
-
-            string encodedText = interpreter.GetValueOfSymbol("@encodedText");
-            string decodedText = interpreter.GetValueOfSymbol("@decodedText");
-
-            Assert.AreEqual(@"Hello &#39;World&#39;", encodedText);
-            Assert.AreEqual(@"Hello 'World'", decodedText);
+            Assert.AreEqual("pRpt_StoredProcName", interpreter.GetValueOfSymbol("@procName"));
+            Assert.AreEqual("pRpt_StoredProcName.sql", interpreter.GetValueOfSymbol("@fileTitle"));
+            Assert.AreEqual(@"D:\Sandbox\MSDF\Code\SQLQueries\DataMartV2\Reports\pRpt_StoredProcName.sql", interpreter.GetValueOfSymbol("@filePath"));
+            Assert.AreEqual("MSDF_DW", interpreter.GetValueOfSymbol("@database"));
         }
 
         [Test]
         public void ScriptExamples_OptionInput_Parsed_IsNotAPlaceholder()
         {
-            string scriptText = FileHelpers.ReadText("OptionBox.qik");
-            IInterpreter interpreter = new Intepreter();
+            var scriptText = FileHelpers.ReadText("OptionBox.qik");
+            var interpreter = new Intepreter();
             interpreter.Interpret(scriptText);
 
-            IInputField inputField = interpreter.InputFields[0];
+            var inputField = interpreter.InputFields[0];
             Assert.IsFalse(inputField.IsPlaceholder);
         }
     }
