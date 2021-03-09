@@ -3,7 +3,6 @@ using System;
 
 namespace CygSoft.Qik.Antlr
 {
-    // TODO: Move into Interpreter folder where it belongs.
     public class SyntaxValidator : ISyntaxValidator
     {
         public event EventHandler<InterpretErrorEventArgs> CompileError;
