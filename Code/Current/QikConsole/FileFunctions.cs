@@ -74,10 +74,17 @@ namespace CygSoft.Qik.Console
 
         public bool FindBlueprintFilesInFolder(string directoryPath, out IEnumerable<string> blueprintPaths)
         {
-            var paths = Directory.EnumerateFiles(directoryPath, "*.blu");
-            blueprintPaths = paths;
+            var result = new List<string>();
+            string[] extensions = { ".blu", ".md" };
 
-            return paths is not null && paths.Count() > 0;
+            foreach (string file in Directory.EnumerateFiles(directoryPath, "*.*", SearchOption.AllDirectories)
+                .Where(s => extensions.Any(ext => ext == Path.GetExtension(s))))
+            {
+                result.Add(file);
+            }
+            blueprintPaths = result;
+
+            return blueprintPaths is not null && blueprintPaths.Count() > 0;
         }
 
         public bool IsFolder(string path)
@@ -121,9 +128,9 @@ namespace CygSoft.Qik.Console
         public string GeneratOutputPath(string blueprintFilePath)
         {
             var directory = Path.GetDirectoryName(blueprintFilePath);
-            var fileName = Path.GetFileNameWithoutExtension(blueprintFilePath);
+            var fileName = Path.GetFileName(blueprintFilePath);
 
-            return Path.Combine(directory, "output", $"{fileName}.txt");
+            return Path.Combine(directory, "output", $"{fileName}");
         }
     }
 }
