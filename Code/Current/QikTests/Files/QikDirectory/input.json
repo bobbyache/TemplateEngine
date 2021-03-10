@@ -1,14 +1,14 @@
 [
     {
-        "Symbol":"@table",
-        "Value": "Table_1"
+        "symbol":"@table",
+        "value": "Table_1"
     },
     {
-        "Symbol":"@userPrimaryKey",
-        "Value": "User_Primary_Key"
+        "symbol":"@userPrimaryKey",
+        "value": "User_Primary_Key"
     },
     {
-        "Symbol":"@primaryKeyOption",
-        "Value": "INFERRED"
+        "symbol":"@primaryKeyOption",
+        "value": "INFERRED"
     }
 ]

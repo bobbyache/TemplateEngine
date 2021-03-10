@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace CygSoft.Qik.Console
 {
@@ -12,7 +13,9 @@ namespace CygSoft.Qik.Console
 
     public class InputSymbol
     {
+        [JsonPropertyName("symbol")]
         public string Symbol { get; set; }
+        [JsonPropertyName("value")]
         public string Value { get; set; }
     }
 
@@ -26,16 +29,13 @@ namespace CygSoft.Qik.Console
 
         public InputSymbol[] DeserializeInput(string jsonKeyValues)
         {
-            JsonSerializerOptions opts = new JsonSerializerOptions();
-            // TODO: Get this to work... currently JSON has to be proper case.
-            opts.PropertyNameCaseInsensitive = false;
-            
             var values = JsonSerializer.Deserialize<InputSymbol[]>(jsonKeyValues);
             return values;
         }
 
         public string SerializeInputSymbols(IInterpreter interpreter)
         {
+            var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             var result = new StringBuilder();
 
             result.Append("[");
@@ -45,18 +45,13 @@ namespace CygSoft.Qik.Console
                 var inputField = interpreter.InputFields[i];
 
                 if (inputField is TextInputSymbol textInputField)
-                {
-                    result.Append(JsonSerializer.Serialize<TextInputSymbol>(textInputField));
-                }
+                    result.Append(JsonSerializer.Serialize<TextInputSymbol>(textInputField, options));
+
                 else if (inputField is OptionInputSymbol optionInputField)
-                {
-                    result.Append(JsonSerializer.Serialize<OptionInputSymbol>(optionInputField));
-                }
+                    result.Append(JsonSerializer.Serialize<OptionInputSymbol>(optionInputField, options));
 
                 if (i < interpreter.InputFields.Length - 1)
-                {
                     result.Append(",");
-                }
             }
 
             result.Append("]");
