@@ -29,7 +29,7 @@ namespace Qik.LanguageEngine.IntegrationTests
             var jsonFunctions = new JsonFunctions(interpreter);
 
             var appHost = new AppHost(interpreter, fileFunctions, jsonFunctions);
-            appHost.Generate(FileHelpers.GetSubFolder("QikDirectory"));
+            appHost.Generate(FileHelpers.GetSubFolder("QikDirectory"), blueprintExtensions: ".blu");
 
             var output_1 = FileHelpers.ReadText(@"QikDirectory\output\blueprint_1.blu");
             var output_2 = FileHelpers.ReadText(@"QikDirectory\output\blueprint_2.blu");

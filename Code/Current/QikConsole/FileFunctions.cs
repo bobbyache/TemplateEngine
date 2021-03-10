@@ -13,7 +13,7 @@ namespace CygSoft.Qik.Console
         string ReadTextFile(string filePath);
         void WriteTextFile(string path, string contents);
         bool FindQikScriptInFolder(string directoryPath, out string scriptPath);
-        bool FindBlueprintFilesInFolder(string directoryPath, out IEnumerable<string> blueprintPaths);
+        bool FindBlueprintFilesInFolder(string directoryPath, string[] blueprintExtensions, out IEnumerable<string> blueprintPaths);
         bool FindInputsFileInFolder(string directoryPath, out string jsonInputFile);
         bool IsInputsFile(string path);
         bool IsFolder(string path);
@@ -72,13 +72,12 @@ namespace CygSoft.Qik.Console
             return path is not null;
         }
 
-        public bool FindBlueprintFilesInFolder(string directoryPath, out IEnumerable<string> blueprintPaths)
+        public bool FindBlueprintFilesInFolder(string directoryPath, string[] blueprintExtensions, out IEnumerable<string> blueprintPaths)
         {
             var result = new List<string>();
-            string[] extensions = { ".blu", ".md" };
 
             foreach (string file in Directory.EnumerateFiles(directoryPath, "*.*", SearchOption.AllDirectories)
-                .Where(s => extensions.Any(ext => ext == Path.GetExtension(s))))
+                .Where(s => blueprintExtensions.Any(ext => ext == Path.GetExtension(s))))
             {
                 result.Add(file);
             }
@@ -97,6 +96,7 @@ namespace CygSoft.Qik.Console
 
         public bool IsQikScript(string path)
         {
+            // TODO: Definitely look specifically for a file called script.qik (even if it is read out of settings)
             if (!IsFolder(path))
             {
                 if (Path.GetExtension(path) == ".qik" && File.Exists(path))
@@ -107,6 +107,7 @@ namespace CygSoft.Qik.Console
 
         public bool IsInputsFile(string path)
         {
+            // TODO: Definitely look specifically for a file called inputs.json  (even if it is read out of settings)
             if (!IsFolder(path))
             {
                 if (Path.GetExtension(path) == ".json" && File.Exists(path))

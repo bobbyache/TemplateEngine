@@ -26,11 +26,11 @@ namespace CygSoft.Qik.Console
             return jsonFunctions.SerializeInputSymbols();
         }
 
-        public void Generate(string path)
+        public void Generate(string path, string blueprintExtensions)
         {
             var inputFile = GetInputPath(path);
             var scriptFile = GetQikScriptPath(path);
-            var bluePrintFiles = GetBlueprintPaths(path);
+            var bluePrintFiles = GetBlueprintPaths(path, blueprintExtensions);
 
             interpreter.Interpret(fileFunctions.ReadTextFile(scriptFile));
 
@@ -61,16 +61,16 @@ namespace CygSoft.Qik.Console
             }
         }
 
-        private IEnumerable<string> GetBlueprintPaths(string path)
+        private IEnumerable<string> GetBlueprintPaths(string path, string blueprintExtensions)
         {
             if (fileFunctions.IsFolder(path))
             {
-                var blueprintsFound = fileFunctions.FindBlueprintFilesInFolder(path, out var bluePrints);
+                var blueprintsFound = fileFunctions.FindBlueprintFilesInFolder(path, blueprintExtensions.Split(","), out var bluePrints);
                 if (blueprintsFound) return bluePrints;
             }
             else
             {
-                var blueprintsFound = fileFunctions.FindBlueprintFilesInFolder(fileFunctions.GetFileDirectory(path), out var blueprintPaths);
+                var blueprintsFound = fileFunctions.FindBlueprintFilesInFolder(fileFunctions.GetFileDirectory(path), blueprintExtensions.Split(","), out var blueprintPaths);
                 if (blueprintsFound) return blueprintPaths;
             } 
 

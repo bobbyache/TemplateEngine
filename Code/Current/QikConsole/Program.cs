@@ -22,6 +22,7 @@ class Program
         {
             IAppHost appHost = null;
             NLog.ILogger logger = null;
+            Settings settings = null;
 
             // TODO: Investigate why when you run after cd ~ with the *.exe fule path you get an error about a missing appsettings.json
             // TODO: Why, when executing with Powershell... does the program not end but remain running?
@@ -40,10 +41,7 @@ class Program
                     path
                 ) =>
             {
-                // Console.WriteLine(inputs);
-                // Console.WriteLine(path);
 
-                
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine(new Resources().GetWelcomeHeader());
                 Console.ForegroundColor = ConsoleColor.White;
@@ -74,7 +72,7 @@ class Program
                     try
                     {
                         Console.WriteLine("Generating output files...");
-                        appHost.Generate(path);
+                        appHost.Generate(path, settings.BlueprintExtensions);
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("...Success!");
                         Console.ForegroundColor = ConsoleColor.White;
@@ -94,6 +92,8 @@ class Program
             var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json").Build();
+
+            settings = config.GetSection("Settings").Get<Settings>();
 
             LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
 
