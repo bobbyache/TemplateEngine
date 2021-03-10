@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace CygSoft.Qik.Functions
 {
@@ -11,24 +12,21 @@ namespace CygSoft.Qik.Functions
         public int Column { get;}
         public string Name { get; }
 
-        public BaseFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments)
+        public BaseFunction(IFuncInfo funcInfo, IGlobalTable scopeTable, List<IFunction> functionArguments = null)
         {
+            if (funcInfo is null) throw new ArgumentNullException($"{nameof(funcInfo)} cannot be null.");
+            this.scopeTable = scopeTable ?? throw new ArgumentNullException($"{nameof(scopeTable)} cannot be null.");
+
             Line = funcInfo.Line;
             Column = funcInfo.Column;
             Name = funcInfo.Name;
-            this.scopeTable = scopeTable;
-            this.functionArguments = functionArguments;
+
+            this.functionArguments = functionArguments ?? new List<IFunction>();
         }
 
-        public BaseFunction(IFuncInfo funcInfo, IGlobalTable scopeTable)
-        {
-            Line = funcInfo.Line;
-            Column = funcInfo.Column;
-            Name = funcInfo.Name;
-            this.scopeTable = scopeTable;
-            functionArguments = new List<IFunction>();
-        }
-
+        // TODO: Believe this error report should go in via constructor
+        // Derived function should call into BaseFunction protected method to set error report.
+        // In that way, eliminate interface dependency on IErrorReport
         public abstract string Execute(IErrorReport errorReport);
     }
 }

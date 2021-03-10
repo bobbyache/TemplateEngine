@@ -30,8 +30,8 @@ namespace CygSoft.Qik
         // For testing purposes:
         public Interpreter(ISyntaxValidator syntaxValidator, IInterpreterEngine interpreterEngine)
         {
-            this.syntaxValidator = syntaxValidator;
-            this.interpreterEngine = interpreterEngine;
+            this.syntaxValidator = syntaxValidator ?? throw new ArgumentNullException($"{nameof(syntaxValidator)} cannot be null.");
+            this.interpreterEngine = interpreterEngine ?? throw new ArgumentNullException($"{nameof(interpreterEngine)} cannot be null.");
         }
 
         public void Interpret(string scriptText)

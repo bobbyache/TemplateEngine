@@ -1,10 +1,13 @@
-﻿using CygSoft.Qik.Functions;
+﻿using System;
+using CygSoft.Qik.Functions;
 
 namespace CygSoft.Qik
 {
     public class ExpressionSymbol : BaseSymbol, IExpression
     {
         private readonly IFunction func;
+
+        // TODO: This was a convenience for the old windows property grid. Think it's not really necessary although part of the language. Investigate.
         public bool IsVisibleToEditor { get; }
         private readonly IErrorReport errorReport;
 
@@ -12,8 +15,8 @@ namespace CygSoft.Qik
             bool isPlaceholder, bool isVisibleToEditor, IFunction func)
             : base(symbol, title, description, isPlaceholder)
         {
-            this.func = func;
-            this.errorReport = errorReport;
+            this.func = func ?? throw new ArgumentNullException($"{nameof(func)} cannot be null.");
+            this.errorReport = errorReport ?? throw new ArgumentNullException($"{nameof(errorReport)} cannot be null.");
             IsVisibleToEditor = isVisibleToEditor;
         }
 
@@ -21,8 +24,8 @@ namespace CygSoft.Qik
             bool isPlaceholder, bool isVisibleToEditor, IFunction func, string prefix, string postfix)
             : base(symbol, title, description, isPlaceholder, prefix, postfix)
         {
-            this.func = func;
-            this.errorReport = errorReport;
+            this.func = func ?? throw new ArgumentNullException($"{nameof(func)} cannot be null.");
+            this.errorReport = errorReport ?? throw new ArgumentNullException($"{nameof(errorReport)} cannot be null.");
             IsVisibleToEditor = isVisibleToEditor;
         }
 

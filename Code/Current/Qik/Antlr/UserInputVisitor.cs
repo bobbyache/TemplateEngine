@@ -14,12 +14,12 @@ namespace CygSoft.Qik.Antlr
 
         public override string VisitTextBox(QikTemplateParser.TextBoxContext context)
         {
-            string controlId = context.VARIABLE().GetText();
+            var controlId = context.VARIABLE().GetText();
 
-            SymbolArguments symbolArguments = new SymbolArguments(errorReport);
+            var symbolArguments = new SymbolArguments(errorReport);
             symbolArguments.Process(context.declArgs());
 
-            TextInputSymbol textInputSymbol = new TextInputSymbol(controlId, symbolArguments.Title, symbolArguments.Description, symbolArguments.Default, symbolArguments.IsPlaceholder);
+            var textInputSymbol = new TextInputSymbol(controlId, symbolArguments.Title, symbolArguments.Description, symbolArguments.Default, symbolArguments.IsPlaceholder);
             scopeTable.AddSymbol(textInputSymbol);
 
             return base.VisitTextBox(context);
@@ -27,16 +27,16 @@ namespace CygSoft.Qik.Antlr
 
         public override string VisitOptionBox(QikTemplateParser.OptionBoxContext context)
         {
-            string symbol = context.VARIABLE().GetText();
+            var symbol = context.VARIABLE().GetText();
 
-            SymbolArguments symbolArguments = new SymbolArguments(errorReport);
+            var symbolArguments = new SymbolArguments(errorReport);
             symbolArguments.Process(context.declArgs());
 
-            OptionInputSymbol optionInputSymbol = new OptionInputSymbol(symbol, symbolArguments.Title, symbolArguments.Description, symbolArguments.Default, symbolArguments.IsPlaceholder);
+            var optionInputSymbol = new OptionInputSymbol(symbol, symbolArguments.Title, symbolArguments.Description, symbolArguments.Default, symbolArguments.IsPlaceholder);
 
-            foreach (QikTemplateParser.SingleOptionContext optionContext in context.optionsBody().singleOption())
+            foreach (var optionContext in context.optionsBody().singleOption())
             {
-                SymbolArguments optionArgs = new SymbolArguments(errorReport);
+                var optionArgs = new SymbolArguments(errorReport);
                 optionArgs.Process(optionContext.declArgs());
 
                 optionInputSymbol.AddOption(Common.StripOuterQuotes(optionContext.STRING().GetText()),
@@ -44,6 +44,7 @@ namespace CygSoft.Qik.Antlr
             }
 
             scopeTable.AddSymbol(optionInputSymbol);
+            
             return base.VisitOptionBox(context);
         }
     }

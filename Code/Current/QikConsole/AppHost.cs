@@ -12,9 +12,9 @@ namespace CygSoft.Qik.Console
         private readonly IJsonFunctions jsonFunctions;
         public AppHost(IInterpreter interpreter, IFileFunctions fileFunctions, IJsonFunctions jsonFunctions)
         {
-            this.interpreter = interpreter ?? throw new ArgumentNullException("IInterpreter cannot be null.");
-            this.fileFunctions = fileFunctions ?? throw new ArgumentNullException("IFileFunctions cannot be null.");
-            this.jsonFunctions = jsonFunctions ?? throw new ArgumentNullException("IJsonFunctions cannot be null.");
+            this.interpreter = interpreter ?? throw new ArgumentNullException($"{nameof(interpreter)} cannot be null.");
+            this.fileFunctions = fileFunctions ?? throw new ArgumentNullException($"{nameof(fileFunctions)} cannot be null.");
+            this.jsonFunctions = jsonFunctions ?? throw new ArgumentNullException($"{nameof(jsonFunctions)} cannot be null.");
         }
 
         // TODO: Generate a human readable text file that explains how the options can be
@@ -23,7 +23,7 @@ namespace CygSoft.Qik.Console
         {
             var scriptFile = GetQikScriptPath(path);
             interpreter.Interpret(fileFunctions.ReadTextFile(GetQikScriptPath(path)));
-            return jsonFunctions.SerializeInputSymbols(interpreter);
+            return jsonFunctions.SerializeInputSymbols();
         }
 
         public void Generate(string path)

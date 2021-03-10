@@ -7,7 +7,7 @@ namespace CygSoft.Qik.Console
 {
     public interface IJsonFunctions
     {
-        string SerializeInputSymbols(IInterpreter interpreter);
+        string SerializeInputSymbols();
         InputSymbol[] DeserializeInput(string jsonKeyValues);
     }
 
@@ -24,7 +24,7 @@ namespace CygSoft.Qik.Console
         private readonly IInterpreter interpreter;
         public JsonFunctions(IInterpreter interpreter)
         {
-            this.interpreter = interpreter ?? throw new ArgumentNullException("IInterpreter cannot be null.");
+            this.interpreter = interpreter ?? throw new ArgumentNullException($"{nameof(interpreter)} cannot be null.");
         }
 
         public InputSymbol[] DeserializeInput(string jsonKeyValues)
@@ -33,7 +33,7 @@ namespace CygSoft.Qik.Console
             return values;
         }
 
-        public string SerializeInputSymbols(IInterpreter interpreter)
+        public string SerializeInputSymbols()
         {
             var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             var result = new StringBuilder();

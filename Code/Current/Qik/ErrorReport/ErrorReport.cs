@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace CygSoft.Qik
 {
+    // TODO: Turn on nullability per project
     internal class ErrorReport : IErrorReport
     {
         public event EventHandler<InterpretErrorEventArgs> ExecutionErrorDetected;

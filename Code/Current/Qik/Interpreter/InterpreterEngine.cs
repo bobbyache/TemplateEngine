@@ -27,8 +27,8 @@ namespace CygSoft.Qik
 
         public InterpreterEngine(IGlobalTable scopeTable, IErrorReport errorReport )
         {
-            this.scopeTable = scopeTable;
-            this.errorReport = errorReport;
+            this.scopeTable = scopeTable ?? throw new ArgumentNullException($"{nameof(scopeTable)} cannot be null.");
+            this.errorReport = errorReport ?? throw new ArgumentNullException($"{nameof(errorReport)} cannot be null.");
         }
 
         public void CreateFieldInput(string symbol, string fieldName, string description)

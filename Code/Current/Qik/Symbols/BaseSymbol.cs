@@ -2,6 +2,9 @@
 {
     public abstract class BaseSymbol : ISymbol 
     {
+        // TODO: This should not be here. Can't hard code this.
+        // Should rather pass it in as a constructor parameter
+        // Therefore remove constructor without these parameters.
         private readonly string prefix = "@{";
         private readonly string postfix = "}";
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CygSoft.Qik.Functions;
 
 namespace CygSoft.Qik.Antlr
@@ -10,37 +11,37 @@ namespace CygSoft.Qik.Antlr
 
         internal ExpressionVisitor(IGlobalTable scopeTable, IErrorReport errorReport)
         {
-            this.scopeTable = scopeTable;
-            this.errorReport = errorReport;
+            this.scopeTable = scopeTable ?? throw new ArgumentNullException($"{nameof(scopeTable)} cannot be null.");
+            this.errorReport = errorReport ?? throw new ArgumentNullException($"{nameof(errorReport)} cannot be null.");
         }
 
         public override IFunction VisitExprDecl(QikTemplateParser.ExprDeclContext context)
         {
-            string id = context.VARIABLE().GetText();
+            var id = context.VARIABLE().GetText();
 
-            SymbolArguments symbolArguments = new SymbolArguments(errorReport);
+            var symbolArguments = new SymbolArguments(errorReport);
             symbolArguments.Process(context.declArgs());
 
             if (context.concatExpr() != null)
             {
-                ConcatenateFunction concatenateFunc = GetConcatenateFunction(context.concatExpr());
-                ExpressionSymbol expression =
+                var concatenateFunc = GetConcatenateFunction(context.concatExpr());
+                var expression =
                     new ExpressionSymbol(errorReport, id, symbolArguments.Title, symbolArguments.Description,
                         symbolArguments.IsPlaceholder, symbolArguments.IsVisibleToEditor, concatenateFunc);
                 scopeTable.AddSymbol(expression);
             }
             else if (context.optExpr() != null)
             {
-                IFunction ifFunc = VisitOptExpr(context.optExpr());
+                var ifFunc = VisitOptExpr(context.optExpr());
 
-                ExpressionSymbol expression = new ExpressionSymbol(errorReport, id, symbolArguments.Title, symbolArguments.Description,
+                var expression = new ExpressionSymbol(errorReport, id, symbolArguments.Title, symbolArguments.Description,
                     symbolArguments.IsPlaceholder, symbolArguments.IsVisibleToEditor, ifFunc);
                 scopeTable.AddSymbol(expression);
             }
             else if (context.expr() != null)
             {
-                IFunction function = VisitExpr(context.expr());
-                ExpressionSymbol expression = new ExpressionSymbol(errorReport, id, symbolArguments.Title, symbolArguments.Description,
+                var function = VisitExpr(context.expr());
+                var expression = new ExpressionSymbol(errorReport, id, symbolArguments.Title, symbolArguments.Description,
                     symbolArguments.IsPlaceholder, symbolArguments.IsVisibleToEditor, function);
                 scopeTable.AddSymbol(expression);
             }
@@ -50,24 +51,24 @@ namespace CygSoft.Qik.Antlr
 
         public override IFunction VisitOptExpr(QikTemplateParser.OptExprContext context)
         {
-            int line = context.Start.Line;
-            int column = context.Start.Column;
+            var line = context.Start.Line;
+            var column = context.Start.Column;
 
-            string id = context.VARIABLE().GetText();
-            IfDecissionFunction ifFunc = new IfDecissionFunction(new FuncInfo("Float", line, column), this.scopeTable, id);
+            var id = context.VARIABLE().GetText();
+            var ifFunc = new IfDecissionFunction(new FuncInfo("Float", line, column), this.scopeTable, id);
 
             foreach (var ifOptContext in context.ifOptExpr())
             {
-                string text = ifOptContext.STRING().GetText();
+                var text = ifOptContext.STRING().GetText();
 
                 if (ifOptContext.concatExpr() != null)
                 {
-                    ConcatenateFunction concatenateFunc = GetConcatenateFunction(ifOptContext.concatExpr());
+                    var concatenateFunc = GetConcatenateFunction(ifOptContext.concatExpr());
                     ifFunc.AddFunction(text, concatenateFunc);
                 }
                 else if (ifOptContext.expr() != null)
                 {
-                    IFunction function = VisitExpr(ifOptContext.expr());
+                    var function = VisitExpr(ifOptContext.expr());
                     ifFunc.AddFunction(text, function);
                 }
             }
@@ -113,7 +114,7 @@ namespace CygSoft.Qik.Antlr
             {
                 string constantText = context.CONST().GetText();
                 if (constantText == "NEWLINE")
-                    return new NewlineFunction(new FuncInfo("Constant", line, column));
+                    return new NewlineFunction(new FuncInfo("Constant", line, column), scopeTable);
                 else
                     return new ConstantFunction(new FuncInfo("Constant", line, column), scopeTable, context.CONST().GetText());
             }

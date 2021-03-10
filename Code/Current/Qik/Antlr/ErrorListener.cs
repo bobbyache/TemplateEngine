@@ -12,7 +12,14 @@ namespace CygSoft.Qik.Antlr
 
         public override void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
         {
-            IList<string> stack = ((Parser)recognizer).GetRuleInvocationStack();
+            // TODO: Implement below commented out when have time to check and test the impact
+
+            // if (output is null) throw new ArgumentNullException($"{nameof(output)} cannot be null.");
+            // if (recognizer is null) throw new ArgumentNullException($"{nameof(recognizer)} cannot be null.");
+            // if (offendingSymbol is null) throw new ArgumentNullException($"{nameof(offendingSymbol)} cannot be null.");
+            // if (e is null) throw new ArgumentNullException($"RecognitionException cannot be null.");
+
+            var stack = ((Parser)recognizer).GetRuleInvocationStack();
             stack.Reverse();
 
             SyntaxErrorDetected?.Invoke(this, new InterpretErrorEventArgs(UserFriendlyContext(stack[0].ToString()), line, charPositionInLine, offendingSymbol.ToString(), msg));

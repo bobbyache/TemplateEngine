@@ -21,12 +21,12 @@ namespace CygSoft.Qik.Antlr
 
         public void Process(QikTemplateParser.DeclArgsContext context)
         {
-            foreach (QikTemplateParser.DeclArgContext declArg in context.declArg())
+            foreach (var declArg in context.declArg())
             {
                 if (declArg.IDENTIFIER() != null)
                 {
-                    string identifier = declArg.IDENTIFIER().GetText();
-                    string value = Common.StripOuterQuotes(declArg.STRING().GetText());
+                    var identifier = declArg.IDENTIFIER().GetText();
+                    var value = Common.StripOuterQuotes(declArg.STRING().GetText());
 
                     switch (identifier)
                     {

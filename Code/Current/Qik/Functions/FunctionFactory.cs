@@ -9,11 +9,15 @@ namespace CygSoft.Qik.Functions
 
         public FunctionFactory(IGlobalTable scopeTable)
         {
-            this.scopeTable = scopeTable;
+            this.scopeTable= scopeTable?? throw new ArgumentNullException($"{nameof(scopeTable)} cannot be null.");
         }
 
         public IFunction GetFunction(string functionIdentifier, IFuncInfo funcInfo, List<IFunction> functionArguments)
         {
+            if (functionIdentifier is null) throw new ArgumentNullException($"{nameof(functionIdentifier)} cannot be null.");
+            if (funcInfo is null) throw new ArgumentNullException($"{nameof(funcInfo)} cannot be null.");
+            if (functionArguments is null) throw new ArgumentNullException($"{nameof(functionArguments)} cannot be null.");
+
             IFunction func;
 
             switch (functionIdentifier)
