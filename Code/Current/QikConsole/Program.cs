@@ -22,7 +22,8 @@ class Program
         {
             IAppHost appHost = null;
             NLog.ILogger logger = null;
-            Settings settings = null;
+            FileSettings settings = null;
+            ServiceProvider serviceProvider = null;
 
             // TODO: Investigate why when you run after cd ~ with the *.exe fule path you get an error about a missing appsettings.json
             // TODO: Why, when executing with Powershell... does the program not end but remain running?
@@ -72,7 +73,7 @@ class Program
                     try
                     {
                         Console.WriteLine("Generating output files...");
-                        appHost.Generate(path, settings.BlueprintExtensions);
+                        appHost.Generate(path);
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("...Success!");
                         Console.ForegroundColor = ConsoleColor.White;
@@ -93,7 +94,7 @@ class Program
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json").Build();
 
-            settings = config.GetSection("Settings").Get<Settings>();
+            settings = config.GetSection(nameof(FileSettings)).Get<FileSettings>();
 
             LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
 
@@ -101,12 +102,14 @@ class Program
                                 .LoadConfigurationFromSection(config)
                                 .GetCurrentClassLogger();
             
-            var serviceProvider = new ServiceCollection()
+            var services = new ServiceCollection()
                 .AddSingleton<IJsonFunctions, JsonFunctions>()
-                .AddSingleton<IFileFunctions, FileFunctions>()
                 .AddSingleton<IInterpreter, Interpreter>()
+                .AddSingleton<IFileFunctions>(ah => new FileFunctions(settings))
                 .AddSingleton<IAppHost, AppHost>()
-            .BuildServiceProvider();
+            ;
+
+            serviceProvider = services.BuildServiceProvider();
 
             appHost = serviceProvider.GetService<IAppHost>();
 

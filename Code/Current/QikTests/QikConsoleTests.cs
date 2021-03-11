@@ -11,7 +11,8 @@ namespace Qik.LanguageEngine.IntegrationTests
         [Test]
         public void Should_Read_Script_And_Return_Input_Manifest()
         {
-            var fileFunctions = new FileFunctions();
+            var fileSettings = new CygSoft.Qik.Console.FileSettings() { CommaDelimitedBlueprintExtensions = ".blu", ScriptFileName = "InferPrimaryKey.qik", InputsFileName = "input.json" };
+            var fileFunctions = new FileFunctions(fileSettings);
             var interpreter = new Interpreter();
             var jsonFunctions = new JsonFunctions(interpreter);
 
@@ -24,12 +25,13 @@ namespace Qik.LanguageEngine.IntegrationTests
         [Test]
         public void Should_Find_Script_In_Directory_And_Generate_Valid_Output()
         {
-            var fileFunctions = new FileFunctions();
+            var fileSettings = new CygSoft.Qik.Console.FileSettings() { CommaDelimitedBlueprintExtensions = ".blu", ScriptFileName = "file.qik", InputsFileName = "input.json" };
+            var fileFunctions = new FileFunctions(fileSettings);
             var interpreter = new Interpreter();
             var jsonFunctions = new JsonFunctions(interpreter);
 
             var appHost = new AppHost(interpreter, fileFunctions, jsonFunctions);
-            appHost.Generate(FileHelpers.GetSubFolder("QikDirectory"), blueprintExtensions: ".blu");
+            appHost.Generate(FileHelpers.GetSubFolder("QikDirectory"));
 
             var output_1 = FileHelpers.ReadText(@"QikDirectory\output\blueprint_1.blu");
             var output_2 = FileHelpers.ReadText(@"QikDirectory\output\blueprint_2.blu");

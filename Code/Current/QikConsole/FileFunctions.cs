@@ -12,18 +12,22 @@ namespace CygSoft.Qik.Console
         string GetFileDirectory(string filePath);
         string ReadTextFile(string filePath);
         void WriteTextFile(string path, string contents);
-        bool FindQikScriptInFolder(string directoryPath, out string scriptPath);
-        bool FindBlueprintFilesInFolder(string directoryPath, string[] blueprintExtensions, out IEnumerable<string> blueprintPaths);
+        bool FindScriptInFolder(string directoryPath, out string scriptPath);
+        bool FindBlueprintFilesInFolder(string directoryPath, out IEnumerable<string> blueprintPaths);
         bool FindInputsFileInFolder(string directoryPath, out string jsonInputFile);
         bool IsInputsFile(string path);
         bool IsFolder(string path);
-        bool IsQikScript(string path);
+        bool IsScript(string path);
         bool IsBlueprint(string path);
         string GeneratOutputPath(string blueprintFilePath);
     }
 
     public class FileFunctions : IFileFunctions
     {
+        private readonly FileSettings fileSettings;
+
+        public FileFunctions(FileSettings fileSettings) => this.fileSettings = fileSettings;
+
         public bool FileExists(string filePath) => File.Exists(filePath);
         public string GetFileDirectory(string filePath) => Path.GetDirectoryName(filePath);
 
@@ -56,28 +60,24 @@ namespace CygSoft.Qik.Console
 
         public void CreateDirectory(string directoryPath) => Directory.CreateDirectory(directoryPath);
 
-        public bool FindInputsFileInFolder(string directoryPath, out string jsonInputFile)
+        public bool FindInputsFileInFolder(string directoryPath, out string inputFile)
         {
-            var path = Directory.EnumerateFiles(directoryPath, "*.json").SingleOrDefault();
-            jsonInputFile = path;
-
-            return path is not null;
+            inputFile = Path.Combine(directoryPath, fileSettings.InputsFileName);
+            return File.Exists(inputFile);
         }
 
-        public bool FindQikScriptInFolder(string directoryPath, out string scriptPath)
+        public bool FindScriptInFolder(string directoryPath, out string scriptPath)
         {
-            var path = Directory.EnumerateFiles(directoryPath, "*.qik").SingleOrDefault();
-            scriptPath = path;
-
-            return path is not null;
+            scriptPath = Path.Combine(directoryPath, fileSettings.ScriptFileName);
+            return File.Exists(scriptPath);
         }
 
-        public bool FindBlueprintFilesInFolder(string directoryPath, string[] blueprintExtensions, out IEnumerable<string> blueprintPaths)
+        public bool FindBlueprintFilesInFolder(string directoryPath, out IEnumerable<string> blueprintPaths)
         {
             var result = new List<string>();
 
             foreach (string file in Directory.EnumerateFiles(directoryPath, "*.*", SearchOption.AllDirectories)
-                .Where(s => blueprintExtensions.Any(ext => ext == Path.GetExtension(s))))
+                .Where(s => fileSettings.BlueprintExtensions.Any(ext => ext == Path.GetExtension(s))))
             {
                 result.Add(file);
             }
@@ -94,12 +94,12 @@ namespace CygSoft.Qik.Console
             return fileSystemInfo.IsDirectory();
         }
 
-        public bool IsQikScript(string path)
+        public bool IsScript(string path)
         {
             // TODO: Definitely look specifically for a file called script.qik (even if it is read out of settings)
             if (!IsFolder(path))
             {
-                if (Path.GetExtension(path) == ".qik" && File.Exists(path))
+                if (Path.GetFileName(path) == fileSettings.ScriptFileName && File.Exists(path))
                     return true;
             }
             return false;
@@ -110,7 +110,7 @@ namespace CygSoft.Qik.Console
             // TODO: Definitely look specifically for a file called inputs.json  (even if it is read out of settings)
             if (!IsFolder(path))
             {
-                if (Path.GetExtension(path) == ".json" && File.Exists(path))
+                if (Path.GetFileName(path) == fileSettings.InputsFileName && File.Exists(path))
                     return true;
             }
             return false;

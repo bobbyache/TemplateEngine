@@ -10,6 +10,7 @@ namespace CygSoft.Qik.Console
         private readonly IInterpreter interpreter;
         private readonly IFileFunctions fileFunctions;
         private readonly IJsonFunctions jsonFunctions;
+
         public AppHost(IInterpreter interpreter, IFileFunctions fileFunctions, IJsonFunctions jsonFunctions)
         {
             this.interpreter = interpreter ?? throw new ArgumentNullException($"{nameof(interpreter)} cannot be null.");
@@ -21,16 +22,16 @@ namespace CygSoft.Qik.Console
         // set from the InputSymbols Json. Call it input_manual.txt.
         public string GetJsonInputInterface(string path)
         {
-            var scriptFile = GetQikScriptPath(path);
-            interpreter.Interpret(fileFunctions.ReadTextFile(GetQikScriptPath(path)));
+            var scriptFile = GetScriptPath(path);
+            interpreter.Interpret(fileFunctions.ReadTextFile(GetScriptPath(path)));
             return jsonFunctions.SerializeInputSymbols();
         }
 
-        public void Generate(string path, string blueprintExtensions)
+        public void Generate(string path)
         {
             var inputFile = GetInputPath(path);
-            var scriptFile = GetQikScriptPath(path);
-            var bluePrintFiles = GetBlueprintPaths(path, blueprintExtensions);
+            var scriptFile = GetScriptPath(path);
+            var bluePrintFiles = GetBlueprintPaths(path);
 
             interpreter.Interpret(fileFunctions.ReadTextFile(scriptFile));
 
@@ -61,16 +62,16 @@ namespace CygSoft.Qik.Console
             }
         }
 
-        private IEnumerable<string> GetBlueprintPaths(string path, string blueprintExtensions)
+        private IEnumerable<string> GetBlueprintPaths(string path)
         {
             if (fileFunctions.IsFolder(path))
             {
-                var blueprintsFound = fileFunctions.FindBlueprintFilesInFolder(path, blueprintExtensions.Split(","), out var bluePrints);
+                var blueprintsFound = fileFunctions.FindBlueprintFilesInFolder(path, out var bluePrints);
                 if (blueprintsFound) return bluePrints;
             }
             else
             {
-                var blueprintsFound = fileFunctions.FindBlueprintFilesInFolder(fileFunctions.GetFileDirectory(path), blueprintExtensions.Split(","), out var blueprintPaths);
+                var blueprintsFound = fileFunctions.FindBlueprintFilesInFolder(fileFunctions.GetFileDirectory(path), out var blueprintPaths);
                 if (blueprintsFound) return blueprintPaths;
             } 
 
@@ -93,17 +94,17 @@ namespace CygSoft.Qik.Console
             throw new FileNotFoundException("Input file not found.");
         }
 
-        private string GetQikScriptPath(string path)
+        private string GetScriptPath(string path)
         {
             if (fileFunctions.IsFolder(path))
             {
-                var scriptFound = fileFunctions.FindQikScriptInFolder(path, out var scriptPath);
+                var scriptFound = fileFunctions.FindScriptInFolder(path, out var scriptPath);
                 if (scriptFound) return scriptPath;
             }
             else
-                if (fileFunctions.IsQikScript(path)) return path;             
+                if (fileFunctions.IsScript(path)) return path;             
 
-            throw new FileNotFoundException("Qik file not found.");
+            throw new FileNotFoundException("Script file not found.");
         }
     }
 }
