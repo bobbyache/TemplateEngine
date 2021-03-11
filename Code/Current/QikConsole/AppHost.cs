@@ -75,7 +75,7 @@ namespace CygSoft.Qik.Console
                 if (blueprintsFound) return blueprintPaths;
             } 
 
-            throw new FileNotFoundException("Blueprint file not found.");
+            throw new FileNotFoundException(ErrorMessages.BlueprintFilesNotFound);
         }
 
         private string GetInputPath(string path)
@@ -91,7 +91,7 @@ namespace CygSoft.Qik.Console
                 if (inputFound) return inputPath;
             }         
 
-            throw new FileNotFoundException("Input file not found.");
+            throw new FileNotFoundException(ErrorMessages.InputFileNotFound);
         }
 
         private string GetScriptPath(string path)
@@ -104,7 +104,7 @@ namespace CygSoft.Qik.Console
             else
                 if (fileFunctions.IsScript(path)) return path;             
 
-            throw new FileNotFoundException("Script file not found.");
+            throw new FileNotFoundException(ErrorMessages.ScriptFileNotFound);
         }
     }
 }

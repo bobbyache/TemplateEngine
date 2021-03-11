@@ -15,15 +15,18 @@
                 // ****************************************
                 // Generate Inputs 
                 // ****************************************
-                "--path", 
-                "C:\\Users\\RobB\\Desktop\\TestQik\\", 
-                "--inputs"
+                // "--path", 
+                // "C:\\Users\\RobB\\Desktop\\TestQik\\", 
+                // "--inputs"
                 
                 // ****************************************
                 // Prompt to Generate
                 // ****************************************
                 // "--path", 
                 // "C:\\Users\\RobB\\Desktop\\TestQik\\", 
+
+                // "--path", 
+                // "C:\\Users\\RobB\\Desktop\\TestQik\\XD\\ApiServer\\Tests\\", 
             ],
             "cwd": "${workspaceFolder}/QikConsole",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
