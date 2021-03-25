@@ -84,6 +84,9 @@ namespace CygSoft.Qik.Functions
                 case "padRight":
                     func = new PadRightFunction(funcInfo, scopeTable, functionArguments);
                     break;
+                case "abbreviate":
+                    func = new AbbreviateFunction(funcInfo, scopeTable, functionArguments);
+                    break;
 
                 default:
                     func = null;
